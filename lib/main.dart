@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:nhagiare_mobile/injection_container.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await initializeDependencies();
   runApp(const MyApp());
 }
 
@@ -11,7 +14,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Nha Gia Re',
+      debugShowCheckedModeBanner: false,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,

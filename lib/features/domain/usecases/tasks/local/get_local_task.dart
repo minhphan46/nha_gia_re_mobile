@@ -1,7 +1,6 @@
 import 'package:nhagiare_mobile/core/usecases/usecase.dart';
 import 'package:nhagiare_mobile/features/domain/entities/task.dart';
-
-import '../../repository/task_repository.dart';
+import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 
 class GetLocalTasksUseCase implements UseCase<List<TaskEntity>, void> {
   final TaskRepository _taskRepository;
