@@ -73,6 +73,9 @@ dependencies:
   #check internet connection
   internet_connection_checker: ^1.0.0+1
 
+  #bottom bar
+  convex_bottom_bar: ^3.2.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

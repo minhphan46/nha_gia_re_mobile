@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/routes/app_pages.dart';
+import 'package:nhagiare_mobile/config/routes/app_routes.dart';
+import 'package:nhagiare_mobile/config/values/app_string.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
+import 'config/theme/app_theme.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -19,18 +24,13 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
-      title: 'Nha Gia Re',
+    return GetMaterialApp(
+      title: AppStrings.appName,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
-      ),
-      home: const Scaffold(
-        body: Center(
-          child: Text('Hello, world!'),
-        ),
-      ),
+      theme: appTheme(),
+      defaultTransition: Transition.cupertino,
+      initialRoute: AppRoutes.home,
+      getPages: AppPages.pages,
     );
   }
 }

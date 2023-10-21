@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:nhagiare_mobile/config/theme/app_color.dart';
 
-ThemeData theme() {
+ThemeData appTheme() {
   return ThemeData(
-    scaffoldBackgroundColor: Colors.white,
+    scaffoldBackgroundColor: AppColor.white,
     //fontFamily: 'Muli',
     appBarTheme: appBarTheme(),
-    colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColor.green),
     useMaterial3: true,
   );
 }
