@@ -4,6 +4,19 @@ import 'package:flutter/material.dart';
 abstract class AppColor {
   const AppColor();
 
+  static const Color green = Color(0xff026D4D);
+  static const Color orange = Color(0xffEB7910);
+  static const Color white = Color(0xffFFFFFF);
+  static const Color black = Color(0xff000000);
+  static const Color lightBlack = Color(0xff2B3641);
+  static const Color grey500 = Color(0xff6A6A6A);
+  static const Color grey400 = Color(0xff808080);
+  static const Color grey300 = Color(0xff959BA0);
+  static const Color grey100 = Color(0xffF6F6F6);
+  static const Color yellow = Color(0xffFFCD29);
+  static const Color red = Color(0xffD00000);
+  static const Color neon = Color(0xff04C048);
+
   static const Color mainAppBarGradient1 = Color(0xff5F44B9);
   static const Color mainAppBarGradient2 = Color(0xff8F5BE3);
   static const Color mainAppBarGradient3 = Color(0xff9869e3);
