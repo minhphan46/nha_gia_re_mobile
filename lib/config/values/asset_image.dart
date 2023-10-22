@@ -6,7 +6,7 @@ class Assets {
   Assets._();
   // image
   static const String appLogoLight = '$imagePath/logo.png';
-  static const String appLogoDark = '$imagePath/sologan.png';
+  static const String appLogoSologan = '$imagePath/sologan.png';
 
   // icon
   static const String home = '$iconPath/home (1).png';

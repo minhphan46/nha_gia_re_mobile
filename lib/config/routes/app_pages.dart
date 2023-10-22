@@ -10,6 +10,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/home/home_binding.
 import 'package:nhagiare_mobile/features/presentation/modules/home/screens/home_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/login_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/login_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/login/screens/register_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/notification/notification_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/notification/screens/notification_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/post_management_binding.dart';
@@ -20,6 +21,11 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.login,
       page: () => const LoginScreen(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.register,
+      page: () => const RegisterScreen(),
       binding: LoginBinding(),
     ),
     GetPage(

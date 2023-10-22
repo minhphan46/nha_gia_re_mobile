@@ -76,6 +76,12 @@ dependencies:
   #bottom bar
   convex_bottom_bar: ^3.2.0
 
+  #google font
+  google_fonts: ^6.1.0
+
+  # check do manh password
+  flutter_pw_validator: ^1.6.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
