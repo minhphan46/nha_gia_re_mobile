@@ -1,5 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
+import 'package:nhagiare_mobile/core/utils/date_picker.dart';
+
+import '../../../../core/service/device_service.dart';
 
 class LoginController extends GetxController {
   var loginEmail = TextEditingController();
@@ -16,6 +23,7 @@ class LoginController extends GetxController {
   final loginFormGlobalKey = GlobalKey<FormState>();
   final forgotPassFormGlobalKey = GlobalKey<FormState>();
   final changePassFormKey = GlobalKey<FormState>();
+  final updateInfoFormKey = GlobalKey<FormState>();
 
   RxString loginError = RxString('');
   RxString registerError = RxString('');
@@ -81,4 +89,51 @@ class LoginController extends GetxController {
   Future<void> handleRegister() async {}
 
   Future<void> handleForgotPass() async {}
+
+  /// this is add info form
+  var fnamUpdateInfoTextController = TextEditingController();
+  var lnameUpdateInfoTextController = TextEditingController();
+  var phoneUpdateInfoTextController = TextEditingController();
+  var emailUpdateInfoTextController = TextEditingController(text: "asdasdasd");
+  var birthUpdateInfoTextController = TextEditingController();
+  var genderUpdateInfoTextController = TextEditingController();
+  var addressUpdateInfoTextController = TextEditingController();
+
+  File? imageAvatar; // file image of user
+
+  void cancelImages() {
+    imageAvatar = null;
+  }
+
+  /// get image from camera
+  Future<void> getImageFromCamera() async {
+    final image = await DeviceService.pickImage(ImageSource.camera);
+    if (image == null) return;
+    imageAvatar = image;
+    Get.back();
+  }
+
+  /// get image from gallery
+  Future<void> getImageFromGallery() async {
+    final image = await DeviceService.pickImage(ImageSource.gallery);
+    if (image == null) return;
+    imageAvatar = image;
+    Get.back();
+  }
+
+  /// get day from date picker
+  Future<void> handleDatePicker() async {
+    DateTime? date = await DatePickerHelper.getDatePicker();
+    if (date != null) {
+      birthUpdateInfoTextController.text =
+          DateFormat('dd/MM/yyyy').format(date);
+    }
+  }
+
+  /// data gender
+  RxString gender = "Nam".obs;
+
+  void changeGender(String? newValue) {
+    gender.value = newValue!;
+  }
 }

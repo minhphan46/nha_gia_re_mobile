@@ -53,6 +53,8 @@ class _LoginScreenState extends State<LoginScreen> {
                     decoration: InputDecoration(
                         labelText: 'Email',
                         hintText: 'Nhập Email'.tr,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 20.0),
                         errorText: (controller.loginError.value == '')
                             ? null
                             : controller.loginError.value,
@@ -83,6 +85,8 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                       labelText: 'Mật khẩu'.tr,
                       hintText: 'Nhập mật khẩu'.tr,
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18.0, horizontal: 20.0),
                       suffixIcon: IconButton(
                         icon: Icon(
                           !controller.isObscureLogin.value

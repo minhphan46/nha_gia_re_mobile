@@ -3,6 +3,7 @@ import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
+import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../core/extensions/string_ex.dart';
@@ -54,6 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(
                       hintText: 'Email'.tr,
                       labelText: 'Nhập Email',
+                      contentPadding: const EdgeInsets.symmetric(
+                          vertical: 18.0, horizontal: 20.0),
                       errorText: (controller.registerError.value == '')
                           ? null
                           : controller.registerError.value,
@@ -86,6 +89,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(
                         hintText: 'Mật khẩu'.tr,
                         labelText: 'Nhập mật khẩu'.tr,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 20.0),
                         suffixIcon: IconButton(
                           icon: Icon(
                             !controller.isObscureRegister.value
@@ -143,6 +148,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(
                         hintText: 'Nhập lại mật khẩu'.tr,
                         labelText: 'Nhập lại mật khẩu'.tr,
+                        contentPadding: const EdgeInsets.symmetric(
+                            vertical: 18.0, horizontal: 20.0),
                         suffixIcon: IconButton(
                           icon: Icon(
                             !controller.isObscureRepeatPass.value
@@ -202,6 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   TextButton(
                       onPressed: () {
                         //Get.to(() => const ForgetPasswordPage());
+                        Get.toNamed(AppRoutes.updateInfo);
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.only(top: 20, bottom: 20),

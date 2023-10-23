@@ -7,6 +7,7 @@ class Assets {
   // image
   static const String appLogoLight = '$imagePath/logo.png';
   static const String appLogoSologan = '$imagePath/sologan.png';
+  static const String avatarDefault = '$imagePath/avatar.png';
 
   // icon
   static const String home = '$iconPath/home (1).png';
@@ -14,4 +15,7 @@ class Assets {
   static const String pencil = '$iconPath/shopping-outline.png';
   static const String notification = '$iconPath/store-outline.png';
   static const String user = '$iconPath/account-details-outline.png';
+  static const String search = '$iconPath/search.png';
+  static const String blog = '$iconPath/store-outline.png';
+  static const String camera = '$iconPath/camera.png';
 }
