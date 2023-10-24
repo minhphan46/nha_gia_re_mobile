@@ -90,7 +90,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               const SizedBox(height: 15),
               // button tiep tuc
               Obx(() => ElevatedButton(
-                    onPressed: controller.handleForgotPass,
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.resetPassword);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),

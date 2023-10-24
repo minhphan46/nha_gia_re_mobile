@@ -13,6 +13,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/login/screens/forg
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/login_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/register_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/update_info_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/login/screens/update_password.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/notification/notification_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/notification/screens/notification_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/post_management_binding.dart';
@@ -33,6 +34,11 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.register,
       page: () => const RegisterScreen(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.resetPassword,
+      page: () => const UpdatePasswordScreen(),
       binding: LoginBinding(),
     ),
     GetPage(

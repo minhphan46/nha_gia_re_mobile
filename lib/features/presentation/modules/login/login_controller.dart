@@ -33,6 +33,7 @@ class LoginController extends GetxController {
   RxBool isObscureLogin = true.obs;
   RxBool isObscureRegister = true.obs;
   RxBool isObscureRepeatPass = true.obs;
+  RxBool isObscureResetPass = true.obs;
   RxBool isObscureRepeatPassReset = true.obs;
   RxBool validatorVisibility = false.obs;
   RxBool validatorSusscess = false.obs;
@@ -54,6 +55,10 @@ class LoginController extends GetxController {
 
   void togglePassReg() {
     isObscureRegister.value = !isObscureRegister.value;
+  }
+
+  void toggleResetPass() {
+    isObscureResetPass.value = !isObscureResetPass.value;
   }
 
   void toggleRepeatPassReg() {
@@ -139,6 +144,10 @@ class LoginController extends GetxController {
 
   /// forgot password
   var emailForgotTextController = TextEditingController();
+  var newPasswordTextController = TextEditingController();
+  var reNewPasswordTextController = TextEditingController();
 
   void handleForgotPassword() {}
+
+  void handleResetPassword() {}
 }
