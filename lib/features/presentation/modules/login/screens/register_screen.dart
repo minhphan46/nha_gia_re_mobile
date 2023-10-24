@@ -175,12 +175,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 20),
               // Button register
               Obx(() => ElevatedButton(
-                    onPressed: controller.handleRegister,
+                    onPressed: () {
+                      Get.toNamed(AppRoutes.updateInfo);
+                      controller.handleRegister();
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       textStyle: const TextStyle(color: AppColor.white),
                       elevation: 10,
+                      minimumSize: Size(100.wp, 55),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                     child: controller.isLoading.value
                         ? const SizedBox(
@@ -208,8 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   const Spacer(),
                   TextButton(
                       onPressed: () {
-                        //Get.to(() => const ForgetPasswordPage());
-                        Get.toNamed(AppRoutes.updateInfo);
+                        Get.toNamed(AppRoutes.fogot);
                       },
                       style: TextButton.styleFrom(
                         padding: const EdgeInsets.only(top: 20, bottom: 20),

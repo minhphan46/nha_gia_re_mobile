@@ -94,7 +94,7 @@ class LoginController extends GetxController {
   var fnamUpdateInfoTextController = TextEditingController();
   var lnameUpdateInfoTextController = TextEditingController();
   var phoneUpdateInfoTextController = TextEditingController();
-  var emailUpdateInfoTextController = TextEditingController(text: "asdasdasd");
+  var emailUpdateInfoTextController = TextEditingController();
   var birthUpdateInfoTextController = TextEditingController();
   var genderUpdateInfoTextController = TextEditingController();
   var addressUpdateInfoTextController = TextEditingController();
@@ -136,4 +136,9 @@ class LoginController extends GetxController {
   void changeGender(String? newValue) {
     gender.value = newValue!;
   }
+
+  /// forgot password
+  var emailForgotTextController = TextEditingController();
+
+  void handleForgotPassword() {}
 }

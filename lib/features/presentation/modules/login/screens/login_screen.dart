@@ -117,7 +117,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         padding: const EdgeInsets.only(top: 20, bottom: 20),
                       ),
                       onPressed: () {
-                        //Get.to(() => const ForgetPasswordPage());
+                        Get.toNamed(AppRoutes.fogot);
                       },
                       child: Text('Quên mật khẩu?'.tr)),
                 ],
@@ -131,6 +131,10 @@ class _LoginScreenState extends State<LoginScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 15),
                       textStyle: const TextStyle(color: AppColor.white),
                       elevation: 10,
+                      minimumSize: Size(100.wp, 55),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
+                      ),
                     ),
                     child: controller.isLoading.value
                         ? const SizedBox(

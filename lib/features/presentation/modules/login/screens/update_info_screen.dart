@@ -178,6 +178,10 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                   padding: const EdgeInsets.symmetric(vertical: 15),
                   textStyle: const TextStyle(color: AppColor.white),
                   elevation: 10,
+                  minimumSize: Size(100.wp, 55),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
                 ),
                 child: controller.isLoading.value
                     ? const SizedBox(

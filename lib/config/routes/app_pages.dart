@@ -9,6 +9,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/create_post/screen
 import 'package:nhagiare_mobile/features/presentation/modules/home/home_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/screens/home_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/login_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/login/screens/forgot_password.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/login_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/register_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/update_info_screen.dart';
@@ -22,6 +23,11 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.login,
       page: () => const LoginScreen(),
+      binding: LoginBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.fogot,
+      page: () => const ForgotPasswordScreen(),
       binding: LoginBinding(),
     ),
     GetPage(
