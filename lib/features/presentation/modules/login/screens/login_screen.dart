@@ -4,6 +4,7 @@ import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/image_logo.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/my_appbar.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../login_controller.dart';
@@ -31,6 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const MyAppbar(title: "Đăng nhập"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Form(
@@ -40,7 +42,7 @@ class _LoginScreenState extends State<LoginScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 15.hp),
+              SizedBox(height: 5.hp),
               // Logo
               const ImageLogo(),
               // Text file Email
@@ -125,7 +127,10 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // button login
               Obx(() => ElevatedButton(
-                    onPressed: controller.handleLogin,
+                    onPressed: () {
+                      controller.handleLogin();
+                      Get.toNamed(AppRoutes.bottomBar);
+                    },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),

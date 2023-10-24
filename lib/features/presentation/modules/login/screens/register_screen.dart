@@ -9,6 +9,8 @@ import '../../../../../config/theme/text_styles.dart';
 import '../../../../../core/extensions/string_ex.dart';
 import '../login_controller.dart';
 import '../widgets/image_logo.dart';
+import '../widgets/my_appbar.dart';
+import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -35,6 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const MyAppbar(title: "Đăng ký"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
         child: Form(
@@ -42,7 +45,6 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 2.hp),
               // Logo
               const ImageLogo(),
               // text field email
@@ -202,25 +204,19 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             style: AppTextStyles.bold14.colorEx(AppColor.white),
                           ),
                   )),
+              const SizedBox(height: 20),
               Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
+                  const Text("Đã có tài khoản? "),
                   TextButton(
-                      onPressed: () {
-                        Get.back();
+                      onPressed: () async {
+                        Get.offAll(const LoginScreen());
                       },
                       style: TextButton.styleFrom(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 0),
                       ),
                       child: Text('Đăng nhập'.tr)),
-                  const Spacer(),
-                  TextButton(
-                      onPressed: () {
-                        Get.toNamed(AppRoutes.fogot);
-                      },
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.only(top: 20, bottom: 20),
-                      ),
-                      child: Text('Quên mật khẩu?'.tr)),
                 ],
               ),
             ],

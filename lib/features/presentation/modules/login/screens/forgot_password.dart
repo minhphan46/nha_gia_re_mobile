@@ -8,6 +8,8 @@ import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../login_controller.dart';
+import '../widgets/my_appbar.dart';
+import '../widgets/opt_bottom_sheet.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -27,9 +29,25 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
+  void _showOTPBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      isScrollControlled: true,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(
+          top: Radius.circular(20),
+        ),
+      ),
+      builder: (BuildContext context) {
+        return OTPBottomSheet(controller);
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: const MyAppbar(title: "Quên mật khẩu"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Form(
@@ -38,7 +56,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
             mainAxisAlignment: MainAxisAlignment.start,
             mainAxisSize: MainAxisSize.min,
             children: [
-              SizedBox(height: 15.hp),
+              SizedBox(height: 5.hp),
               // Logo
               Column(
                 mainAxisAlignment: MainAxisAlignment.start,
@@ -91,7 +109,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
               // button tiep tuc
               Obx(() => ElevatedButton(
                     onPressed: () {
-                      Get.toNamed(AppRoutes.resetPassword);
+                      //Get.toNamed(AppRoutes.resetPassword);
+                      _showOTPBottomSheet(context);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColor.green,

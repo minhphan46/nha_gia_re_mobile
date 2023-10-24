@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
+import 'package:nhagiare_mobile/config/theme/text_styles.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 
 ThemeData appTheme() {
   return ThemeData(
@@ -12,11 +14,11 @@ ThemeData appTheme() {
 }
 
 AppBarTheme appBarTheme() {
-  return const AppBarTheme(
-    color: Colors.white,
+  return AppBarTheme(
+    backgroundColor: Colors.white,
     elevation: 0,
     centerTitle: true,
-    iconTheme: IconThemeData(color: Color(0XFF8B8B8B)),
-    titleTextStyle: TextStyle(color: Color(0XFF8B8B8B), fontSize: 18),
+    iconTheme: const IconThemeData(color: AppColor.black),
+    titleTextStyle: AppTextStyles.semiBold18.colorEx(AppColor.green),
   );
 }

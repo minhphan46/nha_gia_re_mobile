@@ -7,7 +7,9 @@ import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/dropdown_with_title.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/image_avatar_picker.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/text_field_with_title.dart';
+import '../../../../../config/routes/app_routes.dart';
 import '../login_controller.dart';
+import '../widgets/my_appbar.dart';
 
 class UpdateInfoScreen extends StatefulWidget {
   const UpdateInfoScreen({super.key});
@@ -46,6 +48,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
     controller.emailUpdateInfoTextController.text = getEmail();
 
     return Scaffold(
+      appBar: const MyAppbar(title: "Cập nhập thông tin"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
         child: Form(
@@ -53,7 +56,6 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
-              SizedBox(height: 8.hp),
 // image avatar
               const ImageAvatarPicker(),
               const SizedBox(height: 12),
@@ -172,7 +174,10 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
 // Button luu
               const SizedBox(height: 14),
               ElevatedButton(
-                onPressed: controller.handleRegister,
+                onPressed: () {
+                  controller.handleRegister();
+                  Get.toNamed(AppRoutes.bottomBar);
+                },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColor.green,
                   padding: const EdgeInsets.symmetric(vertical: 15),
