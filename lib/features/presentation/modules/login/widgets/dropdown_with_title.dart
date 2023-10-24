@@ -48,26 +48,30 @@ class DropdownWithTitle extends StatelessWidget {
         // field
         SizedBox(
           width: weightField.wp,
-          child: Obx(() => DropdownButtonHideUnderline(
-                child: DropdownButton2(
-                  isExpanded: true,
-                  value: value.value,
-                  style:
-                      AppTextStyles.regular14.copyWith(color: AppColor.black),
-                  onChanged: (String? newValue) {
-                    onChanged(newValue);
-                  },
-                  items: dropDownMenuItems,
-                  buttonStyleData: const ButtonStyleData(
-                    height: 40,
-                    width: 140,
+          child: Obx(() => DropdownButtonFormField2<String>(
+                isExpanded: true,
+                decoration: InputDecoration(
+                  contentPadding:
+                      const EdgeInsets.symmetric(vertical: 9, horizontal: 20.0),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(10),
                   ),
-                  menuItemStyleData: const MenuItemStyleData(
-                    height: 40,
-                  ),
-                  dropdownStyleData: const DropdownStyleData(
-                    maxHeight: 400,
-                  ),
+                ),
+                value: value.value,
+                style: AppTextStyles.regular14.copyWith(color: AppColor.black),
+                onChanged: (String? newValue) {
+                  onChanged(newValue);
+                },
+                items: dropDownMenuItems,
+                buttonStyleData: const ButtonStyleData(
+                  height: 40,
+                  width: 140,
+                ),
+                menuItemStyleData: const MenuItemStyleData(
+                  height: 40,
+                ),
+                dropdownStyleData: const DropdownStyleData(
+                  maxHeight: 400,
                 ),
               )),
         ),
