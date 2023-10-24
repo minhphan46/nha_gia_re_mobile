@@ -55,9 +55,9 @@ class _BottomBarScreenState extends State<BottomBarScreen>
         ),
       ),
       TabItem(
-        icon: Image.asset(Assets.notification),
-        activeIcon: Image.asset(Assets.notification, color: AppColor.green),
-        title: 'Thông báo'.tr,
+        icon: Image.asset(Assets.blog),
+        activeIcon: Image.asset(Assets.blog, color: AppColor.green),
+        title: 'Blog'.tr,
       ),
       TabItem(
         icon: Image.asset(Assets.user),
