@@ -11,6 +11,7 @@ class Assets {
   static const String forgotPassword = '$imagePath/forgot.png';
   // icon
   static const String home = '$iconPath/home (1).png';
+  static const String homeGreen = '$iconPath/home.png';
   static const String document = '$iconPath/coffee-outline.png';
   static const String pencil = '$iconPath/shopping-outline.png';
   static const String notification = '$iconPath/bell.png';
@@ -20,4 +21,5 @@ class Assets {
   static const String camera = '$iconPath/camera.png';
   static const String sun = '$iconPath/weather-sunny.png';
   static const String chat = '$iconPath/chat.png';
+  static const String switchHorizon = '$iconPath/switch-horizontal.png';
 }
