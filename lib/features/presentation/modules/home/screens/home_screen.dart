@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/home_appbar.dart';
 import '../home_controller.dart';
+import '../widgets/carousel_ad.dart';
 import '../widgets/textfield_search.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -22,6 +23,13 @@ class HomeScreen extends StatelessWidget {
               // search
               const SizedBox(height: 10),
               TextFiedSearch(),
+              // CarouselAd
+              const SizedBox(height: 10),
+              CarouselAd(
+                imgList: controller.imgList,
+                aspectRatio: 2.59,
+                indicatorSize: 6,
+              ),
             ],
           ),
         ),
