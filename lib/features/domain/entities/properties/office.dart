@@ -2,15 +2,15 @@ import '../address.dart';
 import '../../enums/enums.dart';
 import 'post.dart';
 
-class Office extends Post {
-  bool hasWideAlley;
-  bool isFacade;
-  OfficeType? officeType;
-  Direction? mainDoorDirection;
-  LegalDocumentStatus? legalDocumentStatus;
-  FurnitureStatus? furnitureStatus;
+class OfficeEntity extends PostEntity {
+  final bool hasWideAlley;
+  final bool isFacade;
+  final OfficeType? officeType;
+  final Direction? mainDoorDirection;
+  final LegalDocumentStatus? legalDocumentStatus;
+  final FurnitureStatus? furnitureStatus;
 
-  Office({
+  OfficeEntity({
     required this.furnitureStatus,
     required String id,
     required double area,
@@ -60,8 +60,8 @@ class Office extends Post {
         isPriority: isPriority,
         );
 
-  factory Office.fromJson(Map<String, dynamic> json) {
-    return Office(
+  factory OfficeEntity.fromJson(Map<String, dynamic> json) {
+    return OfficeEntity(
       id: json['id'],
       area: json['area'],
       type: PropertyType.parse(json['property_type']),

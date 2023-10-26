@@ -2,19 +2,19 @@ import '../../enums/enums.dart';
 import 'post.dart';
 import '../address.dart';
 
-class Land extends Post {
-  String? landLotCode;
-  String? subdivisionName;
-  LandType? landType;
-  double width;
-  double length;
-  Direction? landDirection;
-  LegalDocumentStatus? legalDocumentStatus;
-  bool isFacade;
-  bool isWidensTowardsTheBack;
-  bool hasWideAlley;
+class LandEntity extends PostEntity {
+  final String? landLotCode;
+  final String? subdivisionName;
+  final LandType? landType;
+  final double width;
+  final double length;
+  final Direction? landDirection;
+  final LegalDocumentStatus? legalDocumentStatus;
+  final bool isFacade;
+  final bool isWidensTowardsTheBack;
+  final bool hasWideAlley;
 
-  Land({
+  LandEntity({
     required String id,
     required double area,
     required String? projectName,
@@ -71,8 +71,8 @@ class Land extends Post {
           isPriority: isPriority,
         );
 
-  factory Land.fromJson(Map<String, dynamic> json) {
-    return Land(
+  factory LandEntity.fromJson(Map<String, dynamic> json) {
+    return LandEntity(
         id: json['id'],
         area: json['area'],
         type: PropertyType.parse(json['property_type']),

@@ -2,22 +2,22 @@ import '../../enums/enums.dart';
 import '../address.dart';
 import 'post.dart';
 
-class House extends Post {
-  bool hasWideAlley;
-  bool isFacade;
-  bool isWidensTowardsTheBack;
-  double? areaUsed;
-  HouseType? houseType;
-  double? width;
-  double? length;
-  int? numOfBedRooms;
-  int? numOfToilets;
-  int? numOfFloors;
-  Direction? mainDoorDirection;
-  LegalDocumentStatus? legalDocumentStatus;
-  FurnitureStatus? furnitureStatus;
+class HouseEntity extends PostEntity {
+  final bool hasWideAlley;
+  final bool isFacade;
+  final bool isWidensTowardsTheBack;
+  final double? areaUsed;
+  final HouseType? houseType;
+  final double? width;
+  final double? length;
+  final int? numOfBedRooms;
+  final int? numOfToilets;
+  final int? numOfFloors;
+  final Direction? mainDoorDirection;
+  final LegalDocumentStatus? legalDocumentStatus;
+  final FurnitureStatus? furnitureStatus;
 
-  House({
+  HouseEntity({
     required String id,
     required this.furnitureStatus,
     required double area,
@@ -74,56 +74,55 @@ class House extends Post {
           projectName: projectName,
           deposit: deposit,
           numOfLikes: numOfLikes,
-        status: status,
-        rejectedInfo: rejectedInfo,
-        isHide: isHide,
-        isPriority: isPriority,
+          status: status,
+          rejectedInfo: rejectedInfo,
+          isHide: isHide,
+          isPriority: isPriority,
         );
 
-  factory House.fromJson(Map<String, dynamic> json) {
-    return House(
-      id: json['id'],
-      area: json['area'],
-      type: PropertyType.parse(json['property_type']),
-      address: AddressEntity.fromJson(json['address']),
-      userID: json['user_id'],
-      isLease: json['is_lease'],
-      price: json['price'],
-      title: json['title'],
-      description: json['description'],
-      postedDate: DateTime.parse(json['posted_date']),
-      expiryDate: DateTime.parse(json['expiry_date']),
-      imagesUrl: List<String>.from(json['images_url']),
-      isProSeller: json['is_pro_seller'],
-      projectName: json['project_name'],
-      deposit: json['deposit'],
-      numOfLikes: json['num_of_likes'],
-      hasWideAlley: json['has_wide_alley'],
-      isFacade: json['is_facade'],
-      isWidensTowardsTheBack: json['is_widens_towards_the_back'],
-      houseType: json['house_type'] != null
-          ? HouseType.parse(json['house_type'])
-          : null,
-      mainDoorDirection: json['main_door_direction'] != null
-          ? Direction.parse(json['main_door_direction'])
-          : null,
-      legalDocumentStatus: json['legal_document_status'] != null
-          ? LegalDocumentStatus.parse(json['legal_document_status'])
-          : null,
-      furnitureStatus: json['furniture_status'] != null
-          ? FurnitureStatus.parse(json['furniture_status'])
-          : null,
-      areaUsed: json['area_used'],
-      width: json['width']?.toDouble(),
-      length: json['length']?.toDouble(),
-      numOfBedRooms: json['nums_of_bed_rooms'],
-      numOfToilets: json['nums_of_toilets'],
-      numOfFloors: json['nums_of_floors'],
-      status: PostStatus.parse(json['status']),
-      rejectedInfo: json['rejected_info'],
-      isHide: json['is_hide'],
-        isPriority: json['is_priority']
-    );
+  factory HouseEntity.fromJson(Map<String, dynamic> json) {
+    return HouseEntity(
+        id: json['id'],
+        area: json['area'],
+        type: PropertyType.parse(json['property_type']),
+        address: AddressEntity.fromJson(json['address']),
+        userID: json['user_id'],
+        isLease: json['is_lease'],
+        price: json['price'],
+        title: json['title'],
+        description: json['description'],
+        postedDate: DateTime.parse(json['posted_date']),
+        expiryDate: DateTime.parse(json['expiry_date']),
+        imagesUrl: List<String>.from(json['images_url']),
+        isProSeller: json['is_pro_seller'],
+        projectName: json['project_name'],
+        deposit: json['deposit'],
+        numOfLikes: json['num_of_likes'],
+        hasWideAlley: json['has_wide_alley'],
+        isFacade: json['is_facade'],
+        isWidensTowardsTheBack: json['is_widens_towards_the_back'],
+        houseType: json['house_type'] != null
+            ? HouseType.parse(json['house_type'])
+            : null,
+        mainDoorDirection: json['main_door_direction'] != null
+            ? Direction.parse(json['main_door_direction'])
+            : null,
+        legalDocumentStatus: json['legal_document_status'] != null
+            ? LegalDocumentStatus.parse(json['legal_document_status'])
+            : null,
+        furnitureStatus: json['furniture_status'] != null
+            ? FurnitureStatus.parse(json['furniture_status'])
+            : null,
+        areaUsed: json['area_used'],
+        width: json['width']?.toDouble(),
+        length: json['length']?.toDouble(),
+        numOfBedRooms: json['nums_of_bed_rooms'],
+        numOfToilets: json['nums_of_toilets'],
+        numOfFloors: json['nums_of_floors'],
+        status: PostStatus.parse(json['status']),
+        rejectedInfo: json['rejected_info'],
+        isHide: json['is_hide'],
+        isPriority: json['is_priority']);
   }
   @override
   String toString() {

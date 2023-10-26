@@ -1,29 +1,30 @@
+import 'package:equatable/equatable.dart';
 import '../../enums/enums.dart';
 import '../address.dart';
 
-class Post {
-  String id;
-  double area;
-  String? projectName;
-  PropertyType type;
-  AddressEntity address;
-  String userID;
-  int price;
-  int? deposit;
-  bool isLease;
-  String title;
-  String description;
-  DateTime postedDate;
-  DateTime expiryDate;
-  int numOfLikes;
-  List<String> imagesUrl;
-  bool isProSeller;
-  PostStatus status;
-  String? rejectedInfo;
-  bool isHide;
-  bool isPriority;
+class PostEntity extends Equatable {
+  final String id;
+  final double area;
+  final String? projectName;
+  final PropertyType type;
+  final AddressEntity address;
+  final String userID;
+  final int price;
+  final int? deposit;
+  final bool isLease;
+  final String title;
+  final String description;
+  final DateTime postedDate;
+  final DateTime expiryDate;
+  final int numOfLikes;
+  final List<String> imagesUrl;
+  final bool isProSeller;
+  final PostStatus status;
+  final String? rejectedInfo;
+  final bool isHide;
+  final bool isPriority;
 
-  Post({
+  PostEntity({
     required this.id,
     required this.area,
     required this.type,
@@ -54,8 +55,8 @@ class Post {
         assert(postedDate.isBefore(expiryDate)),
         assert(numOfLikes >= 0);
 
-  factory Post.fromJson(Map<String, dynamic> json) {
-    return Post(
+  factory PostEntity.fromJson(Map<String, dynamic> json) {
+    return PostEntity(
         id: json['id'],
         area: json['area'].toDouble(),
         type: PropertyType.parse(json['property_type']),
@@ -102,4 +103,7 @@ class Post {
         'isHide: $isHide'
         '}';
   }
+
+  @override
+  List<Object?> get props => [id];
 }
