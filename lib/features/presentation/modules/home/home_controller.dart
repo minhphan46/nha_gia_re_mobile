@@ -30,4 +30,14 @@ class HomeController extends GetxController {
       throw Exception('Could not launch $url');
     }
   }
+
+  // near by
+  List<String> locationNearby = [
+    "Thủ Đức",
+    "Quận 10",
+    "Bình Thạnh",
+    "Gò Vấp",
+    "Tân Bình",
+    "Quận 12",
+  ];
 }
