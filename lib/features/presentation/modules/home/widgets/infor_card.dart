@@ -1,7 +1,14 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
+
+import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/theme/text_styles.dart';
+import '../../../../domain/entities/properties/post.dart';
+import '../home_controller.dart';
 
 class InforCard extends StatelessWidget {
   const InforCard({super.key, required this.post});
@@ -12,9 +19,9 @@ class InforCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return ZoomTapAnimation(
       child: InkWell(
-        splashColor: AppColors.secondary,
+        splashColor: AppColor.green,
         child: Container(
-          color: AppColors.white,
+          color: AppColor.white,
           width: 180,
           child:
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
@@ -30,7 +37,7 @@ class InforCard extends StatelessWidget {
             ),
             Text(
               post.title,
-              style: AppTextStyles.roboto16semiBold,
+              style: AppTextStyles.semiBold12,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
             ),
@@ -39,16 +46,15 @@ class InforCard extends StatelessWidget {
             ),
             Text(
               post.price.toFormattedMoney(isLease: post.isLease),
-              style:
-                  AppTextStyles.roboto16semiBold.copyWith(color: AppColors.red),
+              style: AppTextStyles.medium12.copyWith(color: AppColor.orange),
             ),
             const SizedBox(
               height: 8,
             ),
             Text(
               post.address.toString(),
-              style: AppTextStyles.roboto12semiBold.copyWith(
-                  color: AppColors.grey, overflow: TextOverflow.ellipsis),
+              style: AppTextStyles.medium12.copyWith(
+                  color: AppColor.grey500, overflow: TextOverflow.ellipsis),
               maxLines: 1,
             ),
             const SizedBox(
@@ -57,8 +63,7 @@ class InforCard extends StatelessWidget {
             Text(
               maxLines: 1,
               post.postedDate.getTimeAgo(),
-              style: AppTextStyles.roboto12semiBold
-                  .copyWith(color: AppColors.grey),
+              style: AppTextStyles.medium12.copyWith(color: AppColor.grey500),
             )
           ]),
         ),
@@ -72,13 +77,13 @@ class InforCardList extends StatefulWidget {
       {super.key,
       required this.title,
       required this.list,
-      required this.navType,
+      //required this.navType,
       this.province,
       this.uid});
 
   final String title;
   final List<Post> list;
-  final TypeNavigate navType;
+  //final TypeNavigate navType;
   final String? province;
   final String? uid;
 
@@ -87,18 +92,20 @@ class InforCardList extends StatefulWidget {
 }
 
 class _InforCardListState extends State<InforCardList> {
+  final HomeController controller = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return Container(
       constraints: const BoxConstraints(maxHeight: 350),
       padding: const EdgeInsets.all(10),
-      color: AppColors.white,
+      color: AppColor.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
             widget.title,
-            style: AppTextStyles.roboto20Bold,
+            style: AppTextStyles.bold14,
           ),
           const SizedBox(
             height: 10,
@@ -118,9 +125,9 @@ class _InforCardListState extends State<InforCardList> {
                       child:
                           InforCard(key: UniqueKey(), post: widget.list[index]),
                       onTap: () {
-                        Get.toNamed(
-                            AppRoutes.getPostRoute(widget.list[index].id),
-                            arguments: widget.list[index]);
+                        // Get.toNamed(
+                        //     AppRoutes.getPostRoute(widget.list[index].id),
+                        //     arguments: widget.list[index]);
                       },
                     );
                   }),
@@ -138,27 +145,27 @@ class _InforCardListState extends State<InforCardList> {
               ZoomTapAnimation(
                 child: InkWell(
                   child: Text(
-                    'See more'.tr,
-                    style: AppTextStyles.roboto16regular
-                        .copyWith(color: AppColors.blue),
+                    'Xem thêm 12.345 mẫu tin khác'.tr,
+                    style: AppTextStyles.regular12
+                        .copyWith(color: AppColor.grey500),
                   ),
                   onTap: () {
-                    String? matchingProvince;
-                    if (widget.province != null) {
-                      matchingProvince =
-                          FilterValues.instance.provinces.firstWhere(
-                        (item) => widget.province!
-                            .noAccentVietnamese()
-                            .contains(item.noAccentVietnamese()),
-                      );
-                    }
-                    var data = {
-                      "title": widget.title,
-                      "type": widget.navType,
-                      "province": matchingProvince,
-                      "uid": widget.uid,
-                    };
-                    Get.toNamed(AppRoutes.resultArg, arguments: data);
+                    // String? matchingProvince;
+                    // if (widget.province != null) {
+                    //   matchingProvince =
+                    //       FilterValues.instance.provinces.firstWhere(
+                    //     (item) => widget.province!
+                    //         .noAccentVietnamese()
+                    //         .contains(item.noAccentVietnamese()),
+                    //   );
+                    // }
+                    // var data = {
+                    //   "title": widget.title,
+                    //   "type": widget.navType,
+                    //   "province": matchingProvince,
+                    //   "uid": widget.uid,
+                    // };
+                    // Get.toNamed(AppRoutes.resultArg, arguments: data);
                   },
                 ),
               )
