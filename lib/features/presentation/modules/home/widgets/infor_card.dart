@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/entities/properties/post.dart';
@@ -13,7 +12,7 @@ import '../home_controller.dart';
 class InforCard extends StatelessWidget {
   const InforCard({super.key, required this.post});
 
-  final Post post;
+  final PostEntity post;
 
   @override
   Widget build(BuildContext context) {
@@ -82,7 +81,7 @@ class InforCardList extends StatefulWidget {
       this.uid});
 
   final String title;
-  final List<Post> list;
+  final List<PostEntity> list;
   //final TypeNavigate navType;
   final String? province;
   final String? uid;
