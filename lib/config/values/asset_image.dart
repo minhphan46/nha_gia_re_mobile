@@ -13,9 +13,11 @@ class Assets {
   static const String home = '$iconPath/home (1).png';
   static const String document = '$iconPath/coffee-outline.png';
   static const String pencil = '$iconPath/shopping-outline.png';
-  static const String notification = '$iconPath/store-outline.png';
+  static const String notification = '$iconPath/bell.png';
   static const String user = '$iconPath/account-details-outline.png';
   static const String search = '$iconPath/search.png';
   static const String blog = '$iconPath/store-outline.png';
   static const String camera = '$iconPath/camera.png';
+  static const String sun = '$iconPath/weather-sunny.png';
+  static const String chat = '$iconPath/chat.png';
 }

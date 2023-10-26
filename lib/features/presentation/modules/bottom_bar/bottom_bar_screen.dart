@@ -75,6 +75,7 @@ class _BottomBarScreenState extends State<BottomBarScreen>
         return Scaffold(
           body: TabBarView(
             controller: controller.tabController,
+            physics: const NeverScrollableScrollPhysics(),
             children: _pages,
           ),
           bottomNavigationBar: ConvexAppBar(

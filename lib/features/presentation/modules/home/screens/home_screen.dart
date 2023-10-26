@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-
+import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/home_appbar.dart';
 import '../home_controller.dart';
+import '../widgets/textfield_search.dart';
 
 class HomeScreen extends StatelessWidget {
   HomeScreen({super.key});
@@ -10,9 +11,20 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Home Screen'),
+    return Scaffold(
+      body: SafeArea(
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+          child: Column(
+            children: [
+              // Appbar
+              HomeAppbar(),
+              // search
+              const SizedBox(height: 10),
+              TextFiedSearch(),
+            ],
+          ),
+        ),
       ),
     );
   }
