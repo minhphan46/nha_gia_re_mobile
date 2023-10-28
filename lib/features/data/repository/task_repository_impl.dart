@@ -4,9 +4,9 @@ import 'package:dio/dio.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/local/app_database.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/new_api_service.dart';
-import 'package:nhagiare_mobile/features/data/models/task.dart';
-import 'package:nhagiare_mobile/features/data/models/task_local.dart';
-import 'package:nhagiare_mobile/features/domain/entities/task.dart';
+import 'package:nhagiare_mobile/features/data/models/tasks/task.dart';
+import 'package:nhagiare_mobile/features/data/models/tasks/task_local.dart';
+import 'package:nhagiare_mobile/features/domain/entities/task/task.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 
 class TaskRepositoryImpl implements TaskRepository {

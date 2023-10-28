@@ -1,5 +1,5 @@
-import 'package:nhagiare_mobile/features/data/models/task_local.dart';
-import 'package:nhagiare_mobile/features/domain/entities/task.dart';
+import 'package:nhagiare_mobile/features/data/models/tasks/task_local.dart';
+import 'package:nhagiare_mobile/features/domain/entities/task/task.dart';
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 

@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/domain/entities/task.dart';
+import 'package:nhagiare_mobile/features/domain/entities/task/task.dart';
 import '../../../../core/resources/data_state.dart';
 
 abstract class TaskRepository {

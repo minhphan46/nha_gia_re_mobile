@@ -1,14 +1,20 @@
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
-import 'package:nhagiare_mobile/features/domain/entities/properties/post.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
-
+import '../../domain/entities/posts/real_estate_post.dart';
 import '../data_sources/remote/new_api_service.dart';
 
 class PostRepositoryImpl implements PostRepository {
   final NewApiService _newApiService;
   PostRepositoryImpl(this._newApiService);
+
   @override
-  Future<DataState<void>> createPost(PostEntity post) {
+  Future<DataState<List<RealEstatePostEntity>>> getPosts() {
+    // TODO: implement getPosts
+    throw UnimplementedError();
+  }
+
+  @override
+  Future<DataState<void>> createPost(RealEstatePostEntity post) {
     // TODO: implement createPost
     throw UnimplementedError();
   }
@@ -20,19 +26,13 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<List<PostEntity>>> getPosts() {
-    // TODO: implement getPosts
-    throw UnimplementedError();
-  }
-
-  @override
-  Future<DataState<PostEntity>> getSinglePost(String id) {
+  Future<DataState<RealEstatePostEntity>> getSinglePost(String id) {
     // TODO: implement getSinglePost
     throw UnimplementedError();
   }
 
   @override
-  Future<DataState<void>> updatePost(PostEntity post) {
+  Future<DataState<void>> updatePost(RealEstatePostEntity post) {
     // TODO: implement updatePost
     throw UnimplementedError();
   }

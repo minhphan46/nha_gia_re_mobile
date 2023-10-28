@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/data/models/task.dart';
+import 'package:nhagiare_mobile/features/data/models/tasks/task.dart';
 import 'package:floor/floor.dart';
 
 @Entity(tableName: "task", primaryKeys: ["id"])
