@@ -1,11 +1,13 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/entities/posts/real_estate_post.dart';
 import '../home_controller.dart';
+import '../../../../../core/extensions/date_ex.dart';
 
 class InforCard extends StatelessWidget {
   const InforCard({super.key, required this.post});
@@ -26,14 +28,14 @@ class InforCard extends StatelessWidget {
               borderRadius: const BorderRadius.only(
                   topLeft: Radius.circular(10), topRight: Radius.circular(10)),
               child: CachedNetworkImage(
-                imageUrl: post.imagesUrl.first,
+                imageUrl: post.images!.first,
                 fit: BoxFit.fill,
                 height: 110,
                 width: 180,
               ),
             ),
             Text(
-              post.title,
+              post.title!,
               style: AppTextStyles.semiBold12,
               maxLines: 2,
               overflow: TextOverflow.ellipsis,
@@ -42,7 +44,7 @@ class InforCard extends StatelessWidget {
               height: 8,
             ),
             Text(
-              post.price.toFormattedMoney(isLease: post.isLease),
+              post.price!.toFormattedMoney(isLease: false),
               style: AppTextStyles.medium12.copyWith(color: AppColor.orange),
             ),
             const SizedBox(
@@ -59,7 +61,7 @@ class InforCard extends StatelessWidget {
             ),
             Text(
               maxLines: 1,
-              post.postedDate.getTimeAgo(),
+              post.postedDate!.getTimeAgo(),
               style: AppTextStyles.medium12.copyWith(color: AppColor.grey500),
             )
           ]),
