@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import '../../enums/enums.dart';
-import '../address.dart';
+import 'address.dart';
 
 class PostEntity extends Equatable {
   final String id;

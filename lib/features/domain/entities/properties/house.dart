@@ -1,5 +1,5 @@
 import '../../enums/enums.dart';
-import '../address.dart';
+import 'address.dart';
 import 'post.dart';
 
 class HouseEntity extends PostEntity {

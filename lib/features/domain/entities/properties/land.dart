@@ -1,6 +1,6 @@
 import '../../enums/enums.dart';
 import 'post.dart';
-import '../address.dart';
+import 'address.dart';
 
 class LandEntity extends PostEntity {
   final String? landLotCode;
