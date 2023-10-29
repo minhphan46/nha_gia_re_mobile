@@ -14,7 +14,7 @@ class RealEstatePostEntity extends Equatable {
   final double? area;
   final AddressEntity? address;
   final Point? addressPoint;
-  final int? price;
+  final String? price;
   final int? deposit;
   final bool? isLease;
   final DateTime? postedDate;
@@ -22,12 +22,15 @@ class RealEstatePostEntity extends Equatable {
   final List<String>? images;
   final List<String>? videos;
   final bool? isProSeller;
-  final Map<String, dynamic>? features;
-  final bool? postApprovalPriority;
-  final bool? isActive;
   final String? infoMessage;
-  final int? updateCount;
   final int? priorityLevel;
+  final Map<String, dynamic>? features;
+  final int? postApprovalPriorityPoint;
+  final int? updateCount;
+  final bool? isActive;
+  final int? numFavourites;
+  final int? numViews;
+  final bool? isFavorite;
 
   const RealEstatePostEntity({
     this.id,
@@ -50,11 +53,14 @@ class RealEstatePostEntity extends Equatable {
     this.videos,
     this.isProSeller,
     this.features,
-    this.postApprovalPriority,
+    this.postApprovalPriorityPoint,
     this.isActive,
     this.infoMessage,
     this.updateCount,
     this.priorityLevel,
+    this.isFavorite,
+    this.numFavourites,
+    this.numViews,
   });
 
   @override
@@ -79,11 +85,14 @@ class RealEstatePostEntity extends Equatable {
         videos,
         isProSeller,
         features,
-        postApprovalPriority,
+        postApprovalPriorityPoint,
         isActive,
         infoMessage,
         updateCount,
         priorityLevel,
+        isFavorite,
+        numFavourites,
+        numViews,
       ];
 
   RealEstatePostEntity copyWith({
@@ -98,7 +107,7 @@ class RealEstatePostEntity extends Equatable {
     double? area,
     AddressEntity? address,
     Point? addressPoint,
-    int? price,
+    String? price,
     int? deposit,
     bool? isLease,
     DateTime? postedDate,
@@ -107,11 +116,14 @@ class RealEstatePostEntity extends Equatable {
     List<String>? videos,
     bool? isProSeller,
     Map<String, dynamic>? features,
-    bool? postApprovalPriority,
+    int? postApprovalPriorityPoint,
     bool? isActive,
     String? infoMessage,
     int? updateCount,
     int? priorityLevel,
+    int? numFavourites,
+    int? numViews,
+    bool? isFavorite,
   }) {
     return RealEstatePostEntity(
       id: id ?? this.id,
@@ -134,11 +146,15 @@ class RealEstatePostEntity extends Equatable {
       videos: videos ?? this.videos,
       isProSeller: isProSeller ?? this.isProSeller,
       features: features ?? this.features,
-      postApprovalPriority: postApprovalPriority ?? this.postApprovalPriority,
+      postApprovalPriorityPoint:
+          postApprovalPriorityPoint ?? this.postApprovalPriorityPoint,
       isActive: isActive ?? this.isActive,
       infoMessage: infoMessage ?? this.infoMessage,
       updateCount: updateCount ?? this.updateCount,
       priorityLevel: priorityLevel ?? this.priorityLevel,
+      numFavourites: numFavourites ?? this.numFavourites,
+      numViews: numViews ?? this.numViews,
+      isFavorite: isFavorite ?? this.isFavorite,
     );
   }
 }

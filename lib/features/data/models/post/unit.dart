@@ -1,4 +1,4 @@
-import '../../../domain/entities/properties/units.dart';
+import '../../../domain/entities/posts/unit.dart';
 
 class UnitModel extends UnitEntity {
   const UnitModel({

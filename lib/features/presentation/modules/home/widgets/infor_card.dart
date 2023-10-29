@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
@@ -44,7 +44,7 @@ class InforCard extends StatelessWidget {
               height: 8,
             ),
             Text(
-              post.price!.toFormattedMoney(isLease: false),
+              double.parse(post.price!).toFormattedMoney(),
               style: AppTextStyles.medium12.copyWith(color: AppColor.orange),
             ),
             const SizedBox(

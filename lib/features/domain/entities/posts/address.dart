@@ -1,31 +1,31 @@
 import 'package:equatable/equatable.dart';
 
 class AddressEntity extends Equatable {
-  final int? cityCode;
+  final int? provinceCode;
   final int? districtCode;
   final int? wardCode;
   final String? detail;
 
   AddressEntity({
-    this.cityCode,
+    this.provinceCode,
     this.districtCode,
     this.wardCode,
     this.detail,
   }) : assert(detail?.trim().isNotEmpty ?? true);
 
   Map<String, dynamic> toJson() => {
-        'city_code': cityCode,
+        'province_code': provinceCode,
         'district_code': districtCode,
         'ward_code': wardCode,
         'detail': detail,
       };
 
   AddressEntity.fromJson(Map<String, dynamic> json)
-      : cityCode = json['city_code'],
+      : provinceCode = json['province_code'],
         districtCode = json['district_code'],
         wardCode = json['ward_code'],
         detail = json['detail'];
 
   @override
-  List<Object?> get props => [cityCode];
+  List<Object?> get props => [provinceCode];
 }

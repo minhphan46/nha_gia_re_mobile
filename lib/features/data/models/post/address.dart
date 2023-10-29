@@ -2,7 +2,7 @@ import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 
 class AddressModel extends AddressEntity {
   AddressModel({
-    final int? cityCode,
+    final int? provinceCode,
     final String? cityName,
     final int? districtCode,
     final String? districtName,
@@ -12,7 +12,7 @@ class AddressModel extends AddressEntity {
     final double? latitude,
     final double? longitude,
   }) : super(
-          cityCode: cityCode,
+          provinceCode: provinceCode,
           districtCode: districtCode,
           wardCode: wardCode,
           detail: detail,
@@ -20,7 +20,7 @@ class AddressModel extends AddressEntity {
 
   @override
   Map<String, dynamic> toJson() => {
-        'city_code': cityCode,
+        'city_code': provinceCode,
         'district_code': districtCode,
         'ward_code': wardCode,
         'detail': detail,
@@ -28,7 +28,7 @@ class AddressModel extends AddressEntity {
 
   factory AddressModel.fromJson(Map<String, dynamic> json) {
     return AddressModel(
-      cityCode: json['city_code'],
+      provinceCode: json['city_code'],
       districtCode: json['district_code'],
       wardCode: json['ward_code'],
       detail: json['detail'],
@@ -37,7 +37,7 @@ class AddressModel extends AddressEntity {
 
   factory AddressModel.fromEntity(AddressEntity entity) {
     return AddressModel(
-      cityCode: entity.cityCode,
+      provinceCode: entity.provinceCode,
       districtCode: entity.districtCode,
       wardCode: entity.wardCode,
       detail: entity.detail,

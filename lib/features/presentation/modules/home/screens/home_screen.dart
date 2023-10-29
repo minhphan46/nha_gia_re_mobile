@@ -8,10 +8,22 @@ import '../home_controller.dart';
 import '../widgets/carousel_ad.dart';
 import '../widgets/textfield_search.dart';
 
-class HomeScreen extends StatelessWidget {
-  HomeScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   final HomeController controller = Get.find<HomeController>();
+
+  @override
+  void initState() {
+    print("asdlhadlahsdloasdhalskdjhasd");
+    controller.onGetAllPosts();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
