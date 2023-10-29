@@ -72,19 +72,20 @@ class InforCard extends StatelessWidget {
 }
 
 class InforCardList extends StatefulWidget {
-  const InforCardList(
-      {super.key,
-      required this.title,
-      required this.list,
-      //required this.navType,
-      this.province,
-      this.uid});
+  const InforCardList({
+    super.key,
+    required this.title,
+    //required this.list,
+    //required this.navType,
+    // this.province,
+    // this.uid,
+  });
 
   final String title;
-  final List<RealEstatePostEntity> list;
+  //final List<RealEstatePostEntity> list;
   //final TypeNavigate navType;
-  final String? province;
-  final String? uid;
+  //final String? province;
+  //final String? uid;
 
   @override
   State<InforCardList> createState() => _InforCardListState();
@@ -109,28 +110,39 @@ class _InforCardListState extends State<InforCardList> {
           const SizedBox(
             height: 10,
           ),
-          if (widget.list.isNotEmpty)
-            Flexible(
-              child: ListView.separated(
-                  shrinkWrap: true,
-                  itemCount: widget.list.length,
-                  scrollDirection: Axis.horizontal,
-                  separatorBuilder: (BuildContext context, int index) =>
-                      const SizedBox(
-                        width: 10,
-                      ),
-                  itemBuilder: (BuildContext context, int index) {
-                    return InkWell(
-                      child:
-                          InforCard(key: UniqueKey(), post: widget.list[index]),
-                      onTap: () {
-                        // Get.toNamed(
-                        //     AppRoutes.getPostRoute(widget.list[index].id),
-                        //     arguments: widget.list[index]);
-                      },
-                    );
-                  }),
+          Flexible(
+            child: FutureBuilder<List<RealEstatePostEntity>>(
+              future: controller.onGetAllPosts(),
+              builder: (context, snapShot) {
+                if (!snapShot.hasData) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                } else {
+                  List<RealEstatePostEntity> data = snapShot.data!;
+                  return ListView.separated(
+                    shrinkWrap: true,
+                    itemCount: data.length,
+                    scrollDirection: Axis.horizontal,
+                    separatorBuilder: (BuildContext context, int index) =>
+                        const SizedBox(
+                      width: 10,
+                    ),
+                    itemBuilder: (BuildContext context, int index) {
+                      return InkWell(
+                        child: InforCard(key: UniqueKey(), post: data[index]),
+                        onTap: () {
+                          // Get.toNamed(
+                          //     AppRoutes.getPostRoute(widget.list[index].id),
+                          //     arguments: widget.list[index]);
+                        },
+                      );
+                    },
+                  );
+                }
+              },
             ),
+          ),
           const Divider(
             thickness: 0.5,
             height: 2,

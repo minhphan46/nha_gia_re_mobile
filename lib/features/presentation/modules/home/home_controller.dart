@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -47,15 +48,15 @@ class HomeController extends GetxController {
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
-  void onGetAllPosts() async {
+  Future<List<RealEstatePostEntity>> onGetAllPosts() async {
     final dataState = await _getPostsUseCase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      print(dataState.data);
-    }
-
-    if (dataState is DataFailed) {
-      print(dataState.error!);
+      return dataState.data!;
+    } else if (dataState is DataFailed) {
+      return [];
+    } else {
+      return [];
     }
   }
 }

@@ -6,24 +6,13 @@ import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/home_
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/nearby_location.dart';
 import '../home_controller.dart';
 import '../widgets/carousel_ad.dart';
+import '../widgets/infor_card.dart';
 import '../widgets/textfield_search.dart';
 
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+class HomeScreen extends StatelessWidget {
+  HomeScreen({super.key});
 
-  @override
-  State<HomeScreen> createState() => _HomeScreenState();
-}
-
-class _HomeScreenState extends State<HomeScreen> {
   final HomeController controller = Get.find<HomeController>();
-
-  @override
-  void initState() {
-    print("asdlhadlahsdloasdhalskdjhasd");
-    controller.onGetAllPosts();
-    super.initState();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +60,13 @@ class _HomeScreenState extends State<HomeScreen> {
               // gan ban
               const SizedBox(height: 10),
               NearbyLocation(),
+
+              // Tin moi
+              const SizedBox(height: 10),
+              const InforCardList(
+                title: 'Gần bạn',
+                //list: data[1],
+              ),
             ],
           ),
         ),
