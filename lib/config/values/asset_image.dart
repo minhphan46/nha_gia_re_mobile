@@ -22,4 +22,7 @@ class Assets {
   static const String sun = '$iconPath/weather-sunny.png';
   static const String chat = '$iconPath/chat.png';
   static const String switchHorizon = '$iconPath/switch-horizontal.png';
+  static const String location = '$iconPath/location-marker.png';
+  static const String money = '$iconPath/currency-dollar.png';
+  static const String clock = '$iconPath/clock.png';
 }

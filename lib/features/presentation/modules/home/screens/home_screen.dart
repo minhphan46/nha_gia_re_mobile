@@ -6,7 +6,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/home_
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/nearby_location.dart';
 import '../home_controller.dart';
 import '../widgets/carousel_ad.dart';
-import '../widgets/infor_card.dart';
+import '../widgets/info_card_list.dart';
 import '../widgets/textfield_search.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -57,16 +57,36 @@ class HomeScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // gan ban
-              const SizedBox(height: 10),
+              // tinh thanh
+              const SizedBox(height: 15),
               NearbyLocation(),
 
-              // Tin moi
-              const SizedBox(height: 10),
-              const InforCardList(
+              // gan ban
+              const SizedBox(height: 15),
+              InforCardList(
                 title: 'Gần bạn',
+                getListFunc: () => controller.getAllPosts(),
                 //list: data[1],
               ),
+              const SizedBox(height: 15),
+
+              // gmua ban
+              const SizedBox(height: 15),
+              InforCardList(
+                title: 'Mua bán',
+                getListFunc: () => controller.getAllPosts(),
+                //list: data[1],
+              ),
+              const SizedBox(height: 15),
+
+              // cho thuê
+              const SizedBox(height: 15),
+              InforCardList(
+                title: 'Cho thuê',
+                getListFunc: () => controller.getAllPosts(),
+                //list: data[1],
+              ),
+              const SizedBox(height: 15),
             ],
           ),
         ),

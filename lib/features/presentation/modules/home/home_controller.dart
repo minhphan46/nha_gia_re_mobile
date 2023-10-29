@@ -48,7 +48,7 @@ class HomeController extends GetxController {
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
-  Future<List<RealEstatePostEntity>> onGetAllPosts() async {
+  Future<List<RealEstatePostEntity>> getAllPosts() async {
     final dataState = await _getPostsUseCase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {

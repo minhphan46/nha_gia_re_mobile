@@ -27,5 +27,15 @@ class AddressEntity extends Equatable {
         detail = json['detail'];
 
   @override
+  String toString() {
+    String result = "";
+    result += detail != null ? "$detail, " : "";
+    result += wardCode != null ? "$wardCode, " : "";
+    result += districtCode != null ? "$districtCode, " : "";
+    result += provinceCode != null ? "$provinceCode" : "";
+    return result;
+  }
+
+  @override
   List<Object?> get props => [provinceCode];
 }

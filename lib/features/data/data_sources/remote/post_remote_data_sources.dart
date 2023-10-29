@@ -20,9 +20,9 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
     try {
       final response = await client.get(url);
-      print('${response.statusCode} : ${response.data["message"].toString()}');
+      //print('${response.statusCode} : ${response.data["message"].toString()}');
       if (response.statusCode != 200) {
-        print('${response.statusCode} : ${response.data["result"].toString()}');
+        //print('${response.statusCode} : ${response.data["result"].toString()}');
         throw ApiException(
           message: response.data,
           statusCode: response.statusCode!,
