@@ -15,6 +15,15 @@ abstract class AppRoutes {
   // home
   static const home = '/home';
 
+  // post detail
+  static const postDetail = '/postDetail';
+
+  // search
+  static const search = '/search';
+
+  // setting
+  static const setting = '/setting';
+
   // account
   static const account = '/account';
 
