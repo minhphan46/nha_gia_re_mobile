@@ -9,7 +9,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/imag
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/text_field_with_title.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../login_controller.dart';
-import '../widgets/my_appbar.dart';
+import '../../../global_widgets/my_appbar.dart';
 
 class UpdateInfoScreen extends StatefulWidget {
   const UpdateInfoScreen({super.key});

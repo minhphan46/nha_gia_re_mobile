@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
-import '../../../../../config/theme/app_color.dart';
-import '../home_controller.dart';
+import '../../../config/theme/app_color.dart';
+import '../modules/home/home_controller.dart';
 
 class CarouselAd extends StatefulWidget {
   const CarouselAd(

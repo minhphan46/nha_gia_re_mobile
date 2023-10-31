@@ -5,7 +5,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/butto
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/home_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/nearby_location.dart';
 import '../home_controller.dart';
-import '../widgets/carousel_ad.dart';
+import '../../../global_widgets/carousel_ad.dart';
 import '../widgets/info_card_list.dart';
 import '../widgets/textfield_search.dart';
 

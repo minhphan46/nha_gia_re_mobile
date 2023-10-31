@@ -8,7 +8,7 @@ import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../login_controller.dart';
-import '../widgets/my_appbar.dart';
+import '../../../global_widgets/my_appbar.dart';
 import '../widgets/opt_bottom_sheet.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {

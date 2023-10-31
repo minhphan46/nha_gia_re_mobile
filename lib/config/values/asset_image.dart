@@ -8,6 +8,7 @@ class Assets {
   static const String appLogoLight = '$imagePath/logo.png';
   static const String appLogoSologan = '$imagePath/sologan.png';
   static const String avatarDefault = '$imagePath/avatar.png';
+  static const String avatar2 = '$imagePath/avatar2.png';
   static const String forgotPassword = '$imagePath/forgot.png';
   // icon
   static const String home = '$iconPath/home (1).png';
@@ -25,4 +26,12 @@ class Assets {
   static const String location = '$iconPath/location-marker.png';
   static const String money = '$iconPath/currency-dollar.png';
   static const String clock = '$iconPath/clock.png';
+  static const String heart = '$iconPath/heart.png';
+  static const String key = '$iconPath/key.png';
+  static const String map = '$iconPath/map.png';
+  static const String clipboard = '$iconPath/clipboard-list.png';
+  static const String office = '$iconPath/office-building.png';
+  static const String chatGreen = '$iconPath/chat_green.png';
+  static const String chatAlt = '$iconPath/chat-alt.png';
+  static const String phoneOut = '$iconPath/phone-outgoing.png';
 }

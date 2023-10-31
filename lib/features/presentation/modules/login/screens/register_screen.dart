@@ -9,7 +9,7 @@ import '../../../../../config/theme/text_styles.dart';
 import '../../../../../core/extensions/string_ex.dart';
 import '../login_controller.dart';
 import '../widgets/image_logo.dart';
-import '../widgets/my_appbar.dart';
+import '../../../global_widgets/my_appbar.dart';
 import 'login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {

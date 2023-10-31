@@ -4,7 +4,7 @@ import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/image_logo.dart';
-import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/my_appbar.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../login_controller.dart';

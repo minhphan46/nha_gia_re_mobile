@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import '../../../../../config/theme/app_color.dart';
+import 'package:get/get.dart';
+import '../../../config/theme/app_color.dart';
+
 class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
   const MyAppbar({required this.title, super.key});
 
@@ -19,12 +21,19 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
           height: 1.0,
         ),
       ),
-      // leading: IconButton(
-      //   icon: const Icon(Icons.close),
-      //   color: AppColor.black,
-      //   onPressed: () {
-
-      //   },
+      leading: Padding(
+        padding: const EdgeInsets.only(left: 10),
+        child: IconButton(
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            size: 20,
+          ),
+          color: AppColor.black,
+          onPressed: () {
+            Get.back();
+          },
+        ),
+      ),
       // ),
       // actions: [
       //   TextButton(
