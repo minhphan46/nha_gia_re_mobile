@@ -16,7 +16,10 @@ abstract class AppRoutes {
   static const home = '/home';
 
   // post detail
-  static const postDetail = '/postDetail';
+  static const postDetail = '/post_detail/:id';
+  static String getPostRoute(String id) {
+    return '/post_detail/$id';
+  }
 
   // search
   static const search = '/search';

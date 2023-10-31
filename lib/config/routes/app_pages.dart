@@ -84,7 +84,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.postDetail,
-      page: () => const PostDetailScreen(),
+      page: () => PostDetailScreen(),
       binding: PostDetailBinding(),
     ),
     GetPage(

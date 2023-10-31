@@ -1,5 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
@@ -21,6 +23,12 @@ class InforCard extends StatelessWidget {
 
     return ZoomTapAnimation(
       child: InkWell(
+        onTap: () {
+          Get.toNamed(
+            AppRoutes.getPostRoute(post.id!),
+            arguments: post,
+          );
+        },
         splashColor: AppColor.green,
         child: Container(
           width: widthBox,
