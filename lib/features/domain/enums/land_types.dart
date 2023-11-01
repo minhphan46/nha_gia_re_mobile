@@ -24,4 +24,17 @@ enum LandTypes {
         return "agricultural";
     }
   }
+
+  static String getStringVi(LandTypes types) {
+    switch (types) {
+      case LandTypes.residential:
+        return "Đất dân cư";
+      case LandTypes.commercial:
+        return "Đất thương mại";
+      case LandTypes.industrial:
+        return "Đất công nghiệp";
+      case LandTypes.agricultural:
+        return "Đất nông nghiệp";
+    }
+  }
 }

@@ -4,9 +4,9 @@ import '../../enums/legal_document_status.dart';
 import 'property_feature.dart';
 
 class Apartment implements PropertyFeature {
-  final ApartmentTypes apartmentType;
-  final bool isHandOver;
-  final int numOfBedRooms;
+  final ApartmentTypes? apartmentType;
+  final bool? isHandOver;
+  final int? numOfBedRooms;
   final FurnitureStatus? furnitureStatus;
   final int? numOfToilets;
   final String? balconyDirection;
@@ -32,15 +32,21 @@ class Apartment implements PropertyFeature {
 
   factory Apartment.fromJson(Map<String, dynamic> json) {
     return Apartment(
-      json['apartment_type'],
+      json['apartment_type'] != null
+          ? ApartmentTypes.parse(json['apartment_type'])
+          : null,
       json['is_hand_over'],
       json['num_of_bed_rooms'],
-      json['furniture_status'],
+      json['furniture_status'] != null
+          ? FurnitureStatus.parse(json['furniture_status'])
+          : null,
       json['num_of_toilets'],
       json['balcony_direction'],
       json['block'],
       json['floor'],
-      json['legal_document_status'],
+      json['legal_document_status'] != null
+          ? LegalDocumentStatus.parse(json['legal_document_status'])
+          : null,
       json['apartment_number'],
       json['show_apartment_number'],
     );

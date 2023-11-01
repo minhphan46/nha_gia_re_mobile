@@ -16,7 +16,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts() async {
-    const url = '$apiBaseUrl/posts';
+    const url = '$apiBaseUrl$kGetPostEndpoint';
 
     try {
       final response = await client.get(url);

@@ -36,4 +36,26 @@ enum Direction {
         return "south_west";
     }
   }
+
+  static String getStringVi(String value) {
+    switch (value) {
+      case "east":
+        return "Đông";
+      case "west":
+        return "Tây";
+      case "south":
+        return "Nam";
+      case "north":
+        return "Bắc";
+      case "north_east":
+        return "Đông Bắc";
+      case "north_west":
+        return "Tây Bắc";
+      case "south_east":
+        return "Đông Nam";
+      case "south_west":
+        return "Tây Nam";
+    }
+    return value;
+  }
 }

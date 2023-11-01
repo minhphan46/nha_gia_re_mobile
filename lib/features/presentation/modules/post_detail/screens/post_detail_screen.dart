@@ -1,10 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/values/asset_image.dart';
+import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/post_detail_controller.dart';
-
+import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/user_card.dart';
+import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../global_widgets/carousel_ad.dart';
+import '../widgets/expandable_container.dart';
 
 class PostDetailScreen extends StatelessWidget {
   PostDetailScreen({super.key});
@@ -38,9 +44,83 @@ class PostDetailScreen extends StatelessWidget {
                     controller.post.title!,
                     style: AppTextStyles.semiBold18,
                   ),
+                  // Price
                   const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text.rich(
+                        TextSpan(
+                          text: double.parse(controller.post.price!)
+                              .toFormattedMoney(),
+                          style:
+                              AppTextStyles.semiBold14.colorEx(AppColor.orange),
+                          children: <InlineSpan>[
+                            TextSpan(
+                              text: " - ${controller.post.area!} m2",
+                              style: AppTextStyles.medium14
+                                  .colorEx(AppColor.grey500),
+                            )
+                          ],
+                        ),
+                      ),
+                      Image.asset(
+                        Assets.heart,
+                        width: 20,
+                        height: 20,
+                      ),
+                    ],
+                  ),
+                  // Address
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.home,
+                        width: 20,
+                        height: 20,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        controller.post.address.toString(),
+                        style: AppTextStyles.medium14.colorEx(AppColor.grey500),
+                      )
+                    ],
+                  ),
+
+                  // time
+                  const SizedBox(height: 10),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      Image.asset(
+                        Assets.clock,
+                        width: 20,
+                        height: 20,
+                      ),
+                      const SizedBox(width: 5),
+                      Text(
+                        "Đăng ${controller.post.postedDate!.getTimeAgoVi()}",
+                        style: AppTextStyles.medium14.colorEx(AppColor.grey500),
+                      )
+                    ],
+                  ),
                 ],
               ),
+            ),
+
+            // Post's User
+            const SizedBox(height: 20),
+            UserCard(),
+            // details
+            const SizedBox(height: 20),
+            ExpandableContainer(
+              title: 'Chi tiết'.tr,
+              minHeight: 130,
+              child: controller.getDetailCard(),
             ),
           ],
         ),

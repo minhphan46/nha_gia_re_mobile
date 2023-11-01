@@ -8,7 +8,7 @@ class Assets {
   static const String appLogoLight = '$imagePath/logo.png';
   static const String appLogoSologan = '$imagePath/sologan.png';
   static const String avatarDefault = '$imagePath/avatar.png';
-  static const String avatar2 = '$imagePath/avatar2.png';
+  static const String avatar2 = '$imagePath/avatar_2.png';
   static const String forgotPassword = '$imagePath/forgot.png';
   // icon
   static const String home = '$iconPath/home (1).png';

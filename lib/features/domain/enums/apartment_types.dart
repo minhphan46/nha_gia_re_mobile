@@ -31,4 +31,21 @@ enum ApartmentTypes {
         return "penhouse";
     }
   }
+
+  static String getStringVi(ApartmentTypes type) {
+    switch (type) {
+      case ApartmentTypes.apartment:
+        return "Căn hộ";
+      case ApartmentTypes.duplex:
+        return "Duplex";
+      case ApartmentTypes.officetel:
+        return "Officetel";
+      case ApartmentTypes.service:
+        return "Dịch vụ";
+      case ApartmentTypes.dormitory:
+        return "Ký túc xá";
+      case ApartmentTypes.penhouse:
+        return "Penthouse";
+    }
+  }
 }

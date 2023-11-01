@@ -4,7 +4,7 @@ import '../../enums/legal_document_status.dart';
 import 'property_feature.dart';
 
 class Office implements PropertyFeature {
-  final String officeType;
+  final String? officeType;
   final bool? isFacade;
   final Direction? mainDoorDirection;
   final String? block;
@@ -30,13 +30,19 @@ class Office implements PropertyFeature {
     return Office(
       json['office_type'],
       json['is_facade'],
-      json['main_door_direction'],
+      json['main_door_direction'] != null
+          ? Direction.parse(json['main_door_direction'])
+          : null,
       json['block'],
       json['floor'],
-      json['legal_document_status'],
+      json['legal_document_status'] != null
+          ? LegalDocumentStatus.parse(json['legal_document_status'])
+          : null,
       json['office_number'],
       json['show_office_number'],
-      json['furniture_status'],
+      json['furniture_status'] != null
+          ? FurnitureStatus.parse(json['furniture_status'])
+          : null,
     );
   }
 }

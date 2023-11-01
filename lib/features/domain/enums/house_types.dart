@@ -15,13 +15,26 @@ enum HouseTypes {
   String toString() {
     switch (this) {
       case HouseTypes.townhouse:
-        return "townhouse";
+        return "Nhà phố";
       case HouseTypes.villa:
-        return "villa";
+        return "Biệt thự";
       case HouseTypes.alleyhouse:
-        return "alleyhouse";
+        return "Nhà hẻm";
       case HouseTypes.frontagehouse:
-        return "frontagehouse";
+        return "Nhà mặt tiền";
+    }
+  }
+
+  static String getStringVi(HouseTypes type) {
+    switch (type) {
+      case HouseTypes.townhouse:
+        return "Nhà phố";
+      case HouseTypes.villa:
+        return "Biệt thự";
+      case HouseTypes.alleyhouse:
+        return "Nhà hẻm";
+      case HouseTypes.frontagehouse:
+        return "Nhà mặt tiền";
     }
   }
 }

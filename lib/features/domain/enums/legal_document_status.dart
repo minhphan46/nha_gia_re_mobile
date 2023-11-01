@@ -22,4 +22,15 @@ enum LegalDocumentStatus {
         return "other_documents";
     }
   }
+
+  static String getStringVi(LegalDocumentStatus value) {
+    switch (value) {
+      case LegalDocumentStatus.waitingForCertificates:
+        return "Đang chờ giấy tờ";
+      case LegalDocumentStatus.haveCertificates:
+        return "Đã có giấy tờ";
+      case LegalDocumentStatus.otherDocuments:
+        return "Các giấy tờ khác";
+    }
+  }
 }

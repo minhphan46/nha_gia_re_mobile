@@ -25,4 +25,17 @@ enum FurnitureStatus {
         return "high_end";
     }
   }
+
+  static String getStringVi(FurnitureStatus value) {
+    switch (value) {
+      case FurnitureStatus.empty:
+        return "Trống";
+      case FurnitureStatus.basic:
+        return "Cơ bản";
+      case FurnitureStatus.full:
+        return "Đầy đủ";
+      case FurnitureStatus.highEnd:
+        return "Cao cấp";
+    }
+  }
 }

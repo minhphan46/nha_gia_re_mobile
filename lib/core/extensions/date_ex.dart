@@ -63,6 +63,30 @@ extension DateTimeX on DateTime {
     }
   }
 
+  String getTimeAgoVi() {
+    Duration difference = DateTime.now().difference(this);
+
+    if (difference.inDays >= 365) {
+      int years = (difference.inDays / 365).floor();
+      return '${years.toString()} ${'năm${years > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+    } else if (difference.inDays >= 30) {
+      int months = (difference.inDays / 30).floor();
+      return '${months.toString()} ${'tháng${months > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+    } else if (difference.inDays >= 1) {
+      if (difference.inDays == 1) {
+        return 'Hôm qua'.tr;
+      } else {
+        return '${difference.inDays.toString()} ${'ngày${difference.inDays > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+      }
+    } else if (difference.inHours >= 1) {
+      return '${difference.inHours.toString()} ${'giờ${difference.inHours > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+    } else if (difference.inMinutes >= 1) {
+      return '${difference.inMinutes.toString()} ${'phút${difference.inMinutes > 1 ? '' : ''}'.tr} ${'trước'.tr}';
+    } else {
+      return 'Bây giờ'.tr;
+    }
+  }
+
   /// get the first, second, third, fourth and fifth week of the month
   int get getWeekOfDateInMonth {
     return day % 7 + 1;

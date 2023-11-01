@@ -24,4 +24,17 @@ enum OfficeTypes {
         return "comercialspace";
     }
   }
+
+  static String getStringVi(OfficeTypes type) {
+    switch (type) {
+      case OfficeTypes.office:
+        return "Văn phòng";
+      case OfficeTypes.officetel:
+        return "officetel";
+      case OfficeTypes.shophouse:
+        return "Nhà phố thương mại";
+      case OfficeTypes.comercialspace:
+        return "Không gian thương mại";
+    }
+  }
 }
