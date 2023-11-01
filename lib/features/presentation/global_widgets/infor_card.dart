@@ -9,8 +9,8 @@ import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/icon_
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../../../../domain/entities/posts/real_estate_post.dart';
 import '../../../../../core/extensions/date_ex.dart';
+import '../../domain/entities/posts/real_estate_post.dart';
 
 class InforCard extends StatelessWidget {
   const InforCard({super.key, required this.post});

@@ -51,4 +51,20 @@ class Apartment implements PropertyFeature {
       json['show_apartment_number'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'apartment_type': apartmentType?.toString(),
+      'is_hand_over': isHandOver,
+      'num_of_bed_rooms': numOfBedRooms,
+      'furniture_status': furnitureStatus?.toString(),
+      'num_of_toilets': numOfToilets,
+      'balcony_direction': balconyDirection,
+      'block': block,
+      'floor': floor,
+      'legal_document_status': legalDocumentStatus?.toString(),
+      'apartment_number': apartmentNumber,
+      'show_apartment_number': showApartmentNumber,
+    };
+  }
 }

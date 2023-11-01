@@ -4,9 +4,9 @@ import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/button_home.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/home_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/nearby_location.dart';
+import '../../../global_widgets/info_card_list.dart';
 import '../home_controller.dart';
 import '../../../global_widgets/carousel_ad.dart';
-import '../widgets/info_card_list.dart';
 import '../widgets/textfield_search.dart';
 
 class HomeScreen extends StatelessWidget {

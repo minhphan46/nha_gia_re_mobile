@@ -5,18 +5,15 @@ import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 
-class ExpandableContainer extends StatefulWidget {
-  const ExpandableContainer(
-      {super.key, this.child, required this.title, required this.minHeight});
-  final Widget? child;
-  final String title;
-  final double minHeight;
+class DescriptionCard extends StatefulWidget {
+  const DescriptionCard({required this.description, super.key});
+  final String description;
 
   @override
-  State<ExpandableContainer> createState() => _ExpandableContainerState();
+  State<DescriptionCard> createState() => _DescriptionCardState();
 }
 
-class _ExpandableContainerState extends State<ExpandableContainer>
+class _DescriptionCardState extends State<DescriptionCard>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   bool isExpanded = false;
@@ -38,8 +35,6 @@ class _ExpandableContainerState extends State<ExpandableContainer>
 
   @override
   Widget build(BuildContext context) {
-    final maxHeight = 60.hp;
-
     return Container(
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
@@ -51,7 +46,7 @@ class _ExpandableContainerState extends State<ExpandableContainer>
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            widget.title,
+            "Mô tả",
             style: AppTextStyles.bold14,
           ),
           const SizedBox(
@@ -60,12 +55,11 @@ class _ExpandableContainerState extends State<ExpandableContainer>
           AnimatedSize(
             duration: const Duration(milliseconds: 200),
             curve: Curves.fastOutSlowIn,
-            child: ConstrainedBox(
-              constraints: BoxConstraints(
-                minHeight: widget.minHeight,
-                maxHeight: isExpanded ? maxHeight : widget.minHeight,
-              ),
-              child: widget.child ?? const SizedBox.shrink(),
+            child: Text(
+              widget.description,
+              maxLines: isExpanded ? 100 : 3,
+              overflow: TextOverflow.ellipsis,
+              style: AppTextStyles.regular12,
             ),
           ),
           const SizedBox(

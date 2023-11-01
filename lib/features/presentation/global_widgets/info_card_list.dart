@@ -4,20 +4,17 @@ import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../../../../domain/entities/posts/real_estate_post.dart';
-import '../home_controller.dart';
+import '../../domain/entities/posts/real_estate_post.dart';
 import 'infor_card.dart';
 
 class InforCardList extends StatelessWidget {
   final String title;
   final Function getListFunc;
-  InforCardList({
+  const InforCardList({
     super.key,
     required this.title,
     required this.getListFunc,
   });
-
-  final HomeController controller = Get.find<HomeController>();
 
   @override
   Widget build(BuildContext context) {
@@ -27,9 +24,12 @@ class InforCardList extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            title,
-            style: AppTextStyles.bold14,
+          Padding(
+            padding: const EdgeInsets.only(left: 8),
+            child: Text(
+              title,
+              style: AppTextStyles.bold14,
+            ),
           ),
           const SizedBox(height: 10),
           Flexible(
@@ -53,11 +53,6 @@ class InforCardList extends StatelessWidget {
                     itemBuilder: (BuildContext context, int index) {
                       return InkWell(
                         child: InforCard(key: UniqueKey(), post: data[index]),
-                        onTap: () {
-                          // Get.toNamed(
-                          //     AppRoutes.getPostRoute(widget.list[index].id),
-                          //     arguments: widget.list[index]);
-                        },
                       );
                     },
                   );

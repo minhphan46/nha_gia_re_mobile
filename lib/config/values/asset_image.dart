@@ -34,4 +34,9 @@ class Assets {
   static const String chatGreen = '$iconPath/chat_green.png';
   static const String chatAlt = '$iconPath/chat-alt.png';
   static const String phoneOut = '$iconPath/phone-outgoing.png';
+  static const String archive = '$iconPath/archive.png';
+  static const String arrowsExpand = '$iconPath/arrows-expand.png';
+  static const String inboxIn = '$iconPath/inbox-in.png';
+  static const String library = '$iconPath/library.png';
+  static const String tag = '$iconPath/tag.png';
 }

@@ -14,76 +14,88 @@ class ApartmentCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GridView.count(
-      physics: const NeverScrollableScrollPhysics(),
-      childAspectRatio: 4,
-      crossAxisCount: 2,
-      shrinkWrap: true,
-      children: [
-        if (feature.apartmentType != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Loại căn hộ:",
-            value: ApartmentTypes.getStringVi(feature.apartmentType!),
-          ),
-        if (feature.isHandOver != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Tình trạng:",
-            value: feature.isHandOver! ? "Đã bàn giao" : "Chưa bàn giao",
-          ),
-        if (feature.numOfBedRooms != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Số phòng ngủ:",
-            value: "${feature.numOfBedRooms} phòng",
-          ),
-        if (feature.furnitureStatus != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Tình trạng nội thất:",
-            value: FurnitureStatus.getStringVi(feature.furnitureStatus!),
-          ),
-        if (feature.numOfToilets != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Số phòng vệ sinh:",
-            value: "${feature.numOfToilets} phòng",
-          ),
-        if (feature.balconyDirection != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Hướng ban công:",
-            value: Direction.getStringVi(feature.balconyDirection!),
-          ),
-        if (feature.block != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Tòa",
-            value: feature.block.toString(),
-          ),
-        if (feature.floor != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Tầng:",
-            value: feature.floor.toString(),
-          ),
-        if (feature.legalDocumentStatus != null)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Giấy tờ pháp lý:",
-            value:
-                LegalDocumentStatus.getStringVi(feature.legalDocumentStatus!),
-          ),
-        if (feature.apartmentNumber != null &&
-            feature.showApartmentNumber != null &&
-            feature.showApartmentNumber == true)
-          Detail(
-            iconAsset: Assets.home,
-            title: "Số căn hộ",
-            value: feature.apartmentNumber.toString(),
-          ),
+    var keysList = [];
+    List<String> exclude = ["show_apartment_number"];
+    feature.toJson().forEach((key, value) {
+      if (value != null && !exclude.contains(key)) {
+        keysList.add(key);
+      }
+    });
+    Map<String, List<String>> featureMap = {
+      "apartment_type": [
+        "Loại căn hộ",
+        ApartmentTypes.getStringVi(feature.apartmentType!),
+        Assets.home,
       ],
-    );
+      "is_hand_over": [
+        "Tình trạng",
+        feature.isHandOver.toString(),
+        Assets.tag,
+      ],
+      "num_of_bed_rooms": [
+        "Số phòng ngủ",
+        feature.numOfBedRooms.toString(),
+        Assets.key,
+      ],
+      "furniture_status": [
+        "Tình trạng nội thất",
+        FurnitureStatus.getStringVi(feature.furnitureStatus!),
+        Assets.archive,
+      ],
+      "num_of_toilets": [
+        "Số phòng vệ sinh",
+        feature.numOfToilets.toString(),
+        Assets.inboxIn,
+      ],
+      "balcony_direction": [
+        "Hướng ban công",
+        Direction.getStringVi(feature.balconyDirection!),
+        Assets.arrowsExpand,
+      ],
+      "block": [
+        "Tòa",
+        feature.block.toString(),
+        Assets.office,
+      ],
+      "floor": [
+        "Tầng",
+        feature.floor.toString(),
+        Assets.office,
+      ],
+      "legal_document_status": [
+        "Giấy tờ pháp lý",
+        feature.legalDocumentStatus != null
+            ? LegalDocumentStatus.getStringVi(feature.legalDocumentStatus!)
+            : "",
+        Assets.clipboard,
+      ],
+      "apartment_number": [
+        "Số căn hộ",
+        feature.apartmentNumber.toString(),
+        Assets.home,
+      ],
+    };
+
+    List<Widget> buildFeatureWidget() {
+      List<Widget> list = [];
+      featureMap.forEach((key, value) {
+        if (key == "apartment_number" && feature.showApartmentNumber == false) {
+        } else if (value[1] != "") {
+          list.add(Detail(
+            iconAsset: value[2],
+            title: value[0],
+            value: value[1],
+          ));
+        }
+      });
+      return list;
+    }
+
+    return GridView.count(
+        physics: const NeverScrollableScrollPhysics(),
+        childAspectRatio: 4,
+        crossAxisCount: 2,
+        shrinkWrap: true,
+        children: buildFeatureWidget());
   }
 }

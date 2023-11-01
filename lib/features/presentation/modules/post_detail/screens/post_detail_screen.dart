@@ -6,10 +6,12 @@ import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/post_detail_controller.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/description_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/user_card.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../global_widgets/carousel_ad.dart';
+import '../../../global_widgets/info_card_list.dart';
 import '../widgets/expandable_container.dart';
 
 class PostDetailScreen extends StatelessWidget {
@@ -66,8 +68,8 @@ class PostDetailScreen extends StatelessWidget {
                       ),
                       Image.asset(
                         Assets.heart,
-                        width: 20,
-                        height: 20,
+                        width: 25,
+                        height: 25,
                       ),
                     ],
                   ),
@@ -82,7 +84,7 @@ class PostDetailScreen extends StatelessWidget {
                         width: 20,
                         height: 20,
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(width: 8),
                       Text(
                         controller.post.address.toString(),
                         style: AppTextStyles.medium14.colorEx(AppColor.grey500),
@@ -101,7 +103,7 @@ class PostDetailScreen extends StatelessWidget {
                         width: 20,
                         height: 20,
                       ),
-                      const SizedBox(width: 5),
+                      const SizedBox(width: 8),
                       Text(
                         "Đăng ${controller.post.postedDate!.getTimeAgoVi()}",
                         style: AppTextStyles.medium14.colorEx(AppColor.grey500),
@@ -122,9 +124,90 @@ class PostDetailScreen extends StatelessWidget {
               minHeight: 130,
               child: controller.getDetailCard(),
             ),
+            // description
+            const SizedBox(height: 20),
+            DescriptionCard(
+              description: controller.post.description ?? "",
+            ),
+            const SizedBox(height: 20),
+            InforCardList(
+              title: 'Liên quan',
+              getListFunc: () => controller.getRelatePosts(),
+              //list: data[1],
+            ),
+            const SizedBox(height: 20),
           ],
         ),
       ),
+      bottomNavigationBar: (!controller.isYourPost)
+          ? BottomAppBar(
+              padding: const EdgeInsets.all(0),
+              color: Colors.white,
+              child: SizedBox(
+                child: Row(children: [
+                  Expanded(
+                      child: MaterialButton(
+                          elevation: 0,
+                          onPressed: controller.launchPhone,
+                          color: AppColor.green,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.phone_in_talk_outlined,
+                                  size: 24,
+                                  color: Colors.white,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Gọi điện'.tr,
+                                  style: AppTextStyles.regular12
+                                      .copyWith(color: Colors.white),
+                                )
+                              ]))),
+                  Expanded(
+                      child: MaterialButton(
+                          onPressed: controller.navToChat,
+                          color: Colors.white,
+                          elevation: 0,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Image.asset(
+                                  Assets.chatGreen,
+                                  width: 24,
+                                  color: AppColor.green,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'Nhắn tin'.tr,
+                                  style: AppTextStyles.regular12
+                                      .copyWith(color: AppColor.green),
+                                )
+                              ]))),
+                  Expanded(
+                      child: MaterialButton(
+                          onPressed: controller.launchSms,
+                          color: Colors.white,
+                          elevation: 0,
+                          child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                const Icon(
+                                  Icons.sms_outlined,
+                                  size: 24,
+                                  color: AppColor.green,
+                                ),
+                                const SizedBox(height: 5),
+                                Text(
+                                  'SMS'.tr,
+                                  style: AppTextStyles.regular12
+                                      .copyWith(color: AppColor.green),
+                                )
+                              ])))
+                ]),
+              ))
+          : null,
     );
   }
 }
