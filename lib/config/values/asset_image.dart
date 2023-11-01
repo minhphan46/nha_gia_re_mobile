@@ -39,4 +39,8 @@ class Assets {
   static const String inboxIn = '$iconPath/inbox-in.png';
   static const String library = '$iconPath/library.png';
   static const String tag = '$iconPath/tag.png';
+  static const String collection = '$iconPath/collection.png';
+  static const String colorSwatch = '$iconPath/color-swatch.png';
+  static const String leaf = '$iconPath/Leaf.png';
+  static const String lightBulb = '$iconPath/light-bulb.png';
 }

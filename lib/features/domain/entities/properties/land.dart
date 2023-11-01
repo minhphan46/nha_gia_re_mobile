@@ -49,4 +49,20 @@ class Land implements PropertyFeature {
       json['show_land_lot_code'],
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'land_type': landType?.toString(),
+      'land_lot_code': landLotCode,
+      'subdivision_name': subdivisionName,
+      'is_facade': isFacade,
+      'has_wide_alley': hasWideAlley,
+      'is_widens_towards_the_back': isWidensTowardsTheBack,
+      'land_direction': landDirection?.toString(),
+      'width': width,
+      'length': length,
+      'legal_document_status': legalDocumentStatus?.toString(),
+      'show_land_lot_code': showLandLotCode,
+    };
+  }
 }

@@ -1,10 +1,11 @@
+import 'package:nhagiare_mobile/features/domain/enums/house_types.dart';
 import '../../enums/direction.dart';
 import '../../enums/furniture_status.dart';
 import '../../enums/legal_document_status.dart';
 import 'property_feature.dart';
 
 class House implements PropertyFeature {
-  final String? houseType;
+  final HouseTypes? houseType;
   final int? numOfBedRooms;
   final bool? isWidensTowardsTheBack;
   final int? numOfToilets;
@@ -36,7 +37,7 @@ class House implements PropertyFeature {
 
   factory House.fromJson(Map<String, dynamic> json) {
     return House(
-      json['house_type'],
+      json['house_type'] != null ? HouseTypes.parse(json['house_type']) : null,
       json['num_of_bed_rooms'],
       json['is_widens_towards_the_back'],
       json['num_of_toilets'],
@@ -58,5 +59,23 @@ class House implements PropertyFeature {
           ? FurnitureStatus.parse(json['furniture_status'])
           : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'house_type': houseType?.toString(),
+      'num_of_bed_rooms': numOfBedRooms,
+      'is_widens_towards_the_back': isWidensTowardsTheBack,
+      'num_of_toilets': numOfToilets,
+      'num_of_floors': numOfFloors,
+      'main_door_direction': mainDoorDirection?.toString(),
+      'width': width,
+      'length': length,
+      'area_used': areaUsed,
+      'legal_document_status': legalDocumentStatus?.toString(),
+      'house_number': houseNumber,
+      'show_house_number': showHouseNumber,
+      'furniture_status': furnitureStatus?.toString(),
+    };
   }
 }

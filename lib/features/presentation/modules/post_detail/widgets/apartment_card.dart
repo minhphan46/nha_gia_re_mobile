@@ -23,7 +23,7 @@ class ApartmentCard extends StatelessWidget {
     });
     Map<String, List<String>> featureMap = {
       "apartment_type": [
-        "Loại căn hộ",
+        "Loại hình căn hộ",
         ApartmentTypes.getStringVi(feature.apartmentType!),
         Assets.home,
       ],
@@ -81,11 +81,13 @@ class ApartmentCard extends StatelessWidget {
       featureMap.forEach((key, value) {
         if (key == "apartment_number" && feature.showApartmentNumber == false) {
         } else if (value[1] != "") {
-          list.add(Detail(
-            iconAsset: value[2],
-            title: value[0],
-            value: value[1],
-          ));
+          list.add(
+            Detail(
+              iconAsset: value[2],
+              title: value[0],
+              value: value[1],
+            ),
+          );
         }
       });
       return list;

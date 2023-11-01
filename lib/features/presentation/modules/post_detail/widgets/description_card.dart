@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
-
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 

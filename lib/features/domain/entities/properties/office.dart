@@ -1,10 +1,11 @@
+import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 import '../../enums/direction.dart';
 import '../../enums/furniture_status.dart';
 import '../../enums/legal_document_status.dart';
 import 'property_feature.dart';
 
 class Office implements PropertyFeature {
-  final String? officeType;
+  final OfficeTypes? officeType;
   final bool? isFacade;
   final Direction? mainDoorDirection;
   final String? block;
@@ -28,7 +29,9 @@ class Office implements PropertyFeature {
 
   factory Office.fromJson(Map<String, dynamic> json) {
     return Office(
-      json['office_type'],
+      json['office_type'] != null
+          ? OfficeTypes.parse(json['office_type'])
+          : null,
       json['is_facade'],
       json['main_door_direction'] != null
           ? Direction.parse(json['main_door_direction'])
@@ -44,5 +47,19 @@ class Office implements PropertyFeature {
           ? FurnitureStatus.parse(json['furniture_status'])
           : null,
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'office_type': officeType?.toString(),
+      'is_facade': isFacade,
+      'main_door_direction': mainDoorDirection?.toString(),
+      'block': block,
+      'floor': floor,
+      'legal_document_status': legalDocumentStatus?.toString(),
+      'office_number': officeNumber,
+      'show_office_number': showOfficeNumber,
+      'furniture_status': furnitureStatus?.toString(),
+    };
   }
 }

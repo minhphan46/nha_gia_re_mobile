@@ -21,4 +21,12 @@ class Motel implements PropertyFeature {
           : null,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'water_price': waterPrice,
+      'electric_price': electricPrice,
+      'furniture_status': furnitureStatus?.toString(),
+    };
+  }
 }

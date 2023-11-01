@@ -4,7 +4,6 @@ import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/motel_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/office_card.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/properties/apartment.dart';
@@ -27,17 +26,15 @@ class PostDetailController extends GetxController {
     feature = PropertyFeature.fromJson(post.typeId!, post.features!);
     if (feature is Apartment) {
       return ApartmentCard(feature: feature as Apartment);
-    }
-    // else if (feature is House) {
-    //   return HouseCard(feature: feature as House);
-    // } else if (feature is Land) {
-    //   return LandCard(feature: feature as Land);
-    // } else if (feature is Office) {
-    //   return OfficeCard(feature: feature as Office);
-    // } else if (feature is Motel) {
-    //   return MotelCard(feature: feature as Motel);
-    // }
-    else {
+    } else if (feature is House) {
+      return HouseCard(feature: feature as House);
+    } else if (feature is Land) {
+      return LandCard(feature: feature as Land);
+    } else if (feature is Office) {
+      return OfficeCard(feature: feature as Office);
+    } else if (feature is Motel) {
+      return MotelCard(feature: feature as Motel);
+    } else {
       return const SizedBox();
     }
   }
