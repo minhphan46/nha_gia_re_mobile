@@ -20,17 +20,19 @@ class MotelCard extends StatelessWidget {
     Map<String, List<String>> featureMap = {
       "water_price": [
         "Giá nước",
-        feature.waterPrice!.toString(),
+        feature.waterPrice != null ? feature.waterPrice.toString() : "",
         Assets.leaf,
       ],
       "electric_price": [
         "Giá điện",
-        feature.electricPrice!.toString(),
+        feature.electricPrice != null ? feature.electricPrice.toString() : "",
         Assets.lightBulb,
       ],
       "furniture_status": [
         "Tình trạng nội thất",
-        FurnitureStatus.getStringVi(feature.furnitureStatus!),
+        feature.furnitureStatus != null
+            ? FurnitureStatus.getStringVi(feature.furnitureStatus!)
+            : "",
         Assets.archive,
       ],
     };

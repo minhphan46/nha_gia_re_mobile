@@ -25,12 +25,14 @@ class OfficeCard extends StatelessWidget {
     Map<String, List<String>> featureMap = {
       "land_type": [
         "Loại hình văn phòng",
-        OfficeTypes.getStringVi(feature.officeType!),
+        feature.officeType != null
+            ? OfficeTypes.getStringVi(feature.officeType!)
+            : "",
         Assets.home,
       ],
       "is_facade": [
         "Mặt tiền",
-        feature.isFacade!.getStringVi(),
+        feature.isFacade != null ? feature.isFacade!.getStringVi() : "",
         Assets.archive,
       ],
       "land_direction": [
@@ -42,12 +44,12 @@ class OfficeCard extends StatelessWidget {
       ],
       "block": [
         "Tòa",
-        feature.block.toString(),
+        feature.block != null ? feature.block.toString() : "",
         Assets.office,
       ],
       "floor": [
         "Tầng",
-        feature.floor.toString(),
+        feature.floor != null ? feature.floor.toString() : "",
         Assets.office,
       ],
       "legal_document_status": [
@@ -59,7 +61,7 @@ class OfficeCard extends StatelessWidget {
       ],
       "office_number": [
         "Mã văn phòng",
-        feature.officeNumber.toString(),
+        feature.officeNumber != null ? feature.officeNumber.toString() : "",
         Assets.tag,
       ],
       "furniture_status": [

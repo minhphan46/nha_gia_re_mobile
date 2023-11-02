@@ -23,32 +23,38 @@ class LandCard extends StatelessWidget {
     Map<String, List<String>> featureMap = {
       "land_type": [
         "Loại hình đất",
-        LandTypes.getStringVi(feature.landType!),
+        feature.landType != null
+            ? LandTypes.getStringVi(feature.landType!)
+            : "",
         Assets.home,
       ],
       "land_lot_code": [
         "Mã lô đất",
-        feature.landLotCode.toString(),
+        feature.landLotCode != null ? feature.landLotCode.toString() : "",
         Assets.tag,
       ],
       "subdivision_name": [
         "Tên khu đất",
-        feature.subdivisionName.toString(),
+        feature.subdivisionName != null
+            ? feature.subdivisionName.toString()
+            : "",
         Assets.key,
       ],
       "is_facade": [
         "Mặt tiền",
-        feature.isFacade!.getStringVi(),
+        feature.isFacade != null ? feature.isFacade!.getStringVi() : "",
         Assets.archive,
       ],
       "has_wide_alley": [
         "Có hẻm rộng",
-        feature.hasWideAlley!.getStringVi(),
+        feature.hasWideAlley != null ? feature.hasWideAlley!.getStringVi() : "",
         Assets.inboxIn,
       ],
       "is_widens_towards_the_back": [
         "Mở rộng về phía sau",
-        feature.isWidensTowardsTheBack!.getStringVi(),
+        feature.isWidensTowardsTheBack != null
+            ? feature.isWidensTowardsTheBack!.getStringVi()
+            : "",
         Assets.arrowsExpand,
       ],
       "land_direction": [

@@ -37,7 +37,9 @@ class HouseCard extends StatelessWidget {
       ],
       "is_widens_towards_the_back": [
         "Mở rộng về phía sau",
-        feature.isWidensTowardsTheBack!.getStringVi(),
+        feature.isWidensTowardsTheBack != null
+            ? feature.isWidensTowardsTheBack!.getStringVi()
+            : "",
         Assets.collection,
       ],
       "num_of_toilets": [
@@ -47,7 +49,7 @@ class HouseCard extends StatelessWidget {
       ],
       "num_of_floors": [
         "Số tầng",
-        feature.numOfFloors!.toString(),
+        feature.numOfFloors != null ? feature.numOfFloors!.toString() : "",
         Assets.office,
       ],
       "main_door_direction": [
@@ -59,17 +61,17 @@ class HouseCard extends StatelessWidget {
       ],
       "width": [
         "Chiều dài",
-        feature.width.toString(),
+        feature.width != null ? feature.width.toString() : "",
         Assets.colorSwatch,
       ],
       "length": [
         "Chiều rộng",
-        feature.length.toString(),
+        feature.length != null ? feature.length.toString() : "",
         Assets.colorSwatch,
       ],
       "area_used": [
         "Diện tích đất sử dụng",
-        feature.areaUsed.toString(),
+        feature.areaUsed != null ? feature.areaUsed.toString() : "",
         Assets.map,
       ],
       "legal_document_status": [
@@ -81,7 +83,7 @@ class HouseCard extends StatelessWidget {
       ],
       "house_number": [
         "Số nhà",
-        feature.houseNumber.toString(),
+        feature.houseNumber != null ? feature.houseNumber.toString() : "",
         Assets.home,
       ],
       "furniture_status": [

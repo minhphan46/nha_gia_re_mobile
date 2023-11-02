@@ -1,5 +1,9 @@
 import 'package:equatable/equatable.dart';
 
+import '../../../../core/resources/data_state.dart';
+import '../../../../injection_container.dart';
+import '../../usecases/post/remote/get_address.dart';
+
 class AddressEntity extends Equatable {
   final int? provinceCode;
   final int? districtCode;
@@ -34,6 +38,19 @@ class AddressEntity extends Equatable {
     result += districtCode != null ? "$districtCode, " : "";
     result += provinceCode != null ? "$provinceCode" : "";
     return result;
+  }
+
+  String getDetailAddress() {
+    final GetAddressUseCase getAddressUseCase = sl<GetAddressUseCase>();
+    final dataState = getAddressUseCase(
+      params: this,
+    );
+
+    if (dataState is DataSuccess) {
+      return dataState.data!;
+    } else {
+      return toString();
+    }
   }
 
   @override

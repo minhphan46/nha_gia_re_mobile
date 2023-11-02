@@ -24,7 +24,9 @@ class ApartmentCard extends StatelessWidget {
     Map<String, List<String>> featureMap = {
       "apartment_type": [
         "Loại hình căn hộ",
-        ApartmentTypes.getStringVi(feature.apartmentType!),
+        feature.apartmentType != null
+            ? ApartmentTypes.getStringVi(feature.apartmentType!)
+            : "",
         Assets.home,
       ],
       "is_hand_over": [
@@ -39,7 +41,9 @@ class ApartmentCard extends StatelessWidget {
       ],
       "furniture_status": [
         "Tình trạng nội thất",
-        FurnitureStatus.getStringVi(feature.furnitureStatus!),
+        feature.furnitureStatus != null
+            ? FurnitureStatus.getStringVi(feature.furnitureStatus!)
+            : "",
         Assets.archive,
       ],
       "num_of_toilets": [
@@ -49,7 +53,9 @@ class ApartmentCard extends StatelessWidget {
       ],
       "balcony_direction": [
         "Hướng ban công",
-        Direction.getStringVi(feature.balconyDirection!),
+        feature.balconyDirection != null
+            ? Direction.getStringVi(feature.balconyDirection!)
+            : "",
         Assets.arrowsExpand,
       ],
       "block": [

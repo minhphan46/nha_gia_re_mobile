@@ -75,7 +75,7 @@ class InforCard extends StatelessWidget {
                     ),
                     IconText(
                       icon: Assets.home,
-                      text: post.address.toString(),
+                      text: post.address!.getDetailAddress(),
                       color: AppColor.grey500,
                     ),
                     const SizedBox(

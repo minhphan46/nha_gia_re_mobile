@@ -24,10 +24,14 @@ class IconText extends StatelessWidget {
           height: 15,
         ),
         const SizedBox(width: 4),
-        Text(
-          text,
-          maxLines: 1,
-          style: AppTextStyles.medium12.copyWith(color: color),
+        SizedBox(
+          width: 145,
+          child: Text(
+            text,
+            maxLines: 1,
+            style: AppTextStyles.medium12.copyWith(color: color),
+            overflow: TextOverflow.ellipsis,
+          ),
         ),
       ],
     );

@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/post_detail_controller.dart';
@@ -85,9 +86,13 @@ class PostDetailScreen extends StatelessWidget {
                         height: 20,
                       ),
                       const SizedBox(width: 8),
-                      Text(
-                        controller.post.address.toString(),
-                        style: AppTextStyles.medium14.colorEx(AppColor.grey500),
+                      SizedBox(
+                        width: 80.wp,
+                        child: Text(
+                          controller.post.address!.getDetailAddress(),
+                          style:
+                              AppTextStyles.medium14.colorEx(AppColor.grey500),
+                        ),
                       )
                     ],
                   ),

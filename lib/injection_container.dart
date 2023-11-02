@@ -6,6 +6,7 @@ import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_da
 import 'package:nhagiare_mobile/features/data/repository/task_repository_impl.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_address.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/get_local_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/remove_task.dart';
@@ -16,6 +17,8 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/save_task.
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_task.dart';
 
 import 'features/data/repository/post_repository_impl.dart';
+import 'features/data/repository/provinces_repository_impl.dart';
+import 'features/domain/repository/provinces_repository.dart';
 
 final sl = GetIt.instance;
 
@@ -113,6 +116,18 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetPostsUseCase>(
     GetPostsUseCase(
       sl<PostRepository>(),
+    ),
+  );
+
+  // Provinces =====================================================
+  // provinces repository
+  sl.registerSingleton<ProvincesRepository>(
+    ProvincesRepositoryImpl(),
+  );
+  // use cases
+  sl.registerSingleton<GetAddressUseCase>(
+    GetAddressUseCase(
+      sl<ProvincesRepository>(),
     ),
   );
 }

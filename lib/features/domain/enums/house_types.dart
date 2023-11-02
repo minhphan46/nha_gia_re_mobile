@@ -2,7 +2,6 @@ enum HouseTypes {
   townhouse,
   villa,
   alleyhouse,
-  duplex,
   frontagehouse;
 
   static HouseTypes parse(String value) {
@@ -23,8 +22,6 @@ enum HouseTypes {
         return "alleyhouse";
       case HouseTypes.frontagehouse:
         return "frontagehouse";
-      case HouseTypes.duplex:
-        return "duplex";
     }
   }
 
@@ -38,8 +35,6 @@ enum HouseTypes {
         return "Nhà hẻm";
       case HouseTypes.frontagehouse:
         return "Nhà mặt tiền";
-      case HouseTypes.duplex:
-        return "Duplex";
     }
   }
 }
