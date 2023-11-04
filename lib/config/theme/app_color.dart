@@ -17,13 +17,21 @@ abstract class AppColor {
   static const Color grey300 = Color(0xff959BA0);
   static const Color grey200 = Color(0xffEAE8E8);
   static const Color grey100 = Color(0xffF6F6F6);
-  static const Color yellow = Color(0xffFFCD29);
   static const Color red = Color(0xffD00000);
-  static const Color redLight = Color(0xffFAD2D2);
+  static const Color yellow = Color(0xffFFCD29);
   static const Color neon = Color(0xff04C048);
 
-  static const Color blue = Color(0xff3730A3);
-  static const Color blueLight = Color(0xffE0E7FF);
+  static const Color green800 = Color(0xff065F46);
+  static const Color green100 = Color(0xffD1FAE5);
+
+  static const Color red800 = Color(0xff991B1B);
+  static const Color red100 = Color(0xffFEE2E2);
+
+  static const Color blue800 = Color(0xff3730A3);
+  static const Color blue100 = Color(0xffE0E7FF);
+
+  static const Color yellow800 = Color(0xff92400E);
+  static const Color yellow100 = Color(0xffFEF3C7);
 
 //   static const Color mainAppBarGradient1 = Color(0xff5F44B9);
 //   static const Color mainAppBarGradient2 = Color(0xff8F5BE3);

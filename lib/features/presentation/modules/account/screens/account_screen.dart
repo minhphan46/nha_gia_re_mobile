@@ -15,6 +15,7 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    controller.servicePack = 1;
     return Scaffold(
       appBar: MyAppbar(
         title: "Tài khoản",
@@ -109,10 +110,10 @@ class AccountScreen extends StatelessWidget {
                             horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                           color: controller.servicePack == 1
-                              ? AppColor.greenLight
+                              ? AppColor.green100
                               : controller.servicePack == 2
-                                  ? AppColor.blueLight
-                                  : AppColor.redLight,
+                                  ? AppColor.blue100
+                                  : AppColor.red100,
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
@@ -123,9 +124,9 @@ class AccountScreen extends StatelessWidget {
                                   : "Gói doanh nghiệp",
                           style: AppTextStyles.medium12
                               .colorEx(controller.servicePack == 1
-                                  ? AppColor.green
+                                  ? AppColor.green800
                                   : controller.servicePack == 2
-                                      ? AppColor.blue
+                                      ? AppColor.blue800
                                       : AppColor.red),
                         ),
                       )
