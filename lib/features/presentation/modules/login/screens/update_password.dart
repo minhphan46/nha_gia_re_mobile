@@ -7,7 +7,7 @@ import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../login_controller.dart';
-import '../widgets/my_appbar.dart';
+import '../../../global_widgets/my_appbar.dart';
 
 class UpdatePasswordScreen extends StatefulWidget {
   const UpdatePasswordScreen({super.key});
@@ -32,7 +32,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppbar(title: "Quên mật khẩu"),
+      appBar: MyAppbar(title: "Quên mật khẩu"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Form(
@@ -54,7 +54,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                   const SizedBox(height: 10),
                   Text(
                     "NHAGIARE",
-                    style: AppTextStyles.semiBold20.colorEx(AppColor.green),
+                    style: AppTextStyles.semiBold20.colorEx(AppColors.green),
                   ),
                 ],
               ),
@@ -80,7 +80,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                           !controller.isObscureResetPass.value
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: AppColor.green,
+                          color: AppColors.green,
                         ),
                         onPressed: controller.toggleResetPass,
                       ),
@@ -121,7 +121,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                           !controller.isObscureRepeatPassReset.value
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: AppColor.green,
+                          color: AppColors.green,
                         ),
                         onPressed: controller.toggleRepeatPass,
                       ),
@@ -146,9 +146,9 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                       Get.offAll(const LoginScreen());
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.green,
+                      backgroundColor: AppColors.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      textStyle: const TextStyle(color: AppColor.white),
+                      textStyle: const TextStyle(color: AppColors.white),
                       minimumSize: Size(100.wp, 55),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -165,7 +165,8 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                             ))
                         : Text(
                             'Cập nhập lại mật khẩu'.tr,
-                            style: AppTextStyles.bold14.colorEx(AppColor.white),
+                            style:
+                                AppTextStyles.bold14.colorEx(AppColors.white),
                           ),
                   )),
             ],

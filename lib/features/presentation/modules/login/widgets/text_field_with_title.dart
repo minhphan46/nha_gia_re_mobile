@@ -46,7 +46,7 @@ class TextFieldWithTitle extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 5, left: 5),
           child: Text(
             titleText,
-            style: AppTextStyles.bold16.colorEx(AppColor.green),
+            style: AppTextStyles.bold16.colorEx(AppColors.green),
           ),
         ),
         // field
@@ -57,7 +57,7 @@ class TextFieldWithTitle extends StatelessWidget {
                 padding: const EdgeInsets.symmetric(horizontal: 15),
                 child: Text(
                   region!,
-                  style: AppTextStyles.regular16.colorEx(AppColor.green),
+                  style: AppTextStyles.regular16.colorEx(AppColors.green),
                 ),
               ),
             SizedBox(
@@ -83,11 +83,11 @@ class TextFieldWithTitle extends StatelessWidget {
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                   ),
                   filled: !enable,
-                  fillColor: enable ? AppColor.white : AppColor.grey100,
+                  fillColor: enable ? AppColors.white : AppColors.grey100,
                   suffixIcon: !canTap
                       ? const Icon(
                           Icons.calendar_month,
-                          color: AppColor.grey300,
+                          color: AppColors.grey300,
                         )
                       : null,
                 ),

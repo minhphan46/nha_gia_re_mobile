@@ -4,7 +4,7 @@ import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/image_logo.dart';
-import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/my_appbar.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../login_controller.dart';
@@ -32,7 +32,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppbar(title: "Đăng nhập"),
+      appBar: MyAppbar(title: "Đăng nhập"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 30),
         child: Form(
@@ -94,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           !controller.isObscureLogin.value
                               ? Icons.visibility
                               : Icons.visibility_off,
-                          color: AppColor.green,
+                          color: AppColors.green,
                         ),
                         onPressed: controller.togglePassword,
                       ),
@@ -132,9 +132,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       Get.toNamed(AppRoutes.bottomBar);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.green,
+                      backgroundColor: AppColors.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      textStyle: const TextStyle(color: AppColor.white),
+                      textStyle: const TextStyle(color: AppColors.white),
                       elevation: 10,
                       minimumSize: Size(100.wp, 55),
                       shape: RoundedRectangleBorder(
@@ -151,7 +151,8 @@ class _LoginScreenState extends State<LoginScreen> {
                             ))
                         : Text(
                             'Đăng nhập'.tr,
-                            style: AppTextStyles.bold14.colorEx(AppColor.white),
+                            style:
+                                AppTextStyles.bold14.colorEx(AppColors.white),
                           ),
                   )),
               const SizedBox(height: 20),

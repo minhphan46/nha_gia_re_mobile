@@ -2,8 +2,12 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/local/app_database.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/new_api_service.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
 import 'package:nhagiare_mobile/features/data/repository/task_repository_impl.dart';
+import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_address.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/get_local_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/remove_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/save_local_task.dart';
@@ -11,6 +15,10 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/get_tasks.
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/remove_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/save_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_task.dart';
+
+import 'features/data/repository/post_repository_impl.dart';
+import 'features/data/repository/provinces_repository_impl.dart';
+import 'features/domain/repository/provinces_repository.dart';
 
 final sl = GetIt.instance;
 
@@ -89,4 +97,37 @@ Future<void> initializeDependencies() async {
   //       sl<SaveLocalTasksUseCase>(),
   //       sl<RemoveLocalTasksUseCase>(),
   //     ));
+
+  //Post=====================================================
+  // datasource
+  sl.registerSingleton<PostRemoteDataSrc>(
+    PostRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+  // post repository
+  sl.registerSingleton<PostRepository>(
+    PostRepositoryImpl(
+      sl<PostRemoteDataSrc>(),
+    ),
+  );
+
+  // use cases
+  sl.registerSingleton<GetPostsUseCase>(
+    GetPostsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  // Provinces =====================================================
+  // provinces repository
+  sl.registerSingleton<ProvincesRepository>(
+    ProvincesRepositoryImpl(),
+  );
+  // use cases
+  sl.registerSingleton<GetAddressUseCase>(
+    GetAddressUseCase(
+      sl<ProvincesRepository>(),
+    ),
+  );
 }

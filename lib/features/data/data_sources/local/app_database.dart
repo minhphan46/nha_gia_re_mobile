@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:sqflite/sqflite.dart' as sqflite;
 import 'package:floor/floor.dart';
-import '../../models/task_local.dart';
+import '../../models/tasks/task_local.dart';
 import 'DAO/task_dao.dart';
 part 'app_database.g.dart';
 

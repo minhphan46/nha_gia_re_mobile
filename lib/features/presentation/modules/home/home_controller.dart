@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
+import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../core/resources/data_state.dart';
 
 class HomeController extends GetxController {
   String nameUser = "Minh Phan";
@@ -40,4 +45,18 @@ class HomeController extends GetxController {
     "Tân Bình",
     "Quận 12",
   ];
+
+  // get all posts
+  final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
+  Future<List<RealEstatePostEntity>> getAllPosts() async {
+    final dataState = await _getPostsUseCase();
+
+    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+      return dataState.data!;
+    } else if (dataState is DataFailed) {
+      return [];
+    } else {
+      return [];
+    }
+  }
 }

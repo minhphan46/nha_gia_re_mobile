@@ -29,7 +29,7 @@ class HomeAppbar extends StatelessWidget {
             Text(
               'Chào buổi sáng, ${controller.nameUser}!',
               style: AppTextStyles.bold14.colorEx(
-                AppColor.green,
+                AppColors.green,
               ),
             ),
           ],
@@ -50,10 +50,10 @@ class HomeAppbar extends StatelessWidget {
                             badges.BadgePosition.topStart(top: -8, start: 18),
                         badgeContent: Text(
                           controller.unreadMessCount.value.toString(),
-                          style: AppTextStyles.bold10.colorEx(AppColor.white),
+                          style: AppTextStyles.bold10.colorEx(AppColors.white),
                         ),
                         badgeStyle: const badges.BadgeStyle(
-                          badgeColor: AppColor.green,
+                          badgeColor: AppColors.green,
                         ),
                         child: Image.asset(Assets.chat, width: 25),
                       ),
@@ -72,10 +72,10 @@ class HomeAppbar extends StatelessWidget {
                             badges.BadgePosition.topStart(top: -8, start: 18),
                         badgeContent: Text(
                           controller.unreadNotiCount.value.toString(),
-                          style: AppTextStyles.bold10.colorEx(AppColor.white),
+                          style: AppTextStyles.bold10.colorEx(AppColors.white),
                         ),
                         badgeStyle: const badges.BadgeStyle(
-                          badgeColor: AppColor.green,
+                          badgeColor: AppColors.green,
                         ),
                         child: Image.asset(Assets.notification, width: 25),
                       ),

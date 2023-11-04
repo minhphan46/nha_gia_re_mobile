@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
-import 'package:nhagiare_mobile/features/data/models/task.dart';
+import 'package:nhagiare_mobile/features/data/models/tasks/task.dart';
 part 'new_api_service.g.dart';
 
 @RestApi(baseUrl: apiBaseUrl)

@@ -15,8 +15,21 @@ abstract class AppRoutes {
   // home
   static const home = '/home';
 
+  // post detail
+  static const postDetail = '/post_detail/:id';
+  static String getPostRoute(String id) {
+    return '/post_detail/$id';
+  }
+
+  // search
+  static const search = '/search';
+
+  // setting
+  static const setting = '/setting';
+
   // account
   static const account = '/account';
+  static const purchase = '/account/purchase';
 
   // create post
   static const createPost = '/createPost';

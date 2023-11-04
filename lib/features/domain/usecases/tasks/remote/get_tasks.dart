@@ -1,6 +1,6 @@
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/core/usecases/usecase.dart';
-import 'package:nhagiare_mobile/features/domain/entities/task.dart';
+import 'package:nhagiare_mobile/features/domain/entities/task/task.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 
 class GetTasksUseCase implements UseCase<DataState<List<TaskEntity>>, void> {

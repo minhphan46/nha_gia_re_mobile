@@ -23,15 +23,15 @@ class ButtonHome extends StatelessWidget {
         //
       },
       style: ElevatedButton.styleFrom(
-        backgroundColor: type ? AppColor.green : AppColor.white,
+        backgroundColor: type ? AppColors.green : AppColors.white,
         padding: const EdgeInsets.symmetric(vertical: 12),
-        textStyle: const TextStyle(color: AppColor.white),
+        textStyle: const TextStyle(color: AppColors.white),
         elevation: 0,
         minimumSize: Size(28.wp, 25),
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(10),
             side: const BorderSide(
-              color: AppColor.green,
+              color: AppColors.green,
               width: 1,
             )),
       ),
@@ -46,7 +46,7 @@ class ButtonHome extends StatelessWidget {
           Text(
             title,
             style: AppTextStyles.medium14
-                .colorEx(type ? AppColor.white : AppColor.green),
+                .colorEx(type ? AppColors.white : AppColors.green),
           ),
         ],
       ),

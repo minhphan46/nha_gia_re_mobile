@@ -109,6 +109,12 @@ dependencies:
   #tap animation
   zoom_tap_animation: ^1.1.0
 
+  # data structures
+  dartz: ^0.10.1
+
+  # dotted border
+  dotted_border: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
@@ -155,8 +161,6 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
-    - assets/fonts/
-    - assets/lotties/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

@@ -16,8 +16,17 @@ import 'package:nhagiare_mobile/features/presentation/modules/login/screens/upda
 import 'package:nhagiare_mobile/features/presentation/modules/login/screens/update_password.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/notification/notification_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/notification/screens/notification_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/post_detail/post_detail_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/post_detail/screens/post_detail_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/post_management_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/screens/post_management_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/purchase/purchase_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/search/screens/search_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/search/search_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/setting/screens/setting_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/setting/setting_binding.dart';
+
+import '../../features/presentation/modules/purchase/screens/purchase_screen.dart';
 
 abstract class AppPages {
   static final List<GetPage> pages = [
@@ -63,7 +72,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.createPost,
-      page: () => const CreatePostScreen(),
+      page: () => CreatePostScreen(),
       binding: CreatePostBinding(),
     ),
     GetPage(
@@ -73,8 +82,28 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.account,
-      page: () => const AccountScreen(),
+      page: () => AccountScreen(),
       binding: AccountBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.purchase,
+      page: () => PurchaseScreen(),
+      binding: PurchaseBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.postDetail,
+      page: () => PostDetailScreen(),
+      binding: PostDetailBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.search,
+      page: () => const SearchScreen(),
+      binding: SearchBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.setting,
+      page: () => SettingScreen(),
+      binding: SettingBinding(),
     ),
   ];
 }

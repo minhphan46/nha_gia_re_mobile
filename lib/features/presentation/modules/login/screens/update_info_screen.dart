@@ -9,7 +9,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/imag
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/text_field_with_title.dart';
 import '../../../../../config/routes/app_routes.dart';
 import '../login_controller.dart';
-import '../widgets/my_appbar.dart';
+import '../../../global_widgets/my_appbar.dart';
 
 class UpdateInfoScreen extends StatefulWidget {
   const UpdateInfoScreen({super.key});
@@ -48,7 +48,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
     controller.emailUpdateInfoTextController.text = getEmail();
 
     return Scaffold(
-      appBar: const MyAppbar(title: "Cập nhập thông tin"),
+      appBar: MyAppbar(title: "Cập nhập thông tin"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
         child: Form(
@@ -63,7 +63,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
               Center(
                 child: Text(
                   "Thay đổi ảnh đại diện",
-                  style: AppTextStyles.bold16.colorEx(AppColor.green),
+                  style: AppTextStyles.bold16.colorEx(AppColors.green),
                 ),
               ),
 // text field Ho & ten
@@ -179,9 +179,9 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                   Get.toNamed(AppRoutes.bottomBar);
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: AppColor.green,
+                  backgroundColor: AppColors.green,
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  textStyle: const TextStyle(color: AppColor.white),
+                  textStyle: const TextStyle(color: AppColors.white),
                   elevation: 10,
                   minimumSize: Size(100.wp, 55),
                   shape: RoundedRectangleBorder(
@@ -198,7 +198,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
                         ))
                     : Text(
                         'Lưu'.tr,
-                        style: AppTextStyles.bold14.colorEx(AppColor.white),
+                        style: AppTextStyles.bold14.colorEx(AppColors.white),
                       ),
               ),
             ],
