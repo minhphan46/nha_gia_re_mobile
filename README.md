@@ -20,11 +20,11 @@
 ## Screenshots
 
 <p align="center">
-  <img src="assets/images/screenshot/loading.png" alt="Screenshot 1" width="200">
-  <img src="assets/images/screenshot/login.png" alt="Screenshot 2" width="200">
-  <img src="assets/images/screenshot/forgot.png" alt="Screenshot 3" width="200">
-  <img src="assets/images/screenshot/update.png" alt="Screenshot 4" width="200">
-  <img src="assets/images/screenshot/otp.png" alt="Screenshot 5" width="200">
+  <img src="assets/images/screenshot/loading.png" alt="Screenshot 1" width="150">
+  <img src="assets/images/screenshot/login.png" alt="Screenshot 2" width="150">
+  <img src="assets/images/screenshot/forgot.png" alt="Screenshot 3" width="150">
+  <img src="assets/images/screenshot/update.png" alt="Screenshot 4" width="150">
+  <img src="assets/images/screenshot/otp.png" alt="Screenshot 5" width="150">
 </p>
 <p align="center">
   <img src="assets/images/screenshot/home.png" alt="Screenshot 6" width="200" style="vertical-align: top;">
