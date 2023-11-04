@@ -15,8 +15,6 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    controller.isIdentity = false;
-    controller.servicePack = 3;
     return Scaffold(
       appBar: MyAppbar(
         title: "Tài khoản",
