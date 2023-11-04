@@ -20,10 +20,13 @@ import 'package:nhagiare_mobile/features/presentation/modules/post_detail/post_d
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/screens/post_detail_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/post_management_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/screens/post_management_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/purchase/purchase_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/screens/search_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/search_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/setting/screens/setting_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/setting/setting_binding.dart';
+
+import '../../features/presentation/modules/purchase/screens/purchase_screen.dart';
 
 abstract class AppPages {
   static final List<GetPage> pages = [
@@ -69,7 +72,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.createPost,
-      page: () => const CreatePostScreen(),
+      page: () => CreatePostScreen(),
       binding: CreatePostBinding(),
     ),
     GetPage(
@@ -81,6 +84,11 @@ abstract class AppPages {
       name: AppRoutes.account,
       page: () => const AccountScreen(),
       binding: AccountBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.purchase,
+      page: () => PurchaseScreen(),
+      binding: PurchaseBinding(),
     ),
     GetPage(
       name: AppRoutes.postDetail,
