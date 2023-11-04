@@ -44,4 +44,5 @@ class Assets {
   static const String leaf = '$iconPath/Leaf.png';
   static const String lightBulb = '$iconPath/light-bulb.png';
   static const String badge = '$iconPath/badge-check.png';
+  static const String addPhoto = '$iconPath/add_photo.png';
 }

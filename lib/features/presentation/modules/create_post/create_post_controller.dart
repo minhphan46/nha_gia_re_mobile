@@ -1,5 +1,8 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 import '../../../domain/enums/property_types.dart';
 
@@ -44,4 +47,50 @@ class CreatePostController extends GetxController {
   String? block;
   String? floor;
   String? address;
+
+  // hinh anh
+  bool? photoController;
+
+  void checkLengthPhoto() {
+    int length = photo.length + imageUrlList.length;
+    if (length >= 3 && length <= 12) {
+      photoController = true;
+    } else {
+      photoController = false;
+    }
+    update();
+  }
+
+  List<File> photo = [];
+  List<String> imageUrlList = [];
+  final ImagePicker _picker = ImagePicker();
+
+  Future imgFromGallery() async {
+    final pickedImages = await _picker.pickMultiImage();
+    for (int i = 0; i < pickedImages.length; i++) {
+      photo.add(File(pickedImages[i].path));
+    }
+    checkLengthPhoto();
+    update();
+  }
+
+  Future imgFromCamera() async {
+    final ImagePicker picker = ImagePicker();
+    final XFile? image = await picker.pickImage(source: ImageSource.camera);
+    if (image != null) {
+      photo.add(File(image.path));
+      checkLengthPhoto();
+      update();
+    }
+  }
+
+  void deleteImage(int index) {
+    if (index < imageUrlList.length) {
+      imageUrlList.removeAt(index);
+    } else {
+      photo.removeAt(index - imageUrlList.length);
+    }
+    checkLengthPhoto();
+    update();
+  }
 }

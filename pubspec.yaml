@@ -112,6 +112,9 @@ dependencies:
   # data structures
   dartz: ^0.10.1
 
+  # dotted border
+  dotted_border: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
