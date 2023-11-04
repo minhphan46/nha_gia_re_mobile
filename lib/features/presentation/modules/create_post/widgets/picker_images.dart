@@ -47,6 +47,8 @@ class PickerImages extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    double heightImage = 50.wp;
+
     return GetBuilder<CreatePostController>(
       builder: (controller) {
         return Column(
@@ -61,11 +63,11 @@ class PickerImages extends StatelessWidget {
               dashPattern: const [5, 2],
               color: controller.photoController == false
                   ? Colors.red
-                  : AppColor.green,
+                  : AppColors.green,
               child: controller.photo.isEmpty && controller.imageUrlList.isEmpty
                   ? Container(
-                      height: 70.wp,
-                      color: AppColor.white,
+                      height: heightImage,
+                      color: AppColors.white,
                       child: GestureDetector(
                         onTap: () {
                           _showPicker(context, controller);
@@ -82,7 +84,7 @@ class PickerImages extends StatelessWidget {
                               Text(
                                 "Thêm từ 3 đến 12 ảnh",
                                 style: AppTextStyles.bold14
-                                    .colorEx(AppColor.grey400),
+                                    .colorEx(AppColors.grey400),
                               )
                             ],
                           ),
@@ -90,12 +92,12 @@ class PickerImages extends StatelessWidget {
                       ),
                     )
                   : Container(
-                      color: AppColor.white,
+                      color: AppColors.white,
                       width: double.infinity,
                       child: Column(
                         children: [
                           SizedBox(
-                            height: 70.wp,
+                            height: heightImage,
                             child: ListView.builder(
                               scrollDirection: Axis.horizontal,
                               itemCount: controller.imageUrlList.length +
@@ -103,14 +105,14 @@ class PickerImages extends StatelessWidget {
                                   controller.photo.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
-                                  height: 70.wp,
+                                  height: heightImage,
                                   child: Container(
                                     padding: const EdgeInsets.symmetric(
                                       horizontal: 3,
                                     ),
                                     alignment: Alignment.center,
                                     decoration: const BoxDecoration(
-                                        color: AppColor.white),
+                                        color: AppColors.white),
                                     child: index == 0
                                         ? GestureDetector(
                                             onTap: () {
@@ -154,7 +156,7 @@ class PickerImages extends StatelessWidget {
                                                               1]
                                                           .path),
                                                       fit: BoxFit.cover,
-                                                      height: 70.wp,
+                                                      height: heightImage,
                                                     ),
                                               Positioned(
                                                 top: -10,
@@ -163,7 +165,7 @@ class PickerImages extends StatelessWidget {
                                                   icon: const Icon(
                                                     Icons.close,
                                                     size: 20,
-                                                    color: AppColor.green,
+                                                    color: AppColors.green,
                                                   ),
                                                   onPressed: () {
                                                     controller
@@ -185,9 +187,14 @@ class PickerImages extends StatelessWidget {
             const SizedBox(height: 8),
             Visibility(
               visible: controller.photoController == false,
-              child: Text(
-                "     Số lượng hình ảnh từ 3 đến 10 hình",
-                style: TextStyle(color: Colors.red, fontSize: 12.sp),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Số lượng hình ảnh từ 3 đến 12 hình",
+                    style: AppTextStyles.regular14.colorEx(AppColors.red),
+                  ),
+                ],
               ),
             )
           ],

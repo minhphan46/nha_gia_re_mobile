@@ -27,16 +27,16 @@ class ChooseTypeUserCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: controller.isPersonal.value == true
-                        ? AppColor.greenLight
-                        : AppColor.grey200,
+                        ? AppColors.greenLight
+                        : AppColors.grey200,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
                     "Cá nhân",
                     style: AppTextStyles.medium14.copyWith(
                       color: controller.isPersonal.value == true
-                          ? AppColor.green
-                          : AppColor.grey600,
+                          ? AppColors.green
+                          : AppColors.grey600,
                     ),
                   ),
                 ),
@@ -55,16 +55,16 @@ class ChooseTypeUserCard extends StatelessWidget {
                   ),
                   decoration: BoxDecoration(
                     color: controller.isPersonal.value != true
-                        ? AppColor.greenLight
-                        : AppColor.grey200,
+                        ? AppColors.greenLight
+                        : AppColors.grey200,
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Text(
                     "Môi giới",
                     style: AppTextStyles.medium14.copyWith(
                       color: controller.isPersonal.value != true
-                          ? AppColor.green
-                          : AppColor.grey600,
+                          ? AppColors.green
+                          : AppColors.grey600,
                     ),
                   ),
                 ),

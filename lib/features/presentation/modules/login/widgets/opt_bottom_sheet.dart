@@ -31,21 +31,21 @@ class OTPBottomSheet extends StatelessWidget {
             // text xac nhan otp
             Text(
               "Xác nhận mã OTP",
-              style: AppTextStyles.bold20.colorEx(AppColor.green),
+              style: AppTextStyles.bold20.colorEx(AppColors.green),
             ),
             const SizedBox(height: 10),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(
                 "Một mã xác thực gồm 6 số đã được gửi đến email của bạn",
-                style: AppTextStyles.regular14.colorEx(AppColor.lightBlack),
+                style: AppTextStyles.regular14.colorEx(AppColors.lightBlack),
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 60),
             Text(
               "Nhập mã để tiếp tục",
-              style: AppTextStyles.regular14.colorEx(AppColor.lightBlack),
+              style: AppTextStyles.regular14.colorEx(AppColors.lightBlack),
               textAlign: TextAlign.center,
             ),
 // opt
@@ -56,7 +56,7 @@ class OTPBottomSheet extends StatelessWidget {
                 controller: otpController,
                 width: MediaQuery.of(context).size.width,
                 fieldWidth: 52,
-                style: AppTextStyles.bold24.colorEx(AppColor.green)!,
+                style: AppTextStyles.bold24.colorEx(AppColors.green)!,
                 textFieldAlignment: MainAxisAlignment.spaceAround,
                 fieldStyle: FieldStyle.box,
                 onCompleted: (pin) {
@@ -69,16 +69,16 @@ class OTPBottomSheet extends StatelessWidget {
               child: Text.rich(
                 TextSpan(
                   text: 'Bạn không nhận được mã? ',
-                  style: AppTextStyles.regular14.colorEx(AppColor.lightBlack),
+                  style: AppTextStyles.regular14.colorEx(AppColors.lightBlack),
                   children: <InlineSpan>[
                     TextSpan(
                       text: 'Gửi lại ',
-                      style: AppTextStyles.regular14.colorEx(AppColor.orange),
+                      style: AppTextStyles.regular14.colorEx(AppColors.orange),
                       children: <InlineSpan>[
                         TextSpan(
                           text: '(${timeCouter}s)',
                           style: AppTextStyles.regular14
-                              .colorEx(AppColor.lightBlack),
+                              .colorEx(AppColors.lightBlack),
                         )
                       ],
                     )

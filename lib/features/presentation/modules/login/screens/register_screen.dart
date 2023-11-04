@@ -98,7 +98,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             !controller.isObscureRegister.value
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: AppColor.green,
+                            color: AppColors.green,
                           ),
                           onPressed: controller.togglePassReg,
                         ),
@@ -121,8 +121,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller: controller.registerPassword,
                       strings: ValidateString(),
                       minLength: 8,
-                      successColor: AppColor.green,
-                      failureColor: AppColor.red,
+                      successColor: AppColors.green,
+                      failureColor: AppColors.red,
                       uppercaseCharCount: 1,
                       lowercaseCharCount: 1,
                       specialCharCount: 1,
@@ -157,7 +157,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             !controller.isObscureRepeatPass.value
                                 ? Icons.visibility
                                 : Icons.visibility_off,
-                            color: AppColor.green,
+                            color: AppColors.green,
                           ),
                           onPressed: controller.toggleRepeatPassReg,
                         ),
@@ -182,9 +182,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       controller.handleRegister();
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.green,
+                      backgroundColor: AppColors.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      textStyle: const TextStyle(color: AppColor.white),
+                      textStyle: const TextStyle(color: AppColors.white),
                       elevation: 10,
                       minimumSize: Size(100.wp, 55),
                       shape: RoundedRectangleBorder(
@@ -201,7 +201,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ))
                         : Text(
                             'Đăng ký'.tr,
-                            style: AppTextStyles.bold14.colorEx(AppColor.white),
+                            style:
+                                AppTextStyles.bold14.colorEx(AppColors.white),
                           ),
                   )),
               const SizedBox(height: 20),

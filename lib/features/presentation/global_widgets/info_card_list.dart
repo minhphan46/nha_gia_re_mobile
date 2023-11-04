@@ -20,7 +20,7 @@ class InforCardList extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       constraints: BoxConstraints(maxHeight: 35.hp),
-      color: AppColor.white,
+      color: AppColors.white,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -73,7 +73,7 @@ class InforCardList extends StatelessWidget {
                     decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: AppColor.grey500, // Text colour here
+                          color: AppColors.grey500, // Text colour here
                           width: 0.5, // Underline width
                         ),
                       ),
@@ -81,7 +81,7 @@ class InforCardList extends StatelessWidget {
                     child: Text(
                       'Xem thêm 12.345 mẫu tin khác'.tr,
                       style: AppTextStyles.regular12.copyWith(
-                        color: AppColor.grey500,
+                        color: AppColors.grey500,
                         //decoration: TextDecoration.underline,
                       ),
                     ),

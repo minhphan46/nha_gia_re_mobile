@@ -44,7 +44,7 @@ class _ExpandableContainerState extends State<ExpandableContainer>
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        color: AppColor.grey100,
+        color: AppColors.grey100,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Column(
@@ -83,7 +83,7 @@ class _ExpandableContainerState extends State<ExpandableContainer>
                     decoration: const BoxDecoration(
                       border: Border(
                         bottom: BorderSide(
-                          color: AppColor.grey500, // Text colour here
+                          color: AppColors.grey500, // Text colour here
                           width: 0.5, // Underline width
                         ),
                       ),
@@ -91,7 +91,7 @@ class _ExpandableContainerState extends State<ExpandableContainer>
                     child: Text(
                       isExpanded ? 'Thu gọn' : 'Xem thêm',
                       style: AppTextStyles.regular12.copyWith(
-                        color: AppColor.grey500,
+                        color: AppColors.grey500,
                         //decoration: TextDecoration.underline,
                       ),
                     ),

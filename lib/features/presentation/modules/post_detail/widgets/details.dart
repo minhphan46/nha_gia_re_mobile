@@ -43,12 +43,12 @@ class Detail extends StatelessWidget {
           children: [
             Text(
               title,
-              style: AppTextStyles.medium12.colorEx(AppColor.grey500),
+              style: AppTextStyles.medium12.colorEx(AppColors.grey500),
               maxLines: 2,
             ),
             Text(
               value,
-              style: AppTextStyles.medium12.colorEx(AppColor.black),
+              style: AppTextStyles.medium12.colorEx(AppColors.black),
               maxLines: 2,
             ),
           ],

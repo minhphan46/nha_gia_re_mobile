@@ -29,12 +29,12 @@ class InforCard extends StatelessWidget {
             arguments: post,
           );
         },
-        splashColor: AppColor.green,
+        splashColor: AppColors.green,
         child: Container(
           width: widthBox,
           height: 10.hp,
           decoration: BoxDecoration(
-            color: AppColor.grey100,
+            color: AppColors.grey100,
             borderRadius: BorderRadius.circular(10),
           ),
           child: Column(
@@ -68,7 +68,7 @@ class InforCard extends StatelessWidget {
                     IconText(
                       icon: Assets.money,
                       text: double.parse(post.price!).toFormattedMoney(),
-                      color: AppColor.orange,
+                      color: AppColors.orange,
                     ),
                     const SizedBox(
                       height: 8,
@@ -76,7 +76,7 @@ class InforCard extends StatelessWidget {
                     IconText(
                       icon: Assets.home,
                       text: post.address!.getDetailAddress(),
-                      color: AppColor.grey500,
+                      color: AppColors.grey500,
                     ),
                     const SizedBox(
                       height: 8,
@@ -84,7 +84,7 @@ class InforCard extends StatelessWidget {
                     IconText(
                       icon: Assets.clock,
                       text: post.postedDate!.getTimeAgo(),
-                      color: AppColor.grey500,
+                      color: AppColors.grey500,
                     ),
                   ],
                 ),

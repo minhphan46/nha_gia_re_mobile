@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/address_images_card.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/area_prices_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/base_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_property.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_user.dart';
@@ -59,7 +60,7 @@ class CreatePostScreen extends StatelessWidget {
                 BaseCard(
                   title: "Diện tích & Giá",
                   isvisible: true,
-                  child: PostInfoCard(),
+                  child: AreaPricesCard(),
                 ),
                 BaseCard(
                   title: "Thông tin khác",

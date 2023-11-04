@@ -93,4 +93,14 @@ class CreatePostController extends GetxController {
     checkLengthPhoto();
     update();
   }
+
+  // Dien tich , gia
+  final areaTextController = TextEditingController();
+  final priceTextController = TextEditingController();
+  final depositTextController = TextEditingController();
+  String? area;
+  String? price;
+  String? deposit;
+
+  // thong tin khac
 }

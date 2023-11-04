@@ -26,7 +26,7 @@ class DropdownWithTitle extends StatelessWidget {
         (String value) => DropdownMenuItem<String>(
           value: value,
           child: Text(value,
-              style: AppTextStyles.regular14.copyWith(color: AppColor.black)),
+              style: AppTextStyles.regular14.copyWith(color: AppColors.black)),
         ),
       )
       .toList();
@@ -42,7 +42,7 @@ class DropdownWithTitle extends StatelessWidget {
           padding: const EdgeInsets.only(bottom: 5, left: 5),
           child: Text(
             titleText,
-            style: AppTextStyles.bold16.colorEx(AppColor.green),
+            style: AppTextStyles.bold16.colorEx(AppColors.green),
           ),
         ),
         // field
@@ -58,7 +58,7 @@ class DropdownWithTitle extends StatelessWidget {
                   ),
                 ),
                 value: value.value,
-                style: AppTextStyles.regular14.copyWith(color: AppColor.black),
+                style: AppTextStyles.regular14.copyWith(color: AppColors.black),
                 onChanged: (String? newValue) {
                   onChanged(newValue);
                 },

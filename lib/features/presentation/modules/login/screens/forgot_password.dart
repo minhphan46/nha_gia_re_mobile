@@ -69,12 +69,13 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const SizedBox(height: 10),
                   Text(
                     "NHAGIARE",
-                    style: AppTextStyles.semiBold20.colorEx(AppColor.green),
+                    style: AppTextStyles.semiBold20.colorEx(AppColors.green),
                   ),
                   const SizedBox(height: 5),
                   Text(
                     "Vui lòng điền email gắn với tài khoản của bạn để nhận đường dẫn thay đổi mật khẩu",
-                    style: AppTextStyles.regular14.colorEx(AppColor.lightBlack),
+                    style:
+                        AppTextStyles.regular14.colorEx(AppColors.lightBlack),
                     textAlign: TextAlign.center,
                   ),
                 ],
@@ -113,9 +114,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       _showOTPBottomSheet(context);
                     },
                     style: ElevatedButton.styleFrom(
-                      backgroundColor: AppColor.green,
+                      backgroundColor: AppColors.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),
-                      textStyle: const TextStyle(color: AppColor.white),
+                      textStyle: const TextStyle(color: AppColors.white),
                       minimumSize: Size(100.wp, 55),
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(10),
@@ -132,7 +133,8 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             ))
                         : Text(
                             'Tiếp tục'.tr,
-                            style: AppTextStyles.bold14.colorEx(AppColor.white),
+                            style:
+                                AppTextStyles.bold14.colorEx(AppColors.white),
                           ),
                   )),
               const SizedBox(height: 20),

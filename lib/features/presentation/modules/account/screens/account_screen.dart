@@ -31,7 +31,7 @@ class AccountScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Column(
           children: ListTile.divideTiles(
-            color: AppColor.grey100,
+            color: AppColors.grey100,
             context: context,
             tiles: [
               // account
@@ -82,7 +82,7 @@ class AccountScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Icon(
                     Icons.favorite,
-                    color: AppColor.red,
+                    color: AppColors.red,
                     size: 25,
                   ),
                 ),
@@ -109,10 +109,10 @@ class AccountScreen extends StatelessWidget {
                             horizontal: 8, vertical: 2),
                         decoration: BoxDecoration(
                           color: controller.servicePack == 1
-                              ? AppColor.green100
+                              ? AppColors.green100
                               : controller.servicePack == 2
-                                  ? AppColor.blue100
-                                  : AppColor.red100,
+                                  ? AppColors.blue100
+                                  : AppColors.red100,
                           borderRadius: BorderRadius.circular(4),
                         ),
                         child: Text(
@@ -123,10 +123,10 @@ class AccountScreen extends StatelessWidget {
                                   : "Gói doanh nghiệp",
                           style: AppTextStyles.medium12
                               .colorEx(controller.servicePack == 1
-                                  ? AppColor.green800
+                                  ? AppColors.green800
                                   : controller.servicePack == 2
-                                      ? AppColor.blue800
-                                      : AppColor.red),
+                                      ? AppColors.blue800
+                                      : AppColors.red),
                         ),
                       )
                   ],
@@ -139,7 +139,7 @@ class AccountScreen extends StatelessWidget {
                   child: Image.asset(
                     Assets.archive,
                     height: 25,
-                    color: AppColor.black,
+                    color: AppColors.black,
                   ),
                 ),
                 trailing: const Icon(
@@ -160,7 +160,7 @@ class AccountScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Icon(
                     Icons.edit_outlined,
-                    color: AppColor.black,
+                    color: AppColors.black,
                     size: 25,
                   ),
                 ),
@@ -182,7 +182,7 @@ class AccountScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Icon(
                     Icons.lock_outline_rounded,
-                    color: AppColor.black,
+                    color: AppColors.black,
                     size: 25,
                   ),
                 ),
@@ -204,7 +204,7 @@ class AccountScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Icon(
                     Icons.language_outlined,
-                    color: AppColor.black,
+                    color: AppColors.black,
                     size: 25,
                   ),
                 ),
@@ -219,14 +219,14 @@ class AccountScreen extends StatelessWidget {
                     const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
                 title: Text(
                   'Đăng xuất',
-                  style: AppTextStyles.medium16.colorEx(AppColor.red),
+                  style: AppTextStyles.medium16.colorEx(AppColors.red),
                 ),
                 onTap: () {},
                 leading: const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 5),
                   child: Icon(
                     Icons.logout,
-                    color: AppColor.red,
+                    color: AppColors.red,
                     size: 25,
                   ),
                 ),

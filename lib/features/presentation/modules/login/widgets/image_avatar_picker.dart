@@ -53,7 +53,7 @@ class _ImageAvatarPickerState extends State<ImageAvatarPicker> {
           Positioned(
             bottom: 0,
             right: 4,
-            child: buildEditIcon(AppColor.green),
+            child: buildEditIcon(AppColors.green),
           ),
         ],
       ),
@@ -62,7 +62,7 @@ class _ImageAvatarPickerState extends State<ImageAvatarPicker> {
 
   Widget buildImage(BuildContext context) {
     return buildCircle(
-      color: AppColor.green,
+      color: AppColors.green,
       all: 1,
       child: buildCircle(
         color: Colors.white,
