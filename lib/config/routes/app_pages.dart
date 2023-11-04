@@ -82,7 +82,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.account,
-      page: () => const AccountScreen(),
+      page: () => AccountScreen(),
       binding: AccountBinding(),
     ),
     GetPage(
@@ -102,7 +102,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.setting,
-      page: () => const SettingScreen(),
+      page: () => SettingScreen(),
       binding: SettingBinding(),
     ),
   ];

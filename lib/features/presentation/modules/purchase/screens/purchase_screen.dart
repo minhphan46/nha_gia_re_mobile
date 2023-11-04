@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/purchase_controller.dart';
 
 class PurchaseScreen extends StatelessWidget {
@@ -8,8 +9,9 @@ class PurchaseScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
+    return Scaffold(
+      appBar: MyAppbar(title: "Gói dịch vụ"),
+      body: const Center(
         child: Text('Purchase Screen'),
       ),
     );

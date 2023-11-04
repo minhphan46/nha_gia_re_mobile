@@ -37,7 +37,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: const MyAppbar(title: "Đăng ký"),
+      appBar: MyAppbar(title: "Đăng ký"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(30),
         child: Form(

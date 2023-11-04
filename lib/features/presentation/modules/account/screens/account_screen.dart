@@ -1,13 +1,241 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/theme/text_styles.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/not_identity_card.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
+
+import '../../../../../config/theme/app_color.dart';
+import '../../../../../config/values/asset_image.dart';
 
 class AccountScreen extends StatelessWidget {
-  const AccountScreen({super.key});
+  AccountScreen({super.key});
+  final AccountController controller = Get.find();
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('account Screen'),
+    controller.isIdentity = false;
+    controller.servicePack = 3;
+    return Scaffold(
+      appBar: MyAppbar(
+        title: "Tài khoản",
+        isShowBack: false,
+        actions: Padding(
+          padding: const EdgeInsets.only(right: 25),
+          child: Image.asset(
+            Assets.chat,
+            width: 25,
+            height: 25,
+          ),
+        ),
+      ),
+      body: SingleChildScrollView(
+        child: Column(
+          children: ListTile.divideTiles(
+            color: AppColor.grey100,
+            context: context,
+            tiles: [
+              // account
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Text(
+                          'Nguyễn Thành Trung',
+                          style: AppTextStyles.medium16,
+                        ),
+                        const SizedBox(width: 2),
+                        if (controller.isIdentity)
+                          Image.asset(
+                            Assets.badge,
+                            height: 15,
+                            width: 15,
+                          ),
+                      ],
+                    ),
+                    if (!controller.isIdentity) const NotIdentityCard(),
+                  ],
+                ),
+                onTap: () {},
+                leading: const CircleAvatar(
+                  radius: 18,
+                  backgroundImage: AssetImage(Assets.avatarDefault),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                ),
+              ),
+              // favorite
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Text(
+                  'Đã lưu',
+                  style: AppTextStyles.medium16,
+                ),
+                onTap: () {},
+                leading: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Icon(
+                    Icons.favorite,
+                    color: AppColor.red,
+                    size: 25,
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                ),
+              ),
+              // purchase
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Gói dịch vụ',
+                      style: AppTextStyles.medium16,
+                    ),
+                    const SizedBox(height: 2),
+                    if (controller.servicePack != 0)
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: controller.servicePack == 1
+                              ? AppColor.greenLight
+                              : controller.servicePack == 2
+                                  ? AppColor.blueLight
+                                  : AppColor.redLight,
+                          borderRadius: BorderRadius.circular(4),
+                        ),
+                        child: Text(
+                          controller.servicePack == 1
+                              ? "Gói cơ bản"
+                              : controller.servicePack == 2
+                                  ? "Gói chuyên nghiệp"
+                                  : "Gói doanh nghiệp",
+                          style: AppTextStyles.medium12
+                              .colorEx(controller.servicePack == 1
+                                  ? AppColor.green
+                                  : controller.servicePack == 2
+                                      ? AppColor.blue
+                                      : AppColor.red),
+                        ),
+                      )
+                  ],
+                ),
+                onTap: () {
+                  controller.navToPurchase();
+                },
+                leading: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 5),
+                  child: Image.asset(
+                    Assets.archive,
+                    height: 25,
+                    color: AppColor.black,
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                ),
+              ),
+              // update info
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Text(
+                  'Cập nhập thông tin',
+                  style: AppTextStyles.medium16,
+                ),
+                onTap: () {},
+                leading: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Icon(
+                    Icons.edit_outlined,
+                    color: AppColor.black,
+                    size: 25,
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                ),
+              ),
+              // change Password
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Text(
+                  'Đổi mật khẩu',
+                  style: AppTextStyles.medium16,
+                ),
+                onTap: () {},
+                leading: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Icon(
+                    Icons.lock_outline_rounded,
+                    color: AppColor.black,
+                    size: 25,
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                ),
+              ),
+              // change language
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Text(
+                  'Ngôn ngữ',
+                  style: AppTextStyles.medium16,
+                ),
+                onTap: () {},
+                leading: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Icon(
+                    Icons.language_outlined,
+                    color: AppColor.black,
+                    size: 25,
+                  ),
+                ),
+                trailing: const Icon(
+                  Icons.arrow_forward_ios_rounded,
+                  size: 18,
+                ),
+              ),
+              // logout
+              ListTile(
+                contentPadding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                title: Text(
+                  'Đăng xuất',
+                  style: AppTextStyles.medium16.colorEx(AppColor.red),
+                ),
+                onTap: () {},
+                leading: const Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 5),
+                  child: Icon(
+                    Icons.logout,
+                    color: AppColor.red,
+                    size: 25,
+                  ),
+                ),
+              ),
+            ],
+          ).toList(),
+        ),
       ),
     );
   }

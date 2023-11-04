@@ -19,7 +19,11 @@ abstract class AppColor {
   static const Color grey100 = Color(0xffF6F6F6);
   static const Color yellow = Color(0xffFFCD29);
   static const Color red = Color(0xffD00000);
+  static const Color redLight = Color(0xffFAD2D2);
   static const Color neon = Color(0xff04C048);
+
+  static const Color blue = Color(0xff3730A3);
+  static const Color blueLight = Color(0xffE0E7FF);
 
 //   static const Color mainAppBarGradient1 = Color(0xff5F44B9);
 //   static const Color mainAppBarGradient2 = Color(0xff8F5BE3);

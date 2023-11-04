@@ -31,7 +31,7 @@ class _BottomBarScreenState extends State<BottomBarScreen>
       const PostManagementScreen(),
       const Scaffold(),
       const NotificationScreen(),
-      const AccountScreen(),
+      AccountScreen(),
     ];
 
     _tab = [

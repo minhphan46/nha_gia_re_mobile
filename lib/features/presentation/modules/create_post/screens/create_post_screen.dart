@@ -15,7 +15,7 @@ class CreatePostScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final formKey = GlobalKey<FormState>();
     return Scaffold(
-      appBar: const MyAppbar(
+      appBar: MyAppbar(
         title: 'Đăng tin',
       ),
       body: ListView(

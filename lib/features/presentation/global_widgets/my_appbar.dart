@@ -2,10 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../config/theme/app_color.dart';
 
+// ignore: must_be_immutable
 class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
-  const MyAppbar({required this.title, super.key});
+  MyAppbar({
+    required this.title,
+    this.isShowBack = true,
+    this.actions,
+    super.key,
+  });
 
   final String title;
+  bool? isShowBack;
+  Widget? actions;
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
@@ -21,33 +29,25 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
           height: 1.0,
         ),
       ),
-      leading: Padding(
-        padding: const EdgeInsets.only(left: 10),
-        child: IconButton(
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            size: 20,
-          ),
-          color: AppColor.black,
-          onPressed: () {
-            Get.back();
-          },
-        ),
-      ),
+      leading: (isShowBack == true)
+          ? Padding(
+              padding: const EdgeInsets.only(left: 10),
+              child: IconButton(
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  size: 20,
+                ),
+                color: AppColor.black,
+                onPressed: () {
+                  Get.back();
+                },
+              ),
+            )
+          : const SizedBox(),
       // ),
-      // actions: [
-      //   TextButton(
-      //     onPressed: () {
-      //       // deletefilter
-      //       searchController.deleteFilter();
-      //     },
-      //     child: Text(
-      //       "Đặt lại",
-      //       style: AppTextStyles.roboto16semiBold
-      //           .copyWith(color: AppColors.primaryColor),
-      //     ),
-      //   ),
-      // ],
+      actions: [
+        actions ?? const SizedBox(),
+      ],
     );
   }
 }
