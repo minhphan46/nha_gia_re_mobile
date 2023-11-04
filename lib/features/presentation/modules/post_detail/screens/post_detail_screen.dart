@@ -56,13 +56,13 @@ class PostDetailScreen extends StatelessWidget {
                         TextSpan(
                           text: double.parse(controller.post.price!)
                               .toFormattedMoney(),
-                          style:
-                              AppTextStyles.semiBold14.colorEx(AppColor.orange),
+                          style: AppTextStyles.semiBold14
+                              .colorEx(AppColors.orange),
                           children: <InlineSpan>[
                             TextSpan(
                               text: " - ${controller.post.area!} m2",
                               style: AppTextStyles.medium14
-                                  .colorEx(AppColor.grey500),
+                                  .colorEx(AppColors.grey500),
                             )
                           ],
                         ),
@@ -91,7 +91,7 @@ class PostDetailScreen extends StatelessWidget {
                         child: Text(
                           controller.post.address!.getDetailAddress(),
                           style:
-                              AppTextStyles.medium14.colorEx(AppColor.grey500),
+                              AppTextStyles.medium14.colorEx(AppColors.grey500),
                         ),
                       )
                     ],
@@ -111,7 +111,8 @@ class PostDetailScreen extends StatelessWidget {
                       const SizedBox(width: 8),
                       Text(
                         "Đăng ${controller.post.postedDate!.getTimeAgoVi()}",
-                        style: AppTextStyles.medium14.colorEx(AppColor.grey500),
+                        style:
+                            AppTextStyles.medium14.colorEx(AppColors.grey500),
                       )
                     ],
                   ),
@@ -154,7 +155,7 @@ class PostDetailScreen extends StatelessWidget {
                       child: MaterialButton(
                           elevation: 0,
                           onPressed: controller.launchPhone,
-                          color: AppColor.green,
+                          color: AppColors.green,
                           child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -181,13 +182,13 @@ class PostDetailScreen extends StatelessWidget {
                                 Image.asset(
                                   Assets.chatGreen,
                                   width: 24,
-                                  color: AppColor.green,
+                                  color: AppColors.green,
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   'Nhắn tin'.tr,
                                   style: AppTextStyles.regular12
-                                      .copyWith(color: AppColor.green),
+                                      .copyWith(color: AppColors.green),
                                 )
                               ]))),
                   Expanded(
@@ -201,13 +202,13 @@ class PostDetailScreen extends StatelessWidget {
                                 const Icon(
                                   Icons.sms_outlined,
                                   size: 24,
-                                  color: AppColor.green,
+                                  color: AppColors.green,
                                 ),
                                 const SizedBox(height: 5),
                                 Text(
                                   'SMS'.tr,
                                   style: AppTextStyles.regular12
-                                      .copyWith(color: AppColor.green),
+                                      .copyWith(color: AppColors.green),
                                 )
                               ])))
                 ]),

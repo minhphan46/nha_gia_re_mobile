@@ -17,7 +17,7 @@ class ChooseTypePropertyCard extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
       decoration: const BoxDecoration(
-          color: AppColor.grey100,
+          color: AppColors.grey100,
           borderRadius: BorderRadius.all(Radius.circular(12))),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -31,15 +31,15 @@ class ChooseTypePropertyCard extends StatelessWidget {
             decoration: const InputDecoration(
               border: OutlineInputBorder(
                 borderRadius: BorderRadius.all(Radius.circular(5)),
-                borderSide: BorderSide(color: AppColor.green),
+                borderSide: BorderSide(color: AppColors.green),
               ),
               contentPadding:
                   EdgeInsets.symmetric(horizontal: 10, vertical: 15),
               filled: true,
-              fillColor: AppColor.white,
+              fillColor: AppColors.white,
             ),
             style: AppTextStyles.regular14.colorEx(Colors.black),
-            dropdownColor: AppColor.white,
+            dropdownColor: AppColors.white,
             value: controller.selectedPropertyType!.value,
             hint: const Text("Chọn loại bất động sản"),
             items: PropertyTypes.toMap().entries.map((entry) {
@@ -83,16 +83,16 @@ class ChooseTypePropertyCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: controller.isShowSale.value == true
-                                ? AppColor.greenLight
-                                : AppColor.grey200,
+                                ? AppColors.greenLight
+                                : AppColors.grey200,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
                             "Cần bán",
                             style: AppTextStyles.medium14.copyWith(
                               color: controller.isShowSale.value == true
-                                  ? AppColor.green
-                                  : AppColor.grey600,
+                                  ? AppColors.green
+                                  : AppColors.grey600,
                             ),
                           ),
                         ),
@@ -113,16 +113,16 @@ class ChooseTypePropertyCard extends StatelessWidget {
                           ),
                           decoration: BoxDecoration(
                             color: controller.isShowSale.value != true
-                                ? AppColor.greenLight
-                                : AppColor.grey200,
+                                ? AppColors.greenLight
+                                : AppColors.grey200,
                             borderRadius: BorderRadius.circular(10),
                           ),
                           child: Text(
                             "Cho thuê",
                             style: AppTextStyles.medium14.copyWith(
                               color: controller.isShowSale.value != true
-                                  ? AppColor.green
-                                  : AppColor.grey600,
+                                  ? AppColors.green
+                                  : AppColors.grey600,
                             ),
                           ),
                         ),

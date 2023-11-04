@@ -78,7 +78,7 @@ class _CarouselAdState extends State<CarouselAd> {
                       vertical: 8.0, horizontal: 4.0),
                   decoration: BoxDecoration(
                     shape: BoxShape.circle,
-                    color: AppColor.white
+                    color: AppColors.white
                         .withOpacity(_current == entry.key ? 0.9 : 0.4),
                   ),
                 ),

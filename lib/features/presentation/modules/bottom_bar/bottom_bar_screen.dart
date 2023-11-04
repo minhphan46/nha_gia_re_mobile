@@ -36,18 +36,18 @@ class _BottomBarScreenState extends State<BottomBarScreen>
 
     _tab = [
       TabItem(
-        icon: Image.asset(Assets.home, color: AppColor.grey700),
-        activeIcon: Image.asset(Assets.home, color: AppColor.green),
+        icon: Image.asset(Assets.home, color: AppColors.grey700),
+        activeIcon: Image.asset(Assets.home, color: AppColors.green),
         title: "Trang chủ".tr,
       ),
       TabItem(
         icon: Image.asset(Assets.document),
-        activeIcon: Image.asset(Assets.document, color: AppColor.green),
+        activeIcon: Image.asset(Assets.document, color: AppColors.green),
         title: 'Quản lý tin'.tr,
       ),
       TabItem(
         icon: CircleAvatar(
-          backgroundColor: AppColor.green,
+          backgroundColor: AppColors.green,
           child: Image.asset(
             Assets.pencil,
             width: 40,
@@ -56,12 +56,12 @@ class _BottomBarScreenState extends State<BottomBarScreen>
       ),
       TabItem(
         icon: Image.asset(Assets.blog),
-        activeIcon: Image.asset(Assets.blog, color: AppColor.green),
+        activeIcon: Image.asset(Assets.blog, color: AppColors.green),
         title: 'Blog'.tr,
       ),
       TabItem(
         icon: Image.asset(Assets.user),
-        activeIcon: Image.asset(Assets.user, color: AppColor.green),
+        activeIcon: Image.asset(Assets.user, color: AppColors.green),
         title: 'Tài khoản'.tr,
       ),
     ];
@@ -73,16 +73,17 @@ class _BottomBarScreenState extends State<BottomBarScreen>
     return GetBuilder<BottomBarController>(
       builder: (_) {
         return Scaffold(
-          body: TabBarView(
-            controller: controller.tabController,
-            physics: const NeverScrollableScrollPhysics(),
-            children: _pages,
-          ),
+          // body: TabBarView(
+          //   controller: controller.tabController,
+          //   physics: const NeverScrollableScrollPhysics(),
+          //   children: _pages,
+          // ),
+          body: _pages[controller.tabIndex],
           bottomNavigationBar: ConvexAppBar(
             onTap: controller.changeTabIndex,
-            backgroundColor: AppColor.white,
-            color: AppColor.black,
-            activeColor: AppColor.green,
+            backgroundColor: AppColors.white,
+            color: AppColors.black,
+            activeColor: AppColors.green,
             style: TabStyle.fixedCircle,
             curveSize: 75,
             top: -22,

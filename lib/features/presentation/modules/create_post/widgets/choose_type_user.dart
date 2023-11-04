@@ -17,7 +17,7 @@ class ChooseTypeUserCard extends StatelessWidget {
         margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
         decoration: const BoxDecoration(
-          color: AppColor.grey100,
+          color: AppColors.grey100,
           borderRadius: BorderRadius.all(Radius.circular(12)),
         ),
         child: Column(
@@ -45,16 +45,16 @@ class ChooseTypeUserCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: controller.isPersonal.value == true
-                            ? AppColor.greenLight
-                            : AppColor.grey200,
+                            ? AppColors.greenLight
+                            : AppColors.grey200,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         "Cá nhân",
                         style: AppTextStyles.medium14.copyWith(
                           color: controller.isPersonal.value == true
-                              ? AppColor.green
-                              : AppColor.grey600,
+                              ? AppColors.green
+                              : AppColors.grey600,
                         ),
                       ),
                     ),
@@ -75,16 +75,16 @@ class ChooseTypeUserCard extends StatelessWidget {
                       ),
                       decoration: BoxDecoration(
                         color: controller.isPersonal.value != true
-                            ? AppColor.greenLight
-                            : AppColor.grey200,
+                            ? AppColors.greenLight
+                            : AppColors.grey200,
                         borderRadius: BorderRadius.circular(10),
                       ),
                       child: Text(
                         "Môi giới",
                         style: AppTextStyles.medium14.copyWith(
                           color: controller.isPersonal.value != true
-                              ? AppColor.green
-                              : AppColor.grey600,
+                              ? AppColors.green
+                              : AppColors.grey600,
                         ),
                       ),
                     ),

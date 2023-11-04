@@ -18,7 +18,7 @@ class UserCard extends StatelessWidget {
       width: double.infinity,
       padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       decoration: BoxDecoration(
-        color: AppColor.grey100,
+        color: AppColors.grey100,
         borderRadius: BorderRadius.circular(12),
       ),
       child: Row(
@@ -41,7 +41,7 @@ class UserCard extends StatelessWidget {
                     //controller.post.title!,
                     "Phan Văn Minh",
                     style: AppTextStyles.semiBold14.colorEx(
-                      AppColor.black,
+                      AppColors.black,
                     ),
                   ),
                   const SizedBox(height: 4),
@@ -49,7 +49,7 @@ class UserCard extends StatelessWidget {
                     //controller.post.title!,
                     "Cá nhân",
                     style: AppTextStyles.regular14.colorEx(
-                      AppColor.lightBlack,
+                      AppColors.lightBlack,
                     ),
                   ),
                 ],
@@ -63,19 +63,19 @@ class UserCard extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 16),
-              textStyle: const TextStyle(color: AppColor.white),
+              textStyle: const TextStyle(color: AppColors.white),
               elevation: 0,
               shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12),
                   side: const BorderSide(
-                    color: AppColor.green,
+                    color: AppColors.green,
                     width: 1,
                   )),
             ),
             child: Text(
               "Xem hồ sơ",
               style: AppTextStyles.medium14.colorEx(
-                AppColor.green,
+                AppColors.green,
               ),
             ),
           ),

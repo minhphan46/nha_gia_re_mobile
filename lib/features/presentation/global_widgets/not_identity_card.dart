@@ -15,7 +15,7 @@ class NotIdentityCard extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
         decoration: BoxDecoration(
-          color: AppColor.grey100,
+          color: AppColors.grey100,
           borderRadius: BorderRadius.circular(4),
         ),
         child: Row(
@@ -23,7 +23,7 @@ class NotIdentityCard extends StatelessWidget {
           children: [
             Text(
               "Chưa xác thực",
-              style: AppTextStyles.medium12.colorEx(AppColor.grey700),
+              style: AppTextStyles.medium12.colorEx(AppColors.grey700),
             ),
             const Icon(
               Icons.arrow_forward_ios_rounded,

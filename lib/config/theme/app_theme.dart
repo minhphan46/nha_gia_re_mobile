@@ -5,10 +5,10 @@ import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 
 ThemeData appTheme() {
   return ThemeData(
-    scaffoldBackgroundColor: AppColor.white,
+    scaffoldBackgroundColor: AppColors.white,
     //fontFamily: 'Muli',
     appBarTheme: appBarTheme(),
-    colorScheme: ColorScheme.fromSeed(seedColor: AppColor.green),
+    colorScheme: ColorScheme.fromSeed(seedColor: AppColors.green),
     useMaterial3: true,
   );
 }
@@ -18,7 +18,7 @@ AppBarTheme appBarTheme() {
     backgroundColor: Colors.white,
     elevation: 0,
     centerTitle: true,
-    iconTheme: const IconThemeData(color: AppColor.black),
-    titleTextStyle: AppTextStyles.semiBold18.colorEx(AppColor.green),
+    iconTheme: const IconThemeData(color: AppColors.black),
+    titleTextStyle: AppTextStyles.semiBold18.colorEx(AppColors.green),
   );
 }
