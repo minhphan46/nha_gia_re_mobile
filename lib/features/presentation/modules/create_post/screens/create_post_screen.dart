@@ -6,6 +6,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/create_post/widget
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/base_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_property.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_user.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/more_info_card.dart';
 import '../../../global_widgets/my_appbar.dart';
 import '../widgets/post_info_card.dart';
 
@@ -62,10 +63,10 @@ class CreatePostScreen extends StatelessWidget {
                   isvisible: true,
                   child: AreaPricesCard(),
                 ),
-                BaseCard(
+                const BaseCard(
                   title: "Thông tin khác",
                   isvisible: true,
-                  child: PostInfoCard(),
+                  child: MoreInfoCard(),
                 ),
               ],
             ),
