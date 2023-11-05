@@ -30,6 +30,7 @@ abstract class AppRoutes {
   // account
   static const account = '/account';
   static const purchase = '/account/purchase';
+  static const purchaseChoosePlan = '/account/purchase/choose_plan';
 
   // create post
   static const createPost = '/createPost';

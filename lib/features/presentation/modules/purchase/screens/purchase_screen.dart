@@ -1,10 +1,12 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/purchase/screens/purchase_choose_plan.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/widgets/package_card.dart';
 
 import '../../../../../config/theme/app_color.dart';
@@ -92,7 +94,10 @@ class PurchaseScreen extends StatelessWidget {
                                   width: double.infinity,
                                   child: MembershipPackageCard(
                                     package: e,
-                                    onTapBuy: (package) {},
+                                    onTapBuy: (package) {
+                                      Get.toNamed(AppRoutes.purchaseChoosePlan,
+                                          arguments: package);
+                                    },
                                   ),
                                 ))
                             .toList(),

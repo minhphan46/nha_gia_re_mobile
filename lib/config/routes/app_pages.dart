@@ -21,6 +21,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/post_detail/screen
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/post_management_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/screens/post_management_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/purchase_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/purchase/screens/purchase_choose_plan.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/screens/search_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/search_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/setting/screens/setting_screen.dart';
@@ -89,6 +90,10 @@ abstract class AppPages {
       name: AppRoutes.purchase,
       page: () => PurchaseScreen(),
       binding: PurchaseBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.purchaseChoosePlan,
+      page: () => PurchaseChoosePlanScreen(),
     ),
     GetPage(
       name: AppRoutes.postDetail,

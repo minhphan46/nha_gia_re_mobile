@@ -111,6 +111,7 @@ dependencies:
 
   # data structures
   dartz: ^0.10.1
+  flutter_zalopay_sdk: ^0.1.14
 
 dev_dependencies:
   flutter_test:

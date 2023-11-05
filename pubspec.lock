@@ -344,6 +344,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_zalopay_sdk:
+    dependency: "direct main"
+    description:
+      name: flutter_zalopay_sdk
+      sha256: b93a57c770197e985b5fd0c0af2ba6034f5a11215948eaff369f29ffcb20b8e8
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.1.14"
   get:
     dependency: "direct main"
     description:
