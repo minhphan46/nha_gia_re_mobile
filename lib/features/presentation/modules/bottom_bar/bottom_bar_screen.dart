@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/screens/account_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/blogs/screens/blog_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/bottom_bar/bottom_bar_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/notification/screens/notification_screen.dart';
 import '../../../../config/theme/app_color.dart';
@@ -30,7 +31,7 @@ class _BottomBarScreenState extends State<BottomBarScreen>
       HomeScreen(),
       const PostManagementScreen(),
       const Scaffold(),
-      const NotificationScreen(),
+      const BlogListScreen(),
       AccountScreen(),
     ];
 
