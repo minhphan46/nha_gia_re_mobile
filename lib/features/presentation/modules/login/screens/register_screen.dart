@@ -57,6 +57,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(
                       hintText: 'Email'.tr,
                       labelText: 'Nhập Email',
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 18.0, horizontal: 20.0),
                       errorText: (controller.registerError.value == '')
@@ -91,6 +92,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(
                         hintText: 'Mật khẩu'.tr,
                         labelText: 'Nhập mật khẩu'.tr,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 18.0, horizontal: 20.0),
                         suffixIcon: IconButton(
@@ -150,6 +152,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     decoration: InputDecoration(
                         hintText: 'Nhập lại mật khẩu'.tr,
                         labelText: 'Nhập lại mật khẩu'.tr,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                         contentPadding: const EdgeInsets.symmetric(
                             vertical: 18.0, horizontal: 20.0),
                         suffixIcon: IconButton(

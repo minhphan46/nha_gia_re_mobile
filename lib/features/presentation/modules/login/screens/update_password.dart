@@ -73,6 +73,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                   decoration: InputDecoration(
                       labelText: 'Mật khẩu mới'.tr,
                       hintText: 'Nhập mật khẩu mới'.tr,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 18.0, horizontal: 20.0),
                       suffixIcon: IconButton(
@@ -114,6 +115,7 @@ class _UpdatePasswordScreenState extends State<UpdatePasswordScreen> {
                   decoration: InputDecoration(
                       labelText: 'Nhập lại mật khẩu mới'.tr,
                       hintText: 'Nhập lại mật khẩu mới'.tr,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 18.0, horizontal: 20.0),
                       suffixIcon: IconButton(

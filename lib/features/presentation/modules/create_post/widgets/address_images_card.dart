@@ -39,34 +39,6 @@ class AddressImagesCard extends StatelessWidget {
               (value!.isNotEmpty) ? null : 'Tiêu đề không được rỗng'.tr,
         ),
         const SizedBox(height: 15),
-        TextFormField(
-          focusNode: _addressFocusNode,
-          controller: controller.addressTextController,
-          keyboardType: TextInputType.text,
-          readOnly: true,
-          textInputAction: TextInputAction.done,
-          style: AppTextStyles.regular14.colorEx(Colors.black),
-          decoration: const InputDecoration(
-            labelText: 'Địa chỉ',
-            hintText: "Địa chỉ",
-            contentPadding:
-                EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-            ),
-            filled: true,
-            fillColor: Colors.white,
-            floatingLabelBehavior: FloatingLabelBehavior.always,
-          ),
-          onTapOutside: (event) {
-            _addressFocusNode.unfocus();
-          },
-          onTap: () {},
-          onSaved: (value) {
-            controller.address = value;
-          },
-        ),
-        const SizedBox(height: 15),
         Visibility(
           visible:
               controller.selectedPropertyType!.value == PropertyTypes.apartment,
@@ -104,6 +76,34 @@ class AddressImagesCard extends StatelessWidget {
               )
             ],
           ),
+        ),
+        const SizedBox(height: 15),
+        TextFormField(
+          focusNode: _addressFocusNode,
+          controller: controller.addressTextController,
+          keyboardType: TextInputType.text,
+          readOnly: true,
+          textInputAction: TextInputAction.done,
+          style: AppTextStyles.regular14.colorEx(Colors.black),
+          decoration: const InputDecoration(
+            labelText: 'Địa chỉ',
+            hintText: "Địa chỉ",
+            contentPadding:
+                EdgeInsets.symmetric(vertical: 15.0, horizontal: 20.0),
+            border: OutlineInputBorder(
+              borderRadius: BorderRadius.all(Radius.circular(5)),
+            ),
+            filled: true,
+            fillColor: Colors.white,
+            floatingLabelBehavior: FloatingLabelBehavior.always,
+          ),
+          onTapOutside: (event) {
+            _addressFocusNode.unfocus();
+          },
+          onTap: () {},
+          onSaved: (value) {
+            controller.address = value;
+          },
         ),
         const SizedBox(height: 15),
         const PickerImages(),

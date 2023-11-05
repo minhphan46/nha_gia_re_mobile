@@ -91,6 +91,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   decoration: InputDecoration(
                       labelText: 'Email',
                       hintText: 'Nhập Email'.tr,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 18.0, horizontal: 20.0),
                       errorText: (controller.loginError.value == '')
