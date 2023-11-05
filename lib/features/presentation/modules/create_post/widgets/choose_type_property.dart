@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
-import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/domain/enums/property_types.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/base_dropdown_button.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
 
 class ChooseTypePropertyCard extends StatelessWidget {
@@ -16,20 +16,9 @@ class ChooseTypePropertyCard extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        DropdownButtonFormField(
-          decoration: const InputDecoration(
-            border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(5)),
-              borderSide: BorderSide(color: AppColors.green),
-            ),
-            contentPadding: EdgeInsets.symmetric(horizontal: 20, vertical: 15),
-            filled: true,
-            fillColor: AppColors.white,
-          ),
-          style: AppTextStyles.regular14.colorEx(Colors.black),
-          dropdownColor: AppColors.white,
+        BaseDropdownButton(
+          hint: "Loại bất động sản",
           value: controller.selectedPropertyType!.value,
-          hint: const Text("Chọn loại bất động sản"),
           items: PropertyTypes.toMap().entries.map((entry) {
             return DropdownMenuItem(
               value: entry.key,
@@ -48,6 +37,7 @@ class ChooseTypePropertyCard extends StatelessWidget {
             print("Save DropDown Fied$value");
           },
         ),
+
         const SizedBox(height: 10),
 
         /// can ban/ cho thue

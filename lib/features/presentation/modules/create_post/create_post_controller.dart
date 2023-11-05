@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 
 import '../../../domain/enums/property_types.dart';
 
@@ -103,4 +104,9 @@ class CreatePostController extends GetxController {
   String? deposit;
 
   // thong tin khac
+  Rx<FurnitureStatus?> selectedFurnitureStatus = null.obs;
+
+  void setFurnitureStatus(FurnitureStatus value) {
+    selectedFurnitureStatus.value = value;
+  }
 }
