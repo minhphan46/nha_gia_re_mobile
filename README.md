@@ -20,25 +20,25 @@
 ## Screenshots
 
 <p align="center">
-  <img src="assets/images/screenshot/loading.png" alt="Screenshot 1" width="200">
-  <img src="assets/images/screenshot/login.png" alt="Screenshot 2" width="200">
-  <img src="assets/images/screenshot/forgot.png" alt="Screenshot 3" width="200">
-  <img src="assets/images/screenshot/update.png" alt="Screenshot 4" width="200">
-  <img src="assets/images/screenshot/otp.png" alt="Screenshot 5" width="200">
+  <img src="assets/images/screenshot/loading.png" alt="Screenshot 1" width="150">
+  <img src="assets/images/screenshot/login.png" alt="Screenshot 2" width="150">
+  <img src="assets/images/screenshot/forgot.png" alt="Screenshot 3" width="150">
+  <img src="assets/images/screenshot/update.png" alt="Screenshot 4" width="150">
+  <img src="assets/images/screenshot/otp.png" alt="Screenshot 5" width="150">
 </p>
 <p align="center">
-  <img src="assets/images/screenshot/home.png" alt="Screenshot 6" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/detail.png" alt="Screenshot 7" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/post.png" alt="Screenshot 8" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/search.png" alt="Screenshot 9" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/fillter.png" alt="Screenshot 10" width="200" style="vertical-align: top;">
+  <img src="assets/images/screenshot/home.png" alt="Screenshot 6" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/detail.png" alt="Screenshot 7" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/post.png" alt="Screenshot 8" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/search.png" alt="Screenshot 9" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/fillter.png" alt="Screenshot 10" width="150" style="vertical-align: top;">
 </p>
 <p align="center">
-  <img src="assets/images/screenshot/account.png" alt="Screenshot 11" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/Blog.png" alt="Screenshot 12" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/chat_detail.png" alt="Screenshot 13" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/management.png" alt="Screenshot 14" width="200" style="vertical-align: top;">
-  <img src="assets/images/screenshot/purchase.png" alt="Screenshot 15" width="200" style="vertical-align: top;">
+  <img src="assets/images/screenshot/account.png" alt="Screenshot 11" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/Blog.png" alt="Screenshot 12" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/chat_detail.png" alt="Screenshot 13" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/management.png" alt="Screenshot 14" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/purchase.png" alt="Screenshot 15" width="150" style="vertical-align: top;">
 </p>
 
 ## Getting Started
