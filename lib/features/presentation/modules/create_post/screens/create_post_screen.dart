@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/address_images_card.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/area_prices_card.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/base_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_property.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_user.dart';
-
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/more_info_card.dart';
 import '../../../global_widgets/my_appbar.dart';
+import '../widgets/post_info_card.dart';
 
 class CreatePostScreen extends StatelessWidget {
   CreatePostScreen({super.key});
@@ -27,9 +31,43 @@ class CreatePostScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               children: <Widget>[
                 // card choose type property
-                ChooseTypePropertyCard(),
+                BaseCard(
+                  title: "Loại bất động sản",
+                  isvisible: true,
+                  child: ChooseTypePropertyCard(),
+                ),
                 // card choose type of user
-                ChooseTypeUserCard(),
+                BaseCard(
+                  title: "Bạn là",
+                  isvisible: true,
+                  child: ChooseTypeUserCard(),
+                ),
+                // post info card
+                BaseCard(
+                  title: "Thông tin bài đăng",
+                  isvisible: true,
+                  child: PostInfoCard(),
+                ),
+                BaseCard(
+                  title: "Địa chỉ & Hình ảnh",
+                  isvisible: true,
+                  child: AddressImagesCard(),
+                ),
+                BaseCard(
+                  title: "Thông tin chi tiết",
+                  isvisible: true,
+                  child: PostInfoCard(),
+                ),
+                BaseCard(
+                  title: "Diện tích & Giá",
+                  isvisible: true,
+                  child: AreaPricesCard(),
+                ),
+                const BaseCard(
+                  title: "Thông tin khác",
+                  isvisible: true,
+                  child: MoreInfoCard(),
+                ),
               ],
             ),
           ),

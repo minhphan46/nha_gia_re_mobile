@@ -113,6 +113,9 @@ dependencies:
   dartz: ^0.10.1
   flutter_zalopay_sdk: ^0.1.14
 
+  # dotted border
+  dotted_border: ^2.1.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

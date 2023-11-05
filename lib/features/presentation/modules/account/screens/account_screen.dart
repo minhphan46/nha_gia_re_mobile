@@ -5,7 +5,6 @@ import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/not_identity_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
-
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/values/asset_image.dart';
 

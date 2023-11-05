@@ -31,26 +31,26 @@ enum PropertyTypes {
 
   String getStringVi() {
     switch (this) {
-      case PropertyTypes.apartment:
+      case PropertyTypes.office:
         return "Văn phòng, Mặt bằng kinh doanh";
       case PropertyTypes.land:
         return "Đất";
-      case PropertyTypes.office:
+      case PropertyTypes.house:
         return "Nhà ở";
       case PropertyTypes.motel:
         return "Phòng trọ";
-      case PropertyTypes.house:
+      case PropertyTypes.apartment:
         return "Căn hộ/Chung cư";
     }
   }
 
   static Map<PropertyTypes, String> toMap() {
     return {
-      PropertyTypes.apartment: "Văn phòng, Mặt bằng kinh doanh",
-      PropertyTypes.land: "Đất",
-      PropertyTypes.office: "Nhà ở",
-      PropertyTypes.motel: "Phòng trọ",
-      PropertyTypes.house: "Căn hộ/Chung cư",
+      PropertyTypes.office: 'Văn phòng, Mặt bằng kinh doanh',
+      PropertyTypes.land: 'Đất',
+      PropertyTypes.house: 'Nhà ở',
+      PropertyTypes.motel: 'Phòng trọ',
+      PropertyTypes.apartment: 'Căn hộ/Chung cư',
     };
   }
 }

@@ -38,4 +38,13 @@ enum FurnitureStatus {
         return "Cao cấp";
     }
   }
+
+  static Map<FurnitureStatus, String> toMap() {
+    return {
+      FurnitureStatus.empty: 'Trống',
+      FurnitureStatus.basic: 'Cơ bản',
+      FurnitureStatus.full: 'Đầy đủ',
+      FurnitureStatus.highEnd: 'Cao cấp',
+    };
+  }
 }
