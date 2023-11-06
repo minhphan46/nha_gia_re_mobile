@@ -60,6 +60,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         errorText: (controller.loginError.value == '')
                             ? null
                             : controller.loginError.value,
+                        floatingLabelBehavior: FloatingLabelBehavior.always,
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         )),
@@ -87,6 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   decoration: InputDecoration(
                       labelText: 'Mật khẩu'.tr,
                       hintText: 'Nhập mật khẩu'.tr,
+                      floatingLabelBehavior: FloatingLabelBehavior.always,
                       contentPadding: const EdgeInsets.symmetric(
                           vertical: 18.0, horizontal: 20.0),
                       suffixIcon: IconButton(

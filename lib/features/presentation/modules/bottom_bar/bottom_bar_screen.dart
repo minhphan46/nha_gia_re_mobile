@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/screens/account_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/blogs/screens/blog_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/bottom_bar/bottom_bar_controller.dart';
-import 'package:nhagiare_mobile/features/presentation/modules/notification/screens/notification_screen.dart';
 import '../../../../config/theme/app_color.dart';
 import '../../../../config/values/asset_image.dart';
 import '../home/screens/home_screen.dart';

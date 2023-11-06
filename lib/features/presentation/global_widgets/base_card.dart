@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
-import '../../../../../config/theme/app_color.dart';
-import '../../../../../config/theme/text_styles.dart';
+import '../../../config/theme/app_color.dart';
+import '../../../config/theme/text_styles.dart';
 
 class BaseCard extends StatelessWidget {
   const BaseCard(
@@ -33,7 +33,7 @@ class BaseCard extends StatelessWidget {
               title,
               style: AppTextStyles.bold14.colorEx(Colors.black),
             ),
-            const SizedBox(height: 8),
+            const SizedBox(height: 10),
             child,
           ],
         ),

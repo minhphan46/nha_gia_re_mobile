@@ -13,7 +13,7 @@ class BlogDetailScreen extends StatefulWidget {
 }
 
 class _BlogDetailScreenState extends State<BlogDetailScreen> {
-  final BlogController _controller = Get.put(BlogController());
+  final BlogController controller = Get.put(BlogController());
   @override
   Widget build(BuildContext context) {
     Blog blog = Get.arguments;

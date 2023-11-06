@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/address_images_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/area_prices_card.dart';
-import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/base_card.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/base_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_property.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_user.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/more_info_card.dart';
@@ -63,7 +63,7 @@ class CreatePostScreen extends StatelessWidget {
                   isvisible: true,
                   child: AreaPricesCard(),
                 ),
-                const BaseCard(
+                BaseCard(
                   title: "Thông tin khác",
                   isvisible: true,
                   child: MoreInfoCard(),
