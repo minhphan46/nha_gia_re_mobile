@@ -39,7 +39,7 @@
 
             <meta-data
                 android:name="com.vng.zalo.sdk.APP_ID"
-                android:value="2553" />
+                android:value="2554" />
             <meta-data
                 android:name="com.vng.zalo.sdk.URI_SCHEME"
                 android:value="demozpdk://app" />

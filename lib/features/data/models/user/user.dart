@@ -1,3 +1,5 @@
+import 'package:nhagiare_mobile/features/data/models/post/address.dart';
+
 import '../../../domain/entities/user/user.dart';
 
 class UserModel extends UserEntity {
@@ -8,7 +10,7 @@ class UserModel extends UserEntity {
     String? role,
     String? email,
     String? password,
-    String? address,
+    AddressModel? address,
     String? firstName,
     String? lastName,
     bool? gender,
@@ -51,7 +53,7 @@ class UserModel extends UserEntity {
       role: json['role'],
       email: json['email'],
       password: json['password'],
-      address: json['address'],
+      address: AddressModel.fromJson(json['address']),
       firstName: json['first_name'],
       lastName: json['last_name'],
       gender: json['gender'],
@@ -63,7 +65,7 @@ class UserModel extends UserEntity {
       lastActiveAt: DateTime.parse(json['last_active_at']),
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      bannedUtil: DateTime.parse(json['banned_util']),
+      bannedUtil: DateTime.tryParse(json['banned_util'] ?? ""),
     );
   }
 
@@ -89,29 +91,5 @@ class UserModel extends UserEntity {
       'updated_at': updatedAt!.toIso8601String(),
       'banned_util': bannedUtil!.toIso8601String(),
     };
-  }
-
-  factory UserModel.fromEntity(UserEntity entity) {
-    return UserModel(
-      id: entity.id,
-      status: entity.status,
-      isIdentityVerified: entity.isIdentityVerified,
-      role: entity.role,
-      email: entity.email,
-      password: entity.password,
-      address: entity.address,
-      firstName: entity.firstName,
-      lastName: entity.lastName,
-      gender: entity.gender,
-      avatar: entity.avatar,
-      dob: entity.dob,
-      phone: entity.phone,
-      banReason: entity.banReason,
-      isActive: entity.isActive,
-      lastActiveAt: entity.lastActiveAt,
-      createdAt: entity.createdAt,
-      updatedAt: entity.updatedAt,
-      bannedUtil: entity.bannedUtil,
-    );
   }
 }

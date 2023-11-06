@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/purchase_controller.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/purchase/screens/purchase_payment_result_screen.dart';
 
 class PurchaseChoosePlanScreen extends StatelessWidget {
   final MembershipPackageEntity package = Get.arguments;
@@ -15,6 +17,7 @@ class PurchaseChoosePlanScreen extends StatelessWidget {
 
   final PurchaseController controller = Get.find<PurchaseController>();
   final RxInt selectedRadio = (-1).obs;
+  final RxBool isEnableButtom = true.obs;
   final List<int> months = [1, 3, 6, 12];
 
   @override
@@ -31,10 +34,23 @@ class PurchaseChoosePlanScreen extends StatelessWidget {
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.green,
                 ),
-                onPressed: selectedRadio.value != -1
-                    ? () {
-                        FlutterZaloPaySdk.payOrder(
-                            zpToken: 'AC4EID9new40bcbEYZShlfJQ');
+                onPressed: (selectedRadio.value != -1 && isEnableButtom.value)
+                    ? () async {
+                        CreateOrderResult res = await controller.createOrder(
+                            package.id, months[selectedRadio.value]);
+                        isEnableButtom.value = false;
+                        if (res.isCreateSuccess) {
+                          Get.to(() => const PurchasePaymentResultScreen(),
+                              arguments: res.appTransId);
+                        } else {
+                          Get.snackbar(
+                            "Lỗi",
+                            res.message!,
+                            backgroundColor: AppColors.red,
+                            colorText: AppColors.white,
+                          );
+                          isEnableButtom.value = true;
+                        }
                       }
                     : null,
                 child: const Text(

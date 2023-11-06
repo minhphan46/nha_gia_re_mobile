@@ -4,14 +4,20 @@ import 'package:nhagiare_mobile/features/data/data_sources/local/app_database.da
 import 'package:nhagiare_mobile/features/data/data_sources/remote/membership_package_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/new_api_service.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/remote/transaction_data_source.dart';
 import 'package:nhagiare_mobile/features/data/repository/membership_package_respository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/task_repository_impl.dart';
+import 'package:nhagiare_mobile/features/data/repository/transaction_repository_impl.dart';
+import 'package:nhagiare_mobile/features/domain/entities/order_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/repository/membership_package_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
+import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_address.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/get_local_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/remove_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/local/save_local_task.dart';
@@ -19,6 +25,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/get_tasks.
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/remove_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/save_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_task.dart';
+import 'package:sqflite/sqflite.dart';
 
 import 'features/data/repository/post_repository_impl.dart';
 import 'features/data/repository/provinces_repository_impl.dart';
@@ -140,6 +147,32 @@ Future<void> initializeDependencies() async {
   // use cases
   sl.registerSingleton<GetMembershipPackageUseCase>(
     GetMembershipPackageUseCase(
+      sl<MembershipPackageRepository>(),
+    ),
+  );
+
+  //Transaction=====================================================
+  sl.registerSingleton<TransactionRemoteDataSrc>(
+    TransactionRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<TransactionRepository>(
+    TranstractionRepositoryImpl(
+      sl<TransactionRemoteDataSrc>(),
+    ),
+  );
+
+  // use cases
+  sl.registerSingleton<GetTransactionUseCase>(
+    GetTransactionUseCase(
+      sl<TransactionRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetOrderMembershipPackageUseCase>(
+    GetOrderMembershipPackageUseCase(
       sl<MembershipPackageRepository>(),
     ),
   );
