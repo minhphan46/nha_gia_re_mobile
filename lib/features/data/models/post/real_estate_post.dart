@@ -1,5 +1,4 @@
 import 'dart:math';
-import 'package:nhagiare_mobile/features/data/models/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/enums/post_status.dart';

@@ -1,4 +1,3 @@
-import 'package:nhagiare_mobile/features/data/models/post/address.dart';
 import '../../../domain/entities/posts/address.dart';
 import '../../../domain/entities/user/user.dart';
 import '../../../domain/enums/role.dart';
