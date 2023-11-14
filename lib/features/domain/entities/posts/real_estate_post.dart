@@ -2,13 +2,15 @@ import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 
+import '../../enums/post_status.dart';
+
 class RealEstatePostEntity extends Equatable {
   final String? id;
   final String? userId;
   final String? projectId;
   final String? typeId;
   final String? unitId;
-  final String? status;
+  final PostStatus? status;
   final String? title;
   final String? description;
   final double? area;
@@ -23,7 +25,7 @@ class RealEstatePostEntity extends Equatable {
   final List<String>? videos;
   final bool? isProSeller;
   final String? infoMessage;
-  final int? priorityLevel;
+  final int? displayPriorityPoint;
   final Map<String, dynamic>? features;
   final int? postApprovalPriorityPoint;
   final int? updateCount;
@@ -57,7 +59,7 @@ class RealEstatePostEntity extends Equatable {
     this.isActive,
     this.infoMessage,
     this.updateCount,
-    this.priorityLevel,
+    this.displayPriorityPoint,
     this.isFavorite,
     this.numFavourites,
     this.numViews,
@@ -89,7 +91,7 @@ class RealEstatePostEntity extends Equatable {
         isActive,
         infoMessage,
         updateCount,
-        priorityLevel,
+        displayPriorityPoint,
         isFavorite,
         numFavourites,
         numViews,
@@ -101,7 +103,7 @@ class RealEstatePostEntity extends Equatable {
     String? projectId,
     String? typeId,
     String? unitId,
-    String? status,
+    PostStatus? status,
     String? title,
     String? description,
     double? area,
@@ -120,7 +122,7 @@ class RealEstatePostEntity extends Equatable {
     bool? isActive,
     String? infoMessage,
     int? updateCount,
-    int? priorityLevel,
+    int? displayPriorityPoint,
     int? numFavourites,
     int? numViews,
     bool? isFavorite,
@@ -151,7 +153,7 @@ class RealEstatePostEntity extends Equatable {
       isActive: isActive ?? this.isActive,
       infoMessage: infoMessage ?? this.infoMessage,
       updateCount: updateCount ?? this.updateCount,
-      priorityLevel: priorityLevel ?? this.priorityLevel,
+      displayPriorityPoint: displayPriorityPoint ?? this.displayPriorityPoint,
       numFavourites: numFavourites ?? this.numFavourites,
       numViews: numViews ?? this.numViews,
       isFavorite: isFavorite ?? this.isFavorite,

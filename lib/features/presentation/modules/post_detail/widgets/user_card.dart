@@ -49,7 +49,7 @@ class UserCard extends StatelessWidget {
                     //controller.post.title!,
                     "Cá nhân",
                     style: AppTextStyles.regular14.colorEx(
-                      AppColors.lightBlack,
+                      AppColors.grey700,
                     ),
                   ),
                 ],
