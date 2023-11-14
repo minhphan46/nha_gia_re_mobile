@@ -27,37 +27,51 @@ class ListPostsPosted extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => controller.approvedPosts.isEmpty
-        ? Center(
-            child: Text(
-              "Chưa có tin đã đăng",
-              style: AppTextStyles.bold20.copyWith(color: AppColors.green),
-            ),
-          )
-        : ListView.builder(
-            itemCount: controller.approvedPosts.length,
-            itemBuilder: (context, index) {
-              return ItemPost(
-                statusCode: PostStatusManagement.approved,
-                status:
-                    "Hiển thị đến ${controller.approvedPosts[index].expiryDate?.toHMDMYString()}",
-                post: controller.approvedPosts[index],
-                funcs: const [
-                  "Ẩn tin",
-                  "Chỉnh sửa",
-                  "Xóa tin",
-                  "Gia hạn",
-                ],
-                iconFuncs: const [
-                  Icons.remove_red_eye_outlined,
-                  Icons.edit,
-                  Icons.delete_outline,
-                  Icons.timer_outlined,
-                ],
-                onSelectedMenu: onSelectedMenu,
-                onTap: controller.navigateToDetailSceen,
-              );
-            },
-          ));
+    return FutureBuilder<List<RealEstatePostEntity>>(
+      future: controller.getPostsApproved(),
+      builder: (context, snapShot) {
+        if (!snapShot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          List<RealEstatePostEntity> data = snapShot.data!;
+          if (data.isEmpty) {
+            return Center(
+              child: Text(
+                "Chưa có tin đã đăng",
+                style: AppTextStyles.bold20.copyWith(color: AppColors.green),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: controller.approvedPosts.length,
+              itemBuilder: (context, index) {
+                return ItemPost(
+                  statusCode: PostStatusManagement.approved,
+                  status:
+                      "Hiển thị đến ${controller.approvedPosts[index].expiryDate?.toHMDMYString()}",
+                  post: controller.approvedPosts[index],
+                  funcs: const [
+                    "Ẩn tin",
+                    "Chỉnh sửa",
+                    "Xóa tin",
+                    "Gia hạn",
+                  ],
+                  iconFuncs: const [
+                    Icons.remove_red_eye_outlined,
+                    Icons.edit,
+                    Icons.delete_outline,
+                    Icons.timer_outlined,
+                  ],
+                  onSelectedMenu: onSelectedMenu,
+                  onTap: controller.navigateToDetailSceen,
+                );
+              },
+            );
+          }
+        }
+      },
+    );
   }
 }

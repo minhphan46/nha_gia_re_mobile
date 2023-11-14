@@ -14,6 +14,8 @@ import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart'
 import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_address.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
@@ -27,6 +29,9 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_tas
 import 'features/data/repository/post_repository_impl.dart';
 import 'features/data/repository/provinces_repository_impl.dart';
 import 'features/domain/repository/provinces_repository.dart';
+import 'features/domain/usecases/post/remote/get_posts_expired.dart';
+import 'features/domain/usecases/post/remote/get_posts_hided.dart';
+import 'features/domain/usecases/post/remote/get_posts_pending.dart';
 
 final sl = GetIt.instance;
 
@@ -123,6 +128,36 @@ Future<void> initializeDependencies() async {
   // use cases
   sl.registerSingleton<GetPostsUseCase>(
     GetPostsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsApprovedUseCase>(
+    GetPostsApprovedUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsPendingUseCase>(
+    GetPostsPendingUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsRejectUseCase>(
+    GetPostsRejectUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsExpiredUseCase>(
+    GetPostsExpiredUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsHidedUseCase>(
+    GetPostsHidedUseCase(
       sl<PostRepository>(),
     ),
   );

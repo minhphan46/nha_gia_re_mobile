@@ -25,35 +25,49 @@ class ListPostsHided extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => controller.hidedPosts.isEmpty
-        ? Center(
-            child: Text(
-              "Chưa có tin đã ẩn",
-              style: AppTextStyles.bold20.copyWith(color: AppColors.green),
-            ),
-          )
-        : ListView.builder(
-            itemCount: controller.hidedPosts.length,
-            itemBuilder: (context, index) {
-              return ItemPost(
-                statusCode: PostStatusManagement.hided,
-                status:
-                    "Đã ẩn tin. Hết hạn sau ${controller.hidedPosts[index].expiryDate?.toHMDMYString()}",
-                post: controller.hidedPosts[index],
-                funcs: const [
-                  "Hiện tin",
-                  "Chỉnh sửa",
-                  "Xóa tin",
-                ],
-                iconFuncs: const [
-                  Icons.remove_red_eye_outlined,
-                  Icons.edit,
-                  Icons.delete_outline,
-                ],
-                onSelectedMenu: onSelectedMenu,
-                onTap: (RealEstatePostEntity post) {},
-              );
-            },
-          ));
+    return FutureBuilder<List<RealEstatePostEntity>>(
+      future: controller.getPostsHided(),
+      builder: (context, snapShot) {
+        if (!snapShot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          List<RealEstatePostEntity> data = snapShot.data!;
+          if (data.isEmpty) {
+            return Center(
+              child: Text(
+                "Chưa có tin đã ẩn",
+                style: AppTextStyles.bold20.copyWith(color: AppColors.green),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: controller.hidedPosts.length,
+              itemBuilder: (context, index) {
+                return ItemPost(
+                  statusCode: PostStatusManagement.hided,
+                  status:
+                      "Đã ẩn tin. Hết hạn sau ${controller.hidedPosts[index].expiryDate?.toHMDMYString()}",
+                  post: controller.hidedPosts[index],
+                  funcs: const [
+                    "Hiện tin",
+                    "Chỉnh sửa",
+                    "Xóa tin",
+                  ],
+                  iconFuncs: const [
+                    Icons.remove_red_eye_outlined,
+                    Icons.edit,
+                    Icons.delete_outline,
+                  ],
+                  onSelectedMenu: onSelectedMenu,
+                  onTap: (RealEstatePostEntity post) {},
+                );
+              },
+            );
+          }
+        }
+      },
+    );
   }
 }

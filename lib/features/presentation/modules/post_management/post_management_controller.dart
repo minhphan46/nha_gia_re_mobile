@@ -1,12 +1,14 @@
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_expired.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_hided.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_pending.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
-import '../../../domain/enums/post_status.dart';
-import '../../../domain/usecases/post/remote/get_posts.dart';
 
 class PostManagementController extends GetxController {
-  List<RealEstatePostEntity> allPosts = [];
   RxList<RealEstatePostEntity> pendingPosts = <RealEstatePostEntity>[].obs;
   RxList<RealEstatePostEntity> approvedPosts = <RealEstatePostEntity>[].obs;
   RxList<RealEstatePostEntity> rejectedPosts = <RealEstatePostEntity>[].obs;
@@ -22,54 +24,82 @@ class PostManagementController extends GetxController {
   ];
 
   // get all posts
-  final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
-  Future<List<RealEstatePostEntity>> getAllPosts() async {
-    final dataState = await _getPostsUseCase();
+  final GetPostsApprovedUseCase _getPostsApprovedUseCase =
+      sl<GetPostsApprovedUseCase>();
+  final GetPostsPendingUseCase _getPostsPendingUseCase =
+      sl<GetPostsPendingUseCase>();
+  final GetPostsExpiredUseCase _getPostsExpiredUseCase =
+      sl<GetPostsExpiredUseCase>();
+  final GetPostsRejectUseCase _getPostsRejectUseCase =
+      sl<GetPostsRejectUseCase>();
+  final GetPostsHidedUseCase _getPostsHidedUseCase = sl<GetPostsHidedUseCase>();
 
+  Future<List<RealEstatePostEntity>> getPostsApproved() async {
+    final dataState = await _getPostsApprovedUseCase();
+    approvedPosts.clear();
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      allPosts = dataState.data!;
+      approvedPosts.value = dataState.data!;
       return dataState.data!;
     } else {
-      allPosts = [];
+      approvedPosts.value = [];
+      return [];
+    }
+  }
+
+  Future<List<RealEstatePostEntity>> getPostsPending() async {
+    final dataState = await _getPostsPendingUseCase();
+    pendingPosts.clear();
+    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+      pendingPosts.value = dataState.data!;
+      return dataState.data!;
+    } else {
+      pendingPosts.value = [];
+      return [];
+    }
+  }
+
+  Future<List<RealEstatePostEntity>> getPostsExpired() async {
+    final dataState = await _getPostsExpiredUseCase();
+    expiredPosts.clear();
+    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+      expiredPosts.value = dataState.data!;
+      return dataState.data!;
+    } else {
+      expiredPosts.value = [];
+      return [];
+    }
+  }
+
+  Future<List<RealEstatePostEntity>> getPostsRejected() async {
+    final dataState = await _getPostsRejectUseCase();
+    rejectedPosts.clear();
+    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+      rejectedPosts.value = dataState.data!;
+      return dataState.data!;
+    } else {
+      rejectedPosts.value = [];
+      return [];
+    }
+  }
+
+  Future<List<RealEstatePostEntity>> getPostsHided() async {
+    final dataState = await _getPostsHidedUseCase();
+    hidedPosts.clear();
+    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+      hidedPosts.value = dataState.data!;
+      return dataState.data!;
+    } else {
+      hidedPosts.value = [];
       return [];
     }
   }
 
   Future<void> getPostsInit() async {
-    allPosts.clear();
-    pendingPosts.clear();
-    expiredPosts.clear();
-    hidedPosts.clear();
-    rejectedPosts.clear();
-    approvedPosts.clear();
-    pendingPosts.clear();
-    allPosts = await getAllPosts();
-
-    for (RealEstatePostEntity post in allPosts) {
-      print(post.status);
-      if (post.status == null) continue;
-      switch (post.status!) {
-        case PostStatus.approved:
-          print(post.toString());
-          if (post.expiryDate!.isBefore(DateTime.now())) {
-            expiredPosts.add(post);
-          } else if (!post.isActive!) {
-            hidedPosts.add(post);
-          } else {
-            approvedPosts.add(post);
-          }
-          break;
-        case PostStatus.pending:
-          pendingPosts.add(post);
-          break;
-        case PostStatus.rejected:
-          rejectedPosts.add(post);
-          break;
-        case PostStatus.hided:
-          hidedPosts.add(post);
-          break;
-      }
-    }
+    getPostsApproved();
+    getPostsPending();
+    getPostsExpired();
+    getPostsRejected();
+    getPostsHided();
   }
 
   void navigateToDetailSceen(RealEstatePostEntity post) {

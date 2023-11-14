@@ -23,33 +23,47 @@ class ListPostsExpried extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => controller.expiredPosts.isEmpty
-        ? Center(
-            child: Text(
-              "Chưa có tin hết hạn",
-              style: AppTextStyles.bold20.copyWith(color: AppColors.green),
-            ),
-          )
-        : ListView.builder(
-            itemCount: controller.expiredPosts.length,
-            itemBuilder: (context, index) {
-              return ItemPost(
-                statusCode: PostStatusManagement.exprired,
-                status:
-                    "Tin đã hết hạn từ ${controller.expiredPosts[index].expiryDate?.toHMDMYString()}",
-                post: controller.expiredPosts[index],
-                funcs: const [
-                  "Xóa tin",
-                  "Gia hạn",
-                ],
-                iconFuncs: const [
-                  Icons.delete_outline,
-                  Icons.timer_outlined,
-                ],
-                onSelectedMenu: onSelectedMenu,
-                onTap: (RealEstatePostEntity post) {},
-              );
-            },
-          ));
+    return FutureBuilder<List<RealEstatePostEntity>>(
+      future: controller.getPostsExpired(),
+      builder: (context, snapShot) {
+        if (!snapShot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          List<RealEstatePostEntity> data = snapShot.data!;
+          if (data.isEmpty) {
+            return Center(
+              child: Text(
+                "Chưa có tin hết hạn",
+                style: AppTextStyles.bold20.copyWith(color: AppColors.green),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: controller.expiredPosts.length,
+              itemBuilder: (context, index) {
+                return ItemPost(
+                  statusCode: PostStatusManagement.exprired,
+                  status:
+                      "Tin đã hết hạn từ ${controller.expiredPosts[index].expiryDate?.toHMDMYString()}",
+                  post: controller.expiredPosts[index],
+                  funcs: const [
+                    "Xóa tin",
+                    "Gia hạn",
+                  ],
+                  iconFuncs: const [
+                    Icons.delete_outline,
+                    Icons.timer_outlined,
+                  ],
+                  onSelectedMenu: onSelectedMenu,
+                  onTap: (RealEstatePostEntity post) {},
+                );
+              },
+            );
+          }
+        }
+      },
+    );
   }
 }

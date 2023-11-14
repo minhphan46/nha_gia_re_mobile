@@ -8,4 +8,11 @@ abstract class PostRepository {
   Future<DataState<void>> createPost(RealEstatePostEntity post);
   Future<DataState<void>> updatePost(RealEstatePostEntity post);
   Future<DataState<void>> deletePost(String id);
+
+  // management
+  Future<DataState<List<RealEstatePostEntity>>> getPostsApproved();
+  Future<DataState<List<RealEstatePostEntity>>> getPostsHided();
+  Future<DataState<List<RealEstatePostEntity>>> getPostsPending();
+  Future<DataState<List<RealEstatePostEntity>>> getPostsRejected();
+  Future<DataState<List<RealEstatePostEntity>>> getPostsExpired();
 }

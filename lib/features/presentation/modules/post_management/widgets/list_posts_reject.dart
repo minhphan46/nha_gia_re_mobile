@@ -21,30 +21,45 @@ class ListPostsReject extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => controller.rejectedPosts.isEmpty
-        ? Center(
-            child: Text(
-              "Chưa có tin bị từ chối",
-              style: AppTextStyles.bold20.copyWith(color: AppColors.green),
-            ),
-          )
-        : ListView.builder(
-            itemCount: controller.rejectedPosts.length,
-            itemBuilder: (context, i) {
-              return ItemPost(
-                statusCode: PostStatusManagement.rejected,
-                status: controller.rejectedPosts[i].infoMessage!,
-                post: controller.rejectedPosts[i],
-                funcs: const [
-                  "Xóa tin",
-                ],
-                iconFuncs: const [
-                  Icons.delete_outline,
-                ],
-                onSelectedMenu: onSelectedMenu,
-                onTap: (RealEstatePostEntity post) {},
-              );
-            },
-          ));
+    return FutureBuilder<List<RealEstatePostEntity>>(
+      future: controller.getPostsRejected(),
+      builder: (context, snapShot) {
+        if (!snapShot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          List<RealEstatePostEntity> data = snapShot.data!;
+          if (data.isEmpty) {
+            return Center(
+              child: Text(
+                "Chưa có tin bị từ chối",
+                style: AppTextStyles.bold20.copyWith(color: AppColors.green),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: controller.rejectedPosts.length,
+              itemBuilder: (context, i) {
+                return ItemPost(
+                  statusCode: PostStatusManagement.rejected,
+                  status:
+                      controller.rejectedPosts[i].infoMessage ?? "Bị từ chối",
+                  post: controller.rejectedPosts[i],
+                  funcs: const [
+                    "Xóa tin",
+                  ],
+                  iconFuncs: const [
+                    Icons.delete_outline,
+                  ],
+                  onSelectedMenu: onSelectedMenu,
+                  onTap: (RealEstatePostEntity post) {},
+                );
+              },
+            );
+          }
+        }
+      },
+    );
   }
 }

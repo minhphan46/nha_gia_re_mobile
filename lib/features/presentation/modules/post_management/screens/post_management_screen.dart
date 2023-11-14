@@ -21,7 +21,6 @@ class _PostManagementScreenState extends State<PostManagementScreen> {
 
   @override
   void initState() {
-    controller.getPostsInit();
     super.initState();
   }
 

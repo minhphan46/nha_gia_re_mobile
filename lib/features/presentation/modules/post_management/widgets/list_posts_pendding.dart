@@ -22,32 +22,46 @@ class ListPostsPendding extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Obx(() => controller.pendingPosts.isEmpty
-        ? Center(
-            child: Text(
-              "Chưa có tin đang chờ duyệt",
-              style: AppTextStyles.bold20.copyWith(color: AppColors.green),
-            ),
-          )
-        : ListView.builder(
-            itemCount: controller.pendingPosts.length,
-            itemBuilder: (context, index) {
-              return ItemPost(
-                statusCode: PostStatusManagement.pending,
-                status: "Đang chờ duyệt",
-                post: controller.pendingPosts[index],
-                funcs: const [
-                  "Chỉnh sửa",
-                  "Xóa tin",
-                ],
-                iconFuncs: const [
-                  Icons.edit,
-                  Icons.delete_outline,
-                ],
-                onSelectedMenu: onSelectedMenu,
-                onTap: (RealEstatePostEntity post) {},
-              );
-            },
-          ));
+    return FutureBuilder<List<RealEstatePostEntity>>(
+      future: controller.getPostsPending(),
+      builder: (context, snapShot) {
+        if (!snapShot.hasData) {
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        } else {
+          List<RealEstatePostEntity> data = snapShot.data!;
+          if (data.isEmpty) {
+            return Center(
+              child: Text(
+                "Chưa có tin đang chờ duyệt",
+                style: AppTextStyles.bold20.copyWith(color: AppColors.green),
+              ),
+            );
+          } else {
+            return ListView.builder(
+              itemCount: controller.pendingPosts.length,
+              itemBuilder: (context, index) {
+                return ItemPost(
+                  statusCode: PostStatusManagement.pending,
+                  status: "Đang chờ duyệt",
+                  post: controller.pendingPosts[index],
+                  funcs: const [
+                    "Chỉnh sửa",
+                    "Xóa tin",
+                  ],
+                  iconFuncs: const [
+                    Icons.edit,
+                    Icons.delete_outline,
+                  ],
+                  onSelectedMenu: onSelectedMenu,
+                  onTap: (RealEstatePostEntity post) {},
+                );
+              },
+            );
+          }
+        }
+      },
+    );
   }
 }
