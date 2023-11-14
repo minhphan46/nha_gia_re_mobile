@@ -161,6 +161,11 @@ class _ItemPostState extends State<ItemPost> {
             // more icon
             PopupMenuButton<int>(
               initialValue: selectedMenu,
+              icon: const Icon(
+                Icons.more_vert,
+                color: AppColors.grey300,
+              ),
+              color: AppColors.white,
               // Callback that sets the selected popup menu item.
               onSelected: (int item) {
                 setState(() {
