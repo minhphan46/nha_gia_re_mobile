@@ -1,5 +1,7 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/data/models/membership_package_model.dart';
+import 'package:nhagiare_mobile/features/data/models/order_membership_package_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -7,6 +9,8 @@ import '../../../../core/utils/typedef.dart';
 
 abstract class MembershipPackageRemoteDataSrc {
   Future<HttpResponse<List<MembershipPackageModel>>> getAllMembershipPackages();
+  Future<HttpResponse<OrderMembershipPackageModel>> createOrder(
+      String id, int numOfMonth);
 }
 
 class MembershipPackageRemoteDataSrcImpl
@@ -45,33 +49,35 @@ class MembershipPackageRemoteDataSrcImpl
     }
   }
 
-  // @override
-  // Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts() async {
-  //   const url = '$apiBaseUrl$kGetPostEndpoint';
+  @override
+  Future<HttpResponse<OrderMembershipPackageModel>> createOrder(
+      String id, int numOfMonth) {
+    const url = '$apiBaseUrl$kCreateOrderEndpoint';
+    print(url);
+    try {
+      return client.post(url, data: {
+        "membership_package_id": id,
+        "num_of_subscription_month": numOfMonth,
+        "user_id": "1a9a5785-721a-4bb5-beb7-9d752e2070d4"
+      }).then((response) {
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data,
+            statusCode: response.statusCode!,
+          );
+        }
+        final DataMap taskDataList = DataMap.from(response.data["result"]);
 
-  //   try {
-  //     final response = await client.get(url);
-  //     //print('${response.statusCode} : ${response.data["message"].toString()}');
-  //     if (response.statusCode != 200) {
-  //       //print('${response.statusCode} : ${response.data["result"].toString()}');
-  //       throw ApiException(
-  //         message: response.data,
-  //         statusCode: response.statusCode!,
-  //       );
-  //     }
+        OrderMembershipPackageModel value =
+            OrderMembershipPackageModel.fromJson(taskDataList);
 
-  //     final List<DataMap> taskDataList =
-  //         List<DataMap>.from(response.data["result"]);
-
-  //     List<RealEstatePostModel> value = taskDataList
-  //         .map((postJson) => RealEstatePostModel.fromJson(postJson))
-  //         .toList();
-
-  //     return HttpResponse(value, response);
-  //   } on ApiException {
-  //     rethrow;
-  //   } catch (error) {
-  //     throw ApiException(message: error.toString(), statusCode: 505);
-  //   }
-  // }
+        return HttpResponse(value, response);
+      });
+    } on ApiException {
+      rethrow;
+    } catch (e) {
+      e.printInfo();
+      throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
 }

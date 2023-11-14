@@ -1,6 +1,7 @@
 const imagePath = 'assets/images';
 const iconPath = 'assets/icons';
 const animationsPath = 'assets/animations';
+const ilustrationPath = 'assets/ilustrations';
 
 class Assets {
   Assets._();
@@ -45,4 +46,8 @@ class Assets {
   static const String lightBulb = '$iconPath/light-bulb.png';
   static const String badge = '$iconPath/badge-check.png';
   static const String addPhoto = '$iconPath/add_photo.png';
+
+  // Ilustration
+  static const String purchaseFailed = '$ilustrationPath/purchase-fail.png';
+  static const String purchaseSuccess = '$ilustrationPath/purchase-success.png';
 }

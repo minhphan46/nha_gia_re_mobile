@@ -116,6 +116,7 @@ dependencies:
   # dotted border
   dotted_border: ^2.1.0
   flutter_html: ^3.0.0-beta.2
+  flutter_svg: ^2.0.9
 
 dev_dependencies:
   flutter_test:
@@ -163,6 +164,7 @@ flutter:
   assets:
     - assets/images/
     - assets/icons/
+    - assets/ilustrations/
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

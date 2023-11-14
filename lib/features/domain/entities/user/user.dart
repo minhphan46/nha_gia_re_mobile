@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 
 class UserEntity extends Equatable {
   final String? id;
@@ -7,7 +8,7 @@ class UserEntity extends Equatable {
   final String? role;
   final String? email;
   final String? password;
-  final String? address;
+  final AddressEntity? address;
   final String? firstName;
   final String? lastName;
   final bool? gender;
@@ -53,7 +54,7 @@ class UserEntity extends Equatable {
     String? role,
     String? email,
     String? password,
-    String? address,
+    AddressEntity? address,
     String? firstName,
     String? lastName,
     bool? gender,
