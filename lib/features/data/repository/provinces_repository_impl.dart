@@ -111,4 +111,17 @@ class ProvincesRepositoryImpl implements ProvincesRepository {
     // TODO: implement getWardCode
     throw UnimplementedError();
   }
+  
+  @override
+  DataState<List<String>> getProvinceNames() {
+    try {
+      List<String> provinceNames = [];
+      for (Map<String, Object> province in provincesVietNam) {
+        provinceNames.add(province['name'] as String);
+      }
+      return DataSuccess(provinceNames);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

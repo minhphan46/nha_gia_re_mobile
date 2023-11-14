@@ -12,7 +12,8 @@ import 'package:nhagiare_mobile/features/domain/repository/membership_package_re
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_address.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_address.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
@@ -217,6 +218,12 @@ Future<void> initializeDependencies() async {
   // use cases
   sl.registerSingleton<GetAddressUseCase>(
     GetAddressUseCase(
+      sl<ProvincesRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetProvinceNamesUseCase>(
+    GetProvinceNamesUseCase(
       sl<ProvincesRepository>(),
     ),
   );

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../../../../config/theme/text_styles.dart';
+import '../../search/widgets/my_search_delegate.dart';
 import '../home_controller.dart';
 
 class TextFiedSearch extends StatelessWidget {
   TextFiedSearch({super.key});
   final HomeController controller = Get.find<HomeController>();
+
   @override
   Widget build(BuildContext context) {
     return TextField(
@@ -28,7 +30,7 @@ class TextFiedSearch extends StatelessWidget {
       readOnly: true,
       style: AppTextStyles.regular16,
       controller: controller.textSearchController,
-      onTap: controller.onTapSearch,
+      onTap: () => controller.onTapSearch(context, MySearchDelegate()),
       onChanged: controller.onChangedTextFiled,
       onTapOutside: (event) {
         controller.searchFocusNode.unfocus();

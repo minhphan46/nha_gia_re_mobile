@@ -16,4 +16,6 @@ abstract class ProvincesRepository {
   DataState<int> getProvinceCode(String provinceName);
   DataState<int> getDistrictCode(String districtName);
   DataState<int> getWardCode(String wardName);
+
+  DataState<List<String>> getProvinceNames();
 }
