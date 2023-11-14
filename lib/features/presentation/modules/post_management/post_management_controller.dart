@@ -46,9 +46,11 @@ class PostManagementController extends GetxController {
     allPosts = await getAllPosts();
 
     for (RealEstatePostEntity post in allPosts) {
+      print(post.status);
       if (post.status == null) continue;
-      switch (post.status ?? PostStatus.pending) {
+      switch (post.status!) {
         case PostStatus.approved:
+          print(post.toString());
           if (post.expiryDate!.isBefore(DateTime.now())) {
             expiredPosts.add(post);
           } else if (!post.isActive!) {

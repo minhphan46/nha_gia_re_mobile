@@ -2,7 +2,6 @@ import 'package:nhagiare_mobile/features/data/models/membership_package_model.da
 import 'package:nhagiare_mobile/features/data/models/subscription_model.dart';
 import 'package:nhagiare_mobile/features/data/models/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/entities/transaction.dart';
-import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 
 class TransactionModel extends TransactionEntity {
   const TransactionModel({
