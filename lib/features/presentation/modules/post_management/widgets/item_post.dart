@@ -37,7 +37,7 @@ class _ItemPostState extends State<ItemPost> {
   Color getColorStatus() {
     switch (widget.statusCode) {
       case PostStatusManagement.approved:
-        return AppColors.green;
+        return AppColors.green800;
       case PostStatusManagement.pending:
         return AppColors.blue800;
       case PostStatusManagement.rejected:
@@ -49,6 +49,21 @@ class _ItemPostState extends State<ItemPost> {
     }
   }
 
+  Color getColorBackground() {
+    switch (widget.statusCode) {
+      case PostStatusManagement.approved:
+        return AppColors.green100;
+      case PostStatusManagement.pending:
+        return AppColors.blue100;
+      case PostStatusManagement.rejected:
+        return AppColors.red100;
+      case PostStatusManagement.hided:
+        return AppColors.grey100;
+      case PostStatusManagement.exprired:
+        return AppColors.yellow100;
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return InkWell(
@@ -57,8 +72,15 @@ class _ItemPostState extends State<ItemPost> {
       },
       child: Container(
         padding: const EdgeInsets.all(8.0),
-        margin: const EdgeInsets.only(bottom: 8),
-        color: AppColors.white,
+        margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 15),
+        decoration: BoxDecoration(
+          color: AppColors.white,
+          borderRadius: BorderRadius.circular(8),
+          border: Border.all(
+            color: AppColors.grey300,
+            width: 0.5,
+          ),
+        ),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -92,33 +114,47 @@ class _ItemPostState extends State<ItemPost> {
                       ),
                     ),
                   ),
-                  const SizedBox(width: 5),
+                  const SizedBox(width: 10),
                   Flexible(
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          widget.status,
-                          style: AppTextStyles.medium14
-                              .copyWith(color: getColorStatus()),
+                        Container(
+                          padding: const EdgeInsets.symmetric(
+                            horizontal: 10,
+                            vertical: 2,
+                          ),
+                          decoration: BoxDecoration(
+                            color: getColorBackground(),
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Text(
+                            widget.status,
+                            style: AppTextStyles.medium12
+                                .copyWith(color: getColorStatus()),
+                          ),
                         ),
-                        const SizedBox(height: 5),
+                        const SizedBox(height: 2),
                         Text(
                           widget.post.title!,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                           style: AppTextStyles.medium14.copyWith(
                             color: AppColors.grey700,
                           ),
                         ),
-                        const SizedBox(height: 5),
-                        Text(widget.post.address.toString(),
-                            style: AppTextStyles.regular12.copyWith(
-                              color: AppColors.grey500,
-                            )),
+                        const SizedBox(height: 2),
+                        Text(
+                          widget.post.address!.getDetailAddress(),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: AppTextStyles.regular12.copyWith(
+                            color: AppColors.grey500,
+                          ),
+                        ),
                       ],
                     ),
                   ),
-                  // column text
-                  const SizedBox(width: 8),
                 ],
               ),
             ),

@@ -44,7 +44,7 @@ class ListPostsPendding extends StatelessWidget {
               itemBuilder: (context, index) {
                 return ItemPost(
                   statusCode: PostStatusManagement.pending,
-                  status: "Đang chờ duyệt",
+                  status: "Chờ duyệt",
                   post: controller.pendingPosts[index],
                   funcs: const [
                     "Chỉnh sửa",
