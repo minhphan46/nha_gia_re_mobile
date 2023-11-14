@@ -6,17 +6,12 @@ import 'package:nhagiare_mobile/features/presentation/modules/blogs/blog_control
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
 
-class BlogDetailScreen extends StatefulWidget {
-  const BlogDetailScreen({Key? key}) : super(key: key);
-  @override
-  State<BlogDetailScreen> createState() => _BlogDetailScreenState();
-}
-
-class _BlogDetailScreenState extends State<BlogDetailScreen> {
+class BlogDetailScreen extends StatelessWidget {
   final BlogController controller = Get.put(BlogController());
+  BlogDetailScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    Blog blog = Get.arguments;
+    BlogEntity blog = Get.arguments;
     return Scaffold(
         appBar: AppBar(),
         body: SingleChildScrollView(
@@ -58,15 +53,24 @@ class _BlogDetailScreenState extends State<BlogDetailScreen> {
                     Text(blog.createdAt.getTimeAgo())
                   ],
                 ),
-                Html(
-                  data: blog.content,
-                  onLinkTap: (url, _, __) async {
-                    await launchUrl(
-                      Uri.parse(url!),
-                      mode: LaunchMode.externalApplication,
-                    );
+                FutureBuilder(
+                  future: Future.delayed(Duration.zero),
+                  builder: (context, snapshot) {
+                    if (snapshot.connectionState == ConnectionState.done) {
+                      return Html(
+                        data: blog.content,
+                        onLinkTap: (url, attributes, element) async {
+                          await launchUrl(
+                            Uri.parse(url!),
+                            mode: LaunchMode.externalApplication,
+                          );
+                        },
+                      );
+                    } else {
+                      return const CircularProgressIndicator();
+                    }
                   },
-                ),
+                )
               ],
             ),
           ),

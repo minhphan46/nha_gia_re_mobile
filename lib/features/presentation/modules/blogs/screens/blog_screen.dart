@@ -32,7 +32,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
         title: 'Blogs',
         isShowBack: false,
       ),
-      body: FutureBuilder<List<Blog>>(
+      body: FutureBuilder<List<BlogEntity>>(
           future: _controller.getBlogs(),
           builder: (context, snapshot) {
             if (!snapshot.hasData) {
@@ -40,7 +40,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                 child: CircularProgressIndicator(),
               );
             }
-            RxList<Blog> data = snapshot.data!.obs;
+            RxList<BlogEntity> data = snapshot.data!.obs;
             return ListView.builder(
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
@@ -54,7 +54,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                         //   "AppRoutes.blog_screen_detail",
                         //   arguments: data[index],
                         // );
-                        Get.to(() => const BlogDetailScreen(),
+                        Get.to(() => BlogDetailScreen(),
                             arguments: data[index]);
                       },
                       child: Stack(
@@ -112,7 +112,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                       width: 5,
                                     ),
                                     Obx(() => Text(
-                                          "${data[index].view} lượt xem",
+                                          "${data[index].numViews} lượt xem",
                                           style: AppTextStyles.regular12
                                               .copyWith(
                                                   color: AppColors.grey100),

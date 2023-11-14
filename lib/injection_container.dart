@@ -1,18 +1,22 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/local/app_database.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/remote/blog_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/membership_package_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/new_api_service.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/transaction_data_source.dart';
+import 'package:nhagiare_mobile/features/data/repository/blog_repository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/membership_package_respository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/task_repository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/transaction_repository_impl.dart';
 import 'package:nhagiare_mobile/features/domain/entities/order_membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/repository/blog_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/membership_package_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/blog/remote/get_all_blogs.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_address.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
@@ -174,6 +178,26 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetOrderMembershipPackageUseCase>(
     GetOrderMembershipPackageUseCase(
       sl<MembershipPackageRepository>(),
+    ),
+  );
+
+  // Blog =====================================================
+  // blog repository
+  sl.registerSingleton<BlogRemoteDataSrc>(
+    BlogRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<BlogRepository>(
+    BlogRepositoryImpl(
+      sl<BlogRemoteDataSrc>(),
+    ),
+  );
+
+  sl.registerSingleton<GetBlogsUseCase>(
+    GetBlogsUseCase(
+      sl<BlogRepository>(),
     ),
   );
 

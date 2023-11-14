@@ -1,25 +1,27 @@
 import 'package:equatable/equatable.dart';
 
-class Blog extends Equatable {
+class BlogEntity extends Equatable {
   final String id;
   final String title;
   final String shortDescription;
   final String author;
   final String content;
   final String thumbnail;
-  final int view;
+  final int numViews;
   final DateTime createdAt;
+  final bool isFavorite;
   final bool isActive;
 
-  const Blog({
+  const BlogEntity({
     required this.id,
     required this.title,
     required this.shortDescription,
     required this.content,
     required this.thumbnail,
-    required this.view,
+    required this.numViews,
     required this.createdAt,
     required this.author,
+    required this.isFavorite,
     required this.isActive,
   });
 
@@ -30,9 +32,10 @@ class Blog extends Equatable {
         shortDescription,
         content,
         thumbnail,
-        view,
+        numViews,
         createdAt,
         author,
+        isFavorite,
         isActive,
       ];
 }
