@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
-import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/blog.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/blogs/blog_controller.dart';
@@ -45,84 +46,79 @@ class _BlogListScreenState extends State<BlogListScreen> {
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 4, 4),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: InkWell(
-                      onTap: () {
-                        // Get.toNamed(
-                        //   "AppRoutes.blog_screen_detail",
-                        //   arguments: data[index],
-                        // );
-                        Get.to(() => const BlogDetailScreen(),
-                            arguments: data[index]);
-                      },
-                      child: Stack(
-                        alignment: AlignmentDirectional.bottomEnd,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 5.0,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(() => const BlogDetailScreen(),
+                          arguments: data[index]);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.grey100,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
                         children: [
-                          Container(
-                            height: 70.0.wp,
-                            width: 100.0.wp,
-                            foregroundDecoration: const BoxDecoration(
-                              gradient: LinearGradient(
-                                colors: [Colors.transparent, Colors.black],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomCenter,
-                                // stops: [0, 0.2, 0.8, 1],
-                              ),
-                            ),
+                          ClipRRect(
+                            borderRadius: const BorderRadius.only(
+                                topLeft: Radius.circular(10),
+                                topRight: Radius.circular(10)),
                             child: CachedNetworkImage(
                               imageUrl: data[index].thumbnail,
-                              fit: BoxFit.fill,
+                              fit: BoxFit.cover,
+                              height: 23.hp,
+                              width: double.infinity,
                             ),
                           ),
-                          const SizedBox(height: 4),
                           Padding(
-                            padding: EdgeInsets.all(8),
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 5, vertical: 5),
                             child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.stretch,
+                              crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  data[index].title,
-                                  style: AppTextStyles.semiBold18
-                                      .copyWith(color: AppColors.white),
-                                  maxLines: 3,
-                                ),
-                                const SizedBox(
-                                  height: 8,
-                                ),
-                                Text(
                                   data[index].shortDescription,
-                                  style: AppTextStyles.regular16
-                                      .copyWith(color: AppColors.white),
+                                  style: AppTextStyles.bold16,
                                   maxLines: 3,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(
-                                  height: 8,
+                                  height: 2,
+                                ),
+                                Text(
+                                  data[index].shortDescription,
+                                  style: AppTextStyles.light12
+                                      .colorEx(AppColors.grey500),
+                                  maxLines: 3,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                const SizedBox(
+                                  height: 10,
                                 ),
                                 Row(
                                   children: [
                                     const Icon(
                                       Icons.remove_red_eye_outlined,
-                                      color: AppColors.grey100,
-                                      size: 18,
+                                      color: AppColors.grey500,
+                                      size: 15,
                                     ),
                                     const SizedBox(
                                       width: 5,
                                     ),
                                     Obx(() => Text(
                                           "${data[index].view} lượt xem",
-                                          style: AppTextStyles.regular12
-                                              .copyWith(
-                                                  color: AppColors.grey100),
+                                          style: AppTextStyles.light12.copyWith(
+                                              color: AppColors.grey500),
                                         )),
                                   ],
                                 ),
                                 const SizedBox(height: 4),
                               ],
                             ),
-                          )
+                          ),
                         ],
                       ),
                     ),
