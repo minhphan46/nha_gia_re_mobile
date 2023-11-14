@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:equatable/equatable.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
+import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 
 import '../../enums/post_status.dart';
 
@@ -33,6 +34,7 @@ class RealEstatePostEntity extends Equatable {
   final int? numFavourites;
   final int? numViews;
   final bool? isFavorite;
+  final UserEntity? user;
 
   const RealEstatePostEntity({
     this.id,
@@ -63,6 +65,7 @@ class RealEstatePostEntity extends Equatable {
     this.isFavorite,
     this.numFavourites,
     this.numViews,
+    this.user,
   });
 
   @override
@@ -95,6 +98,7 @@ class RealEstatePostEntity extends Equatable {
         isFavorite,
         numFavourites,
         numViews,
+        user,
       ];
 
   RealEstatePostEntity copyWith({
@@ -126,6 +130,7 @@ class RealEstatePostEntity extends Equatable {
     int? numFavourites,
     int? numViews,
     bool? isFavorite,
+    UserEntity? user,
   }) {
     return RealEstatePostEntity(
       id: id ?? this.id,
@@ -157,6 +162,7 @@ class RealEstatePostEntity extends Equatable {
       numFavourites: numFavourites ?? this.numFavourites,
       numViews: numViews ?? this.numViews,
       isFavorite: isFavorite ?? this.isFavorite,
+      user: user ?? this.user,
     );
   }
 }

@@ -1,26 +1,26 @@
 import 'package:equatable/equatable.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
+import 'package:nhagiare_mobile/features/domain/enums/role.dart';
+import 'package:nhagiare_mobile/features/domain/enums/user_status.dart';
 
 class UserEntity extends Equatable {
   final String? id;
-  final String? status;
+  final UserStatus? status;
   final bool? isIdentityVerified;
-  final String? role;
+  final Role? role;
   final String? email;
-  final String? password;
   final AddressEntity? address;
   final String? firstName;
   final String? lastName;
   final bool? gender;
   final String? avatar;
-  final DateTime? dob;
+  final String? dob;
   final String? phone;
-  final String? banReason;
-  final bool? isActive;
   final DateTime? lastActiveAt;
   final DateTime? createdAt;
   final DateTime? updatedAt;
   final DateTime? bannedUtil;
+  final String? banReason;
 
   const UserEntity({
     this.id,
@@ -28,7 +28,6 @@ class UserEntity extends Equatable {
     this.isIdentityVerified,
     this.role,
     this.email,
-    this.password,
     this.address,
     this.firstName,
     this.lastName,
@@ -37,7 +36,6 @@ class UserEntity extends Equatable {
     this.dob,
     this.phone,
     this.banReason,
-    this.isActive,
     this.lastActiveAt,
     this.createdAt,
     this.updatedAt,
@@ -48,33 +46,30 @@ class UserEntity extends Equatable {
   List<Object?> get props => [id];
 
   UserEntity copyWith({
-    String? uuid,
-    String? status,
+    String? id,
+    UserStatus? status,
     bool? isIdentityVerified,
-    String? role,
+    Role? role,
     String? email,
-    String? password,
     AddressEntity? address,
     String? firstName,
     String? lastName,
     bool? gender,
     String? avatar,
-    DateTime? dob,
+    String? dob,
     String? phone,
     String? banReason,
-    bool? isActive,
     DateTime? lastActiveAt,
     DateTime? createdAt,
     DateTime? updatedAt,
     DateTime? bannedUtil,
   }) {
     return UserEntity(
-      id: uuid ?? id,
+      id: id ?? this.id,
       status: status ?? this.status,
       isIdentityVerified: isIdentityVerified ?? this.isIdentityVerified,
       role: role ?? this.role,
       email: email ?? this.email,
-      password: password ?? this.password,
       address: address ?? this.address,
       firstName: firstName ?? this.firstName,
       lastName: lastName ?? this.lastName,
@@ -83,11 +78,34 @@ class UserEntity extends Equatable {
       dob: dob ?? this.dob,
       phone: phone ?? this.phone,
       banReason: banReason ?? this.banReason,
-      isActive: isActive ?? this.isActive,
       lastActiveAt: lastActiveAt ?? this.lastActiveAt,
       createdAt: createdAt ?? this.createdAt,
       updatedAt: updatedAt ?? this.updatedAt,
       bannedUtil: bannedUtil ?? this.bannedUtil,
+    );
+  }
+
+  factory UserEntity.fromJson(Map<String, dynamic> json) {
+    return UserEntity(
+      id: json['id'],
+      status: UserStatus.parse(json['status'] ?? ""),
+      isIdentityVerified: json['is_identity_verified'] ?? false,
+      role: Role.parse(json['role'] ?? ""),
+      email: json['email'] ?? "",
+      address: AddressEntity.fromJson(json['address'] ?? {}),
+      firstName: json['first_name'] ?? "",
+      lastName: json['last_name'] ?? "",
+      gender: json['gender'] ?? false,
+      avatar: json['avatar'] ?? "",
+      dob: json['dob'] ?? "",
+      phone: json['phone'] ?? "",
+      banReason: json['ban_reason'] ?? "",
+      lastActiveAt: DateTime.parse(json['last_active_at'] ?? ""),
+      createdAt: DateTime.parse(json['created_at'] ?? ""),
+      updatedAt: json['updated_at'] != null
+          ? DateTime.parse(json['updated_at'])
+          : DateTime.now(),
+      bannedUtil: DateTime.tryParse(json['banned_util'] ?? ""),
     );
   }
 }
