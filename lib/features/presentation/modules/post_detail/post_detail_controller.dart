@@ -4,6 +4,7 @@ import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/motel_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/office_card.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/properties/apartment.dart';
@@ -77,14 +78,14 @@ class PostDetailController extends GetxController {
   }
 
   void navToUserProfile() {
-    //Get.toNamed(AppRoutes.personal, arguments: userInfo);
+    Get.toNamed(AppRoutes.userProfile, arguments: post.user);
   }
 
   void launchPhone() {
-    launchUrl(Uri.parse("tel://${0899922463}"));
+    launchUrl(Uri.parse("tel://${post.user!.phone}"));
   }
 
   void launchSms() {
-    launchUrl(Uri.parse("sms://${0899922463}"));
+    launchUrl(Uri.parse("sms://${post.user!.phone}"));
   }
 }

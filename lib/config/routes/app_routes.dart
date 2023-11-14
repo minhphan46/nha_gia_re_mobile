@@ -40,4 +40,10 @@ abstract class AppRoutes {
 
   // post management
   static const postManagement = '/postManagement';
+
+  // user profile
+  static const userProfile = '/userProfile/:id';
+  static String getUserProfileRoute(String id) {
+    return '/userProfile/$id';
+  }
 }

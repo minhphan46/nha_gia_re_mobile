@@ -74,7 +74,7 @@ class UserCard extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              //
+              controller.navToUserProfile();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,
