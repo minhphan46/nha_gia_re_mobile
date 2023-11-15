@@ -46,20 +46,20 @@ class _BlogListScreenState extends State<BlogListScreen> {
               itemCount: data.length,
               itemBuilder: (BuildContext context, int index) {
                 return Padding(
-                  padding: const EdgeInsets.fromLTRB(8, 8, 4, 4),
-                  child: ClipRRect(
-                    borderRadius: const BorderRadius.all(Radius.circular(10)),
-                    child: InkWell(
-                      onTap: () {
-                        // Get.toNamed(
-                        //   "AppRoutes.blog_screen_detail",
-                        //   arguments: data[index],
-                        // );
-                        Get.to(() => BlogDetailScreen(),
-                            arguments: data[index]);
-                      },
-                      child: Stack(
-                        alignment: AlignmentDirectional.bottomEnd,
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0,
+                    vertical: 5.0,
+                  ),
+                  child: InkWell(
+                    onTap: () {
+                      Get.to(() => BlogDetailScreen(), arguments: data[index]);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: AppColors.grey100,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Column(
                         children: [
                           ClipRRect(
                             borderRadius: const BorderRadius.only(
@@ -81,7 +81,7 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                 Text(
                                   data[index].shortDescription,
                                   style: AppTextStyles.bold16,
-                                  maxLines: 3,
+                                  maxLines: 2,
                                   overflow: TextOverflow.ellipsis,
                                 ),
                                 const SizedBox(
@@ -105,13 +105,12 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                       size: 15,
                                     ),
                                     const SizedBox(
-                                      width: 5,
+                                      width: 3,
                                     ),
                                     Obx(() => Text(
                                           "${data[index].numViews} lượt xem",
-                                          style: AppTextStyles.regular12
-                                              .copyWith(
-                                                  color: AppColors.grey100),
+                                          style: AppTextStyles.light12.copyWith(
+                                              color: AppColors.grey500),
                                         )),
                                   ],
                                 ),

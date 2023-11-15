@@ -83,7 +83,7 @@ class InforCard extends StatelessWidget {
                     ),
                     IconText(
                       icon: Assets.clock,
-                      text: post.postedDate!.getTimeAgo(),
+                      text: post.postedDate!.getTimeAgoVi(),
                       color: AppColors.grey500,
                     ),
                   ],

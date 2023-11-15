@@ -24,16 +24,10 @@ class BlogDetailScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      blog.title,
-                      style:
-                          AppTextStyles.bold24.copyWith(color: AppColors.green),
-                      textAlign: TextAlign.start,
-                    ),
-                  ],
+                Text(
+                  blog.title,
+                  style: AppTextStyles.bold24.copyWith(color: AppColors.green),
+                  textAlign: TextAlign.start,
                 ),
                 const SizedBox(
                   height: 10,
@@ -58,11 +52,11 @@ class BlogDetailScreen extends StatelessWidget {
                     const SizedBox(
                       width: 5,
                     ),
-                    Text(blog.createdAt.getTimeAgo())
+                    Text(blog.createdAt.getTimeAgoVi())
                   ],
                 ),
                 FutureBuilder(
-                  future: Future.delayed(Duration.zero),
+                  future: Future.delayed(const Duration(microseconds: 500)),
                   builder: (context, snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       return Html(
