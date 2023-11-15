@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/widgets/my_search_delegate.dart';
@@ -66,5 +67,10 @@ class HomeController extends GetxController {
     } else {
       return [];
     }
+  }
+
+  // navigate to notification screen
+  void navigateToNotificationScreen() {
+    Get.toNamed(AppRoutes.notifications);
   }
 }

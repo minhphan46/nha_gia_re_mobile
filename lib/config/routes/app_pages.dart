@@ -79,7 +79,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.notifications,
-      page: () => const NotificationScreen(),
+      page: () => NotificationScreen(),
       binding: NotificationBinding(),
     ),
     GetPage(
