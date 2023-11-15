@@ -63,7 +63,7 @@ class UserCard extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    controller.post.isLease! ? "Cá nhân" : "Môi giới",
+                    controller.post.isProSeller! ? "Cá nhân" : "Môi giới",
                     style: AppTextStyles.regular14.colorEx(
                       AppColors.grey700,
                     ),
