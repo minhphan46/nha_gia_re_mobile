@@ -118,6 +118,10 @@ dependencies:
   flutter_html: ^3.0.0-beta.2
   flutter_svg: ^2.0.9
 
+  # voice to text
+  speech_to_text: ^6.4.0
+  avatar_glow: ^2.0.2
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

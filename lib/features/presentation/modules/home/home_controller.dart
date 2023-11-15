@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/search/widgets/my_search_delegate.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -16,7 +18,14 @@ class HomeController extends GetxController {
   // Search
   var textSearchController = TextEditingController();
   var searchFocusNode = FocusNode();
-  onTapSearch() {}
+
+  onTapSearch(BuildContext context, MySearchDelegate delegate) async {
+    await showSearch<String>(
+      context: context,
+      delegate: delegate,
+    );
+  }
+
   onChangedTextFiled(String value) {}
 
   // image ad
@@ -58,5 +67,10 @@ class HomeController extends GetxController {
     } else {
       return [];
     }
+  }
+
+  // navigate to notification screen
+  void navigateToNotificationScreen() {
+    Get.toNamed(AppRoutes.notifications);
   }
 }

@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
-import '../../usecases/post/remote/get_address.dart';
+import '../../usecases/address/get_address.dart';
 
 class AddressEntity extends Equatable {
   final int? provinceCode;

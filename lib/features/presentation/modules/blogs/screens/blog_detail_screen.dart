@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:nhagiare_mobile/config/theme/app_color.dart';
+import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/blog.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/blogs/blog_controller.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:get/get.dart';
@@ -13,19 +16,24 @@ class BlogDetailScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     BlogEntity blog = Get.arguments;
     return Scaffold(
-        appBar: AppBar(),
+        appBar: MyAppbar(title: "Chi tiết bài viết"),
         body: SingleChildScrollView(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text(
-                  blog.title,
-                  style: Theme.of(context)
-                      .textTheme
-                      .headlineSmall!
-                      .copyWith(fontWeight: FontWeight.bold),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      blog.title,
+                      style:
+                          AppTextStyles.bold24.copyWith(color: AppColors.green),
+                      textAlign: TextAlign.start,
+                    ),
+                  ],
                 ),
                 const SizedBox(
                   height: 10,

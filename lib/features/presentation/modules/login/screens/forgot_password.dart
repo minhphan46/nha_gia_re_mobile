@@ -74,8 +74,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   const SizedBox(height: 5),
                   Text(
                     "Vui lòng điền email gắn với tài khoản của bạn để nhận đường dẫn thay đổi mật khẩu",
-                    style:
-                        AppTextStyles.regular14.colorEx(AppColors.lightBlack),
+                    style: AppTextStyles.regular14.colorEx(AppColors.grey700),
                     textAlign: TextAlign.center,
                   ),
                 ],

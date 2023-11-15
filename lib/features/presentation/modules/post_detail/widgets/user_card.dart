@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
@@ -28,28 +29,43 @@ class UserCard extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
               // avatar
-              const CircleAvatar(
-                radius: 25,
-                backgroundImage: AssetImage(Assets.avatar2),
-              ),
+              if (controller.post.user!.avatar != null)
+                ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  child: CachedNetworkImage(
+                    imageUrl: controller.post.user!.avatar!,
+                    fit: BoxFit.cover,
+                    width: 50,
+                    errorWidget: (context, _, __) {
+                      return const CircleAvatar(
+                        radius: 25,
+                        backgroundImage: AssetImage(Assets.avatar2),
+                      );
+                    },
+                  ),
+                )
+              else
+                const CircleAvatar(
+                  radius: 25,
+                  backgroundImage: AssetImage(Assets.avatar2),
+                ),
               const SizedBox(width: 10),
               // Name
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    //controller.post.title!,
-                    "Phan Văn Minh",
+                    "${controller.post.user!.firstName!} ${controller.post.user!.lastName}",
+                    //"Phan Văn Minh",
                     style: AppTextStyles.semiBold14.colorEx(
                       AppColors.black,
                     ),
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    //controller.post.title!,
-                    "Cá nhân",
+                    controller.post.isProSeller! ? "Cá nhân" : "Môi giới",
                     style: AppTextStyles.regular14.colorEx(
-                      AppColors.lightBlack,
+                      AppColors.grey700,
                     ),
                   ),
                 ],
@@ -58,7 +74,7 @@ class UserCard extends StatelessWidget {
           ),
           ElevatedButton(
             onPressed: () {
-              //
+              controller.navToUserProfile();
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

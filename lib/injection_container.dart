@@ -10,15 +10,17 @@ import 'package:nhagiare_mobile/features/data/repository/blog_repository_impl.da
 import 'package:nhagiare_mobile/features/data/repository/membership_package_respository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/task_repository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/transaction_repository_impl.dart';
-import 'package:nhagiare_mobile/features/domain/entities/order_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/repository/blog_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/membership_package_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/blog/remote/get_all_blogs.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_address.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_address.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
@@ -29,11 +31,12 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/get_tasks.
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/remove_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/save_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_task.dart';
-import 'package:sqflite/sqflite.dart';
-
 import 'features/data/repository/post_repository_impl.dart';
 import 'features/data/repository/provinces_repository_impl.dart';
 import 'features/domain/repository/provinces_repository.dart';
+import 'features/domain/usecases/post/remote/get_posts_expired.dart';
+import 'features/domain/usecases/post/remote/get_posts_hided.dart';
+import 'features/domain/usecases/post/remote/get_posts_pending.dart';
 
 final sl = GetIt.instance;
 
@@ -134,6 +137,36 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  sl.registerSingleton<GetPostsApprovedUseCase>(
+    GetPostsApprovedUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsPendingUseCase>(
+    GetPostsPendingUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsRejectUseCase>(
+    GetPostsRejectUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsExpiredUseCase>(
+    GetPostsExpiredUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostsHidedUseCase>(
+    GetPostsHidedUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
   //MembershipPackage=====================================================
   // datasource
   sl.registerSingleton<MembershipPackageRemoteDataSrc>(
@@ -209,6 +242,12 @@ Future<void> initializeDependencies() async {
   // use cases
   sl.registerSingleton<GetAddressUseCase>(
     GetAddressUseCase(
+      sl<ProvincesRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetProvinceNamesUseCase>(
+    GetProvinceNamesUseCase(
       sl<ProvincesRepository>(),
     ),
   );

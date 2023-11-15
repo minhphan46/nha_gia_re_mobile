@@ -38,14 +38,14 @@ class OTPBottomSheet extends StatelessWidget {
               padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Text(
                 "Một mã xác thực gồm 6 số đã được gửi đến email của bạn",
-                style: AppTextStyles.regular14.colorEx(AppColors.lightBlack),
+                style: AppTextStyles.regular14.colorEx(AppColors.grey700),
                 textAlign: TextAlign.center,
               ),
             ),
             const SizedBox(height: 60),
             Text(
               "Nhập mã để tiếp tục",
-              style: AppTextStyles.regular14.colorEx(AppColors.lightBlack),
+              style: AppTextStyles.regular14.colorEx(AppColors.grey700),
               textAlign: TextAlign.center,
             ),
 // opt
@@ -69,7 +69,7 @@ class OTPBottomSheet extends StatelessWidget {
               child: Text.rich(
                 TextSpan(
                   text: 'Bạn không nhận được mã? ',
-                  style: AppTextStyles.regular14.colorEx(AppColors.lightBlack),
+                  style: AppTextStyles.regular14.colorEx(AppColors.grey700),
                   children: <InlineSpan>[
                     TextSpan(
                       text: 'Gửi lại ',
@@ -78,7 +78,7 @@ class OTPBottomSheet extends StatelessWidget {
                         TextSpan(
                           text: '(${timeCouter}s)',
                           style: AppTextStyles.regular14
-                              .colorEx(AppColors.lightBlack),
+                              .colorEx(AppColors.grey700),
                         )
                       ],
                     )

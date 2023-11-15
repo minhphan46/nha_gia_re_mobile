@@ -4,9 +4,15 @@ import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/typedef.dart';
 import '../../models/post/real_estate_post.dart';
+import '../db/database_helper.dart';
 
 abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts();
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsApproved();
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsHided();
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsPending();
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsRejected();
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired();
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -16,6 +22,20 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts() async {
+    const url = '$apiBaseUrl$kGetPostEndpoint';
+    return await DatabaseHelper().getPosts(url, client);
+  }
+
+  @override
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsApproved() async {
+    const status = 'approved';
+    const url = '$apiBaseUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+
+    return await DatabaseHelper().getPosts(url, client);
+  }
+
+  @override
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired() async {
     const url = '$apiBaseUrl$kGetPostEndpoint';
 
     try {
@@ -34,6 +54,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
       List<RealEstatePostModel> value = taskDataList
           .map((postJson) => RealEstatePostModel.fromJson(postJson))
+          .where((post) => post.isActive!)
+          .where((post) => post.expiryDate!.isBefore(DateTime.now()))
           .toList();
 
       return HttpResponse(value, response);
@@ -42,5 +64,28 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     } catch (error) {
       throw ApiException(message: error.toString(), statusCode: 505);
     }
+  }
+
+  @override
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsHided() async {
+    const status = 'hided';
+    const url = '$apiBaseUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+
+    return await DatabaseHelper().getPosts(url, client);
+  }
+
+  @override
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsPending() async {
+    const status = 'pending';
+    const url = '$apiBaseUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+    return await DatabaseHelper().getPosts(url, client);
+  }
+
+  @override
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsRejected() async {
+    const status = 'rejected';
+    const url = '$apiBaseUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+
+    return await DatabaseHelper().getPosts(url, client);
   }
 }
