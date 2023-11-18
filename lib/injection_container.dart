@@ -15,6 +15,7 @@ import 'package:nhagiare_mobile/features/domain/repository/membership_package_re
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_up.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/blog/remote/get_all_blogs.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_address.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
@@ -155,6 +156,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<CheckTokenUseCase>(
     CheckTokenUseCase(
+      sl<AuthenticationRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SignUpUseCase>(
+    SignUpUseCase(
       sl<AuthenticationRepository>(),
     ),
   );

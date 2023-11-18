@@ -1,5 +1,7 @@
 import 'dart:io';
+import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_in.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_up.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 
 import '../../../../../config/routes/app_routes.dart';
@@ -18,6 +20,7 @@ class LoginController extends GetxController {
   var forgotPassEmail = TextEditingController();
   var registerEmail = TextEditingController();
   var registerPassword = TextEditingController();
+  var registerRepeatPassword = TextEditingController();
   var newPassword = TextEditingController();
 
   // final CountdownController countdownController =
@@ -69,36 +72,98 @@ class LoginController extends GetxController {
     isObscureRepeatPass.value = !isObscureRepeatPass.value;
   }
 
-  final SignInUseCase signInUseCase = sl<SignInUseCase>();
   Future<void> handleLogin() async {
-    // validate form
-    if (loginFormGlobalKey.currentState!.validate()) {
-      // show loading
-      isLoading.value = true;
-      // call api
-      Map<String, dynamic>? params = {
-        "email": loginEmail.text,
-        "password": loginPassword.text,
-      };
+    try {
+      final SignInUseCase signInUseCase = sl<SignInUseCase>();
+      // validate form
+      if (loginFormGlobalKey.currentState!.validate()) {
+        // show loading
+        isLoading.value = true;
+        // call api
+        Map<String, dynamic>? params = {
+          "email": loginEmail.text,
+          "password": loginPassword.text,
+        };
 
-      final dataState = await signInUseCase(params: params);
-      // hide loading
-      isLoading.value = false;
-      // if success
-      if (dataState is DataSuccess) {
-        Get.offAllNamed(AppRoutes.bottomBar);
-      } else {
-        Get.snackbar(
-          'Đăng nhập thất bại',
-          'Email hoặc mật khẩu không đúng',
-          backgroundColor: Colors.red,
-          colorText: Colors.white,
-        );
+        final dataState = await signInUseCase(params: params);
+        // hide loading
+        isLoading.value = false;
+        // if success
+        if (dataState is DataSuccess) {
+          Get.offAllNamed(AppRoutes.bottomBar);
+          Get.snackbar(
+            'Đăng nhập thành công',
+            'Chào mừng bạn đến với nhà giá rẻ',
+            backgroundColor: AppColors.green,
+            colorText: Colors.white,
+          );
+        } else {
+          Get.snackbar(
+            'Đăng nhập thất bại',
+            'Email hoặc mật khẩu không đúng',
+            backgroundColor: Colors.red,
+            colorText: Colors.white,
+          );
+        }
       }
-      // if fail
-      // loginError.value = 'Email hoặc mật khẩu không đúng';
+    } catch (e) {
+      Get.snackbar(
+        'Đăng nhập thất bại',
+        'Email hoặc mật khẩu không đúng',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
     }
   }
+
+  Future<void> handleRegister() async {
+    try {
+      final SignUpUseCase signUpUseCase = sl<SignUpUseCase>();
+      // validate form
+      if (registerFormGlobalKey.currentState!.validate()) {
+        // show loading
+        isLoading.value = true;
+        // call api
+        Map<String, dynamic>? params = {
+          "email": registerEmail.text,
+          "password": registerPassword.text,
+          "confirmPassword": registerRepeatPassword.text,
+        };
+
+        final dataState = await signUpUseCase(params: params);
+        // hide loading
+        isLoading.value = false;
+        // if success
+        if (dataState is DataSuccess) {
+          Get.toNamed(AppRoutes.updateInfo);
+          Get.snackbar(
+            'Đăng ký thành công',
+            'Vui lòng cập nhập thông để tiếp tục',
+            backgroundColor: AppColors.green,
+            colorText: Colors.white,
+          );
+        } else {
+          Get.snackbar(
+            'Đăng ký thất bại',
+            (dataState as DataFailed).error.toString(),
+            backgroundColor: AppColors.red800,
+            colorText: Colors.white,
+          );
+        }
+      }
+    } catch (e) {
+      Get.snackbar(
+        'Đăng ký thất bại',
+        e.toString(),
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      isLoading.value = false;
+    }
+  }
+
+  Future<void> handleForgotPass() async {}
 
   void showChangePassValidator() {
     validatorChangePassVisibility.value = true;
@@ -123,10 +188,6 @@ class LoginController extends GetxController {
   void hideValidator() {
     validatorVisibility.value = false;
   }
-
-  Future<void> handleRegister() async {}
-
-  Future<void> handleForgotPass() async {}
 
   /// this is add info form
   var fnamUpdateInfoTextController = TextEditingController();

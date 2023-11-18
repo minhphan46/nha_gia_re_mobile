@@ -108,4 +108,27 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<String>> signUp(
+      String email, String password, String confirmPassword) async {
+    try {
+      final httpResponse =
+          await _dataRemoteSrc.signUp(email, password, confirmPassword);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        String otp = httpResponse.data;
+        return DataSuccess(otp);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

@@ -3,7 +3,6 @@ import 'package:flutter_pw_validator/flutter_pw_validator.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
-import '../../../../../config/routes/app_routes.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../core/extensions/string_ex.dart';
@@ -107,6 +106,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         border: const OutlineInputBorder(
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         )),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return 'Mật khẩu không được để trống'.tr;
+                      }
+                      return null;
+                    },
                     onTapOutside: (event) {
                       _passwordFocusNode.unfocus();
                     },
@@ -145,6 +150,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
               Obx(() => TextFormField(
                     focusNode: _rePasswordFocusNode,
                     textInputAction: TextInputAction.done,
+                    controller: controller.registerRepeatPassword,
                     obscureText: controller.isObscureRepeatPass.value,
                     autocorrect: false,
                     enableSuggestions: false,
@@ -168,7 +174,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           borderRadius: BorderRadius.all(Radius.circular(10)),
                         )),
                     validator: (value) {
-                      if (value != controller.registerPassword.text) {
+                      if (value!.isEmpty) {
+                        return 'Mật khẩu không được để trống'.tr;
+                      } else if (value !=
+                          controller.registerRepeatPassword.text) {
                         return "Mật khẩu không khớp".tr;
                       }
                       return null;
@@ -180,10 +189,11 @@ class _RegisterScreenState extends State<RegisterScreen> {
               const SizedBox(height: 20),
               // Button register
               Obx(() => ElevatedButton(
-                    onPressed: () {
-                      Get.toNamed(AppRoutes.updateInfo);
-                      controller.handleRegister();
-                    },
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () {
+                            controller.handleRegister();
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),
@@ -199,7 +209,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             width: 20,
                             height: 20,
                             child: CircularProgressIndicator(
-                              color: Colors.black,
+                              color: Colors.white,
                               strokeWidth: 2,
                             ))
                         : Text(

@@ -156,12 +156,15 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       // Gửi yêu cầu đăng ky
       final response = await client.post(
         url,
+        options: Options(sendTimeout: const Duration(seconds: 10)),
         data: {
           'email': email,
           'password': password,
           'confirmPassword': confirmPassword
         },
       );
+
+      print(response.data);
 
       if (response.statusCode != 200) {
         throw ApiException(
@@ -173,10 +176,14 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       // Nếu yêu cầu thành công, giải mã dữ liệu JSON
       final DataMap data = DataMap.from(response.data["result"]);
 
-      // Lấy AccessToken và RefreshToken từ dữ liệu giải mã
       String otpCode = data['otp_code'];
 
       return HttpResponse(otpCode, response);
+    } on DioException catch (e) {
+      throw ApiException(
+        message: e.message!,
+        statusCode: e.response?.statusCode ?? 505,
+      );
     } on ApiException {
       rethrow;
     } catch (error) {

@@ -134,10 +134,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
               // button login
               Obx(() => ElevatedButton(
-                    onPressed: () {
-                      controller.handleLogin();
-                      //Get.toNamed(AppRoutes.bottomBar);
-                    },
+                    onPressed: controller.isLoading.value
+                        ? null
+                        : () {
+                            controller.handleLogin();
+                            //Get.toNamed(AppRoutes.bottomBar);
+                          },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.green,
                       padding: const EdgeInsets.symmetric(vertical: 15),
