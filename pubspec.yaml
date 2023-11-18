@@ -122,6 +122,10 @@ dependencies:
   speech_to_text: ^6.4.0
   avatar_glow: ^2.0.2
 
+  # login
+  shared_preferences: ^2.2.2
+  jwt_decoder: ^2.0.1
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

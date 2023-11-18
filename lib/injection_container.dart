@@ -31,9 +31,15 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/get_tasks.
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/remove_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/save_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_task.dart';
+import 'features/data/data_sources/local/authentication_local_data_source.dart';
+import 'features/data/data_sources/remote/authentication_data_source.dart';
+import 'features/data/repository/authentication_repository_impl.dart';
 import 'features/data/repository/post_repository_impl.dart';
 import 'features/data/repository/provinces_repository_impl.dart';
+import 'features/domain/repository/authentication_repository.dart';
 import 'features/domain/repository/provinces_repository.dart';
+import 'features/domain/usecases/authentication/check_token.dart';
+import 'features/domain/usecases/authentication/sign_in.dart';
 import 'features/domain/usecases/post/remote/get_posts_expired.dart';
 import 'features/domain/usecases/post/remote/get_posts_hided.dart';
 import 'features/domain/usecases/post/remote/get_posts_pending.dart';
@@ -115,6 +121,36 @@ Future<void> initializeDependencies() async {
   //       sl<SaveLocalTasksUseCase>(),
   //       sl<RemoveLocalTasksUseCase>(),
   //     ));
+
+  // Login =====================================================
+  // datasource
+  sl.registerSingleton<AuthenRemoteDataSrc>(
+    AuthenRemoteDataSrcImpl(
+      sl<Dio>(),
+    ),
+  );
+  sl.registerSingleton<AuthenLocalDataSrc>(
+    AuthenLocalDataSrcImpl(),
+  );
+  // repository
+  sl.registerSingleton<AuthenticationRepository>(
+    AuthenticationRepositoryImpl(
+      sl<AuthenRemoteDataSrc>(),
+      sl<AuthenLocalDataSrc>(),
+    ),
+  );
+  // use cases
+  sl.registerSingleton<SignInUseCase>(
+    SignInUseCase(
+      sl<AuthenticationRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CheckTokenUseCase>(
+    CheckTokenUseCase(
+      sl<AuthenticationRepository>(),
+    ),
+  );
 
   //Post=====================================================
   // datasource

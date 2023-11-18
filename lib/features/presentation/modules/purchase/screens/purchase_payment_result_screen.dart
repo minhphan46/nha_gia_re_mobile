@@ -97,7 +97,7 @@ class _PurchasePaymentResultScreenState
                       onPressed: () {
                         Get.back();
                       },
-                      child: Text("Quay lại"),
+                      child: const Text("Quay lại"),
                     ),
                   ],
                 ),

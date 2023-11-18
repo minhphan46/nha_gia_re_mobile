@@ -1,16 +1,20 @@
 import 'dart:io';
+import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_in.dart';
+import 'package:nhagiare_mobile/injection_container.dart';
 
+import '../../../../../config/routes/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:intl/intl.dart';
 import 'package:nhagiare_mobile/core/utils/date_picker.dart';
 
+import '../../../../core/resources/data_state.dart';
 import '../../../../core/service/device_service.dart';
 
 class LoginController extends GetxController {
-  var loginEmail = TextEditingController();
-  var loginPassword = TextEditingController();
+  var loginEmail = TextEditingController(text: "nhao@qa.team");
+  var loginPassword = TextEditingController(text: "12345678");
   var forgotPassEmail = TextEditingController();
   var registerEmail = TextEditingController();
   var registerPassword = TextEditingController();
@@ -65,7 +69,36 @@ class LoginController extends GetxController {
     isObscureRepeatPass.value = !isObscureRepeatPass.value;
   }
 
-  Future<void> handleLogin() async {}
+  final SignInUseCase signInUseCase = sl<SignInUseCase>();
+  Future<void> handleLogin() async {
+    // validate form
+    if (loginFormGlobalKey.currentState!.validate()) {
+      // show loading
+      isLoading = true.obs;
+      // call api
+      Map<String, dynamic>? params = {
+        "email": loginEmail.text,
+        "password": loginPassword.text,
+      };
+
+      final dataState = await signInUseCase(params: params);
+      // hide loading
+      isLoading = false.obs;
+      // if success
+      if (dataState is DataSuccess) {
+        Get.toNamed(AppRoutes.bottomBar);
+      } else {
+        Get.snackbar(
+          'Đăng nhập thất bại',
+          'Email hoặc mật khẩu không đúng',
+          backgroundColor: Colors.red,
+          colorText: Colors.white,
+        );
+      }
+      // if fail
+      // loginError.value = 'Email hoặc mật khẩu không đúng';
+    }
+  }
 
   void showChangePassValidator() {
     validatorChangePassVisibility.value = true;

@@ -26,6 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     _emailFocusNode.dispose();
     _passwordFocusNode.dispose();
+    controller.loginEmail.text = "nhao@qa.team";
+    controller.loginPassword.text = "12345678";
     super.dispose();
   }
 
@@ -134,7 +136,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Obx(() => ElevatedButton(
                     onPressed: () {
                       controller.handleLogin();
-                      Get.toNamed(AppRoutes.bottomBar);
+                      //Get.toNamed(AppRoutes.bottomBar);
                     },
                     style: ElevatedButton.styleFrom(
                       backgroundColor: AppColors.green,

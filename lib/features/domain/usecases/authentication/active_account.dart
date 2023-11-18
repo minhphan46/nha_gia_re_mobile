@@ -1,0 +1,14 @@
+import 'package:nhagiare_mobile/core/resources/data_state.dart';
+import 'package:nhagiare_mobile/core/usecases/usecase.dart';
+import 'package:nhagiare_mobile/features/domain/repository/authentication_repository.dart';
+
+class CheckActiveTokenUseCase implements UseCase<DataState<bool>, void> {
+  final AuthenticationRepository _authenRepository;
+
+  CheckActiveTokenUseCase(this._authenRepository);
+
+  @override
+  Future<DataState<bool>> call({void params}) {
+    return _authenRepository.checkActiveToken();
+  }
+}

@@ -1,7 +1,7 @@
 import 'package:nhagiare_mobile/features/domain/entities/subscription.dart';
 
 class SubscriptionModel extends Subscription {
-  SubscriptionModel({
+  const SubscriptionModel({
     required super.id,
     required super.userId,
     required super.packageId,
