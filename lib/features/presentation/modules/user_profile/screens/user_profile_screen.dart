@@ -2,11 +2,13 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
+import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/user_profile_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/button_follow.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/verify_component.dart';
 
 import '../../../../../config/values/asset_image.dart';
 
@@ -25,7 +27,7 @@ class UserProfileScreen extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
-            padding: const EdgeInsets.all(15.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -56,8 +58,7 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     const SizedBox(width: 10),
                     // info ========================================
-                    SizedBox(
-                      width: 68.wp,
+                    Expanded(
                       child: Column(
                         children: [
                           // info
@@ -127,7 +128,65 @@ class UserProfileScreen extends StatelessWidget {
                       ),
                     )
                   ],
-                )
+                ),
+
+                // name ============================================
+                const SizedBox(height: 10),
+                Row(
+                  children: [
+                    Text(
+                      '${controller.user!.firstName} ${controller.user!.lastName!}',
+                      style:
+                          AppTextStyles.semiBold16.colorEx(AppColors.grey700),
+                    ),
+                    const SizedBox(width: 5),
+                    const VerifyComponent(isVerify: true, isMe: false),
+                  ],
+                ),
+                // location ========================================
+                const SizedBox(height: 10),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      Assets.location,
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 80.wp,
+                      child: Text(
+                        controller.user!.address!.getDetailAddress(),
+                        style:
+                            AppTextStyles.medium14.colorEx(AppColors.grey500),
+                      ),
+                    )
+                  ],
+                ),
+                // dateCreate ======================================
+                const SizedBox(height: 5),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Image.asset(
+                      Assets.calendar,
+                      width: 20,
+                      height: 20,
+                    ),
+                    const SizedBox(width: 8),
+                    SizedBox(
+                      width: 80.wp,
+                      child: Text(
+                        "Tham gia ngày ${controller.user!.createdAt!.toDMYString()}",
+                        style:
+                            AppTextStyles.medium14.colorEx(AppColors.grey500),
+                      ),
+                    )
+                  ],
+                ),
               ],
             ),
           ),

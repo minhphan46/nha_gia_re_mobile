@@ -46,6 +46,8 @@ class Assets {
   static const String lightBulb = '$iconPath/light-bulb.png';
   static const String badge = '$iconPath/badge-check.png';
   static const String addPhoto = '$iconPath/add_photo.png';
+  static const String calendar = '$iconPath/calendar.png';
+  static const String grid = '$iconPath/view-grid.png';
 
   // Ilustration
   static const String purchaseFailed = '$ilustrationPath/purchase-fail.png';
