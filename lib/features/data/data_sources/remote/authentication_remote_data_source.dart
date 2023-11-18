@@ -9,7 +9,7 @@ import '../../../../core/utils/typedef.dart';
 abstract class AuthenRemoteDataSrc {
   Future<HttpResponse<Map<String, String>>> login(
       String email, String password);
-  Future<HttpResponse<void>> signUp(
+  Future<HttpResponse<String>> signUp(
       String email, String password, String confirmPassword);
   Future<HttpResponse<void>> changePassword(
       String oldPassword, String newPassword, String confirmNewPassword);
@@ -80,8 +80,33 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
   @override
   Future<HttpResponse<String>> refreshToken(String refreshToken) async {
-    // TODO: implement refreshToken
-    throw UnimplementedError();
+    const url = '$apiBaseUrl$kRefreshToken';
+    try {
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String refreshToken = await localDataSrc.getRefreshToken();
+      // get new access token
+      final response = await client.get(url, data: {
+        "refresh_token": refreshToken,
+      });
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+      final DataMap data = DataMap.from(response.data["result"]);
+
+      // Lấy AccessToken và RefreshToken từ dữ liệu giải mã
+      String accessToken = data['access_token'];
+
+      return HttpResponse(accessToken, response);
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
   }
 
   @override
@@ -97,7 +122,6 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String accessToken = await localDataSrc.getAccessToken();
-      print(accessToken);
       // Gửi yêu cầu đăng xuat
       final response = await client.post(
         url,
@@ -125,9 +149,38 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<void>> signUp(
+  Future<HttpResponse<String>> signUp(
       String email, String password, String confirmPassword) async {
-    // TODO: implement signUp
-    throw UnimplementedError();
+    const url = '$apiBaseUrl$kSignUp';
+    try {
+      // Gửi yêu cầu đăng ky
+      final response = await client.post(
+        url,
+        data: {
+          'email': email,
+          'password': password,
+          'confirmPassword': confirmPassword
+        },
+      );
+
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+      final DataMap data = DataMap.from(response.data["result"]);
+
+      // Lấy AccessToken và RefreshToken từ dữ liệu giải mã
+      String otpCode = data['otp_code'];
+
+      return HttpResponse(otpCode, response);
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
   }
 }

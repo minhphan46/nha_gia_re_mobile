@@ -6,7 +6,7 @@ import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/domain/repository/authentication_repository.dart';
 
 import '../data_sources/local/authentication_local_data_source.dart';
-import '../data_sources/remote/authentication_data_source.dart';
+import '../data_sources/remote/authentication_remote_data_source.dart';
 
 class AuthenticationRepositoryImpl implements AuthenticationRepository {
   final AuthenRemoteDataSrc _dataRemoteSrc;
@@ -71,9 +71,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       final httpResponse = await _dataRemoteSrc.refreshToken(refreshToken);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        print("Refresh token thanh cong");
         String accessToken = httpResponse.data;
-        print("accessToken: $accessToken");
         _dataLocalSrc.storeAccessToken(accessToken);
         return const DataSuccess(null);
       } else {

@@ -32,7 +32,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/remove_tas
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/save_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_task.dart';
 import 'features/data/data_sources/local/authentication_local_data_source.dart';
-import 'features/data/data_sources/remote/authentication_data_source.dart';
+import 'features/data/data_sources/remote/authentication_remote_data_source.dart';
 import 'features/data/repository/authentication_repository_impl.dart';
 import 'features/data/repository/post_repository_impl.dart';
 import 'features/data/repository/provinces_repository_impl.dart';
