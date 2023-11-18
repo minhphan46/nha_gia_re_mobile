@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
+import 'package:nhagiare_mobile/features/presentation/global_widgets/loading_component.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/not_identity_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
@@ -212,23 +213,28 @@ class AccountScreen extends StatelessWidget {
                 ),
               ),
               // logout
-              ListTile(
-                contentPadding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
-                title: Text(
-                  'Đăng xuất',
-                  style: AppTextStyles.medium16.colorEx(AppColors.red),
-                ),
-                onTap: () {},
-                leading: const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 5),
-                  child: Icon(
-                    Icons.logout,
-                    color: AppColors.red,
-                    size: 25,
-                  ),
-                ),
-              ),
+              Obx(() => ListTile(
+                    contentPadding:
+                        const EdgeInsets.symmetric(horizontal: 30, vertical: 2),
+                    title: controller.isLoadingLogout.value
+                        ? const LoadingComponent(color: AppColors.red)
+                        : Text(
+                            'Đăng xuất',
+                            style:
+                                AppTextStyles.medium16.colorEx(AppColors.red),
+                          ),
+                    onTap: () {
+                      controller.handleSignOut();
+                    },
+                    leading: const Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 5),
+                      child: Icon(
+                        Icons.logout,
+                        color: AppColors.red,
+                        size: 25,
+                      ),
+                    ),
+                  )),
             ],
           ).toList(),
         ),

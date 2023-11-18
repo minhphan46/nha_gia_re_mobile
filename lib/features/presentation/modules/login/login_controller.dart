@@ -74,7 +74,7 @@ class LoginController extends GetxController {
     // validate form
     if (loginFormGlobalKey.currentState!.validate()) {
       // show loading
-      isLoading = true.obs;
+      isLoading.value = true;
       // call api
       Map<String, dynamic>? params = {
         "email": loginEmail.text,
@@ -83,10 +83,10 @@ class LoginController extends GetxController {
 
       final dataState = await signInUseCase(params: params);
       // hide loading
-      isLoading = false.obs;
+      isLoading.value = false;
       // if success
       if (dataState is DataSuccess) {
-        Get.toNamed(AppRoutes.bottomBar);
+        Get.offAllNamed(AppRoutes.bottomBar);
       } else {
         Get.snackbar(
           'Đăng nhập thất bại',

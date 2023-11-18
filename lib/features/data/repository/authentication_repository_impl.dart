@@ -20,11 +20,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       final httpResponse = await _dataRemoteSrc.login(email, password);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        print("Login thanh cong");
         String accessToken = httpResponse.data['accessToken']!;
         String refreshToken = httpResponse.data['refreshToken']!;
-        print("accessToken: $accessToken");
-        print("refreshToken: $refreshToken");
         _dataLocalSrc.storeAccessToken(accessToken);
         _dataLocalSrc.storeRefreshToken(refreshToken);
         return const DataSuccess(null);
@@ -78,6 +75,28 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         String accessToken = httpResponse.data;
         print("accessToken: $accessToken");
         _dataLocalSrc.storeAccessToken(accessToken);
+        return const DataSuccess(null);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<void>> signOut() async {
+    try {
+      final httpResponse = await _dataRemoteSrc.signOut();
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        _dataLocalSrc.deleteAccessToken();
+        _dataLocalSrc.deleteRefreshToken();
         return const DataSuccess(null);
       } else {
         return DataFailed(DioException(

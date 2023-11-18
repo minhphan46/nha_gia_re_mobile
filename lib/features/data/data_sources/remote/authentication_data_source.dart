@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/local/authentication_local_data_source.dart';
+import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -44,7 +46,6 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
     const url = '$apiBaseUrl$kSignIn';
     try {
       // Gửi yêu cầu đăng nhập
-      print('email: $email, password: $password');
       final response = await client.post(
         url,
         data: {'email': email, 'password': password},
@@ -91,8 +92,30 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> signOut() async {
-    // TODO: implement signOut
-    throw UnimplementedError();
+    const url = '$apiBaseUrl$kSignOut';
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String accessToken = await localDataSrc.getAccessToken();
+      print(accessToken);
+      // Gửi yêu cầu đăng xuat
+      final response = await client.post(
+        url,
+        options: Options(headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      return HttpResponse(null, response);
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
   }
 
   @override
