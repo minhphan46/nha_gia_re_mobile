@@ -73,4 +73,8 @@ class HomeController extends GetxController {
   void navigateToNotificationScreen() {
     Get.toNamed(AppRoutes.notifications);
   }
+
+  void navigateToChatScreen() {
+    Get.toNamed(AppRoutes.chat);
+  }
 }

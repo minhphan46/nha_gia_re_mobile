@@ -139,7 +139,7 @@ class LoginController extends GetxController {
           Get.toNamed(AppRoutes.updateInfo);
           Get.snackbar(
             'Đăng ký thành công',
-            'Vui lòng cập nhập thông để tiếp tục',
+            'Vui lòng nhập OTP để tiếp tục',
             backgroundColor: AppColors.green,
             colorText: Colors.white,
           );

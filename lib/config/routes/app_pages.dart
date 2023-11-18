@@ -4,6 +4,9 @@ import 'package:nhagiare_mobile/features/presentation/modules/account/account_bi
 import 'package:nhagiare_mobile/features/presentation/modules/account/screens/account_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/bottom_bar/bottom_bar_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/chat/screens/chat_detail_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/chat/screens/chat_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/screens/create_post_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/home_binding.dart';
@@ -115,6 +118,21 @@ abstract class AppPages {
       name: AppRoutes.userProfile,
       page: () => UserProfileScreen(),
       binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.userProfile,
+      page: () => UserProfileScreen(),
+      binding: UserProfileBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.chat,
+      page: () => ChatScreen(),
+      binding: ChatBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.chatDetail,
+      page: () => ChatDetailScreen(),
+      binding: ChatBinding(),
     ),
   ];
 }

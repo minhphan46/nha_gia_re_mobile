@@ -74,7 +74,7 @@ class PostDetailController extends GetxController {
   }
 
   void navToChat() {
-    //Get.toNamed(AppRoutes.chat, arguments: userInfo);
+    Get.toNamed(AppRoutes.chatDetail, arguments: post.user);
   }
 
   void navToUserProfile() {

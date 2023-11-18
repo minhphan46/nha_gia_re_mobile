@@ -46,4 +46,11 @@ abstract class AppRoutes {
   static String getUserProfileRoute(String id) {
     return '/userProfile/$id';
   }
+
+  // chat
+  static const chat = '/chat';
+  static const chatDetail = '/chat/:id';
+  static String getChatDetailRoute(String id) {
+    return '/chat/$id';
+  }
 }

@@ -39,23 +39,34 @@ class HomeAppbar extends StatelessWidget {
           children: [
             Obx(
               () => controller.unreadMessCount.value == 0
-                  ? Padding(
-                      padding: const EdgeInsets.only(right: 12),
-                      child: Image.asset(Assets.chat, width: 25),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(right: 15),
-                      child: badges.Badge(
-                        position:
-                            badges.BadgePosition.topStart(top: -8, start: 18),
-                        badgeContent: Text(
-                          controller.unreadMessCount.value.toString(),
-                          style: AppTextStyles.bold10.colorEx(AppColors.white),
-                        ),
-                        badgeStyle: const badges.BadgeStyle(
-                          badgeColor: AppColors.green,
-                        ),
+                  ? GestureDetector(
+                      onTap: () {
+                        controller.navigateToChatScreen();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 12),
                         child: Image.asset(Assets.chat, width: 25),
+                      ),
+                    )
+                  : GestureDetector(
+                      onTap: () {
+                        controller.navigateToChatScreen();
+                      },
+                      child: Padding(
+                        padding: const EdgeInsets.only(right: 15),
+                        child: badges.Badge(
+                          position:
+                              badges.BadgePosition.topStart(top: -8, start: 18),
+                          badgeContent: Text(
+                            controller.unreadMessCount.value.toString(),
+                            style:
+                                AppTextStyles.bold10.colorEx(AppColors.white),
+                          ),
+                          badgeStyle: const badges.BadgeStyle(
+                            badgeColor: AppColors.green,
+                          ),
+                          child: Image.asset(Assets.chat, width: 25),
+                        ),
                       ),
                     ),
             ),
