@@ -1,4 +1,7 @@
-import 'package:flutter/widgets.dart';
+import 'package:flutter/material.dart';
+import 'package:nhagiare_mobile/config/theme/app_color.dart';
+import 'package:nhagiare_mobile/config/theme/text_styles.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 
 import '../../../../../config/values/asset_image.dart';
 
@@ -14,10 +17,36 @@ class VerifyComponent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image.asset(
-      Assets.badge,
-      width: 20,
-      height: 20,
-    );
+    return isVerify
+        ? Image.asset(
+            Assets.badge,
+            width: 20,
+            height: 20,
+          )
+        : isMe
+            ? InkWell(
+                onTap: () {},
+                child: Container(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 10, vertical: 2),
+                  decoration: BoxDecoration(
+                    color: AppColors.grey100,
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                  child: Row(
+                    children: [
+                      Text(
+                        "Chưa xác thực",
+                        style:
+                            AppTextStyles.medium12.colorEx(AppColors.grey700),
+                      ),
+                      const SizedBox(width: 2),
+                      const Icon(Icons.arrow_forward_ios,
+                          size: 10, color: AppColors.grey700)
+                    ],
+                  ),
+                ),
+              )
+            : const SizedBox();
   }
 }

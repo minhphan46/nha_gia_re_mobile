@@ -7,7 +7,7 @@ import '../../models/post/real_estate_post.dart';
 import '../db/database_helper.dart';
 
 abstract class PostRemoteDataSrc {
-  Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts();
+  Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts(String? userId);
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsApproved();
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsHided();
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsPending();
@@ -21,8 +21,10 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   PostRemoteDataSrcImpl(this.client);
 
   @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts() async {
-    const url = '$apiBaseUrl$kGetPostEndpoint';
+  Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts(
+      String? userId) async {
+    var url = '$apiBaseUrl$kGetPostEndpoint';
+    if (userId != null) url += '?post_user_id[eq]=\'$userId\'';
     return await DatabaseHelper().getPosts(url, client);
   }
 

@@ -3,7 +3,7 @@ import '../entities/posts/real_estate_post.dart';
 
 abstract class PostRepository {
   // API remote
-  Future<DataState<List<RealEstatePostEntity>>> getPosts();
+  Future<DataState<List<RealEstatePostEntity>>> getPosts(String? idUser);
   Future<DataState<RealEstatePostEntity>> getSinglePost(String id);
   Future<DataState<void>> createPost(RealEstatePostEntity post);
   Future<DataState<void>> updatePost(RealEstatePostEntity post);

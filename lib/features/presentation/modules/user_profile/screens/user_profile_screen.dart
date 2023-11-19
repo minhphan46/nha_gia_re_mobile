@@ -8,6 +8,7 @@ import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/user_profile_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/button_follow.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/tab_profile.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/verify_component.dart';
 
 import '../../../../../config/values/asset_image.dart';
@@ -121,8 +122,8 @@ class UserProfileScreen extends StatelessWidget {
                           const SizedBox(height: 5),
                           // button follow
                           const ButtonFollow(
-                            isFollow: true,
-                            isMe: false,
+                            isFollow: false,
+                            isMe: true,
                           )
                         ],
                       ),
@@ -140,7 +141,7 @@ class UserProfileScreen extends StatelessWidget {
                           AppTextStyles.semiBold16.colorEx(AppColors.grey700),
                     ),
                     const SizedBox(width: 5),
-                    const VerifyComponent(isVerify: true, isMe: false),
+                    const VerifyComponent(isVerify: true, isMe: true),
                   ],
                 ),
                 // location ========================================
@@ -190,6 +191,8 @@ class UserProfileScreen extends StatelessWidget {
               ],
             ),
           ),
+          // tab ==============================================
+          const TabProfile(),
         ],
       ),
     );
