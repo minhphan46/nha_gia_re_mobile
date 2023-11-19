@@ -53,7 +53,6 @@ class MembershipPackageRemoteDataSrcImpl
   Future<HttpResponse<OrderMembershipPackageModel>> createOrder(
       String id, int numOfMonth) {
     const url = '$apiBaseUrl$kCreateOrderEndpoint';
-    print(url);
     try {
       return client.post(url, data: {
         "membership_package_id": id,

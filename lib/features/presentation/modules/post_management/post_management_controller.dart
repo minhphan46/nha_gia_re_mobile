@@ -117,7 +117,7 @@ class PostManagementController extends GetxController {
   }
 
   void editPost(RealEstatePostEntity post) async {
-    print("edit post");
+    // TODO: implement editPost
     // edit post
 
     // Get.toNamed(AppRoutes.post, parameters: {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
+import 'package:nhagiare_mobile/core/utils/check_time_date.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/widgets/my_search_delegate.dart';
@@ -14,6 +15,11 @@ class HomeController extends GetxController {
 
   RxInt unreadMessCount = 1.obs;
   RxInt unreadNotiCount = 1.obs;
+
+  // appbar
+  Greeting getGreeting() {
+    return CheckTimeOfDate.getGreeting();
+  }
 
   // Search
   var textSearchController = TextEditingController();

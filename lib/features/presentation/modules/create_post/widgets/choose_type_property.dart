@@ -34,7 +34,6 @@ class ChooseTypePropertyCard extends StatelessWidget {
                 },
           onSaved: (value) {
             if (value == null) return;
-            print("Save DropDown Fied$value");
           },
         ),
 
