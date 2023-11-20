@@ -29,7 +29,7 @@ class AddressImagesCard extends StatelessWidget {
           controller: controller.apartmentNameTextController,
           labelText: 'Tên tòa nhà / khu dân cư / dự án',
           hintText:
-              controller.selectedPropertyType!.value == PropertyTypes.apartment
+              controller.selectedPropertyType.value == PropertyTypes.apartment
                   ? 'Tên tòa nhà / khu dân cư / dự án'.tr
                   : "(Không bắt buộc)",
           onSaved: (value) {
@@ -39,45 +39,49 @@ class AddressImagesCard extends StatelessWidget {
               (value!.isNotEmpty) ? null : 'Tiêu đề không được rỗng'.tr,
         ),
         const SizedBox(height: 15),
-        Visibility(
-          visible:
-              controller.selectedPropertyType!.value == PropertyTypes.apartment,
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              SizedBox(
-                width: 37.wp,
-                child: BaseTextField(
-                  focusNode: _floorFocusNode,
-                  nexFocusNode: _blockFocusNode,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.next,
-                  controller: controller.floorTextController,
-                  labelText: 'Tầng',
-                  hintText: 'Tầng',
-                  onSaved: (value) {
-                    controller.floor = value;
-                  },
-                ),
+        Obx(
+          () => Visibility(
+            visible: controller.selectedPropertyType.value ==
+                PropertyTypes.apartment,
+            child: Container(
+              margin: const EdgeInsets.only(bottom: 15),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  SizedBox(
+                    width: 37.wp,
+                    child: BaseTextField(
+                      focusNode: _floorFocusNode,
+                      nexFocusNode: _blockFocusNode,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.next,
+                      controller: controller.floorTextController,
+                      labelText: 'Tầng',
+                      hintText: 'Tầng',
+                      onSaved: (value) {
+                        controller.floor = value;
+                      },
+                    ),
+                  ),
+                  SizedBox(
+                    width: 40.wp,
+                    child: BaseTextField(
+                      focusNode: _blockFocusNode,
+                      keyboardType: TextInputType.text,
+                      textInputAction: TextInputAction.done,
+                      controller: controller.blockTextController,
+                      labelText: 'Block/Tòa',
+                      hintText: 'Block/Tòa',
+                      onSaved: (value) {
+                        controller.block = value;
+                      },
+                    ),
+                  )
+                ],
               ),
-              SizedBox(
-                width: 40.wp,
-                child: BaseTextField(
-                  focusNode: _blockFocusNode,
-                  keyboardType: TextInputType.text,
-                  textInputAction: TextInputAction.done,
-                  controller: controller.blockTextController,
-                  labelText: 'Block/Tòa',
-                  hintText: 'Block/Tòa',
-                  onSaved: (value) {
-                    controller.block = value;
-                  },
-                ),
-              )
-            ],
+            ),
           ),
         ),
-        const SizedBox(height: 15),
         TextFormField(
           focusNode: _addressFocusNode,
           controller: controller.addressTextController,

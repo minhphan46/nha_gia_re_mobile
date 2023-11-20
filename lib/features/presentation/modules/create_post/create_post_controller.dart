@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -9,28 +8,22 @@ import '../../../domain/enums/property_types.dart';
 
 class CreatePostController extends GetxController {
   // card choose type property
-  Rx<PropertyTypes>? selectedPropertyType = PropertyTypes.apartment.obs;
+  Rxn<PropertyTypes> selectedPropertyType = Rxn(null);
   bool isReachLimitPost = false;
-  Rx<bool> isShowSale = false.obs;
+  Rx<bool> isLease = true.obs;
 
-  void setVisibility(PropertyTypes value) {
-    selectedPropertyType!.value = value;
-    // initBody();
-    if (selectedPropertyType!.value != PropertyTypes.motel) {
-      isShowSale.value = true;
-    } else {
-      isShowSale.value = false;
-    }
+  void changeSelectedProperty(PropertyTypes value) {
+    selectedPropertyType.value = value;
   }
 
-  void setWork(bool value) {
-    isShowSale.value = value;
+  void setIsLease(bool value) {
+    isLease.value = value;
   }
 
   // card choose type of user
-  RxBool isPersonal = true.obs;
+  RxBool isProSeller = true.obs;
   void setRole(bool value) {
-    isPersonal.value = value;
+    isProSeller.value = value;
   }
 
   // card post info
@@ -95,10 +88,10 @@ class CreatePostController extends GetxController {
     update();
   }
 
-  // Dien tich , gia
-  final areaTextController = TextEditingController();
-  final priceTextController = TextEditingController();
-  final depositTextController = TextEditingController();
+  // Dien tich , gia tro
+  final motelareaTC = TextEditingController();
+  final motelpriceTC = TextEditingController();
+  final moteldepositTC = TextEditingController();
   String? area;
   String? price;
   String? deposit;
