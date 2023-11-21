@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/domain/entities/order_membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/order_membership_package.dart';
 
 class OrderMembershipPackageModel extends OrderMembershipPackage {
   const OrderMembershipPackageModel({

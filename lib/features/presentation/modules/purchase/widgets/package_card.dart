@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
-import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
 import '../../../../../config/theme/app_color.dart';
 
 class MembershipPackageCard extends StatelessWidget {

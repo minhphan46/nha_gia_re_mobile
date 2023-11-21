@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
-import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
-import 'package:nhagiare_mobile/features/domain/entities/subscription.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/subscription.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 
 class TransactionEntity extends Equatable {

@@ -2,7 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get/get_connect/http/src/status/http_status.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/blog_data_source.dart';
-import 'package:nhagiare_mobile/features/domain/entities/blog.dart';
+import 'package:nhagiare_mobile/features/domain/entities/blog/blog.dart';
 import 'package:nhagiare_mobile/features/domain/repository/blog_repository.dart';
 
 class BlogRepositoryImpl implements BlogRepository {

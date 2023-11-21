@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/data/models/blog_model.dart';
+import 'package:nhagiare_mobile/features/data/models/blog/blog_model.dart';
 import 'package:retrofit/dio.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';

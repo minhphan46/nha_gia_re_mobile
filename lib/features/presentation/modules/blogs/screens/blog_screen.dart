@@ -5,7 +5,7 @@ import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
-import 'package:nhagiare_mobile/features/domain/entities/blog.dart';
+import 'package:nhagiare_mobile/features/domain/entities/blog/blog.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/blogs/blog_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/blogs/screens/blog_detail_screen.dart';

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
-import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/widgets/package_card.dart';
 import '../../../../../config/theme/app_color.dart';
