@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/chatacter_box.dart';
-import '../../../global_widgets/base_textfield.dart';
+import '../../../../global_widgets/base_textfield.dart';
 
 class OfficeNameCard extends StatelessWidget {
   OfficeNameCard({super.key});

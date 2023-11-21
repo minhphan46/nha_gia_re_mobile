@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/domain/enums/direction.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
-import '../../../global_widgets/base_dropdown_button.dart';
-import '../create_post_controller.dart';
+import '../../../../global_widgets/base_dropdown_button.dart';
+import '../../create_post_controller.dart';
 
 class OfficeInfoCard extends StatelessWidget {
   OfficeInfoCard({super.key});

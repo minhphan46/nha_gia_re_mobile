@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nhagiare_mobile/features/domain/enums/direction.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
+import 'package:nhagiare_mobile/features/domain/enums/land_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 
 import '../../../domain/enums/legal_document_status.dart';
@@ -172,5 +173,62 @@ class CreatePostController extends GetxController {
 
   void setOfficeIsFacade(bool value) {
     officeIsFacade.value = value;
+  }
+
+  // Land ======================================================
+  final landSubdivisionNameTC = TextEditingController();
+  final landLotCodeTC = TextEditingController();
+  String? landSubdivisionName;
+  String? landLotCode;
+  RxBool isShowLandLotCode = false.obs;
+
+  void setIsShowLandLotCode(bool value) {
+    isShowLandLotCode.value = value;
+  }
+
+  Rxn<LandTypes> landType = Rxn(null);
+  Rxn<Direction> landDirection = Rxn(null);
+
+  void setLandType(LandTypes value) {
+    landType.value = value;
+  }
+
+  void setLandDirection(Direction value) {
+    landDirection.value = value;
+  }
+
+  // dien tich & gia
+  final landAreaTC = TextEditingController();
+  final landPriceTC = TextEditingController();
+  final landDepositTC = TextEditingController();
+  final landWidthTC = TextEditingController();
+  final landLengthTC = TextEditingController();
+  String? landArea;
+  String? landPrice;
+  String? landDeposit;
+  String? landWidth;
+  String? landLength;
+
+  // thong tin khac
+  Rxn<LegalDocumentStatus> landLegalDocumentStatus = Rxn(null);
+
+  void setLandLegalDocumentStatus(LegalDocumentStatus value) {
+    landLegalDocumentStatus.value = value;
+  }
+
+  RxBool landIsFacade = false.obs;
+  RxBool landHasWideAlley = false.obs;
+  RxBool landIsWidensTowardsTheBack = false.obs;
+
+  void setLandIsFacade(bool value) {
+    landIsFacade.value = value;
+  }
+
+  void setLandHasWideAlley(bool value) {
+    landHasWideAlley.value = value;
+  }
+
+  void setLandIsWidensTowardsTheBack(bool value) {
+    landIsWidensTowardsTheBack.value = value;
   }
 }

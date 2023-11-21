@@ -37,4 +37,14 @@ enum LandTypes {
         return "Đất nông nghiệp";
     }
   }
+
+  // to map LandTypes
+  static Map<LandTypes, String> toMap() {
+    return {
+      LandTypes.residential: 'Đất dân cư',
+      LandTypes.commercial: 'Đất thương mại',
+      LandTypes.industrial: 'Đất công nghiệp',
+      LandTypes.agricultural: 'Đất nông nghiệp',
+    };
+  }
 }

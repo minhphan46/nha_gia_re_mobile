@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/base_textfield.dart';
-import '../create_post_controller.dart';
+import '../../create_post_controller.dart';
 
 class OfficeAreaPricesCard extends StatelessWidget {
   OfficeAreaPricesCard({super.key});
@@ -47,7 +47,7 @@ class OfficeAreaPricesCard extends StatelessWidget {
         const SizedBox(height: 15),
         Obx(
           () => Visibility(
-            visible: controller.isProSeller.value,
+            visible: !controller.isLease.value,
             child: BaseTextField(
               focusNode: _depositFocusNode,
               maxLines: 1,

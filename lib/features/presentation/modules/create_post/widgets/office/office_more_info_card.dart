@@ -5,8 +5,8 @@ import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/chatacter_box.dart';
-import '../../../../domain/enums/legal_document_status.dart';
-import '../../../global_widgets/base_dropdown_button.dart';
+import '../../../../../domain/enums/legal_document_status.dart';
+import '../../../../global_widgets/base_dropdown_button.dart';
 
 class OfficeMoreInfoCard extends StatelessWidget {
   OfficeMoreInfoCard({super.key});
@@ -21,6 +21,7 @@ class OfficeMoreInfoCard extends StatelessWidget {
       children: [
         const SizedBox(height: 5),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             SizedBox(
               width: widthDropdown,
@@ -50,7 +51,6 @@ class OfficeMoreInfoCard extends StatelessWidget {
                 },
               ),
             ),
-            const SizedBox(width: 15),
             SizedBox(
               width: widthDropdown,
               child: BaseDropdownButton(

@@ -18,7 +18,6 @@ class CharacterBox extends StatelessWidget {
             const SizedBox(height: 5),
             Container(
               padding: const EdgeInsets.all(2),
-              margin: const EdgeInsets.only(right: 5),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black, width: 0.8),
                 borderRadius: BorderRadius.circular(5),

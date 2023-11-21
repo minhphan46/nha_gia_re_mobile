@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../global_widgets/base_textfield.dart';
-import '../create_post_controller.dart';
+import '../../../../global_widgets/base_textfield.dart';
+import '../../create_post_controller.dart';
 
 class MotelInfoCard extends StatelessWidget {
   MotelInfoCard({super.key});

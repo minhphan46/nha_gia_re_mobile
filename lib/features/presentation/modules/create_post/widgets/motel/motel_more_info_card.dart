@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
-import '../../../global_widgets/base_dropdown_button.dart';
+import '../../../../global_widgets/base_dropdown_button.dart';
 
 class MotelMoreInfoCard extends StatelessWidget {
   MotelMoreInfoCard({super.key});

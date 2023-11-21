@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/base_textfield.dart';
-import '../create_post_controller.dart';
+import '../../create_post_controller.dart';
 
 class MotelAreaPricesCard extends StatelessWidget {
   MotelAreaPricesCard({super.key});
