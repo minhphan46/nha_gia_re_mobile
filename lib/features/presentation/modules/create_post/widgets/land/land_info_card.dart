@@ -34,7 +34,7 @@ class LandInfoCard extends StatelessWidget {
                 keyboardType: TextInputType.text,
                 textInputAction: TextInputAction.next,
                 controller: controller.landSubdivisionNameTC,
-                labelText: 'Tiên phân khu',
+                labelText: 'Tên phân khu',
                 hintText: 'Không bắt buộc',
                 onSaved: (value) {
                   controller.landSubdivisionName = value!.trim();

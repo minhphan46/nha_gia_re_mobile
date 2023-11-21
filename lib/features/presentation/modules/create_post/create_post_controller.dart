@@ -7,6 +7,7 @@ import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/domain/enums/land_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 
+import '../../../domain/enums/house_types.dart';
 import '../../../domain/enums/legal_document_status.dart';
 import '../../../domain/enums/property_types.dart';
 
@@ -230,5 +231,74 @@ class CreatePostController extends GetxController {
 
   void setLandIsWidensTowardsTheBack(bool value) {
     landIsWidensTowardsTheBack.value = value;
+  }
+
+  // house ======================================================
+  Rxn<HouseTypes> houseType = Rxn(null);
+  void setHouseType(HouseTypes value) {
+    houseType.value = value;
+  }
+
+  String? houseNumOfBedRooms;
+  final houseNumOfBedRoomsTC = TextEditingController();
+
+  String? houseNumOfToilets;
+  final houseNumOfToiletsTC = TextEditingController();
+
+  String? houseNumOfFloors;
+  final houseNumOfFloorsTC = TextEditingController();
+
+  Rxn<Direction> houseMainDoorDirection = Rxn(null);
+  void setHouseMainDoorDirection(Direction value) {
+    houseMainDoorDirection.value = value;
+  }
+
+  String? houseNumber;
+  final houseNumberTC = TextEditingController();
+
+  RxBool isShowHouseNumber = false.obs;
+  void setIsShowHouseNumber(bool value) {
+    isShowHouseNumber.value = value;
+  }
+
+  // dien tich & gia
+  final houseAreaTC = TextEditingController();
+  final houseAreaUsedTC = TextEditingController();
+  final housePriceTC = TextEditingController();
+  final houseDepositTC = TextEditingController();
+  final houseWidthTC = TextEditingController();
+  final houseLengthTC = TextEditingController();
+  String? houseArea;
+  String? houseAreaUsed;
+  String? housePrice;
+  String? houseDeposit;
+  String? houseWidth;
+  String? houseLength;
+
+  // thong tin khac
+  Rxn<LegalDocumentStatus> houseLegalDocumentStatus = Rxn(null);
+  Rxn<FurnitureStatus> houseFurnitureStatus = Rxn(null);
+  void sethouseLegalDocumentStatus(LegalDocumentStatus value) {
+    houseLegalDocumentStatus.value = value;
+  }
+
+  void setHouseFurnitureStatus(FurnitureStatus value) {
+    houseFurnitureStatus.value = value;
+  }
+
+  RxBool houseIsFacade = false.obs;
+  RxBool houseHasWideAlley = false.obs;
+  RxBool houseIsWidensTowardsTheBack = false.obs;
+
+  void sethouseIsFacade(bool value) {
+    houseIsFacade.value = value;
+  }
+
+  void sethouseHasWideAlley(bool value) {
+    houseHasWideAlley.value = value;
+  }
+
+  void sethouseIsWidensTowardsTheBack(bool value) {
+    houseIsWidensTowardsTheBack.value = value;
   }
 }

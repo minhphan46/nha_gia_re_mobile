@@ -17,6 +17,9 @@ import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/enums/property_types.dart';
 import '../../../global_widgets/my_appbar.dart';
+import '../widgets/house/house_area_prices_card.dart';
+import '../widgets/house/house_info_card.dart';
+import '../widgets/house/house_more_info_card.dart';
 import '../widgets/land/land_area_prices_card.dart';
 import '../widgets/land/land_more_info_card.dart';
 import '../widgets/motel/motel_info_card.dart';
@@ -173,13 +176,35 @@ class CreatePostScreen extends StatelessWidget {
                     child: LandMoreInfoCard(),
                   ),
                 ),
-                // nha ban
-
-                // nha cho thue
-
-                // chung cu ban
-
-                // chung cu cho thue
+                // nha ban ============================================
+                Obx(
+                  () => BaseCard(
+                    title: "Thông tin chi tiết",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.house,
+                    child: HouseInfoCard(),
+                  ),
+                ),
+                Obx(
+                  () => BaseCard(
+                    title: "Diện tích & Giá",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.house,
+                    child: HouseAreaPricesCard(),
+                  ),
+                ),
+                Obx(
+                  () => BaseCard(
+                    title: "Thông tin khác",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.house,
+                    child: HouseMoreInfoCard(),
+                  ),
+                ),
+                // chung cu ban ============================================
 
                 // dang bai
                 Obx(
