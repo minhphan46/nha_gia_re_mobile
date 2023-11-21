@@ -2,8 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nhagiare_mobile/features/domain/enums/direction.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
+import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 
+import '../../../domain/enums/legal_document_status.dart';
 import '../../../domain/enums/property_types.dart';
 
 class CreatePostController extends GetxController {
@@ -32,6 +35,9 @@ class CreatePostController extends GetxController {
 
   void setIsLease(bool value) {
     isLease.value = value;
+    if (value && selectedPropertyType.value == PropertyTypes.motel) {
+      selectedPropertyType.value = Rxn(null).value;
+    }
   }
 
   // card choose type of user
@@ -102,7 +108,7 @@ class CreatePostController extends GetxController {
     update();
   }
 
-  // Motel
+  // Motel ======================================================
   // thong tin chi tiet
   double? motelWaterPrice;
   double? motelElectricPrice;
@@ -113,14 +119,58 @@ class CreatePostController extends GetxController {
   final motelAreaTC = TextEditingController();
   final motelPriceTC = TextEditingController();
   final motelDepositTC = TextEditingController();
-  String? area;
-  String? price;
-  String? deposit;
+  String? motelArea;
+  String? motelPrice;
+  String? motelDeposit;
 
   // thong tin khac
-  Rx<FurnitureStatus?> motelSelectedFurnitureStatus = null.obs;
+  Rxn<FurnitureStatus> motelSelectedFurnitureStatus = Rxn(null);
 
   void setFurnitureStatus(FurnitureStatus value) {
     motelSelectedFurnitureStatus.value = value;
+  }
+
+  // Office ======================================================
+  final officeNumberTC = TextEditingController();
+  String? officeNumber;
+  RxBool officeIsShowName = false.obs;
+  void setofficeIsShowName(bool value) {
+    officeIsShowName.value = value;
+  }
+
+  // thong tin chi tiet
+  Rxn<OfficeTypes> officeType = Rxn(null);
+  Rxn<Direction> officeMainDoorDirection = Rxn(null);
+
+  void setOfficeType(OfficeTypes value) {
+    officeType.value = value;
+  }
+
+  void setOfficeMainDoorDirection(Direction value) {
+    officeMainDoorDirection.value = value;
+  }
+
+  // Dien tich , gia tro
+  final officeAreaTC = TextEditingController();
+  final officePriceTC = TextEditingController();
+  final officeDepositTC = TextEditingController();
+  String? officeArea;
+  String? officePrice;
+  String? officeDeposit;
+  // thong tin khac
+  Rxn<LegalDocumentStatus> officeLegalDocumentStatus = Rxn(null);
+  Rxn<FurnitureStatus> officeFurnitureStatus = Rxn(null);
+  RxBool officeIsFacade = false.obs;
+
+  void setOfficeLegalDocumentStatus(LegalDocumentStatus value) {
+    officeLegalDocumentStatus.value = value;
+  }
+
+  void setOfficeFurnitureStatus(FurnitureStatus value) {
+    officeFurnitureStatus.value = value;
+  }
+
+  void setOfficeIsFacade(bool value) {
+    officeIsFacade.value = value;
   }
 }

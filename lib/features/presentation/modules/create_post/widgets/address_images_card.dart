@@ -42,7 +42,8 @@ class AddressImagesCard extends StatelessWidget {
         Obx(
           () => Visibility(
             visible: controller.selectedPropertyType.value ==
-                PropertyTypes.apartment,
+                    PropertyTypes.apartment ||
+                controller.selectedPropertyType.value == PropertyTypes.office,
             child: Container(
               margin: const EdgeInsets.only(bottom: 15),
               child: Row(

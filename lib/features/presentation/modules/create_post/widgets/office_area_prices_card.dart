@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/base_textfield.dart';
 import '../create_post_controller.dart';
 
-class MotelAreaPricesCard extends StatelessWidget {
-  MotelAreaPricesCard({super.key});
+class OfficeAreaPricesCard extends StatelessWidget {
+  OfficeAreaPricesCard({super.key});
 
   final CreatePostController controller = Get.find<CreatePostController>();
 
@@ -23,11 +23,11 @@ class MotelAreaPricesCard extends StatelessWidget {
           maxLines: 1,
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
-          controller: controller.motelAreaTC,
+          controller: controller.officeAreaTC,
           labelText: 'Diện tích (m2)',
           hintText: "Diện tích",
           onSaved: (value) {
-            controller.motelArea = value!.trim();
+            controller.officeArea = value!.trim();
           },
         ),
         const SizedBox(height: 15),
@@ -37,27 +37,27 @@ class MotelAreaPricesCard extends StatelessWidget {
           maxLines: 1,
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
-          controller: controller.motelPriceTC,
+          controller: controller.officePriceTC,
           labelText: 'Giá (VNĐ)',
           hintText: "Giá",
           onSaved: (value) {
-            controller.motelPrice = value!.trim();
+            controller.officePrice = value!.trim();
           },
         ),
         const SizedBox(height: 15),
         Obx(
           () => Visibility(
-            visible: !controller.isLease.value,
+            visible: controller.isProSeller.value,
             child: BaseTextField(
               focusNode: _depositFocusNode,
               maxLines: 1,
               keyboardType: TextInputType.number,
               textInputAction: TextInputAction.done,
-              controller: controller.motelDepositTC,
+              controller: controller.officeDepositTC,
               labelText: 'Số tiền cọc (VNĐ)',
               hintText: "Không bắt buộc",
               onSaved: (value) {
-                controller.motelDeposit = value!.trim();
+                controller.officeDeposit = value!.trim();
               },
             ),
           ),

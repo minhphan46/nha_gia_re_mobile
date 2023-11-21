@@ -10,11 +10,14 @@ import 'package:nhagiare_mobile/features/presentation/modules/create_post/widget
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_property.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/choose_type_user.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/motel_more_info_card.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/office_more_info_card.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/widgets/office_name_card.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/enums/property_types.dart';
 import '../../../global_widgets/my_appbar.dart';
 import '../widgets/motel_info_card.dart';
+import '../widgets/office_info_card.dart';
 import '../widgets/post_info_card.dart';
 
 class CreatePostScreen extends StatelessWidget {
@@ -102,10 +105,43 @@ class CreatePostScreen extends StatelessWidget {
                   ),
                 ),
 
-                // van phong ban
-
-                // van phong cho thue
-
+                // van phong ============================================
+                Obx(
+                  () => BaseCard(
+                    title: "Thông tin chung",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.office,
+                    child: OfficeNameCard(),
+                  ),
+                ),
+                Obx(
+                  () => BaseCard(
+                    title: "Thông tin chi tiết",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.office,
+                    child: OfficeInfoCard(),
+                  ),
+                ),
+                Obx(
+                  () => BaseCard(
+                    title: "Diện tích & Giá",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.office,
+                    child: MotelAreaPricesCard(),
+                  ),
+                ),
+                Obx(
+                  () => BaseCard(
+                    title: "Thông tin khác",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.office,
+                    child: OfficeMoreInfoCard(),
+                  ),
+                ),
                 // dat ban
 
                 // dat cho thue
