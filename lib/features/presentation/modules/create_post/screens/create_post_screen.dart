@@ -17,6 +17,9 @@ import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/enums/property_types.dart';
 import '../../../global_widgets/my_appbar.dart';
+import '../widgets/apartment/apartment_area_prices_card.dart';
+import '../widgets/apartment/apartment_info_card.dart';
+import '../widgets/apartment/apartment_more_info_card.dart';
 import '../widgets/house/house_area_prices_card.dart';
 import '../widgets/house/house_info_card.dart';
 import '../widgets/house/house_more_info_card.dart';
@@ -204,9 +207,35 @@ class CreatePostScreen extends StatelessWidget {
                     child: HouseMoreInfoCard(),
                   ),
                 ),
-                // chung cu ban ============================================
-
-                // dang bai
+                // chung cu ============================================
+                Obx(
+                  () => BaseCard(
+                    title: "Thông tin chi tiết",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.apartment,
+                    child: ApartmentInfoCard(),
+                  ),
+                ),
+                Obx(
+                  () => BaseCard(
+                    title: "Diện tích & Giá",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.apartment,
+                    child: ApartmentAreaPricesCard(),
+                  ),
+                ),
+                Obx(
+                  () => BaseCard(
+                    title: "Thông tin khác",
+                    isvisible: controller.selectedPropertyType.value != null &&
+                        controller.selectedPropertyType.value ==
+                            PropertyTypes.apartment,
+                    child: ApartmentMoreInfoCard(),
+                  ),
+                ),
+                // dang bai ============================================
                 Obx(
                   () => Visibility(
                     visible: controller.selectedPropertyType.value != null,

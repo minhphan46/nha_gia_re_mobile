@@ -2,11 +2,11 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nhagiare_mobile/features/domain/enums/apartment_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/direction.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/domain/enums/land_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
-
 import '../../../domain/enums/house_types.dart';
 import '../../../domain/enums/legal_document_status.dart';
 import '../../../domain/enums/property_types.dart';
@@ -300,5 +300,60 @@ class CreatePostController extends GetxController {
 
   void sethouseIsWidensTowardsTheBack(bool value) {
     houseIsWidensTowardsTheBack.value = value;
+  }
+
+  // apartment ======================================================
+  RxBool officeIsHandOver = true.obs;
+  void setOfficeIsHandOver(bool value) {
+    officeIsHandOver.value = value;
+  }
+
+  Rxn<ApartmentTypes> apartmentType = Rxn(null);
+  void setapartmentType(ApartmentTypes value) {
+    apartmentType.value = value;
+  }
+
+  String? apartmentNumOfBedRooms;
+  final apartmentNumOfBedRoomsTC = TextEditingController();
+
+  String? apartmentNumOfToilets;
+  final apartmentNumOfToiletsTC = TextEditingController();
+
+  Rxn<Direction> apartmentBalconyDirection = Rxn(null);
+  void setapartmentBalconyDirection(Direction value) {
+    apartmentBalconyDirection.value = value;
+  }
+
+  String? apartmentNumber;
+  final apartmentNumberTC = TextEditingController();
+
+  RxBool isShowapartmentNumber = false.obs;
+  void setIsShowapartmentNumber(bool value) {
+    isShowapartmentNumber.value = value;
+  }
+
+  // dien tich & gia
+  final apartmentAreaTC = TextEditingController();
+  final apartmentPriceTC = TextEditingController();
+  final apartmentDepositTC = TextEditingController();
+  String? apartmentArea;
+  String? apartmentPrice;
+  String? apartmentDeposit;
+
+  // thong tin khac
+  Rxn<LegalDocumentStatus> apartmentLegalDocumentStatus = Rxn(null);
+  Rxn<FurnitureStatus> apartmentFurnitureStatus = Rxn(null);
+  void setapartmentLegalDocumentStatus(LegalDocumentStatus value) {
+    apartmentLegalDocumentStatus.value = value;
+  }
+
+  void setapartmentFurnitureStatus(FurnitureStatus value) {
+    apartmentFurnitureStatus.value = value;
+  }
+
+  RxBool apartmentIsCorner = false.obs;
+
+  void setapartmentIsCorner(bool value) {
+    apartmentIsCorner.value = value;
   }
 }
