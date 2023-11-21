@@ -3,8 +3,8 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/base_textfield.dart';
 import '../create_post_controller.dart';
 
-class AreaPricesCard extends StatelessWidget {
-  AreaPricesCard({super.key});
+class MotelAreaPricesCard extends StatelessWidget {
+  MotelAreaPricesCard({super.key});
 
   final CreatePostController controller = Get.find<CreatePostController>();
 
@@ -23,11 +23,11 @@ class AreaPricesCard extends StatelessWidget {
           maxLines: 1,
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
-          controller: controller.areaTextController,
+          controller: controller.motelAreaTC,
           labelText: 'Diện tích (m2)',
           hintText: "Diện tích",
           onSaved: (value) {
-            controller.area = value;
+            controller.area = value!.trim();
           },
         ),
         const SizedBox(height: 15),
@@ -37,25 +37,30 @@ class AreaPricesCard extends StatelessWidget {
           maxLines: 1,
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
-          controller: controller.priceTextController,
+          controller: controller.motelPriceTC,
           labelText: 'Giá (VNĐ)',
           hintText: "Giá",
           onSaved: (value) {
-            controller.price = value;
+            controller.price = value!.trim();
           },
         ),
         const SizedBox(height: 15),
-        BaseTextField(
-          focusNode: _depositFocusNode,
-          maxLines: 1,
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.done,
-          controller: controller.depositTextController,
-          labelText: 'Số tiền cọc (VNĐ)',
-          hintText: "Không bắt buộc",
-          onSaved: (value) {
-            controller.deposit = value;
-          },
+        Obx(
+          () => Visibility(
+            visible: controller.isProSeller.value,
+            child: BaseTextField(
+              focusNode: _depositFocusNode,
+              maxLines: 1,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              controller: controller.motelDepositTC,
+              labelText: 'Số tiền cọc (VNĐ)',
+              hintText: "Không bắt buộc",
+              onSaved: (value) {
+                controller.deposit = value!.trim();
+              },
+            ),
+          ),
         ),
       ],
     );

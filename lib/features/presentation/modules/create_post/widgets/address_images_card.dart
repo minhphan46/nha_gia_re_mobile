@@ -33,10 +33,10 @@ class AddressImagesCard extends StatelessWidget {
                   ? 'Tên tòa nhà / khu dân cư / dự án'.tr
                   : "(Không bắt buộc)",
           onSaved: (value) {
-            controller.apartmentName = value;
+            controller.apartmentName = value!.trim();
           },
           validator: (value) =>
-              (value!.isNotEmpty) ? null : 'Tiêu đề không được rỗng'.tr,
+              (value!.trim().isNotEmpty) ? null : 'Tiêu đề không được rỗng'.tr,
         ),
         const SizedBox(height: 15),
         Obx(
@@ -59,7 +59,7 @@ class AddressImagesCard extends StatelessWidget {
                       labelText: 'Tầng',
                       hintText: 'Tầng',
                       onSaved: (value) {
-                        controller.floor = value;
+                        controller.floor = value!.trim();
                       },
                     ),
                   ),
@@ -73,7 +73,7 @@ class AddressImagesCard extends StatelessWidget {
                       labelText: 'Block/Tòa',
                       hintText: 'Block/Tòa',
                       onSaved: (value) {
-                        controller.block = value;
+                        controller.block = value!.trim();
                       },
                     ),
                   )
@@ -106,7 +106,7 @@ class AddressImagesCard extends StatelessWidget {
           },
           onTap: () {},
           onSaved: (value) {
-            controller.address = value;
+            controller.address = value!.trim();
           },
         ),
         const SizedBox(height: 15),

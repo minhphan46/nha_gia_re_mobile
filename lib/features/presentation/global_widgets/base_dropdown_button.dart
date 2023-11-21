@@ -40,7 +40,7 @@ class BaseDropdownButton extends StatelessWidget {
       style: AppTextStyles.regular14.colorEx(Colors.black),
       dropdownColor: AppColors.white,
       value: value,
-      hint: const Text("Chọn loại bất động sản"),
+      hint: Text(hint),
       items: items,
       onChanged: onChanged,
       onSaved: onSaved,

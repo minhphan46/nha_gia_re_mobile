@@ -7,6 +7,20 @@ import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import '../../../domain/enums/property_types.dart';
 
 class CreatePostController extends GetxController {
+  RxBool isLoading = false.obs;
+  toggleIsLoading(bool value) {
+    isLoading.value = value;
+  }
+
+  // create Post
+  Future<void> createPost() async {
+    toggleIsLoading(true);
+    Future.delayed(const Duration(seconds: 2), () {
+      toggleIsLoading(false);
+      Get.back();
+    });
+  }
+
   // card choose type property
   Rxn<PropertyTypes> selectedPropertyType = Rxn(null);
   bool isReachLimitPost = false;
@@ -88,18 +102,25 @@ class CreatePostController extends GetxController {
     update();
   }
 
+  // Motel
+  // thong tin chi tiet
+  double? motelWaterPrice;
+  double? motelElectricPrice;
+  final motelWaterPriceTC = TextEditingController();
+  final motelElectricPriceTC = TextEditingController();
+
   // Dien tich , gia tro
-  final motelareaTC = TextEditingController();
-  final motelpriceTC = TextEditingController();
-  final moteldepositTC = TextEditingController();
+  final motelAreaTC = TextEditingController();
+  final motelPriceTC = TextEditingController();
+  final motelDepositTC = TextEditingController();
   String? area;
   String? price;
   String? deposit;
 
   // thong tin khac
-  Rx<FurnitureStatus?> selectedFurnitureStatus = null.obs;
+  Rx<FurnitureStatus?> motelSelectedFurnitureStatus = null.obs;
 
   void setFurnitureStatus(FurnitureStatus value) {
-    selectedFurnitureStatus.value = value;
+    motelSelectedFurnitureStatus.value = value;
   }
 }
