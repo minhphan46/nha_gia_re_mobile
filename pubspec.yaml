@@ -60,12 +60,12 @@ dependencies:
   retrofit: ^4.0.1
 
   #Hooks
-  flutter_hooks: ^0.18.3
+  flutter_hooks: ^0.20.3
 
   #chached image
   cached_network_image: ^3.2.0
 
-  flutter_slidable: ^2.0.0
+  flutter_slidable: ^3.0.1
 
   #local storage
   sqflite: ^2.3.0
@@ -125,6 +125,8 @@ dependencies:
   # login
   shared_preferences: ^2.2.2
   jwt_decoder: ^2.0.1
+  heroicons_flutter: ^0.3.0
+  socket_io_client: ^2.0.3+1
 
 dev_dependencies:
   flutter_test:
@@ -135,7 +137,7 @@ dev_dependencies:
   # activated in the `analysis_options.yaml` file located at the root of your
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
-  flutter_lints: ^2.0.0
+  flutter_lints: ^3.0.1
 
 flutter_launcher_icons:
   android: "launcher_icon"

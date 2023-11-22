@@ -4,11 +4,11 @@ enum MessageTypes {
   location,
   post;
 
-  static MessageTypes parse(String value) {
+  static MessageTypes parse(String value, {MessageTypes? defaultValue}) {
     for (MessageTypes type in MessageTypes.values) {
       if (type.toString() == value) return type;
     }
-    throw Exception("Can't parse MessageTypes! Your input value is \"$value\"");
+    return defaultValue ?? MessageTypes.text;
   }
 
   @override

@@ -1,5 +1,6 @@
-const String apiDevUrl = "http://localhost:3000/api/v1";
-const String apiBaseUrl = "https://nha-gia-re-server.onrender.com/api/v1";
+const String apiDevUrl = "http://192.168.137.1:8000/api/v1";
+const String apiProductionUrl = "https://nha-gia-re-server.onrender.com/api/v1";
+const String apiUrl = apiDevUrl;
 
 const String kSignIn = '/auth/sign-in';
 const String kSignUp = '/auth/sign-up';

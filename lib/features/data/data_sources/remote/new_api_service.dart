@@ -4,7 +4,7 @@ import 'package:nhagiare_mobile/core/constants/constants.dart';
 import 'package:nhagiare_mobile/features/data/models/tasks/task.dart';
 part 'new_api_service.g.dart';
 
-@RestApi(baseUrl: apiBaseUrl)
+@RestApi(baseUrl: apiUrl)
 abstract class NewApiService {
   factory NewApiService(Dio dio) = _NewApiService;
 

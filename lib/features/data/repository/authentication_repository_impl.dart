@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
@@ -130,5 +131,21 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
     } on DioException catch (e) {
       return DataFailed(e);
     }
+  }
+
+  @override
+  Future<DataState<String>> getUserId() async {
+    try {
+      String id = await _dataLocalSrc.getUserIdFromToken();
+      return DataSuccess(id);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<String>> getAccessToken() async {
+    final accessToken = await _dataLocalSrc.getAccessToken();
+    return DataSuccess(accessToken);
   }
 }

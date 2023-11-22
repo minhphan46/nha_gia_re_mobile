@@ -50,4 +50,5 @@ class Assets {
   // Ilustration
   static const String purchaseFailed = '$ilustrationPath/purchase-fail.png';
   static const String purchaseSuccess = '$ilustrationPath/purchase-success.png';
+  static const String emptyChat = '$ilustrationPath/empty_chat.png';
 }

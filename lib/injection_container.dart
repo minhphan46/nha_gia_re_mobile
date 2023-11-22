@@ -2,6 +2,7 @@ import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/local/app_database.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/blog_data_source.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/remote/conversation_remote_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/membership_package_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/new_api_service.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
@@ -15,6 +16,8 @@ import 'package:nhagiare_mobile/features/domain/repository/membership_package_re
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_access_token.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_user_id.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_up.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/blog/remote/get_all_blogs.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_address.dart';
@@ -32,12 +35,16 @@ import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/get_tasks.
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/remove_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/save_task.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/tasks/remote/update_task.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:socket_io_client/socket_io_client.dart';
 import 'features/data/data_sources/local/authentication_local_data_source.dart';
 import 'features/data/data_sources/remote/authentication_remote_data_source.dart';
 import 'features/data/repository/authentication_repository_impl.dart';
+import 'features/data/repository/conversation_repository_impl.dart';
 import 'features/data/repository/post_repository_impl.dart';
 import 'features/data/repository/provinces_repository_impl.dart';
 import 'features/domain/repository/authentication_repository.dart';
+import 'features/domain/repository/conversation_repository.dart';
 import 'features/domain/repository/provinces_repository.dart';
 import 'features/domain/usecases/authentication/check_token.dart';
 import 'features/domain/usecases/authentication/sign_in.dart';
@@ -132,7 +139,7 @@ Future<void> initializeDependencies() async {
     ),
   );
   sl.registerSingleton<AuthenLocalDataSrc>(
-    AuthenLocalDataSrcImpl(),
+    AuthenLocalDataSrcImpl(await SharedPreferences.getInstance()),
   );
   // repository
   sl.registerSingleton<AuthenticationRepository>(
@@ -142,17 +149,6 @@ Future<void> initializeDependencies() async {
     ),
   );
   // use cases
-  sl.registerSingleton<SignInUseCase>(
-    SignInUseCase(
-      sl<AuthenticationRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<SignOutUseCase>(
-    SignOutUseCase(
-      sl<AuthenticationRepository>(),
-    ),
-  );
 
   sl.registerSingleton<CheckTokenUseCase>(
     CheckTokenUseCase(
@@ -160,8 +156,14 @@ Future<void> initializeDependencies() async {
     ),
   );
 
-  sl.registerSingleton<SignUpUseCase>(
-    SignUpUseCase(
+  sl.registerSingleton<GetUserIdUseCase>(
+    GetUserIdUseCase(
+      sl<AuthenticationRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetAccessTokenUseCase>(
+    GetAccessTokenUseCase(
       sl<AuthenticationRepository>(),
     ),
   );
@@ -296,9 +298,41 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  // Chat =====================================================
+  sl.registerSingleton<ConversationRemoteDataSource>(
+    ConversationRemoteDataSourceImpl(),
+  );
+
+  sl.registerSingleton<ConversationRepository>(
+    ConversationRepositoryImpl(
+      sl<ConversationRemoteDataSource>(),
+      sl<AuthenLocalDataSrc>(),
+    ),
+  );
+
   sl.registerSingleton<GetProvinceNamesUseCase>(
     GetProvinceNamesUseCase(
       sl<ProvincesRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SignInUseCase>(
+    SignInUseCase(
+      sl<AuthenticationRepository>(),
+      sl<ConversationRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SignOutUseCase>(
+    SignOutUseCase(
+      sl<AuthenticationRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SignUpUseCase>(
+    SignUpUseCase(
+      sl<AuthenticationRepository>(),
+      sl<ConversationRepository>(),
     ),
   );
 }

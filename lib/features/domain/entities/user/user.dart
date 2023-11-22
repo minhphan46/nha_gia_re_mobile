@@ -22,6 +22,8 @@ class UserEntity extends Equatable {
   final DateTime? bannedUtil;
   final String? banReason;
 
+  String get fullName => "$firstName $lastName";
+
   const UserEntity({
     this.id,
     this.status,
