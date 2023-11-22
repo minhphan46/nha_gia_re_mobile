@@ -33,4 +33,13 @@ enum LegalDocumentStatus {
         return "Các giấy tờ khác";
     }
   }
+
+  // toMap
+  static Map<LegalDocumentStatus, String> toMap() {
+    return {
+      LegalDocumentStatus.waitingForCertificates: "Đang chờ giấy tờ",
+      LegalDocumentStatus.haveCertificates: "Đã có giấy tờ",
+      LegalDocumentStatus.otherDocuments: "Các giấy tờ khác",
+    };
+  }
 }

@@ -27,15 +27,15 @@ class PostInfoCard extends StatelessWidget {
           labelText: 'Tiêu đề',
           hintText: 'Nhập tiều đề',
           onSaved: (value) {
-            controller.title = value;
+            controller.title = value!.trim();
           },
           validator: (value) =>
-              (value!.isNotEmpty) ? null : 'Tiêu đề không được rỗng'.tr,
+              (value!.trim().isNotEmpty) ? null : 'Tiêu đề không được rỗng'.tr,
         ),
         const SizedBox(height: 10),
         BaseTextField(
           focusNode: _descriptionFocusNode,
-          minLines: 1,
+          minLines: 3,
           maxLines: 10,
           maxLength: 1000,
           keyboardType: TextInputType.text,
@@ -44,10 +44,10 @@ class PostInfoCard extends StatelessWidget {
           labelText: 'Mô tả chi tiết',
           hintText: 'Mô tả chi tiết',
           onSaved: (value) {
-            controller.description = value;
+            controller.description = value!.trim();
           },
           validator: (value) =>
-              (value!.isNotEmpty) ? null : 'Mô tả không được rỗng'.tr,
+              (value!.trim().isNotEmpty) ? null : 'Mô tả không được rỗng'.tr,
         ),
       ],
     );

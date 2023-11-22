@@ -7,6 +7,11 @@ extension DateTimeX on DateTime {
     return outputFormat.format(this);
   }
 
+  String toDMYString() {
+    var outputFormat = DateFormat('dd/MM/yyyy');
+    return outputFormat.format(this);
+  }
+
   /// get num of date between dateFrom to DateTo
   int daysBetween(DateTime from, DateTime to) {
     from = DateTime(from.year, from.month, from.day);

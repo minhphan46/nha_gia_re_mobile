@@ -1,20 +1,16 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nhagiare_mobile/features/data/data_sources/local/app_database.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/blog_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/conversation_remote_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/membership_package_data_source.dart';
-import 'package:nhagiare_mobile/features/data/data_sources/remote/new_api_service.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/transaction_data_source.dart';
 import 'package:nhagiare_mobile/features/data/repository/blog_repository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/membership_package_respository_impl.dart';
-import 'package:nhagiare_mobile/features/data/repository/task_repository_impl.dart';
 import 'package:nhagiare_mobile/features/data/repository/transaction_repository_impl.dart';
 import 'package:nhagiare_mobile/features/domain/repository/blog_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/membership_package_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
-import 'package:nhagiare_mobile/features/domain/repository/task_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_access_token.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_user_id.dart';
@@ -56,81 +52,8 @@ import 'features/domain/usecases/post/remote/get_posts_pending.dart';
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
-  final localDatabase =
-      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
-  sl.registerSingleton<AppDatabase>(localDatabase);
-
   // Dio
   sl.registerSingleton<Dio>(Dio());
-
-  // Dependencies Injection
-  sl.registerSingleton<NewApiService>(NewApiService(sl<Dio>()));
-
-  sl.registerSingleton<TaskRepository>(
-    TaskRepositoryImpl(
-      sl<NewApiService>(),
-      sl<AppDatabase>(),
-    ),
-  );
-
-  // use cases
-  sl.registerSingleton<GetTasksUseCase>(
-    GetTasksUseCase(
-      sl<TaskRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<SaveTaskUseCase>(
-    SaveTaskUseCase(
-      sl<TaskRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<RemoveTaskUseCase>(
-    RemoveTaskUseCase(
-      sl<TaskRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<UpdateTaskUseCase>(
-    UpdateTaskUseCase(
-      sl<TaskRepository>(),
-    ),
-  );
-
-  // use cases local
-  sl.registerSingleton<GetLocalTasksUseCase>(
-    GetLocalTasksUseCase(
-      sl<TaskRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<SaveLocalTasksUseCase>(
-    SaveLocalTasksUseCase(
-      sl<TaskRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<RemoveLocalTasksUseCase>(
-    RemoveLocalTasksUseCase(
-      sl<TaskRepository>(),
-    ),
-  );
-
-  // blocs
-  // sl.registerFactory<RemoteTasksBloc>(() => RemoteTasksBloc(
-  //       sl<GetTasksUseCase>(),
-  //       sl<SaveTaskUseCase>(),
-  //       sl<RemoveTaskUseCase>(),
-  //       sl<UpdateTaskUseCase>(),
-  //     ));
-
-  // sl.registerFactory<LocalTasksBloc>(() => LocalTasksBloc(
-  //       sl<GetLocalTasksUseCase>(),
-  //       sl<SaveLocalTasksUseCase>(),
-  //       sl<RemoveLocalTasksUseCase>(),
-  //     ));
-
   // Login =====================================================
   // datasource
   sl.registerSingleton<AuthenRemoteDataSrc>(

@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
 
 class MembershipPackageModel extends MembershipPackageEntity {
   const MembershipPackageModel({

@@ -4,7 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/transaction_data_source.dart';
 
-import 'package:nhagiare_mobile/features/domain/entities/transaction.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/transaction.dart';
 
 import '../../domain/repository/transaction_repository.dart';
 

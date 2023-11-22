@@ -58,4 +58,18 @@ enum Direction {
     }
     return value;
   }
+
+  // tomap
+  static Map<Direction, String> toMap() {
+    return {
+      Direction.east: 'Đông',
+      Direction.west: 'Tây',
+      Direction.south: 'Nam',
+      Direction.north: 'Bắc',
+      Direction.northEast: 'Đông Bắc',
+      Direction.northWest: 'Tây Bắc',
+      Direction.southEast: 'Đông Nam',
+      Direction.southWest: 'Tây Nam',
+    };
+  }
 }

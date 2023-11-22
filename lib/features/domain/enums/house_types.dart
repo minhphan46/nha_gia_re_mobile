@@ -37,4 +37,14 @@ enum HouseTypes {
         return "Nhà mặt tiền";
     }
   }
+
+  // tomap
+  static Map<HouseTypes, String> toMap() {
+    return {
+      HouseTypes.townhouse: "Nhà phố",
+      HouseTypes.villa: "Biệt thự",
+      HouseTypes.alleyhouse: "Nhà hẻm",
+      HouseTypes.frontagehouse: "Nhà mặt tiền",
+    };
+  }
 }

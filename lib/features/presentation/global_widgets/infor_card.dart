@@ -13,13 +13,15 @@ import '../../../../../core/extensions/date_ex.dart';
 import '../../domain/entities/posts/real_estate_post.dart';
 
 class InforCard extends StatelessWidget {
-  const InforCard({super.key, required this.post});
+  const InforCard({super.key, this.width, this.height, required this.post});
 
   final RealEstatePostEntity post;
+  final double? height;
+  final double? width;
 
   @override
   Widget build(BuildContext context) {
-    double widthBox = 43.wp;
+    double widthBox = width ?? 43.wp;
 
     return ZoomTapAnimation(
       child: InkWell(
@@ -32,7 +34,7 @@ class InforCard extends StatelessWidget {
         splashColor: AppColors.green,
         child: Container(
           width: widthBox,
-          height: 10.hp,
+          height: height ?? 10.hp,
           decoration: BoxDecoration(
             color: AppColors.grey100,
             borderRadius: BorderRadius.circular(10),

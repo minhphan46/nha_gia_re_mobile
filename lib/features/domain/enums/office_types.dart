@@ -37,4 +37,13 @@ enum OfficeTypes {
         return "Không gian thương mại";
     }
   }
+
+  static Map<OfficeTypes, String> toMap() {
+    return {
+      OfficeTypes.office: getStringVi(OfficeTypes.office),
+      OfficeTypes.officetel: getStringVi(OfficeTypes.officetel),
+      OfficeTypes.shophouse: getStringVi(OfficeTypes.shophouse),
+      OfficeTypes.comercialspace: getStringVi(OfficeTypes.comercialspace),
+    };
+  }
 }

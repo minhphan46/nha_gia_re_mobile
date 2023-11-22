@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/base_textfield.dart';
-import '../create_post_controller.dart';
+import '../../create_post_controller.dart';
 
-class AreaPricesCard extends StatelessWidget {
-  AreaPricesCard({super.key});
+class ApartmentAreaPricesCard extends StatelessWidget {
+  ApartmentAreaPricesCard({super.key});
 
   final CreatePostController controller = Get.find<CreatePostController>();
 
@@ -23,11 +23,11 @@ class AreaPricesCard extends StatelessWidget {
           maxLines: 1,
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
-          controller: controller.areaTextController,
+          controller: controller.apartmentAreaTC,
           labelText: 'Diện tích (m2)',
           hintText: "Diện tích",
           onSaved: (value) {
-            controller.area = value;
+            controller.apartmentArea = value!.trim();
           },
         ),
         const SizedBox(height: 15),
@@ -37,25 +37,30 @@ class AreaPricesCard extends StatelessWidget {
           maxLines: 1,
           keyboardType: TextInputType.number,
           textInputAction: TextInputAction.next,
-          controller: controller.priceTextController,
+          controller: controller.apartmentPriceTC,
           labelText: 'Giá (VNĐ)',
           hintText: "Giá",
           onSaved: (value) {
-            controller.price = value;
+            controller.apartmentPrice = value!.trim();
           },
         ),
         const SizedBox(height: 15),
-        BaseTextField(
-          focusNode: _depositFocusNode,
-          maxLines: 1,
-          keyboardType: TextInputType.number,
-          textInputAction: TextInputAction.done,
-          controller: controller.depositTextController,
-          labelText: 'Số tiền cọc (VNĐ)',
-          hintText: "Không bắt buộc",
-          onSaved: (value) {
-            controller.deposit = value;
-          },
+        Obx(
+          () => Visibility(
+            visible: !controller.isLease.value,
+            child: BaseTextField(
+              focusNode: _depositFocusNode,
+              maxLines: 1,
+              keyboardType: TextInputType.number,
+              textInputAction: TextInputAction.done,
+              controller: controller.apartmentDepositTC,
+              labelText: 'Số tiền cọc (VNĐ)',
+              hintText: "Không bắt buộc",
+              onSaved: (value) {
+                controller.apartmentDeposit = value!.trim();
+              },
+            ),
+          ),
         ),
       ],
     );

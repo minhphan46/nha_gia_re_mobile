@@ -7,7 +7,7 @@ import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
-import 'package:nhagiare_mobile/features/domain/entities/transaction.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/transaction.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/purchase_controller.dart';
 import 'package:url_launcher/url_launcher.dart';

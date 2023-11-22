@@ -48,4 +48,16 @@ enum ApartmentTypes {
         return "Penthouse";
     }
   }
+
+  // tomap
+  static Map<ApartmentTypes, String> toMap() {
+    return {
+      ApartmentTypes.apartment: "Căn hộ",
+      ApartmentTypes.duplex: "Duplex",
+      ApartmentTypes.officetel: "Officetel",
+      ApartmentTypes.service: "Dịch vụ",
+      ApartmentTypes.dormitory: "Ký túc xá",
+      ApartmentTypes.penhouse: "Penthouse",
+    };
+  }
 }

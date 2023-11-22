@@ -7,17 +7,19 @@ import 'property_feature.dart';
 class House implements PropertyFeature {
   final HouseTypes? houseType;
   final int? numOfBedRooms;
-  final bool? isWidensTowardsTheBack;
   final int? numOfToilets;
   final int? numOfFloors;
   final Direction? mainDoorDirection;
+  final double? areaUsed;
   final double? width;
   final double? length;
-  final double? areaUsed;
+  final bool? isWidensTowardsTheBack;
+  final bool? hasWideAlley;
+  final bool? isFacade;
   final LegalDocumentStatus? legalDocumentStatus;
+  final FurnitureStatus? furnitureStatus;
   final String? houseNumber;
   final bool? showHouseNumber;
-  final FurnitureStatus? furnitureStatus;
 
   House(
     this.houseType,
@@ -33,6 +35,8 @@ class House implements PropertyFeature {
     this.houseNumber,
     this.showHouseNumber,
     this.furnitureStatus,
+    this.hasWideAlley,
+    this.isFacade,
   );
 
   factory House.fromJson(Map<String, dynamic> json) {
@@ -58,6 +62,8 @@ class House implements PropertyFeature {
       json['furniture_status'] != null
           ? FurnitureStatus.parse(json['furniture_status'])
           : null,
+      json['has_wide_alley'],
+      json['is_facade'],
     );
   }
 
@@ -76,6 +82,8 @@ class House implements PropertyFeature {
       'house_number': houseNumber,
       'show_house_number': showHouseNumber,
       'furniture_status': furnitureStatus?.toString(),
+      'has_wide_alley': hasWideAlley,
+      'is_facade': isFacade,
     };
   }
 }

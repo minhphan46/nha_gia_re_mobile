@@ -51,9 +51,7 @@ class InforCardList extends StatelessWidget {
                       width: 10,
                     ),
                     itemBuilder: (BuildContext context, int index) {
-                      return InkWell(
-                        child: InforCard(key: UniqueKey(), post: data[index]),
-                      );
+                      return InforCard(key: UniqueKey(), post: data[index]);
                     },
                   );
                 }

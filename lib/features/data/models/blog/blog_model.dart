@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/domain/entities/blog.dart';
+import 'package:nhagiare_mobile/features/domain/entities/blog/blog.dart';
 
 class BlogModel extends BlogEntity {
   const BlogModel({

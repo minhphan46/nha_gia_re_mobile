@@ -17,7 +17,11 @@ class ButtonFollow extends StatelessWidget {
         width: double.infinity,
         padding: const EdgeInsets.symmetric(vertical: 10),
         decoration: BoxDecoration(
-          color: isFollow ? AppColors.grey300 : AppColors.green,
+          color: isFollow
+              ? AppColors.grey300
+              : isMe
+                  ? AppColors.grey500
+                  : AppColors.green,
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(
@@ -27,13 +31,19 @@ class ButtonFollow extends StatelessWidget {
               Icon(
                 isFollow
                     ? Icons.remove_circle_outline_rounded
-                    : Icons.add_circle_outline_rounded,
+                    : isMe
+                        ? Icons.edit_outlined
+                        : Icons.add_circle_outline_rounded,
                 color: isFollow ? AppColors.black : AppColors.white,
                 size: 20,
               ),
               const SizedBox(width: 4),
               Text(
-                isFollow ? 'Bỏ theo dõi' : 'Theo dõi',
+                isFollow
+                    ? 'Bỏ theo dõi'
+                    : isMe
+                        ? "Cập nhập thông tin"
+                        : 'Theo dõi',
                 style: AppTextStyles.medium14
                     .colorEx(isFollow ? AppColors.black : AppColors.white),
               ),

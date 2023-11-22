@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:nhagiare_mobile/features/data/models/transaction_model.dart';
+import 'package:nhagiare_mobile/features/data/models/purchase/transaction_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';

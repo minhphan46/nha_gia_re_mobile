@@ -1,8 +1,8 @@
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/membership_package_data_source.dart';
-import 'package:nhagiare_mobile/features/data/models/order_membership_package_model.dart';
-import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
+import 'package:nhagiare_mobile/features/data/models/purchase/order_membership_package_model.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/repository/membership_package_repository.dart';
 import 'dart:io';
 

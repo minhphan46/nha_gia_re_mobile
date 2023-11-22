@@ -1,9 +1,9 @@
 import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
-import 'package:nhagiare_mobile/features/domain/entities/membership_package.dart';
-import 'package:nhagiare_mobile/features/domain/entities/order_membership_package.dart';
-import 'package:nhagiare_mobile/features/domain/entities/transaction.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/order_membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/transaction.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';

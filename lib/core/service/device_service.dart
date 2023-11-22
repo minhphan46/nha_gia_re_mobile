@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/services.dart';
@@ -36,13 +37,13 @@ class DeviceService {
     try {
       final image = await ImagePicker().pickImage(source: source);
       if (image == null) {
-        print("file null..");
+        log("file null..");
         return null;
       }
 
       imageTemporary = File(image.path);
     } on PlatformException catch (e) {
-      print('Failed to pick image: $e');
+      log('Failed to pick image: $e');
     }
     return imageTemporary;
   }

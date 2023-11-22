@@ -2,10 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
-import '../../../global_widgets/base_dropdown_button.dart';
+import '../../../../global_widgets/base_dropdown_button.dart';
 
-class MoreInfoCard extends StatelessWidget {
-  MoreInfoCard({super.key});
+class MotelMoreInfoCard extends StatelessWidget {
+  MotelMoreInfoCard({super.key});
 
   final CreatePostController controller = Get.find<CreatePostController>();
 
@@ -14,7 +14,7 @@ class MoreInfoCard extends StatelessWidget {
     return BaseDropdownButton(
       title: "Tình trạng nội thất",
       hint: "Không bắt buộc",
-      value: controller.selectedFurnitureStatus.value,
+      value: controller.motelSelectedFurnitureStatus.value,
       items: FurnitureStatus.toMap().entries.map((entry) {
         return DropdownMenuItem(
           value: entry.key,
@@ -28,7 +28,6 @@ class MoreInfoCard extends StatelessWidget {
       },
       onSaved: (value) {
         if (value == null) return;
-        print("Save DropDown Fied$value");
       },
     );
   }

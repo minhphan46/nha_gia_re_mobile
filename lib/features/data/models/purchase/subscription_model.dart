@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/domain/entities/subscription.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/subscription.dart';
 
 class SubscriptionModel extends Subscription {
   const SubscriptionModel({

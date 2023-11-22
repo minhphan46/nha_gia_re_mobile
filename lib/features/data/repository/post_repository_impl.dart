@@ -11,9 +11,9 @@ class PostRepositoryImpl implements PostRepository {
   PostRepositoryImpl(this._dataSrc);
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPosts() async {
+  Future<DataState<List<RealEstatePostEntity>>> getPosts(String? userId) async {
     try {
-      final httpResponse = await _dataSrc.getAllPosts();
+      final httpResponse = await _dataSrc.getAllPosts(userId);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

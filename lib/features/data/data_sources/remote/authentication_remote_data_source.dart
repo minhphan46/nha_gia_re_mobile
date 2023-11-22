@@ -164,8 +164,6 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
         },
       );
 
-      print(response.data);
-
       if (response.statusCode != 200) {
         throw ApiException(
           message: response.data['message'],

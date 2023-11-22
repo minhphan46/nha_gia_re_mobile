@@ -4,6 +4,7 @@ import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import '../../../../../config/values/asset_image.dart';
+import '../../../../../core/utils/check_time_date.dart';
 import '../home_controller.dart';
 import 'package:badges/badges.dart' as badges;
 
@@ -20,14 +21,20 @@ class HomeAppbar extends StatelessWidget {
           children: [
             // Sun
             Image.asset(
-              Assets.sun,
+              controller.getGreeting() == Greeting.evening
+                  ? Assets.solar
+                  : Assets.sun,
               width: 30,
               height: 30,
             ),
             const SizedBox(width: 2),
             // Hello text
             Text(
-              'Chào buổi sáng, ${controller.nameUser}!',
+              controller.getGreeting() == Greeting.evening
+                  ? 'Chào buổi tối, ${controller.nameUser}!'
+                  : controller.getGreeting() == Greeting.afternoon
+                      ? 'Chào buổi chiều, ${controller.nameUser}!'
+                      : 'Chào buổi sáng, ${controller.nameUser}!',
               style: AppTextStyles.bold14.colorEx(
                 AppColors.green,
               ),

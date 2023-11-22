@@ -67,6 +67,5 @@ class ValidateString implements FlutterPwValidatorStrings {
   final String lowercaseLetters = '- Ký tự viết thường'.tr;
 
   @override
-  // TODO: implement normalLetters
   final String normalLetters = '- Ký tự thường'.tr;
 }
