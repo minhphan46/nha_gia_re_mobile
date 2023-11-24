@@ -51,10 +51,9 @@ class ConversationRepositoryImpl extends ConversationRepository {
 
   @override
   void connect() {
-    _authenLocalDataSrc.getAccessToken().then((value) {
-      _conversationRemoteDataSource.setAuthToken(value);
-      _conversationRemoteDataSource.connect();
-    });
+    final token = _authenLocalDataSrc.getAccessToken();
+    _conversationRemoteDataSource.setAuthToken(token!);
+    _conversationRemoteDataSource.connect();
   }
 
   @override

@@ -15,6 +15,8 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   AuthenticationRepositoryImpl(this._dataRemoteSrc, this._dataLocalSrc);
 
+  bool _isLoggedIn = false;
+
   @override
   Future<DataState<void>> signIn(String email, String password) async {
     try {
@@ -25,6 +27,7 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         String refreshToken = httpResponse.data['refreshToken']!;
         _dataLocalSrc.storeAccessToken(accessToken);
         _dataLocalSrc.storeRefreshToken(refreshToken);
+        isLoggedIn = true;
         return const DataSuccess(null);
       } else {
         return DataFailed(DioException(
@@ -40,10 +43,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<DataState<bool>> checkActiveToken() async {
+  DataState<bool> checkActiveToken() {
     try {
-      String accessToken = await _dataLocalSrc.getAccessToken();
-      if (accessToken != "" && JwtDecoder.isExpired(accessToken) == false) {
+      String? accessToken = _dataLocalSrc.getAccessToken();
+      if (accessToken != "" &&
+          JwtDecoder.isExpired(accessToken ?? "") == false) {
         return const DataSuccess(true);
       }
       return const DataSuccess(false);
@@ -53,10 +57,11 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<DataState<bool>> checkRefreshToken() async {
+  DataState<bool> checkRefreshTokenIsValid() {
     try {
-      String refreshToken = await _dataLocalSrc.getRefreshToken();
-      if (refreshToken != "" && JwtDecoder.isExpired(refreshToken) == false) {
+      String? refreshToken = _dataLocalSrc.getRefreshToken();
+      if (refreshToken != "" &&
+          JwtDecoder.isExpired(refreshToken ?? "") == false) {
         return const DataSuccess(true);
       }
       return const DataSuccess(false);
@@ -68,12 +73,13 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   @override
   Future<DataState<void>> refreshNewAccessToken() async {
     try {
-      final refreshToken = await _dataLocalSrc.getRefreshToken();
-      final httpResponse = await _dataRemoteSrc.refreshToken(refreshToken);
-
+      final refreshToken = _dataLocalSrc.getRefreshToken();
+      final httpResponse = await _dataRemoteSrc.refreshToken(refreshToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         String accessToken = httpResponse.data;
+        print(httpResponse.data);
         _dataLocalSrc.storeAccessToken(accessToken);
+        isLoggedIn = true;
         return const DataSuccess(null);
       } else {
         return DataFailed(DioException(
@@ -85,6 +91,12 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       }
     } on DioException catch (e) {
       return DataFailed(e);
+    } catch (e) {
+      return DataFailed(DioException(
+        error: e.toString(),
+        type: DioExceptionType.badCertificate,
+        requestOptions: RequestOptions(path: ""),
+      ));
     }
   }
 
@@ -144,8 +156,58 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<DataState<String>> getAccessToken() async {
-    final accessToken = await _dataLocalSrc.getAccessToken();
+  DataState<String> getAccessToken() {
+    final accessToken = _dataLocalSrc.getAccessToken();
     return DataSuccess(accessToken);
+  }
+
+  final List<Function(bool p1)> _authListeners = [];
+
+  @override
+  void addAuthStateListener(Function(bool p1) listener) {
+    _authListeners.add(listener);
+  }
+
+  @override
+  void removeAuthStateListener(Function(bool p1) listener) {
+    _authListeners.remove(listener);
+  }
+
+  @override
+  void notifyAuthStateListeners() {
+    for (var listener in _authListeners) {
+      listener(_isLoggedIn);
+    }
+  }
+
+  @override
+  bool get isLoggedIn => _isLoggedIn;
+
+  @override
+  set isLoggedIn(bool value) {
+    _isLoggedIn = value;
+    notifyAuthStateListeners();
+  }
+
+  @override
+  Future<DataState<void>> signInWithToken() async {
+    final refreshToken = await _dataLocalSrc.getRefreshToken();
+
+    if (JwtDecoder.isExpired(refreshToken ?? "") == false) {
+      final result = await refreshNewAccessToken();
+      return result is DataSuccess
+          ? const DataSuccess(null)
+          : DataFailed(DioException(
+              error: "Refresh token is invalid",
+              type: DioExceptionType.badCertificate,
+              requestOptions: RequestOptions(path: ""),
+            ));
+    } else {
+      return DataFailed(DioException(
+        error: "Refresh token is invalid",
+        type: DioExceptionType.badCertificate,
+        requestOptions: RequestOptions(path: ""),
+      ));
+    }
   }
 }

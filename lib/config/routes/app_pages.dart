@@ -29,12 +29,19 @@ import 'package:nhagiare_mobile/features/presentation/modules/search/screens/sea
 import 'package:nhagiare_mobile/features/presentation/modules/search/search_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/setting/screens/setting_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/setting/setting_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/splash/splash_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/splash/splash_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/screens/user_profile_screen.dart';
 import '../../features/presentation/modules/purchase/screens/purchase_screen.dart';
 import '../../features/presentation/modules/user_profile/user_profile_binding.dart';
 
 abstract class AppPages {
   static final List<GetPage> pages = [
+    GetPage(
+      name: AppRoutes.splashScreen,
+      page: () => const SplashScreen(),
+      binding: SplashBinding(),
+    ),
     GetPage(
       name: AppRoutes.login,
       page: () => const LoginScreen(),
