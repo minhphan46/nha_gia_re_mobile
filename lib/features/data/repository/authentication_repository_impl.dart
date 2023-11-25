@@ -77,7 +77,6 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
       final httpResponse = await _dataRemoteSrc.refreshToken(refreshToken!);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         String accessToken = httpResponse.data;
-        print(httpResponse.data);
         _dataLocalSrc.storeAccessToken(accessToken);
         isLoggedIn = true;
         return const DataSuccess(null);
@@ -104,10 +103,10 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   Future<DataState<void>> signOut() async {
     try {
       final httpResponse = await _dataRemoteSrc.signOut();
-
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         _dataLocalSrc.deleteAccessToken();
         _dataLocalSrc.deleteRefreshToken();
+        isLoggedIn = false;
         return const DataSuccess(null);
       } else {
         return DataFailed(DioException(
@@ -191,17 +190,19 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
 
   @override
   Future<DataState<void>> signInWithToken() async {
-    final refreshToken = await _dataLocalSrc.getRefreshToken();
-
+    final refreshToken = _dataLocalSrc.getRefreshToken();
     if (JwtDecoder.isExpired(refreshToken ?? "") == false) {
       final result = await refreshNewAccessToken();
-      return result is DataSuccess
-          ? const DataSuccess(null)
-          : DataFailed(DioException(
-              error: "Refresh token is invalid",
-              type: DioExceptionType.badCertificate,
-              requestOptions: RequestOptions(path: ""),
-            ));
+      if (result is DataSuccess) {
+        isLoggedIn = true;
+        return const DataSuccess(null);
+      } else {
+        return DataFailed(DioException(
+          error: "Refresh token is invalid",
+          type: DioExceptionType.badCertificate,
+          requestOptions: RequestOptions(path: ""),
+        ));
+      }
     } else {
       return DataFailed(DioException(
         error: "Refresh token is invalid",

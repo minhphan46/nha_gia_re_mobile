@@ -12,15 +12,7 @@ import 'config/theme/app_theme.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await initializeDependencies();
-  runApp(MyApp());
-}
-
-Future<bool> checkIsLogin() async {
-  bool isLogin = false;
-  CheckTokenUseCase checkTokenUseCase = sl<CheckTokenUseCase>();
-  final dataState = await checkTokenUseCase();
-  if (dataState is DataSuccess && dataState.data == true) isLogin = true;
-  return isLogin;
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {

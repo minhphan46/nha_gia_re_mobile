@@ -13,7 +13,6 @@ class SplashController extends GetxController {
     if (dataState is DataSuccess && dataState.data == true) isLogin = true;
     return isLogin;
   }
-
   void checkLogin() {
     _checkIsLogin().then((value) {
       if (value) {
