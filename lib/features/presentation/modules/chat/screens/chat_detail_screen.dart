@@ -1,3 +1,6 @@
+import 'dart:ffi';
+
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:heroicons_flutter/heroicons_flutter.dart';
@@ -9,6 +12,7 @@ import 'package:nhagiare_mobile/features/domain/entities/chat/conversation.dart'
 import 'package:nhagiare_mobile/features/domain/entities/chat/message.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_controler.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({Key? key}) : super(key: key);
@@ -57,40 +61,90 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
               );
             }
             List<MessageModel> messages = snapshot.data!;
+            String userId = controller.getUserId()!;
+
+// Bước 1: Sắp xếp tin nhắn theo thời gian
+            messages.sort((a, b) => a.sentAt.compareTo(b.sentAt));
+
+// Bước 2 và 3: Nhóm tin nhắn theo ngày
+            Map<String, List<Message>> groupedMessages = {};
+            for (Message message in messages) {
+              DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
+                  message.sentAt.millisecondsSinceEpoch);
+              String dateKey =
+                  '${dateTime.year}-${dateTime.month}-${dateTime.day}';
+              if (!groupedMessages.containsKey(dateKey)) {
+                groupedMessages[dateKey] = [];
+              }
+              groupedMessages[dateKey]!.add(message);
+            }
+
+            final List<String> keys = groupedMessages.keys.toList();
+            keys.sort((a, b) => b.compareTo(a));
             return Column(
               children: [
                 Expanded(
                   child: ListView.builder(
-                    itemCount: messages.length,
+                    itemCount: keys.length,
                     reverse: true,
                     itemBuilder: (context, index) {
-                      Message message = messages[index];
-                      bool isMe = message.senderId == 'user1';
-                      return Row(
-                        mainAxisAlignment: isMe
-                            ? MainAxisAlignment.end
-                            : MainAxisAlignment.start,
-                        children: [
-                          Container(
-                            margin: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            padding: const EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            decoration: BoxDecoration(
-                              color:
-                                  isMe ? AppColors.green800 : AppColors.grey100,
-                              borderRadius: BorderRadius.circular(25),
-                            ),
-                            child: Text(message.content['text'] ?? "Null",
-                                style: AppTextStyles.regular16.colorEx(
-                                  isMe ? AppColors.white : AppColors.black,
-                                )),
+                      String dateKey = keys[index];
+                      List<Message> messagesOfDay = groupedMessages[dateKey]!;
+
+                      // Hiển thị ngày
+                      Widget dateWidget = Center(
+                        child: Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 8),
+                          decoration: BoxDecoration(
+                            color: AppColors
+                                .grey200, // Màu nền của phần tiêu đề ngày
+                            borderRadius: BorderRadius.circular(25),
                           ),
-                        ],
+                          child: Text(
+                            dateKey,
+                            style: AppTextStyles.regular14,
+                          ),
+                        ),
+                      );
+
+                      // Hiển thị các tin nhắn trong ngày
+                      List<Widget> messageWidgets =
+                          messagesOfDay.map((message) {
+                        bool isMe = message.senderId == userId;
+                        return Row(
+                          mainAxisAlignment: isMe
+                              ? MainAxisAlignment.end
+                              : MainAxisAlignment.start,
+                          children: [
+                            Container(
+                              constraints: BoxConstraints(
+                                maxWidth:
+                                    MediaQuery.of(context).size.width * 0.7,
+                              ),
+                              margin: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 8,
+                              ),
+                              decoration: BoxDecoration(
+                                color: isMe
+                                    ? AppColors.green800
+                                    : AppColors.grey100,
+                                borderRadius: BorderRadius.circular(25),
+                              ),
+                              child: _buildTextMessage(
+                                  message.content["text"], isMe),
+                            ),
+                          ],
+                        );
+                      }).toList();
+
+                      return Column(
+                        children: [dateWidget, ...messageWidgets],
                       );
                     },
                   ),
@@ -100,6 +154,73 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             );
           }),
     );
+  }
+
+  Widget _buildTextMessage(String message, bool isMe) {
+    List<InlineSpan> textSpans = [];
+
+    // Tách chuỗi thành các từ để kiểm tra xem có đường dẫn nào không
+    List<String> words = [];
+
+    for (var i = 0; i < message.length; i++) {
+      if (message[i] == ' ' || message[i] == '\n') {
+        words.add(message[i]);
+      } else {
+        // Nếu không phải thì thêm ký tự vào từ cuối cùng
+        if (words.isEmpty) {
+          words.add(message[i]);
+        } else {
+          words[words.length - 1] += message[i];
+        }
+      }
+    }
+    for (String word in words) {
+      if (isURL(word)) {
+        // Nếu là đường dẫn, thêm một phần tử GestureDetector để mở trình duyệt khi nhấn vào
+        textSpans.add(
+          TextSpan(
+            text: '$word ',
+            style: AppTextStyles.regular16
+                .colorEx(
+                  isMe ? AppColors.white : AppColors.black,
+                )!
+                .copyWith(
+                  decoration: TextDecoration.underline,
+                )
+                .copyWith(
+                  fontWeight: FontWeight.w500,
+                ),
+            recognizer: TapGestureRecognizer()..onTap = () => launchURL(word),
+          ),
+        );
+      } else {
+        // Nếu không phải đường dẫn, thêm văn bản bình thường
+        textSpans.add(TextSpan(
+            text: '$word ',
+            style: AppTextStyles.regular16
+                .colorEx(isMe ? AppColors.white : AppColors.black)!));
+      }
+    }
+
+    return RichText(
+      text: TextSpan(
+        children: textSpans,
+      ),
+    );
+  }
+
+  bool isURL(String word) {
+    // Kiểm tra xem một chuỗi có phải là một đường dẫn không
+    Uri? uri = Uri.tryParse(word.trim());
+    return uri != null && (uri.scheme == 'http' || uri.scheme == 'https');
+  }
+
+  void launchURL(String url) async {
+    // Mở trình duyệt với đường dẫn đã cho
+    Uri uri = Uri.parse(url.trim());
+    await canLaunchUrl(uri)
+        ? await launchUrl(uri)
+        : Get.snackbar('Could not launch this url', '');
   }
 
   bool _updateShowButtons() {
@@ -137,7 +258,6 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   _updateShowButtons();
                 },
                 focusNode: _focusNode,
-                onTapOutside: (event) => _focusNode.unfocus(),
                 decoration: const InputDecoration(
                   contentPadding: EdgeInsets.symmetric(
                     horizontal: 16,
@@ -159,8 +279,10 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                 color: AppColors.green,
               ),
               onPressed: () {
+                if (_textEditingController.text.trim().isEmpty) return;
                 controller
                     .sendMessage(_textEditingController.text.trim().toString());
+                _textEditingController.clear();
               },
             ),
           ],

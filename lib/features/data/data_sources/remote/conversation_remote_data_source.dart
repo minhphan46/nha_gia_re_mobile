@@ -89,7 +89,6 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
       socket.on('messages', (data) {
         String type = data["type"] as String;
         String conversationId = data["conversation_id"] as String;
-        print("Received: $data");
         if (type == 'init') {
           List<dynamic> messages = data["data"] ?? [];
           _messages[conversationId] =

@@ -66,12 +66,6 @@ Future<void> initializeDependencies() async {
   );
   // use cases
 
-  sl.registerSingleton<CheckTokenUseCase>(
-    CheckTokenUseCase(
-      sl<AuthenticationRepository>(),
-    ),
-  );
-
   sl.registerSingleton<GetUserIdUseCase>(
     GetUserIdUseCase(
       sl<AuthenticationRepository>(),
@@ -253,6 +247,13 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<SignUpUseCase>(
     SignUpUseCase(
+      sl<AuthenticationRepository>(),
+      sl<ConversationRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CheckTokenUseCase>(
+    CheckTokenUseCase(
       sl<AuthenticationRepository>(),
       sl<ConversationRepository>(),
     ),

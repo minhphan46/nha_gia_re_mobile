@@ -142,9 +142,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<DataState<String>> getUserId() async {
+  DataState<String> getUserId() {
     try {
-      String id = await _dataLocalSrc.getUserIdFromToken();
+      String id = _dataLocalSrc.getUserIdFromToken();
       return DataSuccess(id);
     } on DioException catch (e) {
       return DataFailed(e);

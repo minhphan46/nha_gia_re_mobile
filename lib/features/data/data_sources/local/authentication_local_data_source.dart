@@ -9,7 +9,7 @@ abstract class AuthenLocalDataSrc {
   String? getAccessToken();
   Future<void> deleteRefreshToken();
   Future<void> deleteAccessToken();
-  Future<String> getUserIdFromToken();
+  String getUserIdFromToken();
 }
 
 class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
@@ -74,7 +74,7 @@ class AuthenLocalDataSrcImpl implements AuthenLocalDataSrc {
   }
 
   @override
-  Future<String> getUserIdFromToken() async {
+  String getUserIdFromToken() {
     try {
       String? token = client.getString('accessToken');
       if (JwtDecoder.isExpired(token!)) {
