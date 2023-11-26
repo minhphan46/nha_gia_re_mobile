@@ -107,7 +107,9 @@ class UserEntity extends Equatable {
       updatedAt: json['updated_at'] != null
           ? DateTime.parse(json['updated_at'])
           : DateTime.now(),
-      bannedUtil: DateTime.tryParse(json['banned_util'] ?? ""),
+      bannedUtil: json['banned_util'] != null
+          ? DateTime.tryParse(json['banned_util'])
+          : null,
     );
   }
 }

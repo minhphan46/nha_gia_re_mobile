@@ -17,7 +17,7 @@ class ChooseLeaseCard extends StatelessWidget {
         Obx(
           () => GestureDetector(
             onTap: () {
-              controller.setIsLease(true);
+              controller.setIsLease(false);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -25,7 +25,7 @@ class ChooseLeaseCard extends StatelessWidget {
                 vertical: 10,
               ),
               decoration: BoxDecoration(
-                color: controller.isLease.value == true
+                color: !controller.isLease.value == true
                     ? AppColors.greenLight
                     : AppColors.grey200,
                 borderRadius: BorderRadius.circular(10),
@@ -33,7 +33,7 @@ class ChooseLeaseCard extends StatelessWidget {
               child: Text(
                 "Cần bán",
                 style: AppTextStyles.medium14.copyWith(
-                  color: controller.isLease.value == true
+                  color: !controller.isLease.value == true
                       ? AppColors.green
                       : AppColors.grey600,
                 ),
@@ -47,7 +47,7 @@ class ChooseLeaseCard extends StatelessWidget {
         Obx(
           () => GestureDetector(
             onTap: () {
-              controller.setIsLease(false);
+              controller.setIsLease(true);
             },
             child: Container(
               padding: const EdgeInsets.symmetric(
@@ -55,7 +55,7 @@ class ChooseLeaseCard extends StatelessWidget {
                 vertical: 10,
               ),
               decoration: BoxDecoration(
-                color: controller.isLease.value != true
+                color: !controller.isLease.value != true
                     ? AppColors.greenLight
                     : AppColors.grey200,
                 borderRadius: BorderRadius.circular(10),
@@ -63,7 +63,7 @@ class ChooseLeaseCard extends StatelessWidget {
               child: Text(
                 "Cho thuê",
                 style: AppTextStyles.medium14.copyWith(
-                  color: controller.isLease.value != true
+                  color: !controller.isLease.value != true
                       ? AppColors.green
                       : AppColors.grey600,
                 ),

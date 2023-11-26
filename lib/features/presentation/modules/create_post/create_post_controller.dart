@@ -2,11 +2,19 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
+import 'package:nhagiare_mobile/features/domain/entities/properties/apartment.dart';
+import 'package:nhagiare_mobile/features/domain/entities/properties/house.dart';
+import 'package:nhagiare_mobile/features/domain/entities/properties/land.dart';
+import 'package:nhagiare_mobile/features/domain/entities/properties/motel.dart';
 import 'package:nhagiare_mobile/features/domain/enums/apartment_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/direction.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/domain/enums/land_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
+import '../../../../injection_container.dart';
+import '../../../domain/entities/properties/office.dart';
 import '../../../domain/enums/house_types.dart';
 import '../../../domain/enums/legal_document_status.dart';
 import '../../../domain/enums/property_types.dart';
@@ -20,16 +28,205 @@ class CreatePostController extends GetxController {
   // create Post
   Future<void> createPost() async {
     toggleIsLoading(true);
-    Future.delayed(const Duration(seconds: 2), () {
+    CreatePostsUseCase createPostsUseCase = sl<CreatePostsUseCase>();
+
+    await createPostsUseCase(params: getFinalPost()).then((value) {
       toggleIsLoading(false);
       Get.back();
     });
+    // Future.delayed(
+    //   const Duration(seconds: 2),
+    //   () {
+    //     toggleIsLoading(false);
+    //     Get.back();
+    //   },
+    // );
+  }
+
+  RealEstatePostEntity getFinalPost() {
+    switch (selectedPropertyType.value!) {
+      case PropertyTypes.motel:
+        return createMotel();
+      case PropertyTypes.apartment:
+        return createApartment();
+      case PropertyTypes.office:
+        return createOffice();
+      case PropertyTypes.house:
+        return createHouse();
+      case PropertyTypes.land:
+        return createLand();
+    }
+  }
+
+  RealEstatePostEntity createMotel() {
+    return RealEstatePostEntity(
+      typeId: "motel",
+      unitId: "m2",
+      title: titleTextController.text.trim(),
+      description: descriptionTextController.text.trim(),
+      price: motelPriceTC.text.trim(),
+      deposit: int.parse(
+          motelDepositTC.text.trim() == "" ? "0" : motelDepositTC.text.trim()),
+      area: double.parse(motelAreaTC.text.trim()),
+      address: null,
+      images: const [
+        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
+        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
+        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
+        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
+      ],
+      features: Motel(
+        double.parse(motelWaterPriceTC.text.trim()),
+        double.parse(motelElectricPriceTC.text.trim()),
+        motelSelectedFurnitureStatus.value,
+      ).toJson(),
+      isLease: isLease.value,
+      isProSeller: isProSeller.value,
+    );
+  }
+
+  RealEstatePostEntity createApartment() {
+    return RealEstatePostEntity(
+      typeId: "apartment",
+      unitId: "m2",
+      title: title ?? "",
+      description: description ?? "",
+      price: apartmentPrice,
+      deposit: int.parse(apartmentDeposit!),
+      area: double.parse(apartmentArea!),
+      address: null,
+      images: const [
+        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
+        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
+        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
+        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
+      ],
+      features: Apartment(
+        apartmentType.value,
+        apartmentIsHandOver.value,
+        int.parse(apartmentNumOfBedRooms ?? "0"),
+        apartmentFurnitureStatus.value,
+        int.parse(apartmentNumOfToilets ?? "0"),
+        apartmentBalconyDirection.value.toString(),
+        block,
+        floor,
+        apartmentLegalDocumentStatus.value,
+        apartmentNumber,
+        isShowapartmentNumber.value,
+      ).toJson(),
+      isLease: isLease.value,
+      isProSeller: isProSeller.value,
+    );
+  }
+
+  RealEstatePostEntity createOffice() {
+    return RealEstatePostEntity(
+      typeId: "office",
+      unitId: "m2",
+      title: title ?? "",
+      description: description ?? "",
+      price: officePrice,
+      deposit: int.parse(officeDeposit!),
+      area: double.parse(officeArea!),
+      address: null,
+      images: const [
+        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
+        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
+        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
+        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
+      ],
+      features: Office(
+        officeType.value,
+        officeIsFacade.value,
+        officeMainDoorDirection.value,
+        block,
+        floor,
+        officeLegalDocumentStatus.value,
+        officeNumber,
+        officeIsShowName.value,
+        officeFurnitureStatus.value,
+      ).toJson(),
+      isLease: isLease.value,
+      isProSeller: isProSeller.value,
+    );
+  }
+
+  RealEstatePostEntity createHouse() {
+    return RealEstatePostEntity(
+      typeId: "house",
+      unitId: "m2",
+      title: title ?? "",
+      description: description ?? "",
+      price: housePrice,
+      deposit: int.parse(houseDeposit!),
+      area: double.parse(houseArea!),
+      address: null,
+      images: const [
+        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
+        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
+        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
+        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
+      ],
+      features: House(
+        houseType.value,
+        int.parse(houseNumOfBedRooms ?? "0"),
+        houseIsWidensTowardsTheBack.value,
+        int.parse(houseNumOfToilets ?? "0"),
+        int.parse(houseNumOfFloors ?? "0"),
+        houseMainDoorDirection.value,
+        double.parse(houseWidth ?? "0"),
+        double.parse(houseLength ?? "0"),
+        double.parse(houseAreaUsed ?? "0"),
+        houseLegalDocumentStatus.value,
+        houseNumber,
+        isShowHouseNumber.value,
+        houseFurnitureStatus.value,
+        houseHasWideAlley.value,
+        houseIsFacade.value,
+      ).toJson(),
+      isLease: isLease.value,
+      isProSeller: isProSeller.value,
+    );
+  }
+
+  RealEstatePostEntity createLand() {
+    return RealEstatePostEntity(
+      typeId: "land",
+      unitId: "ha",
+      title: title ?? "",
+      description: description ?? "",
+      price: landPrice,
+      deposit: int.parse(landDeposit!),
+      area: double.parse(landArea!),
+      address: null,
+      images: const [
+        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
+        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
+        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
+        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
+      ],
+      features: Land(
+        landType.value,
+        landLotCode,
+        landSubdivisionName,
+        landIsFacade.value,
+        landHasWideAlley.value,
+        landIsWidensTowardsTheBack.value,
+        landDirection.value,
+        double.parse(landWidth ?? "0"),
+        double.parse(landLength ?? "0"),
+        landLegalDocumentStatus.value,
+        isShowLandLotCode.value,
+      ).toJson(),
+      isLease: isLease.value,
+      isProSeller: isProSeller.value,
+    );
   }
 
   // card choose type property
   Rxn<PropertyTypes> selectedPropertyType = Rxn(null);
   bool isReachLimitPost = false;
-  Rx<bool> isLease = true.obs;
+  Rx<bool> isLease = false.obs;
 
   void changeSelectedProperty(PropertyTypes value) {
     selectedPropertyType.value = value;
@@ -37,7 +234,7 @@ class CreatePostController extends GetxController {
 
   void setIsLease(bool value) {
     isLease.value = value;
-    if (value && selectedPropertyType.value == PropertyTypes.motel) {
+    if (!value && selectedPropertyType.value == PropertyTypes.motel) {
       selectedPropertyType.value = Rxn(null).value;
     }
   }
@@ -303,9 +500,9 @@ class CreatePostController extends GetxController {
   }
 
   // apartment ======================================================
-  RxBool officeIsHandOver = true.obs;
-  void setOfficeIsHandOver(bool value) {
-    officeIsHandOver.value = value;
+  RxBool apartmentIsHandOver = true.obs;
+  void setApartmentIsHandOver(bool value) {
+    apartmentIsHandOver.value = value;
   }
 
   Rxn<ApartmentTypes> apartmentType = Rxn(null);

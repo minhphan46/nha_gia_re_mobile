@@ -265,7 +265,8 @@ class CreatePostScreen extends StatelessWidget {
                                 child: CircularProgressIndicator(
                                   color: Colors.white,
                                   strokeWidth: 2,
-                                ))
+                                ),
+                              )
                             : Text(
                                 'Đăng bài'.tr,
                                 style: AppTextStyles.bold14
