@@ -125,9 +125,6 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       }
 
       // Nếu yêu cầu thành công, giải mã dữ liệu JSON
-
-      final DataMap data = DataMap.from(response.data["result"]);
-
       return HttpResponse(null, response);
     } on DioException catch (e) {
       throw ApiException(
