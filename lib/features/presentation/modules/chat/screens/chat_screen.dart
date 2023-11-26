@@ -54,7 +54,8 @@ class ChatScreen extends StatelessWidget {
             children: [
               ListTile(
                 onTap: () {
-                  Get.to(() => ChatDetailScreen(), arguments: conversation);
+                  Get.to(() => const ChatDetailScreen(),
+                      arguments: conversation);
                 },
                 titleAlignment: ListTileTitleAlignment.threeLine,
                 leading: const CircleAvatar(
@@ -64,7 +65,7 @@ class ChatScreen extends StatelessWidget {
                 title: Padding(
                   padding: const EdgeInsets.only(bottom: 8),
                   child: Text(
-                    conversation.users![0].fullName ?? 'Người dùng',
+                    conversation.users![0].fullName,
                     style: AppTextStyles.semiBold16,
                   ),
                 ),
@@ -83,7 +84,6 @@ class ChatScreen extends StatelessWidget {
                   style: AppTextStyles.regular14,
                 ),
               ),
-              // Add Divider unless it's the last item
               if (!isLastItem)
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),

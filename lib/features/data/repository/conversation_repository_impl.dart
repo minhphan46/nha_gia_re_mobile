@@ -8,7 +8,7 @@ class ConversationRepositoryImpl extends ConversationRepository {
   final ConversationRemoteDataSource _conversationRemoteDataSource;
   final AuthenLocalDataSrc _authenLocalDataSrc;
   ConversationRepositoryImpl(
-      this._conversationRemoteDataSource, this._authenLocalDataSrc) {}
+      this._conversationRemoteDataSource, this._authenLocalDataSrc);
 
   @override
   void addConversationListener(Function(List<ConversationModel> p1) listener) {

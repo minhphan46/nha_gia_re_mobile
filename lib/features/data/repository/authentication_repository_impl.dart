@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
@@ -145,9 +143,9 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
   }
 
   @override
-  Future<DataState<String>> getUserId() async {
+  DataState<String> getUserId() {
     try {
-      String id = await _dataLocalSrc.getUserIdFromToken();
+      String id = _dataLocalSrc.getUserIdFromToken();
       return DataSuccess(id);
     } on DioException catch (e) {
       return DataFailed(e);
