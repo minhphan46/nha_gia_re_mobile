@@ -81,8 +81,8 @@ class LoginController extends GetxController {
         isLoading.value = true;
         // call api
         Map<String, dynamic>? params = {
-          "email": loginEmail.text,
-          "password": loginPassword.text,
+          "email": loginEmail.text.trim(),
+          "password": loginPassword.text.trim(),
         };
 
         final dataState = await signInUseCase(params: params);
@@ -126,9 +126,9 @@ class LoginController extends GetxController {
         isLoading.value = true;
         // call api
         Map<String, dynamic>? params = {
-          "email": registerEmail.text,
-          "password": registerPassword.text,
-          "confirmPassword": registerRepeatPassword.text,
+          "email": registerEmail.text.trim(),
+          "password": registerPassword.text.trim(),
+          "confirmPassword": registerRepeatPassword.text.trim(),
         };
 
         final dataState = await signUpUseCase(params: params);

@@ -62,7 +62,11 @@ class BaseTextField extends StatelessWidget {
         focusNode!.unfocus();
       },
       onSaved: onSaved,
+      onChanged: (value) {
+        onSaved!(value);
+      },
       onFieldSubmitted: (value) {
+        onSaved!(value);
         FocusScope.of(context).requestFocus(nexFocusNode);
       },
     );

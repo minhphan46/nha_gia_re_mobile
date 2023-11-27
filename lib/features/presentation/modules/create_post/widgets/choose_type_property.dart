@@ -12,7 +12,7 @@ class ChooseTypePropertyCard extends StatelessWidget {
   List<DropdownMenuItem<PropertyTypes>>? getItems(bool isLease) {
     return PropertyTypes.toMap()
         .entries
-        .where((entry) => !(isLease &&
+        .where((entry) => !(!isLease &&
             entry.key == PropertyTypes.motel)) // Lọc theo điều kiện
         .map<DropdownMenuItem<PropertyTypes>>(
           (entry) => DropdownMenuItem<PropertyTypes>(

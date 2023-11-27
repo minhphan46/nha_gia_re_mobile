@@ -33,7 +33,7 @@ class ApartmentInfoCard extends StatelessWidget {
                 Obx(
                   () => GestureDetector(
                     onTap: () {
-                      controller.setOfficeIsHandOver(true);
+                      controller.setApartmentIsHandOver(true);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -41,7 +41,7 @@ class ApartmentInfoCard extends StatelessWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: controller.officeIsHandOver.value == true
+                        color: controller.apartmentIsHandOver.value == true
                             ? AppColors.greenLight
                             : AppColors.grey200,
                         borderRadius: BorderRadius.circular(10),
@@ -49,7 +49,7 @@ class ApartmentInfoCard extends StatelessWidget {
                       child: Text(
                         "Đã bàn giao",
                         style: AppTextStyles.medium14.copyWith(
-                          color: controller.officeIsHandOver.value == true
+                          color: controller.apartmentIsHandOver.value == true
                               ? AppColors.green
                               : AppColors.grey600,
                         ),
@@ -63,7 +63,7 @@ class ApartmentInfoCard extends StatelessWidget {
                 Obx(
                   () => GestureDetector(
                     onTap: () {
-                      controller.setOfficeIsHandOver(false);
+                      controller.setApartmentIsHandOver(false);
                     },
                     child: Container(
                       padding: const EdgeInsets.symmetric(
@@ -71,7 +71,7 @@ class ApartmentInfoCard extends StatelessWidget {
                         vertical: 8,
                       ),
                       decoration: BoxDecoration(
-                        color: controller.officeIsHandOver.value != true
+                        color: controller.apartmentIsHandOver.value != true
                             ? AppColors.greenLight
                             : AppColors.grey200,
                         borderRadius: BorderRadius.circular(10),
@@ -79,7 +79,7 @@ class ApartmentInfoCard extends StatelessWidget {
                       child: Text(
                         "Chưa bàn giao",
                         style: AppTextStyles.medium14.copyWith(
-                          color: controller.officeIsHandOver.value != true
+                          color: controller.apartmentIsHandOver.value != true
                               ? AppColors.green
                               : AppColors.grey600,
                         ),

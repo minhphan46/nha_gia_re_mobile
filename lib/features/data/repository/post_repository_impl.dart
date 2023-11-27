@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
+import 'package:nhagiare_mobile/features/data/models/post/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import '../../domain/entities/posts/real_estate_post.dart';
 
@@ -32,8 +33,25 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<DataState<void>> createPost(RealEstatePostEntity post) async {
-    // TODO: implement createPost
-    throw UnimplementedError();
+    try {
+      final httpResponse =
+          await _dataSrc.createPost(RealEstatePostModel.fromEntity(post));
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 
   @override
