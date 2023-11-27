@@ -247,7 +247,7 @@ class CreatePostScreen extends StatelessWidget {
                         onPressed: controller.isLoading.value
                             ? null
                             : () {
-                                controller.uploadImages();
+                                controller.createPost();
                               },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.green,
