@@ -26,7 +26,7 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   final Map<String, List<Function(List<MessageModel>)>> _messageListener = {};
   final List<ConversationModel> _conversations = [];
   final Map<String, List<MessageModel>> _messages = {};
-  late final String authToken;
+  late String authToken;
 
   @override
   List<ConversationModel> getConversations() {
@@ -96,6 +96,7 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
         } else if (type == 'new') {
           MessageModel message = MessageModel.fromJson(data["data"]);
           _messages[conversationId]!.insert(0, message);
+          print(_messages);
         } else if (type == 'update') {
           MessageModel message = MessageModel.fromJson(data["data"]);
           int index = _messages[conversationId]!

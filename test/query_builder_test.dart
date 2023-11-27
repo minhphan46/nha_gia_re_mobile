@@ -36,6 +36,6 @@ void main() {
         .addPage(2)
         .addSearch('keyword');
     expect(queryBuilder.build(),
-        '?name[eq]=John&age[gt]=18&page=2&orderBy=+name&search=keyword');
+        '?name[eq]=John&age[gt]=18&page=2&orders=+name&search=keyword');
   });
 }
