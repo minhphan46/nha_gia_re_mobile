@@ -34,7 +34,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsApproved() async {
     const status = 'approved';
-    const url = '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+    const url =
+        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
 
     return await DatabaseHelper().getPosts(url, client);
   }
@@ -74,7 +75,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsHided() async {
     const status = 'hided';
-    const url = '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+    const url =
+        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
 
     return await DatabaseHelper().getPosts(url, client);
   }
@@ -82,14 +84,16 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsPending() async {
     const status = 'pending';
-    const url = '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+    const url =
+        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
     return await DatabaseHelper().getPosts(url, client);
   }
 
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsRejected() async {
     const status = 'rejected';
-    const url = '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'';
+    const url =
+        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
 
     return await DatabaseHelper().getPosts(url, client);
   }
