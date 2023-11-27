@@ -103,7 +103,7 @@ class HouseAreaPricesCard extends StatelessWidget {
         const SizedBox(height: 15),
         Obx(
           () => Visibility(
-            visible: !controller.isLease.value,
+            visible: controller.isLease.value,
             child: BaseTextField(
               focusNode: _depositFocusNode,
               maxLines: 1,

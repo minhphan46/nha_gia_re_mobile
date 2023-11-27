@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';

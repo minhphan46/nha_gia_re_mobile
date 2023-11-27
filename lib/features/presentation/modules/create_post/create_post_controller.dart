@@ -13,6 +13,7 @@ import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/domain/enums/land_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
+import '../../../../config/theme/app_color.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/properties/office.dart';
 import '../../../domain/enums/house_types.dart';
@@ -33,6 +34,12 @@ class CreatePostController extends GetxController {
     await createPostsUseCase(params: getFinalPost()).then((value) {
       toggleIsLoading(false);
       Get.back();
+      Get.snackbar(
+        'Đăng bài thành công',
+        'Vào mục quản lý tin để xem bài của bạn',
+        backgroundColor: AppColors.green,
+        colorText: Colors.white,
+      );
     });
     // Future.delayed(
     //   const Duration(seconds: 2),
@@ -62,12 +69,11 @@ class CreatePostController extends GetxController {
     return RealEstatePostEntity(
       typeId: "motel",
       unitId: "m2",
-      title: titleTextController.text.trim(),
-      description: descriptionTextController.text.trim(),
-      price: motelPriceTC.text.trim(),
-      deposit: int.parse(
-          motelDepositTC.text.trim() == "" ? "0" : motelDepositTC.text.trim()),
-      area: double.parse(motelAreaTC.text.trim()),
+      title: title ?? "",
+      description: description ?? "",
+      price: motelPrice ?? "",
+      deposit: motelDeposit != null ? int.parse(motelDeposit ?? "0") : null,
+      area: double.parse(motelArea ?? "0"),
       address: null,
       images: const [
         "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
@@ -76,8 +82,8 @@ class CreatePostController extends GetxController {
         "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
       ],
       features: Motel(
-        double.parse(motelWaterPriceTC.text.trim()),
-        double.parse(motelElectricPriceTC.text.trim()),
+        motelWaterPrice,
+        motelElectricPrice,
         motelSelectedFurnitureStatus.value,
       ).toJson(),
       isLease: isLease.value,
@@ -92,7 +98,7 @@ class CreatePostController extends GetxController {
       title: title ?? "",
       description: description ?? "",
       price: apartmentPrice,
-      deposit: int.parse(apartmentDeposit!),
+      deposit: apartmentDeposit != null ? int.parse(apartmentDeposit!) : null,
       area: double.parse(apartmentArea!),
       address: null,
       images: const [
@@ -126,8 +132,8 @@ class CreatePostController extends GetxController {
       title: title ?? "",
       description: description ?? "",
       price: officePrice,
-      deposit: int.parse(officeDeposit!),
-      area: double.parse(officeArea!),
+      deposit: officeDeposit != null ? int.parse(officeDeposit!) : null,
+      area: double.parse(officeArea ?? "0"),
       address: null,
       images: const [
         "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
@@ -158,7 +164,7 @@ class CreatePostController extends GetxController {
       title: title ?? "",
       description: description ?? "",
       price: housePrice,
-      deposit: int.parse(houseDeposit!),
+      deposit: houseDeposit != null ? int.parse(houseDeposit!) : null,
       area: double.parse(houseArea!),
       address: null,
       images: const [
@@ -196,7 +202,7 @@ class CreatePostController extends GetxController {
       title: title ?? "",
       description: description ?? "",
       price: landPrice,
-      deposit: int.parse(landDeposit!),
+      deposit: landDeposit != null ? int.parse(landDeposit!) : null,
       area: double.parse(landArea!),
       address: null,
       images: const [

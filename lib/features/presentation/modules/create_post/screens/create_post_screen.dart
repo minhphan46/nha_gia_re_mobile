@@ -26,6 +26,7 @@ import '../widgets/house/house_more_info_card.dart';
 import '../widgets/land/land_area_prices_card.dart';
 import '../widgets/land/land_more_info_card.dart';
 import '../widgets/motel/motel_info_card.dart';
+import '../widgets/office/office_area_prices_card.dart';
 import '../widgets/office/office_info_card.dart';
 import '../widgets/post_info_card.dart';
 
@@ -139,7 +140,7 @@ class CreatePostScreen extends StatelessWidget {
                     isvisible: controller.selectedPropertyType.value != null &&
                         controller.selectedPropertyType.value ==
                             PropertyTypes.office,
-                    child: MotelAreaPricesCard(),
+                    child: OfficeAreaPricesCard(),
                   ),
                 ),
                 Obx(
