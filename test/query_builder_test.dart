@@ -24,7 +24,7 @@ void main() {
   test('addSearch should add search parameter correctly', () {
     final queryBuilder = QueryBuilder();
     queryBuilder.addSearch('keyword');
-    expect(queryBuilder.build(), '?page=1&search=\'keyword\'');
+    expect(queryBuilder.build(), '?page=1&search=keyword');
   });
 
   test('build should return the correct query string', () {
@@ -35,8 +35,7 @@ void main() {
         .addOrderBy('name', OrderBy.asc)
         .addPage(2)
         .addSearch('keyword');
-    print(queryBuilder.build());
     expect(queryBuilder.build(),
-        '?name[eq]=John&age[gt]=18&page=2&orderBy=+name&search=\'keyword\'');
+        '?name[eq]=John&age[gt]=18&page=2&orderBy=+name&search=keyword');
   });
 }
