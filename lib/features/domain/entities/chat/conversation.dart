@@ -2,8 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:nhagiare_mobile/features/domain/entities/chat/message.dart';
 import 'package:nhagiare_mobile/features/domain/entities/chat/participant.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
-import 'package:nhagiare_mobile/features/domain/enums/message_types.dart';
 
+// ignore: must_be_immutable
 class Conversation extends Equatable {
   final String id;
   final DateTime createdAt;

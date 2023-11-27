@@ -1,6 +1,4 @@
 import 'dart:async';
-import 'dart:io';
-import 'package:http/http.dart' as http;
 import 'package:nhagiare_mobile/core/utils/query_builder.dart';
 
 Future<void> main() async {
@@ -12,5 +10,5 @@ Future<void> main() async {
       // .addPage(2)
       .addQuery('post_address->>province_code', Operation.equals, '\'1\'')
       .addQuery('post_is_active', Operation.equals, true);
-  print(queryBuilder.build());
+  //print(queryBuilder.build());
 }

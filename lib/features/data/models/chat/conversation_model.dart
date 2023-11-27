@@ -1,9 +1,9 @@
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/participant_model.dart';
 import 'package:nhagiare_mobile/features/domain/entities/chat/conversation.dart';
-import 'package:nhagiare_mobile/features/domain/entities/chat/message.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 
+// ignore: must_be_immutable
 class ConversationModel extends Conversation {
   ConversationModel(
       {required super.id,
