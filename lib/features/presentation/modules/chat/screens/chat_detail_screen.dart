@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,7 +13,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_controle
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatDetailScreen extends StatefulWidget {
-  const ChatDetailScreen({Key? key}) : super(key: key);
+  const ChatDetailScreen({super.key});
 
   @override
   State<ChatDetailScreen> createState() => _ChatDetailScreenState();
