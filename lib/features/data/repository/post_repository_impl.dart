@@ -171,4 +171,24 @@ class PostRepositoryImpl implements PostRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  Future<DataState<List<String>>> uploadImages(List<File> images) async {
+    try {
+      final httpResponse = await _dataSrc.uploadImages(images);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

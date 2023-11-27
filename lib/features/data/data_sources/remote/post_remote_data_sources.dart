@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
@@ -16,6 +18,7 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsRejected();
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired();
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
+  Future<HttpResponse<List<String>>> uploadImages(List<File> images);
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -139,6 +142,51 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       rethrow;
     } catch (error) {
       throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<List<String>>> uploadImages(List<File> images) async {
+    const url = '$apiUrl$kPostImages';
+
+    // Tạo danh sách các FormData để chứa từng file
+    List<FormData> formDataList = [];
+
+    for (int i = 0; i < images.length; i++) {
+      FormData formData = FormData.fromMap({
+        'file': await MultipartFile.fromFile(images[i].path,
+            filename: 'image_$i.png'),
+      });
+      formDataList.add(formData);
+    }
+
+    try {
+      // Gửi request POST để upload từng file
+      Response response = await client.post(
+        url,
+        data: FormData.fromMap({
+          'files': formDataList,
+        }),
+        options: Options(
+          headers: {'Content-Type': 'multipart/form-data'},
+        ),
+      );
+
+      // Xử lý kết quả response
+      if (response.statusCode == 200) {
+        List<String> imageUrls = List<String>.from(response.data['result']);
+        return HttpResponse<List<String>>(
+          imageUrls,
+          response,
+        );
+      } else {
+        return HttpResponse<List<String>>(
+          [],
+          response,
+        );
+      }
+    } catch (e) {
+      throw ApiException(message: e.toString(), statusCode: 505);
     }
   }
 }

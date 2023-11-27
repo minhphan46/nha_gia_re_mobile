@@ -22,6 +22,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/upload_images.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
@@ -131,6 +132,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<CreatePostsUseCase>(
     CreatePostsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<UploadImagessUseCase>(
+    UploadImagessUseCase(
       sl<PostRepository>(),
     ),
   );

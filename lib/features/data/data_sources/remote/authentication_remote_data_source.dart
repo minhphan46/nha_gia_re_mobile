@@ -90,10 +90,19 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
             message: 'Refresh token is null', statusCode: 505);
       }
 
+      print("refresh token: $refreshToken");
+
       // get new access token
-      final response = await client.get(url, data: {
-        "refresh_token": refreshToken,
-      });
+      final response = await client.get(
+        url,
+        data: {"refresh_token": refreshToken},
+        options: Options(
+          receiveTimeout: const Duration(
+            milliseconds: 5000,
+          ), // Tăng thời gian chờ (milliseconds)
+        ),
+      );
+      
       if (response.statusCode != 200) {
         throw ApiException(
           message: response.data,

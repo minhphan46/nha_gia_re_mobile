@@ -13,7 +13,9 @@ import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/domain/enums/land_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/upload_images.dart';
 import '../../../../config/theme/app_color.dart';
+import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/properties/office.dart';
 import '../../../domain/enums/house_types.dart';
@@ -31,7 +33,9 @@ class CreatePostController extends GetxController {
     toggleIsLoading(true);
     CreatePostsUseCase createPostsUseCase = sl<CreatePostsUseCase>();
 
-    await createPostsUseCase(params: getFinalPost()).then((value) {
+    final dataState = await createPostsUseCase(params: getFinalPost());
+
+    if (dataState is DataSuccess) {
       toggleIsLoading(false);
       Get.back();
       Get.snackbar(
@@ -40,14 +44,15 @@ class CreatePostController extends GetxController {
         backgroundColor: AppColors.green,
         colorText: Colors.white,
       );
-    });
-    // Future.delayed(
-    //   const Duration(seconds: 2),
-    //   () {
-    //     toggleIsLoading(false);
-    //     Get.back();
-    //   },
-    // );
+    } else {
+      toggleIsLoading(false);
+      Get.snackbar(
+        'Đăng bài thất bại',
+        '',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   RealEstatePostEntity getFinalPost() {
@@ -229,6 +234,21 @@ class CreatePostController extends GetxController {
     );
   }
 
+  Future<List<String>> uploadImages() async {
+    UploadImagessUseCase uploadImagessUseCase = sl<UploadImagessUseCase>();
+
+    final dataState = await uploadImagessUseCase(params: photos);
+
+    if (dataState is DataSuccess) {
+      toggleIsLoading(false);
+      print(dataState.data!);
+      return dataState.data!;
+    } else {
+      toggleIsLoading(false);
+      return [];
+    }
+  }
+
   // card choose type property
   Rxn<PropertyTypes> selectedPropertyType = Rxn(null);
   bool isReachLimitPost = false;
@@ -271,7 +291,7 @@ class CreatePostController extends GetxController {
   bool? photoController;
 
   void checkLengthPhoto() {
-    int length = photo.length + imageUrlList.length;
+    int length = photos.length + imageUrlList.length;
     if (length >= 3 && length <= 12) {
       photoController = true;
     } else {
@@ -280,14 +300,14 @@ class CreatePostController extends GetxController {
     update();
   }
 
-  List<File> photo = [];
+  List<File> photos = [];
   List<String> imageUrlList = [];
   final ImagePicker _picker = ImagePicker();
 
   Future imgFromGallery() async {
     final pickedImages = await _picker.pickMultiImage();
     for (int i = 0; i < pickedImages.length; i++) {
-      photo.add(File(pickedImages[i].path));
+      photos.add(File(pickedImages[i].path));
     }
     checkLengthPhoto();
     update();
@@ -297,7 +317,7 @@ class CreatePostController extends GetxController {
     final ImagePicker picker = ImagePicker();
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      photo.add(File(image.path));
+      photos.add(File(image.path));
       checkLengthPhoto();
       update();
     }
@@ -307,7 +327,7 @@ class CreatePostController extends GetxController {
     if (index < imageUrlList.length) {
       imageUrlList.removeAt(index);
     } else {
-      photo.removeAt(index - imageUrlList.length);
+      photos.removeAt(index - imageUrlList.length);
     }
     checkLengthPhoto();
     update();

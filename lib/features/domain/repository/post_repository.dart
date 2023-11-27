@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import '../../../../core/resources/data_state.dart';
 import '../entities/posts/real_estate_post.dart';
 
@@ -8,6 +10,8 @@ abstract class PostRepository {
   Future<DataState<void>> createPost(RealEstatePostEntity post);
   Future<DataState<void>> updatePost(RealEstatePostEntity post);
   Future<DataState<void>> deletePost(String id);
+
+  Future<DataState<List<String>>> uploadImages(List<File> images);
 
   // management
   Future<DataState<List<RealEstatePostEntity>>> getPostsApproved();

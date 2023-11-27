@@ -64,7 +64,8 @@ class PickerImages extends StatelessWidget {
               color: controller.photoController == false
                   ? Colors.red
                   : AppColors.green,
-              child: controller.photo.isEmpty && controller.imageUrlList.isEmpty
+              child: controller.photos.isEmpty &&
+                      controller.imageUrlList.isEmpty
                   ? Container(
                       height: heightImage,
                       color: AppColors.white,
@@ -102,7 +103,7 @@ class PickerImages extends StatelessWidget {
                               scrollDirection: Axis.horizontal,
                               itemCount: controller.imageUrlList.length +
                                   1 +
-                                  controller.photo.length,
+                                  controller.photos.length,
                               itemBuilder: (BuildContext context, int index) {
                                 return SizedBox(
                                   height: heightImage,
@@ -149,7 +150,7 @@ class PickerImages extends StatelessWidget {
                                                     )
                                                   : Image.file(
                                                       File(controller
-                                                          .photo[index -
+                                                          .photos[index -
                                                               controller
                                                                   .imageUrlList
                                                                   .length -

@@ -19,3 +19,5 @@ const String kGetMembershipPackageEndpoint = '/membership-package';
 const String kGetTransactionEndpoint = '/membership-package/transactions';
 const String kCreateOrderEndpoint = '/membership-package/check-out';
 const String kGetBlogEndpoint = '/blogs';
+
+const String kPostImages = '/media/upload';
