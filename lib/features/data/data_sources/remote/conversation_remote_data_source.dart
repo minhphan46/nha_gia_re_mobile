@@ -83,33 +83,33 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
       for (var element in _conversationListener) {
         element(_conversations);
       }
-      socket.on('messages', (data) {
-        String type = data["type"] as String;
-        String conversationId = data["conversation_id"] as String;
-        if (type == 'init') {
-          List<dynamic> messages = data["data"] ?? [];
-          _messages[conversationId] =
-              messages.map((e) => MessageModel.fromJson(e)).toList();
-        } else if (type == 'new') {
-          MessageModel message = MessageModel.fromJson(data["data"]);
-          _messages[conversationId]!.insert(0, message);
-          print(_messages);
-        } else if (type == 'update') {
-          MessageModel message = MessageModel.fromJson(data["data"]);
-          int index = _messages[conversationId]!
-              .indexWhere((element) => element.id == message.id);
-          _messages[conversationId]![index] = message;
-        } else if (type == 'delete') {
-          MessageModel message = MessageModel.fromJson(data["data"]);
-          _messages[conversationId]!
-              .removeWhere((element) => element.id == message.id);
+    });
+    socket.on('messages', (data) {
+      String type = data["type"] as String;
+      String conversationId = data["conversation_id"] as String;
+      if (type == 'init') {
+        List<dynamic> messages = data["data"] ?? [];
+        _messages[conversationId] =
+            messages.map((e) => MessageModel.fromJson(e)).toList();
+      } else if (type == 'new') {
+        MessageModel message = MessageModel.fromJson(data["data"]);
+        _messages[conversationId]!.insert(0, message);
+        print(_messages);
+      } else if (type == 'update') {
+        MessageModel message = MessageModel.fromJson(data["data"]);
+        int index = _messages[conversationId]!
+            .indexWhere((element) => element.id == message.id);
+        _messages[conversationId]![index] = message;
+      } else if (type == 'delete') {
+        MessageModel message = MessageModel.fromJson(data["data"]);
+        _messages[conversationId]!
+            .removeWhere((element) => element.id == message.id);
+      }
+      if (_messageListener.containsKey(conversationId)) {
+        for (var element in _messageListener[conversationId]!) {
+          element(_messages[conversationId]!);
         }
-        if (_messageListener.containsKey(conversationId)) {
-          for (var element in _messageListener[conversationId]!) {
-            element(_messages[conversationId]!);
-          }
-        }
-      });
+      }
     });
     socket.connect().onError((data) => print(data));
   }
