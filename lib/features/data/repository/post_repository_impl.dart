@@ -75,7 +75,7 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<DataState<List<RealEstatePostEntity>>> getPostsApproved() async {
     try {
-      final httpResponse = await _dataSrc.getPostsApproved();
+      final httpResponse = await _dataSrc.getPostsStatus("approved");
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -115,7 +115,7 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<DataState<List<RealEstatePostEntity>>> getPostsHided() async {
     try {
-      final httpResponse = await _dataSrc.getPostsHided();
+      final httpResponse = await _dataSrc.getPostsStatus("hided");
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -135,7 +135,7 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<DataState<List<RealEstatePostEntity>>> getPostsPending() async {
     try {
-      final httpResponse = await _dataSrc.getPostsPending();
+      final httpResponse = await _dataSrc.getPostsStatus("pending");
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -155,7 +155,7 @@ class PostRepositoryImpl implements PostRepository {
   @override
   Future<DataState<List<RealEstatePostEntity>>> getPostsRejected() async {
     try {
-      final httpResponse = await _dataSrc.getPostsRejected();
+      final httpResponse = await _dataSrc.getPostsStatus("rejected");
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -176,6 +176,27 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<List<String>>> uploadImages(List<File> images) async {
     try {
       final httpResponse = await _dataSrc.uploadImages(images);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<List<RealEstatePostEntity>>> getPostsSearch(
+      Map<String, dynamic>? query) async {
+    try {
+      final httpResponse = await _dataSrc.getPostsSearch(query);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

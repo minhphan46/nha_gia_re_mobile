@@ -19,6 +19,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/blog/remote/get_all_blo
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_address.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_search.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
@@ -132,6 +133,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<CreatePostsUseCase>(
     CreatePostsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostSearchsUseCase>(
+    GetPostSearchsUseCase(
       sl<PostRepository>(),
     ),
   );

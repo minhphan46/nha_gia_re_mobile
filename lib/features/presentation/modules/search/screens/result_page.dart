@@ -43,7 +43,7 @@ class ResultPage extends StatelessWidget {
               OutlinedButton.icon(
                 onPressed: () {
                   // filter here
-                  //searchController.navigateToFilterScreen();
+                  searchController.navigateToFilterScreen();
                 },
                 style: OutlinedButton.styleFrom(
                   padding: const EdgeInsets.all(8),
