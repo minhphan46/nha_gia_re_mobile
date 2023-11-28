@@ -141,10 +141,11 @@ class MySearchController extends GetxController {
   Future<void> initPosts(bool isLease) async {
     final GetPostSearchsUseCase getPostSearchsUseCase =
         sl<GetPostSearchsUseCase>();
-    Map<String, dynamic> query = {
+    Map<String, dynamic> buildQuery = {
       "isLease": isLease,
+      "search": query,
     };
-    final dataState = await getPostSearchsUseCase(params: query);
+    final dataState = await getPostSearchsUseCase(params: buildQuery);
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       searchPosts.value = [...dataState.data!];

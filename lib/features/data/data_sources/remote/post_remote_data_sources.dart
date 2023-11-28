@@ -193,6 +193,10 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
             .addQuery('post_is_lease', Operation.equals, query['isLease'])
             .build();
       }
+
+      if (query.containsKey('search')) {
+        url += QueryBuilder().addSearch(query['search']).build();
+      }
     }
     return await DatabaseHelper().getPosts(url, client);
   }
