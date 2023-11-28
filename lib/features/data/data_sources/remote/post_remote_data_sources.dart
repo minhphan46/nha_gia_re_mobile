@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
@@ -153,11 +152,20 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     List<FormData> formDataList = [];
 
     for (int i = 0; i < images.length; i++) {
+      String fileName = images[i].path.split('/').last;
       FormData formData = FormData.fromMap({
         'file': await MultipartFile.fromFile(images[i].path,
-            filename: 'image_$i.png'),
+            filename: 'image_${i}_$fileName.png'),
       });
       formDataList.add(formData);
+    }
+
+    // get access token
+    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+    String? accessToken = localDataSrc.getAccessToken();
+    if (accessToken == null) {
+      throw const ApiException(
+          message: 'Access token is null', statusCode: 505);
     }
 
     try {
@@ -168,9 +176,16 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
           'files': formDataList,
         }),
         options: Options(
-          headers: {'Content-Type': 'multipart/form-data'},
+          sendTimeout: const Duration(seconds: 10),
+          headers: {
+            'Authorization': 'Bearer $accessToken',
+            'Content-Type':
+                'multipart/form-data; boundary=<calculated when request is sent>'
+          },
         ),
       );
+
+      print(response.toString());
 
       // Xử lý kết quả response
       if (response.statusCode == 200) {
