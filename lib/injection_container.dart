@@ -249,6 +249,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SignOutUseCase>(
     SignOutUseCase(
       sl<AuthenticationRepository>(),
+      sl<ConversationRepository>(),
     ),
   );
 

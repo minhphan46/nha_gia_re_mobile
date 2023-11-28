@@ -56,20 +56,21 @@ class ChatScreen extends StatelessWidget {
               ListTile(
                 onLongPress: () {
                   Get.dialog(AlertDialog(
-                    title: Text('Xóa tin nhắn'),
-                    content: Text('Bạn có chắc chắn muốn xóa tin nhắn này?'),
+                    title: const Text('Xóa tin nhắn'),
+                    content:
+                        const Text('Bạn có chắc chắn muốn xóa tin nhắn này?'),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Get.back();
                         },
-                        child: Text('Hủy'),
+                        child: const Text('Hủy'),
                       ),
                       TextButton(
                         onPressed: () {
                           Get.back();
                         },
-                        child: Text('Xóa'),
+                        child: const Text('Xóa'),
                       ),
                     ],
                   ));
@@ -106,11 +107,8 @@ class ChatScreen extends StatelessWidget {
                 ),
               ),
               if (!isLastItem)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Divider(
-                    color: AppColors.grey100,
-                  ),
+                const Divider(
+                  color: AppColors.grey100,
                 ),
             ],
           );

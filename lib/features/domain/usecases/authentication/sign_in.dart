@@ -10,8 +10,9 @@ class SignInUseCase implements UseCase<DataState<void>, Map<String, dynamic>?> {
   SignInUseCase(this._authenRepository, this._conversationRepository);
 
   @override
-  Future<DataState<void>> call({Map<String, dynamic>? params}) {
-    final data = _authenRepository.signIn(params!['email'], params['password']);
+  Future<DataState<void>> call({Map<String, dynamic>? params}) async {
+    final data =
+        await _authenRepository.signIn(params!['email'], params['password']);
     if (data is DataSuccess) {
       _conversationRepository.connect();
     }

@@ -6,10 +6,13 @@ abstract class ConversationRemoteDataSource {
   List<ConversationModel> getConversations();
   void addConversationListener(Function(List<ConversationModel>) listener);
   void removeConversationListener(Function(List<ConversationModel>) listener);
+  void notifyConversationListeners();
   void addMessageListener(
       String conversationId, Function(List<MessageModel>) listener);
   void removeMessageListener(
       String conversationId, Function(List<MessageModel>) listener);
+  void notifyMessageListeners(String conversationId);
+  void notifyMessageListenersAll();
   List<MessageModel>? initChat(String conversationId);
   void sendTextMessage(String conversationId, String message);
   void disconnect();
@@ -24,6 +27,13 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   final List<ConversationModel> _conversations = [];
   final Map<String, List<MessageModel>> _messages = {};
   late String authToken;
+
+  ConversationRemoteDataSourceImpl() {
+    socket = IO.io('http://192.168.137.1:8000/conversations', <String, dynamic>{
+      'transports': ['websocket'],
+      'autoConnect': false
+    });
+  }
 
   @override
   List<ConversationModel> getConversations() {
@@ -42,18 +52,17 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
 
   @override
   void disconnect() {
+    _conversations.clear();
+    _messages.clear();
     _messageListener.clear();
     _conversationListener.clear();
     socket.disconnect();
     socket.dispose();
+    print("Disconnected");
   }
 
   @override
   void connect() {
-    socket = IO.io('http://192.168.137.1:8000/conversations', <String, dynamic>{
-      'transports': ['websocket'],
-      'autoConnect': false
-    });
     socket.auth = {"token": authToken};
     socket.onConnect((data) {
       print('Connected');
@@ -80,9 +89,7 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
         _conversations
             .removeWhere((element) => element.id == result["data"]["id"]);
       }
-      for (var element in _conversationListener) {
-        element(_conversations);
-      }
+      notifyConversationListeners();
     });
     socket.on('messages', (data) {
       String type = data["type"] as String;
@@ -105,13 +112,10 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
         _messages[conversationId]!
             .removeWhere((element) => element.id == message.id);
       }
-      if (_messageListener.containsKey(conversationId)) {
-        for (var element in _messageListener[conversationId]!) {
-          element(_messages[conversationId]!);
-        }
-      }
+      notifyMessageListeners(conversationId);
     });
     socket.connect().onError((data) => print(data));
+    print("Connecting");
   }
 
   @override
@@ -153,5 +157,30 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   @override
   void setAuthToken(String token) {
     authToken = token;
+  }
+
+  @override
+  void notifyConversationListeners() {
+    for (var element in _conversationListener) {
+      element(_conversations);
+    }
+  }
+
+  @override
+  void notifyMessageListeners(String conversationId) {
+    if (_messageListener.containsKey(conversationId)) {
+      for (var element in _messageListener[conversationId]!) {
+        element(_messages[conversationId]!);
+      }
+    }
+  }
+
+  @override
+  void notifyMessageListenersAll() {
+    for (var element in _messageListener.values) {
+      for (var listener in element) {
+        listener(_messages[element]!);
+      }
+    }
   }
 }
