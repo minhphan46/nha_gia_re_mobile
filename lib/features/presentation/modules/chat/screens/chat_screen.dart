@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:heroicons_flutter/heroicons_flutter.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
@@ -53,6 +54,26 @@ class ChatScreen extends StatelessWidget {
           return Column(
             children: [
               ListTile(
+                onLongPress: () {
+                  Get.dialog(AlertDialog(
+                    title: Text('Xóa tin nhắn'),
+                    content: Text('Bạn có chắc chắn muốn xóa tin nhắn này?'),
+                    actions: [
+                      TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text('Hủy'),
+                      ),
+                      TextButton(
+                        onPressed: () {
+                          Get.back();
+                        },
+                        child: Text('Xóa'),
+                      ),
+                    ],
+                  ));
+                },
                 onTap: () {
                   Get.to(() => const ChatDetailScreen(),
                       arguments: conversation);
