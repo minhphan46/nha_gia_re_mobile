@@ -20,7 +20,7 @@ class ChatController extends GetxController {
     return _conversationsStreamController.stream;
   }
 
-  late String conversationId;
+  String conversationId = '';
   final StreamController<List<MessageModel>> _messagesStreamController =
       StreamController<List<MessageModel>>();
 
@@ -51,23 +51,47 @@ class ChatController extends GetxController {
     _messagesStreamController.sink.add(data);
   }
 
-  void initMessage(String conversationId) {
-    this.conversationId = conversationId;
-    List<MessageModel>? messages =
-        _conversationRepository.initChat(conversationId);
-    if (messages != null) {
-      _messagesStreamController.sink.add(messages);
+  void initMessage({String? conversationId, String? userId}) {
+    if (conversationId != null) {
+      this.conversationId = conversationId;
+      List<MessageModel>? messages = _conversationRepository.initChat(
+          conversationId: conversationId, userId: userId);
+      _conversationRepository.addMessageListener(
+          conversationId, listenerMessage);
+      if (messages != null) {
+        _messagesStreamController.sink.add(messages);
+      }
+    } else if (userId != null) {
+      _conversationRepository.getOrCreateConversation(userId).then((value) {
+        if (value is DataSuccess) {
+          final data = value.data!;
+          _conversationRepository.addMessageListener(data.id, listenerMessage);
+          this.conversationId = value.data!.id;
+          List<MessageModel>? messages = _conversationRepository.initChat(
+              conversationId: this.conversationId);
+          if (messages != null) {
+            _messagesStreamController.sink.add(messages);
+          }
+        } else if (value is DataFailed) {
+          Get.back();
+        }
+      });
     }
-    _conversationRepository.addMessageListener(conversationId, listenerMessage);
   }
 
   void disposeMessage() {
-    _conversationRepository.removeMessageListener(
-        conversationId, listenerMessage);
+    if (conversationId.isNotEmpty) {
+      _conversationRepository.removeMessageListener(
+          conversationId, listenerMessage);
+    }
   }
 
   void sendMessage(String message) {
     _conversationRepository.sendTextMessage(conversationId, message);
+  }
+
+  void deleteConversation(String conversationId) {
+    _conversationRepository.deleteConversation(conversationId);
   }
 
   @override

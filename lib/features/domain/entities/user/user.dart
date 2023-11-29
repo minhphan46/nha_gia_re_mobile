@@ -98,7 +98,7 @@ class UserEntity extends Equatable {
       firstName: json['first_name'] ?? "",
       lastName: json['last_name'] ?? "",
       gender: json['gender'] ?? false,
-      avatar: json['avatar'] ?? "",
+      avatar: json['avatar'],
       dob: json['dob'] ?? "",
       phone: json['phone'] ?? "",
       banReason: json['ban_reason'] ?? "",

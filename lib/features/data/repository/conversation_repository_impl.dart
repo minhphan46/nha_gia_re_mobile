@@ -1,3 +1,7 @@
+import 'dart:io';
+
+import 'package:dio/dio.dart';
+import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/local/authentication_local_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/conversation_remote_data_source.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
@@ -33,8 +37,9 @@ class ConversationRepositoryImpl extends ConversationRepository {
   }
 
   @override
-  List<MessageModel>? initChat(String conversationId) {
-    return _conversationRemoteDataSource.initChat(conversationId);
+  List<MessageModel>? initChat({String? conversationId, String? userId}) {
+    return _conversationRemoteDataSource.initChat(
+        userId: userId, conversationId: conversationId);
   }
 
   @override
@@ -59,5 +64,31 @@ class ConversationRepositoryImpl extends ConversationRepository {
   @override
   void disconnect() {
     _conversationRemoteDataSource.disconnect();
+  }
+
+  @override
+  void deleteConversation(String conversationId) {
+    _conversationRemoteDataSource.deleteConversation(conversationId);
+  }
+
+  @override
+  Future<DataState<ConversationModel>> getOrCreateConversation(
+      String userId) async {
+    try {
+      final httpResponse =
+          await _conversationRemoteDataSource.getOrCreateConversation(userId);
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data!);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 }
