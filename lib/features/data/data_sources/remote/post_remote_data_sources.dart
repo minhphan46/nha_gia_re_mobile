@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
+import '../../../../core/utils/query_builder.dart';
 import '../../../../core/utils/typedef.dart';
 import '../../../../injection_container.dart';
 import '../../models/post/real_estate_post.dart';
@@ -11,10 +12,9 @@ import '../local/authentication_local_data_source.dart';
 
 abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts(String? userId);
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsApproved();
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsHided();
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsPending();
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsRejected();
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsSearch(
+      Map<String, dynamic>? query);
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsStatus(String status);
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired();
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
@@ -29,15 +29,19 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts(
       String? userId) async {
     var url = '$apiUrl$kGetPostEndpoint';
-    if (userId != null) url += '?post_user_id[eq]=\'$userId\'';
+    if (userId != null) {
+      url += QueryBuilder()
+          .addQuery('post_user_id', Operation.equals, '\'$userId\'')
+          .build();
+    }
     return await DatabaseHelper().getPosts(url, client);
   }
 
   @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsApproved() async {
-    const status = 'approved';
-    const url =
-        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsStatus(
+      String status) async {
+    String url =
+        '$apiUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addOrderBy('posted_date', OrderBy.desc).build()}';
 
     return await DatabaseHelper().getPosts(url, client);
   }
@@ -72,32 +76,6 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     } catch (error) {
       throw ApiException(message: error.toString(), statusCode: 505);
     }
-  }
-
-  @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsHided() async {
-    const status = 'hided';
-    const url =
-        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
-
-    return await DatabaseHelper().getPosts(url, client);
-  }
-
-  @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsPending() async {
-    const status = 'pending';
-    const url =
-        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
-    return await DatabaseHelper().getPosts(url, client);
-  }
-
-  @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsRejected() async {
-    const status = 'rejected';
-    const url =
-        '$apiUrl$kGetPostEndpoint?post_status[eq]=\'$status\'&orders=-posted_date';
-
-    return await DatabaseHelper().getPosts(url, client);
   }
 
   @override
@@ -203,5 +181,23 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     } catch (e) {
       throw ApiException(message: e.toString(), statusCode: 505);
     }
+  }
+
+  @override
+  Future<HttpResponse<List<RealEstatePostModel>>> getPostsSearch(
+      Map<String, dynamic>? query) async {
+    var url = '$apiUrl$kGetPostEndpoint';
+    if (query != null) {
+      if (query.containsKey('isLease')) {
+        url += QueryBuilder()
+            .addQuery('post_is_lease', Operation.equals, query['isLease'])
+            .build();
+      }
+
+      if (query.containsKey('search')) {
+        url += QueryBuilder().addSearch(query['search']).build();
+      }
+    }
+    return await DatabaseHelper().getPosts(url, client);
   }
 }

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:nhagiare_mobile/features/domain/repository/provinces_repository.dart';
 
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
@@ -50,6 +51,18 @@ class AddressEntity extends Equatable {
       return dataState.data!;
     } else {
       return toString();
+    }
+  }
+
+  String getProvinceNames() {
+    final ProvincesRepository getProvinceNamesUseCase =
+        sl<ProvincesRepository>();
+    final dataState = getProvinceNamesUseCase.getProvinceName(provinceCode!);
+
+    if (dataState is DataSuccess) {
+      return dataState.data!;
+    } else {
+      return "";
     }
   }
 

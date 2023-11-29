@@ -11,6 +11,9 @@ abstract class PostRepository {
   Future<DataState<void>> updatePost(RealEstatePostEntity post);
   Future<DataState<void>> deletePost(String id);
 
+  Future<DataState<List<RealEstatePostEntity>>> getPostsSearch(
+      Map<String, dynamic>? query);
+
   Future<DataState<List<String>>> uploadImages(List<File> images);
 
   // management

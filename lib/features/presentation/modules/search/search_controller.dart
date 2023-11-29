@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/string_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_search.dart';
 
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
@@ -49,9 +50,9 @@ class MySearchController extends GetxController {
   /// hint text int textField
   final String hintText = "Mua bán văn phòng";
 
-  final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
   Future<List<RealEstatePostEntity>> getAllPosts() async {
-    final dataState = await _getPostsUseCase();
+    final GetPostsUseCase getPostsUseCase = sl<GetPostsUseCase>();
+    final dataState = await getPostsUseCase();
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       return dataState.data!;
@@ -135,6 +136,23 @@ class MySearchController extends GetxController {
   }
 
 // data in result screen
+  RxList<RealEstatePostEntity> searchPosts = <RealEstatePostEntity>[].obs;
+
+  Future<void> initPosts(bool isLease) async {
+    final GetPostSearchsUseCase getPostSearchsUseCase =
+        sl<GetPostSearchsUseCase>();
+    Map<String, dynamic> buildQuery = {
+      "isLease": isLease,
+      "search": query,
+    };
+    final dataState = await getPostSearchsUseCase(params: buildQuery);
+
+    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
+      searchPosts.value = [...dataState.data!];
+    } else {
+      searchPosts.value = [];
+    }
+  }
 
   /// value in dropdown menu item
   // getAll Names of cities

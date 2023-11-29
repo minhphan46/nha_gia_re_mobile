@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/search/widgets/result_page/finded_post_list.dart';
 
 import '../../../../../../config/theme/app_color.dart';
 
@@ -17,20 +18,18 @@ class TabResult extends StatelessWidget {
               indicatorSize: TabBarIndicatorSize.tab,
               tabs: [
                 Tab(
-                  text: "Liên quan",
+                  text: "Cần bán",
                 ),
                 Tab(
-                  text: "Tin mới nhất",
+                  text: "Cho thuê",
                 ),
               ],
             ),
             Expanded(
               child: TabBarView(
                 children: [
-                  //RelatedList(OrderBy.priceAsc),
-                  //RelatedList(OrderBy.createdAtDesc),
-                  Scaffold(),
-                  Scaffold(),
+                  FindedPostList(isLease: true),
+                  FindedPostList(isLease: false),
                 ],
               ),
             ),
