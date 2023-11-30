@@ -23,6 +23,7 @@ abstract class AppRoutes {
 
   // search
   static const search = '/search';
+  static const resultArg = '/search/result_arg';
 
   // setting
   static const setting = '/setting';

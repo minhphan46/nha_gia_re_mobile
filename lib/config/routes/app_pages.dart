@@ -25,6 +25,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/post_management/po
 import 'package:nhagiare_mobile/features/presentation/modules/post_management/screens/post_management_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/purchase_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/screens/purchase_choose_plan.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/search/screens/result_arg_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/screens/search_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/search_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/setting/screens/setting_screen.dart';
@@ -114,6 +115,11 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.search,
       page: () => const SearchScreen(),
+      binding: SearchBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.resultArg,
+      page: () => ResultArgScreen(),
       binding: SearchBinding(),
     ),
     GetPage(

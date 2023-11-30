@@ -21,7 +21,7 @@ class _DropdownButtonCitiesState extends State<DropdownButtonCities> {
   void initState() {
     searchController.getProvinceNames();
     searchController
-        .changeSelectedItem(searchController.provinceNames[0]['name']);
+        .changeSelectedProvince(searchController.provinceNames[0]['name']);
     dropDownMenuItems = searchController.provinceNames
         .map(
           (Map<String, dynamic> value) => DropdownMenuItem<String>(
@@ -46,7 +46,7 @@ class _DropdownButtonCitiesState extends State<DropdownButtonCities> {
           style: AppTextStyles.regular14.copyWith(color: AppColors.black),
           onChanged: (String? newValue) {
             if (newValue != null) {
-              searchController.changeSelectedItem(newValue);
+              searchController.changeSelectedProvince(newValue);
             }
           },
           items: dropDownMenuItems,

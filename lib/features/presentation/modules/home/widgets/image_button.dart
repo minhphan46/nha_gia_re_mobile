@@ -26,7 +26,7 @@ class _ImageButtonState extends State<ImageButton> {
       child: GestureDetector(
         onTap: () {
           // do something when the image is tapped
-          //controller.navByProvince(widget.province);
+          controller.navByProvince(widget.province);
         },
         child: Stack(
           children: [

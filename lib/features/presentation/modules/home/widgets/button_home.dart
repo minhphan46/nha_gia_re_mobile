@@ -9,19 +9,19 @@ class ButtonHome extends StatelessWidget {
     required this.title,
     required this.icon,
     required this.type,
+    required this.onTap,
     super.key,
   });
 
   final String title;
   final String icon;
   final bool type;
+  final Function onTap;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {
-        //
-      },
+      onPressed: () => onTap(),
       style: ElevatedButton.styleFrom(
         backgroundColor: type ? AppColors.green : AppColors.white,
         padding: const EdgeInsets.symmetric(vertical: 12),

@@ -9,10 +9,27 @@ import '../../../../core/utils/filter_values.dart';
 import '../../../../core/utils/list_check_service.dart';
 import '../../../../core/utils/radio_service.dart';
 import '../../../../injection_container.dart';
+import '../../../domain/enums/navigate_type.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 import 'screens/filter_screen.dart';
 
 class MySearchController extends GetxController {
+// set type navigator
+// type of navigate when navigate from home
+  TypeNavigate typeResult = TypeNavigate.search;
+  String uid = "";
+  List<String> favoriteList = List.empty();
+
+  void setTypeResult(TypeNavigate type) {
+    typeResult = type;
+    if (type == TypeNavigate.province) {
+      String province = Get.arguments["province"];
+      changeSelectedProvince(province);
+    }
+
+    //SearchService.instance.setTypeResult(type);
+  }
+
 // loading
   RxBool isLoadingGetPosts = false.obs;
 
@@ -198,7 +215,7 @@ class MySearchController extends GetxController {
   RxString? selectedProvince;
 
   /// change new value to selectedTypeItem
-  void changeSelectedItem(String newValue) async {
+  void changeSelectedProvince(String newValue) async {
     if (selectedProvince == null) {
       selectedProvince = newValue.obs;
     } else {

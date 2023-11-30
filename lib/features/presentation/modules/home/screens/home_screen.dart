@@ -36,7 +36,7 @@ class HomeScreen extends StatelessWidget {
               ),
               // List Buttons
               const SizedBox(height: 10),
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   // Btn Mua ban
@@ -44,16 +44,19 @@ class HomeScreen extends StatelessWidget {
                     title: "Mua bán",
                     icon: Assets.switchHorizon,
                     type: true,
+                    onTap: controller.navToSell,
                   ),
                   ButtonHome(
                     title: "Cho thuê",
                     icon: Assets.homeGreen,
                     type: false,
+                    onTap: controller.navToRent,
                   ),
                   ButtonHome(
                     title: "Đăng tin",
                     icon: Assets.pencil,
                     type: true,
+                    onTap: controller.navigateToCreatePostScreen,
                   ),
                 ],
               ),

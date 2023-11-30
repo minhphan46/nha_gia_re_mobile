@@ -9,6 +9,7 @@ import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/resources/data_state.dart';
+import '../../../domain/enums/navigate_type.dart';
 
 class HomeController extends GetxController {
   String nameUser = "Minh Phan";
@@ -53,12 +54,12 @@ class HomeController extends GetxController {
 
   // near by
   List<String> locationNearby = [
-    "Thủ Đức",
-    "Quận 10",
-    "Bình Thạnh",
-    "Gò Vấp",
-    "Tân Bình",
-    "Quận 12",
+    "Hà Nội",
+    "Hồ Chí Minh",
+    "Đà Nẵng",
+    "Hải Phòng",
+    "Cần Thơ",
+    "An Giang",
   ];
 
   // get all posts
@@ -82,5 +83,34 @@ class HomeController extends GetxController {
 
   void navigateToChatScreen() {
     Get.toNamed(AppRoutes.chat);
+  }
+
+  void navigateToCreatePostScreen() {
+    Get.toNamed(AppRoutes.createPost);
+  }
+
+  void navToSell() {
+    var data = {
+      "title": "Cần bán",
+      "type": TypeNavigate.sell,
+    };
+    Get.toNamed(AppRoutes.resultArg, arguments: data);
+  }
+
+  void navToRent() {
+    var data = {
+      "title": "Cho thuê",
+      "type": TypeNavigate.rent,
+    };
+    Get.toNamed(AppRoutes.resultArg, arguments: data);
+  }
+
+  void navByProvince(String provider) {
+    var data = {
+      "title": 'Tỉnh thành',
+      "type": TypeNavigate.province,
+      "province": provider,
+    };
+    Get.toNamed(AppRoutes.resultArg, arguments: data);
   }
 }
