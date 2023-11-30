@@ -16,18 +16,16 @@ import 'screens/filter_screen.dart';
 class MySearchController extends GetxController {
 // set type navigator
 // type of navigate when navigate from home
-  TypeNavigate typeResult = TypeNavigate.search;
-  String uid = "";
-  List<String> favoriteList = List.empty();
+  TypeNavigate typeNavigate = TypeNavigate.search;
+  String? provinceHome;
 
   void setTypeResult(TypeNavigate type) {
-    typeResult = type;
+    typeNavigate = type;
     if (type == TypeNavigate.province) {
-      String province = Get.arguments["province"];
-      changeSelectedProvince(province);
+      provinceHome = Get.arguments["province"];
+    } else {
+      provinceHome = null;
     }
-
-    //SearchService.instance.setTypeResult(type);
   }
 
 // loading
@@ -96,6 +94,7 @@ class MySearchController extends GetxController {
     List<RealEstatePostEntity> datas = await getAllPosts();
     searchStrings.clear();
     for (var data in datas) {
+      print(data.title!);
       searchStrings.add(data.title!);
     }
     return searchStrings;
@@ -216,15 +215,17 @@ class MySearchController extends GetxController {
 
   /// change new value to selectedTypeItem
   void changeSelectedProvince(String newValue) async {
-    if (selectedProvince == null) {
-      selectedProvince = newValue.obs;
-    } else {
-      selectedProvince!.value = newValue;
+    for (Map<String, dynamic> province in provinceNames) {
+      if ((province['name'] as String).contains(newValue)) {
+        selectedProvince!.value = province['name'] as String;
+        break;
+      }
     }
+    //selectedProvince!.value = newValue;
     // search in provinceNames to get provinceCode
     int provinceCode = 0;
     for (Map<String, dynamic> province in provinceNames) {
-      if (province['name'] == newValue) {
+      if ((province['name'] as String).contains(newValue)) {
         provinceCode = province['code'] as int;
         break;
       }

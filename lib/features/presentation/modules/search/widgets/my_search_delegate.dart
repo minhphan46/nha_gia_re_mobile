@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
+import '../../../../domain/enums/navigate_type.dart';
 import '../screens/result_page.dart';
 import '../search_controller.dart';
 import 'suggestion_list.dart';
@@ -83,7 +84,7 @@ class MySearchDelegate extends SearchDelegate<String> {
 
     /// add the query to history
     controller.addToHistory(query.trim());
-    //controller.setTypeResult(TypeNavigate.search);
+    controller.setTypeResult(TypeNavigate.search);
     super.showResults(context);
   }
 

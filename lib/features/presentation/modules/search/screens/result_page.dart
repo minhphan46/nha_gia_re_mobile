@@ -66,7 +66,7 @@ class ResultPage extends StatelessWidget {
           ),
         ),
         // tab : Lien quan - tin moi nhat
-        const TabResult(),
+        TabResult(),
       ],
     );
   }

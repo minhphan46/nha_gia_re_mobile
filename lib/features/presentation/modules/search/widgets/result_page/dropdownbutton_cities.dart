@@ -5,6 +5,7 @@ import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/search/search_controller.dart';
 
 import '../../../../../../config/theme/text_styles.dart';
+import '../../../../../domain/enums/navigate_type.dart';
 
 class DropdownButtonCities extends StatefulWidget {
   const DropdownButtonCities({super.key});
@@ -33,6 +34,10 @@ class _DropdownButtonCitiesState extends State<DropdownButtonCities> {
           ),
         )
         .toList();
+
+    if (searchController.typeNavigate == TypeNavigate.province) {
+      searchController.changeSelectedProvince(searchController.provinceHome!);
+    }
     super.initState();
   }
 
