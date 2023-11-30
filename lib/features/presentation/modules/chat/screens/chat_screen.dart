@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:heroicons_flutter/heroicons_flutter.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
@@ -27,10 +28,10 @@ class ChatScreen extends StatelessWidget {
           IconButton(
             onPressed: () {
               Get.to(() => const ChatDetailScreen(),
-                  arguments:
-                      UserEntity(id: '28223664-4747-424e-b2e3-27ace26bc553'));
+                  arguments: const UserEntity(
+                      id: '28223664-4747-424e-b2e3-27ace26bc553'));
             },
-            icon: Icon(
+            icon: const Icon(
               HeroiconsMini.user,
               color: AppColors.black,
             ),
