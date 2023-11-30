@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,6 +10,7 @@ import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:nhagiare_mobile/features/domain/entities/chat/conversation.dart';
 import 'package:nhagiare_mobile/features/domain/entities/chat/message.dart';
+import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_controler.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -20,7 +23,7 @@ class ChatDetailScreen extends StatefulWidget {
 }
 
 class _ChatDetailScreenState extends State<ChatDetailScreen> {
-  final Conversation conversation = Get.arguments;
+  late final Conversation conversation;
   late final FocusNode _focusNode;
   late final TextEditingController _textEditingController;
   RxBool isShowButtons = true.obs;
@@ -33,7 +36,14 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
       _updateShowButtons();
     });
     _textEditingController = TextEditingController();
-    controller.initMessage(conversation.id);
+    final data = Get.arguments;
+    if (data is UserEntity) {
+      controller.initMessage(userId: data.id);
+    } else if (data is Conversation) {
+      controller.initMessage(conversationId: data.id);
+    } else {
+      Get.back();
+    }
   }
 
   @override
@@ -156,15 +166,11 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
 
   Widget _buildTextMessage(String message, bool isMe) {
     List<InlineSpan> textSpans = [];
-
-    // Tách chuỗi thành các từ để kiểm tra xem có đường dẫn nào không
     List<String> words = [];
-
     for (var i = 0; i < message.length; i++) {
       if (message[i] == ' ' || message[i] == '\n') {
         words.add(message[i]);
       } else {
-        // Nếu không phải thì thêm ký tự vào từ cuối cùng
         if (words.isEmpty) {
           words.add(message[i]);
         } else {

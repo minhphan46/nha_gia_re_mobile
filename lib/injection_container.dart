@@ -233,7 +233,9 @@ Future<void> initializeDependencies() async {
 
   // Chat =====================================================
   sl.registerSingleton<ConversationRemoteDataSource>(
-    ConversationRemoteDataSourceImpl(),
+    ConversationRemoteDataSourceImpl(
+      sl<Dio>(),
+    ),
   );
 
   sl.registerSingleton<ConversationRepository>(
@@ -259,6 +261,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<SignOutUseCase>(
     SignOutUseCase(
       sl<AuthenticationRepository>(),
+      sl<ConversationRepository>(),
     ),
   );
 

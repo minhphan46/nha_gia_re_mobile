@@ -6,6 +6,7 @@ import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/chat/conversation.dart';
+import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/screens/chat_detail_screen.dart';
 import '../chat_controler.dart';
@@ -20,7 +21,22 @@ class ChatScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(title: "Tin nhắn"),
+      appBar: MyAppbar(
+        title: "Tin nhắn",
+        actions: [
+          IconButton(
+            onPressed: () {
+              Get.to(() => const ChatDetailScreen(),
+                  arguments:
+                      UserEntity(id: '28223664-4747-424e-b2e3-27ace26bc553'));
+            },
+            icon: Icon(
+              HeroiconsMini.user,
+              color: AppColors.black,
+            ),
+          ),
+        ],
+      ),
       body: StreamBuilder<List<Conversation>>(
         stream: controller.getConversations(),
         builder: (context, snapshot) {
@@ -67,6 +83,7 @@ class ChatScreen extends StatelessWidget {
                       ),
                       TextButton(
                         onPressed: () {
+                          controller.deleteConversation(conversation.id);
                           Get.back();
                         },
                         child: const Text('Xóa'),
@@ -106,11 +123,8 @@ class ChatScreen extends StatelessWidget {
                 ),
               ),
               if (!isLastItem)
-                const Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
-                  child: Divider(
-                    color: AppColors.grey100,
-                  ),
+                const Divider(
+                  color: AppColors.grey100,
                 ),
             ],
           );
