@@ -2,26 +2,16 @@ import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_pac
 
 class MembershipPackageModel extends MembershipPackageEntity {
   const MembershipPackageModel({
-    required String id,
-    required String name,
-    required String description,
-    required int pricePerMonth,
-    required int monthlyPostLimit,
-    required int displayPriorityPoint,
-    required int postApprovalPriorityPoint,
-    required DateTime createdAt,
-    required bool isActive,
-  }) : super(
-          id: id,
-          name: name,
-          description: description,
-          pricePerMonth: pricePerMonth,
-          monthlyPostLimit: monthlyPostLimit,
-          displayPriorityPoint: displayPriorityPoint,
-          postApprovalPriorityPoint: postApprovalPriorityPoint,
-          createdAt: createdAt,
-          isActive: isActive,
-        );
+    required super.id,
+    required super.name,
+    required super.description,
+    required super.pricePerMonth,
+    required super.monthlyPostLimit,
+    required super.displayPriorityPoint,
+    required super.postApprovalPriorityPoint,
+    required super.createdAt,
+    required super.isActive,
+  });
 
   factory MembershipPackageModel.fromJson(Map<String, dynamic> json) {
     return MembershipPackageModel(

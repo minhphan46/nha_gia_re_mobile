@@ -2,14 +2,10 @@ import '../../../domain/entities/posts/unit.dart';
 
 class UnitModel extends UnitEntity {
   const UnitModel({
-    String? id,
-    String? name,
-    bool? isActive,
-  }) : super(
-          id: id,
-          name: name,
-          isActive: isActive,
-        );
+    super.id,
+    super.name,
+    super.isActive,
+  });
 
   factory UnitModel.fromJson(Map<String, dynamic> json) {
     return UnitModel(

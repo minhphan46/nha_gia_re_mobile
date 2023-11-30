@@ -2,20 +2,13 @@ import '../../../domain/entities/posts/developer.dart';
 
 class DeveloperModel extends DeveloperEntity {
   const DeveloperModel({
-    String? id,
-    String? description,
-    List<String>? images,
-    DateTime? createdAt,
-    bool? isActive,
-    String? name,
-  }) : super(
-          id: id,
-          description: description,
-          images: images,
-          createdAt: createdAt,
-          isActive: isActive,
-          name: name,
-        );
+    super.id,
+    super.description,
+    super.images,
+    super.createdAt,
+    super.isActive,
+    super.name,
+  });
 
   factory DeveloperModel.fromJson(Map<String, dynamic> json) {
     return DeveloperModel(

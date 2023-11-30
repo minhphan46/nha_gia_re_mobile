@@ -6,18 +6,12 @@ import 'dart:math' as math;
 //ignore: must_be_immutable
 class TaskModel extends TaskEntity {
   const TaskModel({
-    String? id,
-    String? title,
-    DateTime? date,
-    bool? done,
-    Color? color,
-  }) : super(
-          id: id,
-          title: title,
-          date: date,
-          done: done,
-          color: color,
-        );
+    super.id,
+    super.title,
+    super.date,
+    super.done,
+    super.color,
+  });
 
   factory TaskModel.fromJson(Map<String, dynamic> json) {
     return TaskModel(

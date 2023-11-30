@@ -2,7 +2,7 @@ import 'package:nhagiare_mobile/features/data/models/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/entities/chat/participant.dart';
 
 class ParticipantModel extends Participant {
-  ParticipantModel({
+  const ParticipantModel({
     required super.conversationId,
     required super.userId,
     required super.joinedAt,

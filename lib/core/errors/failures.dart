@@ -18,12 +18,9 @@ abstract class Failure extends Equatable {
 
 class ApiFailure extends Failure {
   const ApiFailure({
-    required String message,
-    required int statusCode,
-  }) : super(
-          message: message,
-          statusCode: statusCode,
-        );
+    required super.message,
+    required super.statusCode,
+  });
 
   ApiFailure.fromException(
     ApiException exception,
@@ -35,12 +32,9 @@ class ApiFailure extends Failure {
 
 class ServerFailure extends Failure {
   const ServerFailure({
-    required String message,
-    required int statusCode,
-  }) : super(
-          message: message,
-          statusCode: statusCode,
-        );
+    required super.message,
+    required super.statusCode,
+  });
 
   ServerFailure.fromException(
     ServerException exception,
@@ -52,12 +46,9 @@ class ServerFailure extends Failure {
 
 class ConnectionFailure extends Failure {
   const ConnectionFailure({
-    required String message,
-    required int statusCode,
-  }) : super(
-          message: message,
-          statusCode: statusCode,
-        );
+    required super.message,
+    required super.statusCode,
+  });
 
   ConnectionFailure.fromException(
     ServerException exception,
@@ -69,12 +60,9 @@ class ConnectionFailure extends Failure {
 
 class DatabaseFailure extends Failure {
   const DatabaseFailure({
-    required String message,
-    required int statusCode,
-  }) : super(
-          message: message,
-          statusCode: statusCode,
-        );
+    required super.message,
+    required super.statusCode,
+  });
 
   DatabaseFailure.fromException(
     ServerException exception,
@@ -86,12 +74,9 @@ class DatabaseFailure extends Failure {
 
 class SharedPreferencesFailure extends Failure {
   const SharedPreferencesFailure({
-    required String message,
-    required int statusCode,
-  }) : super(
-          message: message,
-          statusCode: statusCode,
-        );
+    required super.message,
+    required super.statusCode,
+  });
 
   SharedPreferencesFailure.fromException(
     ServerException exception,
@@ -103,12 +88,9 @@ class SharedPreferencesFailure extends Failure {
 
 class CacheFailure extends Failure {
   const CacheFailure({
-    required String message,
-    required int statusCode,
-  }) : super(
-          message: message,
-          statusCode: statusCode,
-        );
+    required super.message,
+    required super.statusCode,
+  });
 
   CacheFailure.fromException(
     ServerException exception,

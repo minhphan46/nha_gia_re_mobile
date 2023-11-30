@@ -8,7 +8,7 @@ class GetAccessTokenUseCase implements UseCase<String, void> {
 
   @override
   Future<String> call({void params}) async {
-    final accessToken = await repository.getAccessToken();
+    final accessToken = repository.getAccessToken();
     return accessToken.data!;
   }
 }

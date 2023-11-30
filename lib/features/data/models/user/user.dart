@@ -1,46 +1,27 @@
 import '../../../domain/entities/posts/address.dart';
 import '../../../domain/entities/user/user.dart';
 import '../../../domain/enums/role.dart';
-import '../../../domain/enums/user_status.dart';
 
 class UserModel extends UserEntity {
   const UserModel({
-    String? id,
-    UserStatus? status,
-    bool? isIdentityVerified,
-    Role? role,
-    String? email,
-    AddressEntity? address,
-    String? firstName,
-    String? lastName,
-    bool? gender,
-    String? avatar,
-    String? dob,
-    String? phone,
-    DateTime? lastActiveAt,
-    DateTime? createdAt,
-    DateTime? updatedAt,
-    DateTime? bannedUtil,
-    String? banReason,
-  }) : super(
-          id: id,
-          status: status,
-          isIdentityVerified: isIdentityVerified,
-          role: role,
-          email: email,
-          address: address,
-          firstName: firstName,
-          lastName: lastName,
-          gender: gender,
-          avatar: avatar,
-          dob: dob,
-          phone: phone,
-          banReason: banReason,
-          lastActiveAt: lastActiveAt,
-          createdAt: createdAt,
-          updatedAt: updatedAt,
-          bannedUtil: bannedUtil,
-        );
+    super.id,
+    super.status,
+    super.isIdentityVerified,
+    super.role,
+    super.email,
+    super.address,
+    super.firstName,
+    super.lastName,
+    super.gender,
+    super.avatar,
+    super.dob,
+    super.phone,
+    super.lastActiveAt,
+    super.createdAt,
+    super.updatedAt,
+    super.bannedUtil,
+    super.banReason,
+  });
 
   factory UserModel.fromJson(Map<String, dynamic> json) {
     return UserModel(

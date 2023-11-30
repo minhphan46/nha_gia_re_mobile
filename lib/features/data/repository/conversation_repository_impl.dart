@@ -78,7 +78,7 @@ class ConversationRepositoryImpl extends ConversationRepository {
       final httpResponse =
           await _conversationRemoteDataSource.getOrCreateConversation(userId);
       if (httpResponse.response.statusCode == HttpStatus.ok) {
-        return DataSuccess(httpResponse.data!);
+        return DataSuccess(httpResponse.data);
       } else {
         return DataFailed(DioException(
           error: httpResponse.response.statusMessage,

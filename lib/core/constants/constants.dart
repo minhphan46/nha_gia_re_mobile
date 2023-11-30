@@ -21,3 +21,5 @@ const String kCreateOrderEndpoint = '/membership-package/check-out';
 const String kGetBlogEndpoint = '/blogs';
 
 const String kPostImages = '/media/upload';
+
+const String kGetOrCreateConversation = '/conversations';

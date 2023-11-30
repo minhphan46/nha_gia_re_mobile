@@ -2,21 +2,16 @@ import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 
 class AddressModel extends AddressEntity {
   AddressModel({
-    final int? provinceCode,
+    super.provinceCode,
     final String? cityName,
-    final int? districtCode,
+    super.districtCode,
     final String? districtName,
-    final int? wardCode,
+    super.wardCode,
     final String? wardName,
-    final String? detail,
+    super.detail,
     final double? latitude,
     final double? longitude,
-  }) : super(
-          provinceCode: provinceCode,
-          districtCode: districtCode,
-          wardCode: wardCode,
-          detail: detail,
-        );
+  });
 
   @override
   Map<String, dynamic> toJson() => {

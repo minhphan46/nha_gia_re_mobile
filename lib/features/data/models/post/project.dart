@@ -3,32 +3,19 @@ import '../../../domain/entities/posts/project.dart';
 
 class ProjectModel extends ProjectEntity {
   const ProjectModel({
-    String? id,
-    String? developerId,
-    String? projectName,
-    double? totalArea,
-    DateTime? startingDate,
-    DateTime? completionDate,
-    AddressEntity? address,
-    String? progression,
-    String? status,
-    List<String>? images,
-    bool? verified,
-    bool? isActive,
-  }) : super(
-          id: id,
-          developerId: developerId,
-          projectName: projectName,
-          totalArea: totalArea,
-          startingDate: startingDate,
-          completionDate: completionDate,
-          address: address,
-          progression: progression,
-          status: status,
-          images: images,
-          verified: verified,
-          isActive: isActive,
-        );
+    super.id,
+    super.developerId,
+    super.projectName,
+    super.totalArea,
+    super.startingDate,
+    super.completionDate,
+    super.address,
+    super.progression,
+    super.status,
+    super.images,
+    super.verified,
+    super.isActive,
+  });
 
   factory ProjectModel.fromJson(Map<String, dynamic> json) {
     return ProjectModel(

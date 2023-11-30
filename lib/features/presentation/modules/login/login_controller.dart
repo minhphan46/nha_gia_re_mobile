@@ -85,8 +85,6 @@ class LoginController extends GetxController {
           "password": loginPassword.text.trim(),
         };
 
-        print("params: $params");
-
         final dataState = await signInUseCase(params: params);
         // hide loading
         isLoading.value = false;

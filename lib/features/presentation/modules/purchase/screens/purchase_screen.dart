@@ -85,19 +85,17 @@ class PurchaseScreen extends StatelessWidget {
                         const SizedBox(
                           height: 20,
                         ),
-                        ...snapshot.data!
-                            .map((e) => Container(
-                                  padding: const EdgeInsets.only(bottom: 20),
-                                  width: double.infinity,
-                                  child: MembershipPackageCard(
-                                    package: e,
-                                    onTapBuy: (package) {
-                                      Get.toNamed(AppRoutes.purchaseChoosePlan,
-                                          arguments: package);
-                                    },
-                                  ),
-                                ))
-                            .toList(),
+                        ...snapshot.data!.map((e) => Container(
+                              padding: const EdgeInsets.only(bottom: 20),
+                              width: double.infinity,
+                              child: MembershipPackageCard(
+                                package: e,
+                                onTapBuy: (package) {
+                                  Get.toNamed(AppRoutes.purchaseChoosePlan,
+                                      arguments: package);
+                                },
+                              ),
+                            )),
                       ],
                     ),
                   ),

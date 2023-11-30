@@ -2,14 +2,10 @@ import '../../../domain/entities/posts/property_type.dart';
 
 class PropertyTypeModel extends PropertyTypeEntity {
   const PropertyTypeModel({
-    String? id,
-    String? name,
-    bool? isActive,
-  }) : super(
-          id: id,
-          name: name,
-          isActive: isActive,
-        );
+    super.id,
+    super.name,
+    super.isActive,
+  });
 
   factory PropertyTypeModel.fromJson(Map<String, dynamic> json) {
     return PropertyTypeModel(

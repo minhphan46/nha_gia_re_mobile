@@ -11,7 +11,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/purchase/screens/p
 class PurchaseChoosePlanScreen extends StatelessWidget {
   final MembershipPackageEntity package = Get.arguments;
 
-  PurchaseChoosePlanScreen({Key? key}) : super(key: key);
+  PurchaseChoosePlanScreen({super.key});
 
   final PurchaseController controller = Get.find<PurchaseController>();
   final RxInt selectedRadio = (-1).obs;

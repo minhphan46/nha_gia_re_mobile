@@ -32,7 +32,7 @@ class FilterScreen extends StatelessWidget {
             },
             child: Text(
               "Đặt lại",
-              style: AppTextStyles.bold16.copyWith(color: AppColors.green),
+              style: AppTextStyles.semiBold14.copyWith(color: AppColors.green),
             ),
           ),
         ],

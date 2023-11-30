@@ -138,7 +138,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.chatDetail,
-      page: () => ChatDetailScreen(),
+      page: () => const ChatDetailScreen(),
       binding: ChatBinding(),
     ),
   ];
