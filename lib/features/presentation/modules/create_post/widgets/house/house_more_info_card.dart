@@ -28,6 +28,7 @@ class HouseMoreInfoCard extends StatelessWidget {
               child: BaseDropdownButton(
                 title: "Giấy tờ pháp lý",
                 hint: "Không bắt buộc",
+                width: widthDropdown,
                 isSetSelectedItemBuilder: true,
                 value: controller.houseLegalDocumentStatus.value,
                 items: LegalDocumentStatus.toMap().entries.map((entry) {
@@ -56,6 +57,7 @@ class HouseMoreInfoCard extends StatelessWidget {
               child: BaseDropdownButton(
                 title: "Tình trạng nội thất",
                 hint: "Không bắt buộc",
+                width: widthDropdown,
                 isSetSelectedItemBuilder: true,
                 value: controller.houseFurnitureStatus.value,
                 items: FurnitureStatus.toMap().entries.map((entry) {

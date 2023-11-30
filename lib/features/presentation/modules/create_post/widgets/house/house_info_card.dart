@@ -134,6 +134,7 @@ class HouseInfoCard extends StatelessWidget {
               child: BaseDropdownButton(
                 title: "Hướng cửa chính",
                 hint: "Không bắt buộc",
+                width: widthBox,
                 isSetSelectedItemBuilder: true,
                 value: controller.houseMainDoorDirection.value,
                 items: Direction.toMap().entries.map((entry) {

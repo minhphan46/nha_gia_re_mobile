@@ -28,6 +28,7 @@ class OfficeMoreInfoCard extends StatelessWidget {
               child: BaseDropdownButton(
                 title: "Giấy tờ pháp lý",
                 hint: "Không bắt buộc",
+                width: widthDropdown,
                 isSetSelectedItemBuilder: true,
                 value: controller.officeLegalDocumentStatus.value,
                 items: LegalDocumentStatus.toMap().entries.map((entry) {
@@ -56,6 +57,7 @@ class OfficeMoreInfoCard extends StatelessWidget {
               child: BaseDropdownButton(
                 title: "Tình trạng nội thất",
                 hint: "Không bắt buộc",
+                width: widthDropdown,
                 isSetSelectedItemBuilder: true,
                 value: controller.officeFurnitureStatus.value,
                 items: FurnitureStatus.toMap().entries.map((entry) {
