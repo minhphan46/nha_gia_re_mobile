@@ -13,6 +13,13 @@ import '../../../domain/usecases/post/remote/get_posts.dart';
 import 'screens/filter_screen.dart';
 
 class MySearchController extends GetxController {
+// loading
+  RxBool isLoadingGetPosts = false.obs;
+
+  void toggleLoadingGetPosts(bool check) {
+    isLoadingGetPosts.value = check;
+  }
+
 // data in search screen
   // voice controller
   RxBool isListening = false.obs;
@@ -146,10 +153,13 @@ class MySearchController extends GetxController {
     "search": "",
     "provinceCode": 0,
   };
+
   Future<void> initPosts(bool isLease) async {
+    toggleLoadingGetPosts(true);
     buildQuery.update("isLease", (value) => isLease);
     buildQuery.update("search", (value) => query);
     await getPosts(buildQuery);
+    toggleLoadingGetPosts(false);
   }
 
   Future<void> getPosts(Map<String, dynamic> buildQuery) async {
@@ -212,8 +222,33 @@ class MySearchController extends GetxController {
   }
 
   // FILTER =================================================================
+  // loading
+  RxBool isLoadingFilter = false.obs;
+  void toggleLoadingFilter(bool check) {
+    isLoadingFilter.value = check;
+  }
+
   void deleteFilter() {
     // reset all
+    // reset all
+    radioCategory.reset();
+    radioSortType.reset();
+    radiopostedBy.reset();
+
+    resetAllCardsOfCategory();
+    changeValuePrice(
+        sl.get<FilterValues>().lowerPrice, sl.get<FilterValues>().upperPrice);
+    changeAreaValue(
+        sl.get<FilterValues>().lowerArea, sl.get<FilterValues>().upperArea);
+  }
+
+  Future<void> applyFilter() async {
+    toggleLoadingFilter(true);
+    // reset all
+    deleteFilter();
+    // pop screen when done
+    toggleLoadingFilter(false);
+    popScreen();
   }
 
 // Category type ==================================
