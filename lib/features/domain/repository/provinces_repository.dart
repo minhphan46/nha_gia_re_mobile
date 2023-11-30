@@ -18,4 +18,6 @@ abstract class ProvincesRepository {
   DataState<int> getWardCode(String wardName);
 
   DataState<List<String>> getProvinceNames();
+
+  DataState<List<Map<String, dynamic>>> getProvincesMap();
 }

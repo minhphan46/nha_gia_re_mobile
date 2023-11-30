@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nhagiare_mobile/core/utils/filter_values.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/blog_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/conversation_remote_data_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/membership_package_data_source.dart';
@@ -47,6 +48,8 @@ import 'features/domain/usecases/post/remote/get_posts_pending.dart';
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  // Filter
+  sl.registerSingleton<FilterValues>(FilterValues());
   // Dio
   sl.registerSingleton<Dio>(Dio());
   // Login =====================================================

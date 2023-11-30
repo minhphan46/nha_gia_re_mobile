@@ -60,6 +60,7 @@ class QueryBuilder {
   String _orderBy = '';
   int page = 1;
   String search = '';
+  int provinceCode = 0;
 
   QueryBuilder();
 
@@ -95,6 +96,11 @@ class QueryBuilder {
     return this;
   }
 
+  QueryBuilder addProvince(int provinceCode) {
+    this.provinceCode = provinceCode;
+    return this;
+  }
+
   String build() {
     if (_query.isNotEmpty) {
       _query += '&';
@@ -107,6 +113,9 @@ class QueryBuilder {
     }
     if (search.isNotEmpty) {
       _query += '&search=$search';
+    }
+    if (provinceCode != 0) {
+      _query += '&post_address->>province_code[eq]=\'$provinceCode\'';
     }
     return _query;
   }

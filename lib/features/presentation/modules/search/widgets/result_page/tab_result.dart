@@ -27,6 +27,7 @@ class TabResult extends StatelessWidget {
             ),
             Expanded(
               child: TabBarView(
+                physics: NeverScrollableScrollPhysics(),
                 children: [
                   FindedPostList(isLease: true),
                   FindedPostList(isLease: false),

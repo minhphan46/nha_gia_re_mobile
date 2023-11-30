@@ -111,7 +111,7 @@ class ProvincesRepositoryImpl implements ProvincesRepository {
     // TODO: implement getWardCode
     throw UnimplementedError();
   }
-  
+
   @override
   DataState<List<String>> getProvinceNames() {
     try {
@@ -120,6 +120,23 @@ class ProvincesRepositoryImpl implements ProvincesRepository {
         provinceNames.add(province['name'] as String);
       }
       return DataSuccess(provinceNames);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  DataState<List<Map<String, dynamic>>> getProvincesMap() {
+    try {
+      List<Map<String, dynamic>> provincesMap = [];
+      for (Map<String, Object> province in provincesVietNam) {
+        Map<String, dynamic> namCode = {
+          'name': province['name'] as String,
+          'code': province['code'] as int,
+        };
+        provincesMap.add(namCode);
+      }
+      return DataSuccess(provincesMap);
     } on DioException catch (e) {
       return DataFailed(e);
     }

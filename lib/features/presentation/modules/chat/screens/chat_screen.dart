@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:heroicons_flutter/heroicons_flutter.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
@@ -12,7 +11,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/chat/screens/chat_
 import '../chat_controler.dart';
 
 class ChatScreen extends StatelessWidget {
-  ChatScreen({Key? key}) : super(key: key) {
+  ChatScreen({super.key}) {
     controller.initConversation();
   }
 
@@ -56,20 +55,21 @@ class ChatScreen extends StatelessWidget {
               ListTile(
                 onLongPress: () {
                   Get.dialog(AlertDialog(
-                    title: Text('Xóa tin nhắn'),
-                    content: Text('Bạn có chắc chắn muốn xóa tin nhắn này?'),
+                    title: const Text('Xóa tin nhắn'),
+                    content:
+                        const Text('Bạn có chắc chắn muốn xóa tin nhắn này?'),
                     actions: [
                       TextButton(
                         onPressed: () {
                           Get.back();
                         },
-                        child: Text('Hủy'),
+                        child: const Text('Hủy'),
                       ),
                       TextButton(
                         onPressed: () {
                           Get.back();
                         },
-                        child: Text('Xóa'),
+                        child: const Text('Xóa'),
                       ),
                     ],
                   ));

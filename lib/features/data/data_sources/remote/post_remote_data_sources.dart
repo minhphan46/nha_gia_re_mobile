@@ -197,6 +197,10 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       if (query.containsKey('search')) {
         url += QueryBuilder().addSearch(query['search']).build();
       }
+
+      if (query.containsKey('provinceCode')) {
+        url += QueryBuilder().addProvince(query['provinceCode']).build();
+      }
     }
     return await DatabaseHelper().getPosts(url, client);
   }

@@ -8,12 +8,14 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
     required this.title,
     this.isShowBack = true,
     this.actions,
+    this.leading,
     super.key,
   });
 
   final String title;
   bool? isShowBack;
   List<Widget>? actions;
+  Widget? leading;
   @override
   Size get preferredSize => const Size.fromHeight(kToolbarHeight);
   @override
@@ -29,21 +31,22 @@ class MyAppbar extends StatelessWidget implements PreferredSizeWidget {
           height: 1.0,
         ),
       ),
-      leading: (isShowBack == true)
-          ? Padding(
-              padding: const EdgeInsets.only(left: 10),
-              child: IconButton(
-                icon: const Icon(
-                  Icons.arrow_back_ios,
-                  size: 20,
-                ),
-                color: AppColors.black,
-                onPressed: () {
-                  Get.back();
-                },
-              ),
-            )
-          : const SizedBox(),
+      leading: leading ??
+          ((isShowBack == true)
+              ? Padding(
+                  padding: const EdgeInsets.only(left: 10),
+                  child: IconButton(
+                    icon: const Icon(
+                      Icons.arrow_back_ios,
+                      size: 20,
+                    ),
+                    color: AppColors.black,
+                    onPressed: () {
+                      Get.back();
+                    },
+                  ),
+                )
+              : const SizedBox()),
       // ),
       actions: actions,
     );

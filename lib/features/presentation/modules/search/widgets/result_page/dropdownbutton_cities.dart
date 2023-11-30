@@ -20,14 +20,16 @@ class _DropdownButtonCitiesState extends State<DropdownButtonCities> {
   @override
   void initState() {
     searchController.getProvinceNames();
-    searchController.changeSelectedItem(searchController.provinceNames[0]);
+    searchController
+        .changeSelectedItem(searchController.provinceNames[0]['name']);
     dropDownMenuItems = searchController.provinceNames
         .map(
-          (String value) => DropdownMenuItem<String>(
-            value: value,
-            child: Text(value,
-                style:
-                    AppTextStyles.regular14.copyWith(color: AppColors.black)),
+          (Map<String, dynamic> value) => DropdownMenuItem<String>(
+            value: value['name'],
+            child: Text(
+              value['name'],
+              style: AppTextStyles.regular14.copyWith(color: AppColors.black),
+            ),
           ),
         )
         .toList();
@@ -40,7 +42,7 @@ class _DropdownButtonCitiesState extends State<DropdownButtonCities> {
       () => DropdownButtonHideUnderline(
         child: DropdownButton2(
           isExpanded: true,
-          value: searchController.selectedTypeItem!.value,
+          value: searchController.selectedProvince!.value,
           style: AppTextStyles.regular14.copyWith(color: AppColors.black),
           onChanged: (String? newValue) {
             if (newValue != null) {

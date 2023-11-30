@@ -59,6 +59,27 @@ enum Direction {
     return value;
   }
 
+  static String getStringValueVi(Direction value) {
+    switch (value) {
+      case Direction.east:
+        return "Đông";
+      case Direction.west:
+        return "Tây";
+      case Direction.south:
+        return "Nam";
+      case Direction.north:
+        return "Bắc";
+      case Direction.northEast:
+        return "Đông Bắc";
+      case Direction.northWest:
+        return "Tây Bắc";
+      case Direction.southEast:
+        return "Đông Nam";
+      case Direction.southWest:
+        return "Tây Nam";
+    }
+  }
+
   // tomap
   static Map<Direction, String> toMap() {
     return {

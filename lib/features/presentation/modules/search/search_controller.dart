@@ -3,11 +3,14 @@ import 'package:nhagiare_mobile/core/extensions/string_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_search.dart';
-
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/utils/filter_values.dart';
+import '../../../../core/utils/list_check_service.dart';
+import '../../../../core/utils/radio_service.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
+import 'screens/filter_screen.dart';
 
 class MySearchController extends GetxController {
 // data in search screen
@@ -124,7 +127,7 @@ class MySearchController extends GetxController {
 
   /// navigator to filter screen
   void navigateToFilterScreen() {
-    //Get.to(() => FilterScreen());
+    Get.to(() => FilterScreen());
   }
 
   void popScreen() {
@@ -138,15 +141,22 @@ class MySearchController extends GetxController {
 // data in result screen
   RxList<RealEstatePostEntity> searchPosts = <RealEstatePostEntity>[].obs;
 
+  Map<String, dynamic> buildQuery = {
+    "isLease": true,
+    "search": "",
+    "provinceCode": 0,
+  };
   Future<void> initPosts(bool isLease) async {
+    buildQuery.update("isLease", (value) => isLease);
+    buildQuery.update("search", (value) => query);
+    await getPosts(buildQuery);
+  }
+
+  Future<void> getPosts(Map<String, dynamic> buildQuery) async {
     final GetPostSearchsUseCase getPostSearchsUseCase =
         sl<GetPostSearchsUseCase>();
-    Map<String, dynamic> buildQuery = {
-      "isLease": isLease,
-      "search": query,
-    };
     final dataState = await getPostSearchsUseCase(params: buildQuery);
-
+    searchPosts.value = [];
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       searchPosts.value = [...dataState.data!];
     } else {
@@ -156,9 +166,9 @@ class MySearchController extends GetxController {
 
   /// value in dropdown menu item
   // getAll Names of cities
-  List<String> provinceNames = <String>[];
+  List<Map<String, dynamic>> provinceNames = <Map<String, dynamic>>[];
 
-  List<String> getProvinceNames() {
+  List<Map<String, dynamic>> getProvinceNames() {
     final GetProvinceNamesUseCase getProvinceNamesUseCase =
         sl<GetProvinceNamesUseCase>();
     final dataState = getProvinceNamesUseCase(
@@ -167,6 +177,7 @@ class MySearchController extends GetxController {
 
     if (dataState is DataSuccess) {
       provinceNames = dataState.data!;
+      provinceNames.insert(0, {"name": "Tất cả", "code": 0});
       return dataState.data!;
     } else {
       provinceNames = [];
@@ -174,27 +185,192 @@ class MySearchController extends GetxController {
     }
   }
 
-  RxString? selectedTypeItem;
+  RxString? selectedProvince;
 
   /// change new value to selectedTypeItem
   void changeSelectedItem(String newValue) async {
-    if (selectedTypeItem == null) {
-      selectedTypeItem = newValue.obs;
+    if (selectedProvince == null) {
+      selectedProvince = newValue.obs;
     } else {
-      selectedTypeItem!.value = newValue;
+      selectedProvince!.value = newValue;
     }
-    // add filter
-    // if (newValue == FilterValues.instance.provinces[0]) {
-    //   if (SearchService.instance.typeResult == TypeNavigate.search) {
-    //     searchPosts.value =
-    //         await getAllPostsInitWithQuery(SearchService.instance.orderBy);
-    //   } else {
-    //     searchPosts.value =
-    //         await getAllPostsInit(SearchService.instance.orderBy);
-    //   }
-    // } else {
-    //   searchPosts.value = await getPostByProvince(
-    //       newValue, typeResult, SearchService.instance.orderBy);
-    // }
+    // search in provinceNames to get provinceCode
+    int provinceCode = 0;
+    for (Map<String, dynamic> province in provinceNames) {
+      if (province['name'] == newValue) {
+        provinceCode = province['code'] as int;
+        break;
+      }
+    }
+    // get posts by province
+    await getPostByProvince(provinceCode);
   }
+
+  Future<void> getPostByProvince(int proviceCode) async {
+    buildQuery.update("provinceCode", (value) => proviceCode);
+    await getPosts(buildQuery);
+  }
+
+  // FILTER =================================================================
+  void deleteFilter() {
+    // reset all
+  }
+
+// Category type ==================================
+  RadioService radioCategory = RadioService(
+    values: sl.get<FilterValues>().categorys,
+    expendedFunc: () => Get.back(),
+  );
+
+// sort card ======================================
+  RadioService radioSortType = RadioService(
+    values: sl.get<FilterValues>().sortTypes,
+  );
+
+// posted card ======================================
+  RadioService radiopostedBy = RadioService(
+    values: sl.get<FilterValues>().postedBy,
+  );
+// Slider ranges ==================================
+  // Price range
+
+  RxDouble lowerPriceValue = sl.get<FilterValues>().lowerPrice.obs;
+  RxDouble upperPriceValue = sl.get<FilterValues>().upperPrice.obs;
+
+  void changeValuePrice(double lower, double upper) {
+    lowerPriceValue.value = lower;
+    upperPriceValue.value = upper;
+  }
+
+  // Area range
+
+  RxDouble lowerAreaValue = sl.get<FilterValues>().lowerArea.obs;
+  RxDouble upperAreaValue = sl.get<FilterValues>().upperArea.obs;
+
+  void changeAreaValue(double lower, double upper) {
+    lowerAreaValue.value = lower;
+    upperAreaValue.value = upper;
+  }
+
+// reset radio ==========================================
+  void resetAllCardsOfCategory() {
+    resetApartment();
+    resetHouse();
+    resetLand();
+    resetOffice();
+    resetRent();
+  }
+
+  void resetApartment() {
+    apartmentStatus.reset();
+    apartmentTypes.reset();
+    apartmentCharacteristics.reset();
+    apartmentBedroomNumber.reset();
+    apartmentMainDirection.reset();
+    apartmentBalconyDirection.reset();
+    apartmentLegalDocuments.reset();
+    apartmentInteriorStatus.reset();
+  }
+
+  void resetHouse() {
+    houseTypes.reset();
+    houseCharacteristics.reset();
+    houseBedroomNumber.reset();
+    houseMainDirection.reset();
+    houseLegalDocuments.reset();
+    houseInteriorStatus.reset();
+  }
+
+  void resetLand() {
+    landTypes.reset();
+    landCharacteristics.reset();
+    landDirection.reset();
+    landLegalDocuments.reset();
+  }
+
+  void resetOffice() {
+    officeType.reset();
+    officeDirection.reset();
+    officeLegalDocuments.reset();
+    officeInteriorStatus.reset();
+  }
+
+  void resetRent() {
+    rentInteriorStatus.reset();
+  }
+
+// Can ho chung cu ======================================
+  RadioService apartmentStatus = RadioService(
+    values: sl.get<FilterValues>().apartmentStatus,
+  );
+  ListCheckService apartmentTypes = ListCheckService(
+    values: sl.get<FilterValues>().apartmentTypes,
+  );
+  RadioService apartmentCharacteristics = RadioService(
+    values: sl.get<FilterValues>().apartmentCharacteristics,
+  );
+  ListCheckService apartmentBedroomNumber = ListCheckService(
+    values: sl.get<FilterValues>().bedroomNumber,
+  );
+  ListCheckService apartmentMainDirection = ListCheckService(
+    values: sl.get<FilterValues>().mainDirection,
+  );
+  ListCheckService apartmentBalconyDirection = ListCheckService(
+    values: sl.get<FilterValues>().mainDirection,
+  );
+  ListCheckService apartmentLegalDocuments = ListCheckService(
+    values: sl.get<FilterValues>().legalDocuments,
+  );
+  ListCheckService apartmentInteriorStatus = ListCheckService(
+    values: sl.get<FilterValues>().interiorStatus,
+  );
+// Nha o ================================================
+  ListCheckService houseTypes = ListCheckService(
+    values: sl.get<FilterValues>().residentialTypes,
+  );
+  ListCheckService houseCharacteristics = ListCheckService(
+    values: sl.get<FilterValues>().houseCharacteristics,
+  );
+  ListCheckService houseBedroomNumber = ListCheckService(
+    values: sl.get<FilterValues>().bedroomNumber,
+  );
+  ListCheckService houseMainDirection = ListCheckService(
+    values: sl.get<FilterValues>().mainDirection,
+  );
+  ListCheckService houseLegalDocuments = ListCheckService(
+    values: sl.get<FilterValues>().legalDocuments,
+  );
+  ListCheckService houseInteriorStatus = ListCheckService(
+    values: sl.get<FilterValues>().interiorStatus,
+  );
+// Dat ================================================
+  ListCheckService landTypes = ListCheckService(
+    values: sl.get<FilterValues>().typeOfLand,
+  );
+  ListCheckService landCharacteristics = ListCheckService(
+    values: sl.get<FilterValues>().houseCharacteristics,
+  );
+  ListCheckService landDirection = ListCheckService(
+    values: sl.get<FilterValues>().mainDirection,
+  );
+  ListCheckService landLegalDocuments = ListCheckService(
+    values: sl.get<FilterValues>().legalDocuments,
+  );
+// Van phong  ================================================
+  ListCheckService officeType = ListCheckService(
+    values: sl.get<FilterValues>().officeType,
+  );
+  ListCheckService officeDirection = ListCheckService(
+    values: sl.get<FilterValues>().mainDirection,
+  );
+  ListCheckService officeLegalDocuments = ListCheckService(
+    values: sl.get<FilterValues>().legalDocuments,
+  );
+  ListCheckService officeInteriorStatus = ListCheckService(
+    values: sl.get<FilterValues>().interiorStatus,
+  );
+// Phong tro  ================================================
+  ListCheckService rentInteriorStatus = ListCheckService(
+    values: sl.get<FilterValues>().interiorStatus,
+  );
 }
