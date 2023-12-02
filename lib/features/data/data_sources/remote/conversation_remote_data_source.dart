@@ -39,7 +39,7 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   final Dio client;
 
   ConversationRemoteDataSourceImpl(this.client) {
-    socket = IO.io('http://192.168.137.1:8000/conversations', <String, dynamic>{
+    socket = IO.io('$baseUrl/conversations', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });

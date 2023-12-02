@@ -58,7 +58,9 @@ class AccountScreen extends StatelessWidget {
                     if (!controller.isIdentity) const NotIdentityCard(),
                   ],
                 ),
-                onTap: () {},
+                onTap: () {
+                  controller.navToAccountInfo();
+                },
                 leading: const CircleAvatar(
                   radius: 18,
                   backgroundImage: AssetImage(Assets.avatarDefault),
