@@ -1,4 +1,5 @@
 import '../../../../core/resources/data_state.dart';
+import '../../data/models/user/user.dart';
 
 abstract class AuthenticationRepository {
   bool get isLoggedIn;
@@ -21,4 +22,6 @@ abstract class AuthenticationRepository {
   void addAuthStateListener(Function(bool) listener);
   void removeAuthStateListener(Function(bool) listener);
   void notifyAuthStateListeners();
+
+  Future<DataState<UserModel>> getMe();
 }

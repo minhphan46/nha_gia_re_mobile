@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_me.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
 import '../core/utils/filter_values.dart';
@@ -293,4 +294,7 @@ Future<void> initializeDependencies() async {
       sl<ConversationRepository>(),
     ),
   );
+
+  sl.registerSingleton(
+      GetMeUseCase(repository: sl<AuthenticationRepository>()));
 }
