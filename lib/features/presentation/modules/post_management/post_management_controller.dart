@@ -38,9 +38,9 @@ class PostManagementController extends GetxController {
   Future<List<RealEstatePostEntity>> getPostsApproved() async {
     final dataState = await _getPostsApprovedUseCase();
     approvedPosts.clear();
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      approvedPosts.value = dataState.data!;
-      return dataState.data!;
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      approvedPosts.value = dataState.data!.second;
+      return dataState.data!.second;
     } else {
       approvedPosts.value = [];
       return [];
@@ -50,9 +50,9 @@ class PostManagementController extends GetxController {
   Future<List<RealEstatePostEntity>> getPostsPending() async {
     final dataState = await _getPostsPendingUseCase();
     pendingPosts.clear();
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      pendingPosts.value = dataState.data!;
-      return dataState.data!;
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      pendingPosts.value = dataState.data!.second;
+      return dataState.data!.second;
     } else {
       pendingPosts.value = [];
       return [];
@@ -62,9 +62,9 @@ class PostManagementController extends GetxController {
   Future<List<RealEstatePostEntity>> getPostsExpired() async {
     final dataState = await _getPostsExpiredUseCase();
     expiredPosts.clear();
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      expiredPosts.value = dataState.data!;
-      return dataState.data!;
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      expiredPosts.value = dataState.data!.second;
+      return dataState.data!.second;
     } else {
       expiredPosts.value = [];
       return [];
@@ -74,9 +74,9 @@ class PostManagementController extends GetxController {
   Future<List<RealEstatePostEntity>> getPostsRejected() async {
     final dataState = await _getPostsRejectUseCase();
     rejectedPosts.clear();
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      rejectedPosts.value = dataState.data!;
-      return dataState.data!;
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      rejectedPosts.value = dataState.data!.second;
+      return dataState.data!.second;
     } else {
       rejectedPosts.value = [];
       return [];
@@ -86,9 +86,9 @@ class PostManagementController extends GetxController {
   Future<List<RealEstatePostEntity>> getPostsHided() async {
     final dataState = await _getPostsHidedUseCase();
     hidedPosts.clear();
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      hidedPosts.value = dataState.data!;
-      return dataState.data!;
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      hidedPosts.value = dataState.data!.second;
+      return dataState.data!.second;
     } else {
       hidedPosts.value = [];
       return [];

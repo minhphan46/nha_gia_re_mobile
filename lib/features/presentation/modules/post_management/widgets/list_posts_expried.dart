@@ -16,9 +16,13 @@ class ListPostsExpried extends StatefulWidget {
 }
 
 class _ListPostsExpriedState extends State<ListPostsExpried> {
-  RxBool isLoading = false.obs;
   final PostManagementController controller =
       Get.find<PostManagementController>();
+
+  int page = 1;
+  int numOfPage = 1;
+  RxBool isLoading = false.obs;
+  final scrollController = ScrollController();
 
   void onSelectedMenu(int i, RealEstatePostEntity post) {
     if (i == 0) {
@@ -31,7 +35,24 @@ class _ListPostsExpriedState extends State<ListPostsExpried> {
   @override
   void initState() {
     refresh();
+    scrollController.addListener(() {
+      if (scrollController.position.maxScrollExtent ==
+          scrollController.offset) {}
+    });
+
     super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  Future fetchMore() async {
+    isLoading.value = true;
+    await controller.getPostsExpired();
+    isLoading.value = false;
   }
 
   Future refresh() async {
@@ -58,6 +79,7 @@ class _ListPostsExpriedState extends State<ListPostsExpried> {
                     ),
                   )
                 : ListView.builder(
+                    controller: scrollController,
                     itemCount: controller.expiredPosts.length,
                     itemBuilder: (context, index) {
                       return ItemPost(
