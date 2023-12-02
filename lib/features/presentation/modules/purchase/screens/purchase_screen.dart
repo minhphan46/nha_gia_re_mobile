@@ -8,6 +8,7 @@ import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/subscription.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/transaction.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/widgets/package_card.dart';
@@ -162,10 +163,24 @@ class _PurchaseScreenState extends State<PurchaseScreen>
               }),
           SingleChildScrollView(
               padding: const EdgeInsets.all(8),
-              child: MembershipPackageCard(
-                package: current,
-                isCurrent: true,
-              )),
+              child: FutureBuilder<Subscription?>(
+                  future: controller.getCurrentSubscription(),
+                  builder: (context, snapshot) {
+                    if (!snapshot.hasData) {
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    }
+                    if (snapshot.data == null) {
+                      return const Center(
+                        child: Text("Bạn chưa đăng ký gói nào"),
+                      );
+                    }
+                    return MembershipPackageCard(
+                      package: snapshot.data!.package!,
+                      isCurrent: true,
+                    );
+                  })),
           FutureBuilder<List<TransactionEntity>>(
               future: controller.getAllTransactions(),
               builder: (context, snapShot) {

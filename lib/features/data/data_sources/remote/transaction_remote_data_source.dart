@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/features/data/models/purchase/subscription_model.dart';
 import 'package:nhagiare_mobile/features/data/models/purchase/transaction_model.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
@@ -8,6 +9,7 @@ import '../../../../core/errors/exceptions.dart';
 abstract class TransactionRemoteDataSrc {
   Future<HttpResponse<TransactionModel>> getTransactionByAppTransId(String id);
   Future<HttpResponse<List<TransactionModel>>> getAllTransactions();
+  Future<HttpResponse<SubscriptionModel?>> getCurrentSubscription();
 }
 
 class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
@@ -81,6 +83,38 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
       } else {
         return HttpResponse(value, httpResponse);
       }
+    } on ApiException catch (e) {
+      printError(info: e.toString());
+      rethrow;
+    } catch (error) {
+      print(error.toString());
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<SubscriptionModel?>> getCurrentSubscription() async {
+    String url = '$apiUrl$kGetCurrentSubscriptionEndpoint';
+    try {
+      final httpResponse = await client.get(url,
+          options: Options(headers: {
+            'Authorization': 'Bearer $accessToken',
+          }));
+      if (httpResponse.statusCode != 200) {
+        throw ApiException(
+          message: httpResponse.data,
+          statusCode: httpResponse.statusCode!,
+        );
+      }
+
+      SubscriptionModel? value;
+      try {
+        value = SubscriptionModel.fromJson(httpResponse.data['result']);
+      } catch (e) {
+        print(e);
+        value = null;
+      }
+      return HttpResponse(value, httpResponse);
     } on ApiException catch (e) {
       printError(info: e.toString());
       rethrow;

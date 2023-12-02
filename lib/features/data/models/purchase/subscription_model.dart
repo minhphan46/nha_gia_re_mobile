@@ -1,5 +1,7 @@
 import 'package:nhagiare_mobile/features/domain/entities/purchase/subscription.dart';
 
+import 'membership_package_model.dart';
+
 class SubscriptionModel extends Subscription {
   const SubscriptionModel({
     required super.id,
@@ -9,6 +11,7 @@ class SubscriptionModel extends Subscription {
     required super.startingDate,
     required super.expirationDate,
     required super.isActive,
+    super.package,
   });
 
   factory SubscriptionModel.fromJson(Map<String, dynamic> json) {
@@ -21,6 +24,9 @@ class SubscriptionModel extends Subscription {
       expirationDate:
           DateTime.tryParse(json['expiration_date']) ?? DateTime.now(),
       isActive: json['is_active'],
+      package: json["membership_package"] != null
+          ? MembershipPackageModel.fromJson(json["membership_package"])
+          : null,
     );
   }
 }

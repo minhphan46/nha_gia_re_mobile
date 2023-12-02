@@ -1,12 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
 import '../core/utils/filter_values.dart';
 import '../features/data/data_sources/remote/blog_data_source.dart';
 import '../features/data/data_sources/remote/conversation_remote_data_source.dart';
 import '../features/data/data_sources/remote/membership_package_data_source.dart';
 import '../features/data/data_sources/remote/post_remote_data_sources.dart';
-import '../features/data/data_sources/remote/transaction_data_source.dart';
+import 'features/data/data_sources/remote/transaction_remote_data_source.dart';
 import '../features/data/repository/blog_repository_impl.dart';
 import '../features/data/repository/membership_package_respository_impl.dart';
 import '../features/data/repository/transaction_repository_impl.dart';
@@ -205,6 +206,10 @@ Future<void> initializeDependencies() async {
       sl<MembershipPackageRepository>(),
     ),
   );
+
+  sl.registerSingleton(GetCurrentSubscriptionUseCase(
+    sl<TransactionRepository>(),
+  ));
 
   // Blog =====================================================
   // blog repository
