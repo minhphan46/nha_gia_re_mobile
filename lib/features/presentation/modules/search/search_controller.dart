@@ -140,6 +140,7 @@ class MySearchController extends GetxController {
     if (query.isEmpty) {
       results = [...history];
     } else {
+      // sửa lấy lại list result ở đây
       for (String value in searchStrings) {
         if (value
             .noAccentVietnamese()
@@ -148,6 +149,7 @@ class MySearchController extends GetxController {
           results.add(value);
         }
       }
+      //====================================
     }
     return results;
   }
