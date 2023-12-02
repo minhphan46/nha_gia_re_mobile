@@ -1,6 +1,8 @@
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/string_ex.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/filter_request.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
+import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_search.dart';
 import '../../../../config/routes/app_routes.dart';
@@ -94,7 +96,6 @@ class MySearchController extends GetxController {
     List<RealEstatePostEntity> datas = await getAllPosts();
     searchStrings.clear();
     for (var data in datas) {
-      print(data.title!);
       searchStrings.add(data.title!);
     }
     return searchStrings;
@@ -164,24 +165,24 @@ class MySearchController extends GetxController {
 // data in result screen
   RxList<RealEstatePostEntity> searchPosts = <RealEstatePostEntity>[].obs;
 
-  Map<String, dynamic> buildQuery = {
-    "isLease": true,
-    "search": "",
-    "provinceCode": 0,
-  };
+  PostFilter postFilter = PostFilter(
+    isLease: true,
+    postedBy: PostedBy.all,
+    provinceCode: 0,
+  );
 
   Future<void> initPosts(bool isLease) async {
     toggleLoadingGetPosts(true);
-    buildQuery.update("isLease", (value) => isLease);
-    buildQuery.update("search", (value) => query);
-    await getPosts(buildQuery);
+    postFilter.setIsLease(isLease);
+    postFilter.setTextSearch(query);
+    await getPosts(postFilter);
     toggleLoadingGetPosts(false);
   }
 
-  Future<void> getPosts(Map<String, dynamic> buildQuery) async {
+  Future<void> getPosts(PostFilter filter) async {
     final GetPostSearchsUseCase getPostSearchsUseCase =
         sl<GetPostSearchsUseCase>();
-    final dataState = await getPostSearchsUseCase(params: buildQuery);
+    final dataState = await getPostSearchsUseCase(params: filter);
     searchPosts.value = [];
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
       searchPosts.value = [...dataState.data!];
@@ -235,8 +236,8 @@ class MySearchController extends GetxController {
   }
 
   Future<void> getPostByProvince(int proviceCode) async {
-    buildQuery.update("provinceCode", (value) => proviceCode);
-    await getPosts(buildQuery);
+    postFilter.setProvinceCode(proviceCode);
+    await getPosts(postFilter);
   }
 
   // FILTER =================================================================

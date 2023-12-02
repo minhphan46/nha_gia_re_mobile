@@ -5,6 +5,7 @@ import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
 import 'package:nhagiare_mobile/features/data/models/post/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
+import '../../domain/entities/posts/filter_request.dart';
 import '../../domain/entities/posts/real_estate_post.dart';
 
 class PostRepositoryImpl implements PostRepository {
@@ -194,9 +195,9 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<DataState<List<RealEstatePostEntity>>> getPostsSearch(
-      Map<String, dynamic>? query) async {
+      PostFilter? query) async {
     try {
-      final httpResponse = await _dataSrc.getPostsSearch(query);
+      final httpResponse = await _dataSrc.getPostsSearch(query!);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
