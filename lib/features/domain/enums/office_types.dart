@@ -11,6 +11,13 @@ enum OfficeTypes {
     throw Exception("Can't parse OfficeTypes! Your input value is \"$value\"");
   }
 
+  static OfficeTypes parseVi(String value) {
+    for (OfficeTypes type in OfficeTypes.values) {
+      if (getStringVi(type) == value) return type;
+    }
+    throw Exception("Can't parse OfficeTypes! Your input value is \"$value\"");
+  }
+
   @override
   String toString() {
     switch (this) {

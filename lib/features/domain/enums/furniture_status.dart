@@ -12,6 +12,14 @@ enum FurnitureStatus {
         "Can't parse FurnitureStatus! Your input value is \"$value\"");
   }
 
+  static FurnitureStatus parseVi(String value) {
+    for (FurnitureStatus status in FurnitureStatus.values) {
+      if (getStringVi(status) == value) return status;
+    }
+    throw Exception(
+        "Can't parse FurnitureStatus! Your input value is \"$value\"");
+  }
+
   @override
   String toString() {
     switch (this) {

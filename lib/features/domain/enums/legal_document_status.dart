@@ -11,6 +11,14 @@ enum LegalDocumentStatus {
         "Can't parse LegalDocumentStatus! Your input value is \"$value\"");
   }
 
+  static LegalDocumentStatus parseVi(String value) {
+    for (LegalDocumentStatus status in LegalDocumentStatus.values) {
+      if (getStringVi(status) == value) return status;
+    }
+    throw Exception(
+        "Can't parse LegalDocumentStatus! Your input value is \"$value\"");
+  }
+
   @override
   String toString() {
     switch (this) {

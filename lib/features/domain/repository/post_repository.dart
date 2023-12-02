@@ -1,6 +1,6 @@
 import 'dart:io';
-
 import '../../../../core/resources/data_state.dart';
+import '../entities/posts/filter_request.dart';
 import '../entities/posts/real_estate_post.dart';
 
 abstract class PostRepository {
@@ -12,7 +12,7 @@ abstract class PostRepository {
   Future<DataState<void>> deletePost(String id);
 
   Future<DataState<List<RealEstatePostEntity>>> getPostsSearch(
-      Map<String, dynamic>? query);
+      PostFilter filter);
 
   Future<DataState<List<String>>> uploadImages(List<File> images);
 

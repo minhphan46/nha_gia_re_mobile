@@ -36,14 +36,14 @@ enum Operation {
         return 'like';
       case Operation.notLike:
         return 'nlike';
-      case Operation.isNull:
-        return 'null';
-      case Operation.isNotNull:
-        return 'nnull';
+      // case Operation.isNull:
+      //   return 'null';
+      // case Operation.isNotNull:
+      //   return 'nnull';
       case Operation.between:
-        return 'between';
+        return 'btw';
       case Operation.notBetween:
-        return 'nbetween';
+        return 'nbtw';
       default:
         return '';
     }

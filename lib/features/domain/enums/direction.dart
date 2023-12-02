@@ -15,6 +15,13 @@ enum Direction {
     throw Exception("Can't parse Direction! Your input value is \"$value\"");
   }
 
+  static Direction parseVi(String value) {
+    for (Direction direction in Direction.values) {
+      if (getStringValueVi(direction) == value) return direction;
+    }
+    throw Exception("Can't parse Direction! Your input value is \"$value\"");
+  }
+
   @override
   String toString() {
     switch (this) {

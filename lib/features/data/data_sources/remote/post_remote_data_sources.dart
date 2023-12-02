@@ -1,11 +1,13 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:nhagiare_mobile/core/utils/ansi_color.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/query_builder.dart';
 import '../../../../core/utils/typedef.dart';
 import '../../../../injection_container.dart';
+import '../../../domain/entities/posts/filter_request.dart';
 import '../../models/post/real_estate_post.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
@@ -13,7 +15,7 @@ import '../local/authentication_local_data_source.dart';
 abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts(String? userId);
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsSearch(
-      Map<String, dynamic>? query);
+      PostFilter query);
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsStatus(String status);
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired();
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
@@ -185,23 +187,45 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsSearch(
-      Map<String, dynamic>? query) async {
-    var url = '$apiUrl$kGetPostEndpoint';
-    if (query != null) {
-      if (query.containsKey('isLease')) {
-        url += QueryBuilder()
-            .addQuery('post_is_lease', Operation.equals, query['isLease'])
-            .build();
-      }
+      PostFilter query) async {
+    String url = '$apiUrl$kGetPostEndpoint';
+    QueryBuilder queryBuilder = QueryBuilder();
 
-      if (query.containsKey('search')) {
-        url += QueryBuilder().addSearch(query['search']).build();
-      }
-
-      if (query.containsKey('provinceCode')) {
-        url += QueryBuilder().addProvince(query['provinceCode']).build();
-      }
+    if (query.textSearch != null && query.textSearch!.isNotEmpty) {
+      queryBuilder.addSearch(query.textSearch!);
     }
+
+    if (query.isLease != null) {
+      queryBuilder.addQuery('post_is_lease', Operation.equals, query.isLease!);
+    }
+
+    if (query.provinceCode != null) {
+      queryBuilder.addProvince(query.provinceCode!);
+    }
+
+    // if (query.postedBy != null) {
+    //   url += QueryBuilder()
+    //       .addQuery('post_user_id', Operation.equals, query.postedBy!.userId)
+    //       .build();
+    // }
+
+    if (query.minPrice != null && query.maxPrice != null) {
+      queryBuilder.addQuery('post_price', Operation.between,
+          '${query.minPrice},${query.maxPrice}');
+    }
+
+    // area
+    if (query.minArea != null && query.maxArea != null) {
+      queryBuilder.addQuery(
+          'post_area', Operation.between, '${query.minArea},${query.maxArea}');
+    }
+
+    url += queryBuilder.build();
+
+    print(success(query.toString()));
+
+    print(success("url: $url"));
+
     return await DatabaseHelper().getPosts(url, client);
   }
 }

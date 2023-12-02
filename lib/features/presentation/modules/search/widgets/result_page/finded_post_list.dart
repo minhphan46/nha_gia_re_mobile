@@ -45,7 +45,7 @@ class _FindedPostListState extends State<FindedPostList> {
                 () => searchController.searchPosts.isEmpty
                     ? Center(
                         child: Text(
-                          "Không có sản phẩm nào",
+                          "Không tìm thấy bài đăng nào",
                           style: AppTextStyles.bold20
                               .copyWith(color: AppColors.green),
                         ),
