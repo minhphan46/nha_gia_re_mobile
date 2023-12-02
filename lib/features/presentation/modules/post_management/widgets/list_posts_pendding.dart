@@ -7,8 +7,15 @@ import '../../../../domain/enums/post_status_management.dart';
 import '../post_management_controller.dart';
 import 'item_post.dart';
 
-class ListPostsPendding extends StatelessWidget {
-  ListPostsPendding({super.key});
+class ListPostsPendding extends StatefulWidget {
+  const ListPostsPendding({super.key});
+
+  @override
+  State<ListPostsPendding> createState() => _ListPostsPenddingState();
+}
+
+class _ListPostsPenddingState extends State<ListPostsPendding> {
+  RxBool isLoading = false.obs;
   final PostManagementController controller =
       Get.find<PostManagementController>();
 
@@ -21,47 +28,55 @@ class ListPostsPendding extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    refresh();
+    super.initState();
+  }
+
+  Future refresh() async {
+    isLoading.value = true;
+    await controller.getPostsPending();
+    isLoading.value = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<RealEstatePostEntity>>(
-      future: controller.getPostsPending(),
-      builder: (context, snapShot) {
-        if (!snapShot.hasData) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          List<RealEstatePostEntity> data = snapShot.data!;
-          if (data.isEmpty) {
-            return Center(
-              child: Text(
-                "Chưa có tin đang chờ duyệt",
-                style: AppTextStyles.bold20.copyWith(color: AppColors.green),
-              ),
-            );
-          } else {
-            return ListView.builder(
-              itemCount: controller.pendingPosts.length,
-              itemBuilder: (context, index) {
-                return ItemPost(
-                  statusCode: PostStatusManagement.pending,
-                  status: "Chờ duyệt",
-                  post: controller.pendingPosts[index],
-                  funcs: const [
-                    "Chỉnh sửa",
-                    "Xóa tin",
-                  ],
-                  iconFuncs: const [
-                    Icons.edit,
-                    Icons.delete_outline,
-                  ],
-                  onSelectedMenu: onSelectedMenu,
-                  onTap: (RealEstatePostEntity post) {},
-                );
-              },
-            );
-          }
-        }
-      },
+    return RefreshIndicator(
+      onRefresh: refresh,
+      child: Obx(
+        () => isLoading.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : controller.pendingPosts.isEmpty
+                ? Center(
+                    child: Text(
+                      "Chưa có tin đang chờ duyệt",
+                      style:
+                          AppTextStyles.bold20.copyWith(color: AppColors.green),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: controller.pendingPosts.length,
+                    itemBuilder: (context, index) {
+                      return ItemPost(
+                        statusCode: PostStatusManagement.pending,
+                        status: "Chờ duyệt",
+                        post: controller.pendingPosts[index],
+                        funcs: const [
+                          "Chỉnh sửa",
+                          "Xóa tin",
+                        ],
+                        iconFuncs: const [
+                          Icons.edit,
+                          Icons.delete_outline,
+                        ],
+                        onSelectedMenu: onSelectedMenu,
+                        onTap: (RealEstatePostEntity post) {},
+                      );
+                    },
+                  ),
+      ),
     );
   }
 }

@@ -24,6 +24,7 @@ class PostManagementController extends GetxController {
   ];
 
   // get all posts
+
   final GetPostsApprovedUseCase _getPostsApprovedUseCase =
       sl<GetPostsApprovedUseCase>();
   final GetPostsPendingUseCase _getPostsPendingUseCase =

@@ -8,8 +8,15 @@ import '../../../../../config/theme/text_styles.dart';
 import '../post_management_controller.dart';
 import 'item_post.dart';
 
-class ListPostsExpried extends StatelessWidget {
-  ListPostsExpried({super.key});
+class ListPostsExpried extends StatefulWidget {
+  const ListPostsExpried({super.key});
+
+  @override
+  State<ListPostsExpried> createState() => _ListPostsExpriedState();
+}
+
+class _ListPostsExpriedState extends State<ListPostsExpried> {
+  RxBool isLoading = false.obs;
   final PostManagementController controller =
       Get.find<PostManagementController>();
 
@@ -22,48 +29,56 @@ class ListPostsExpried extends StatelessWidget {
   }
 
   @override
+  void initState() {
+    refresh();
+    super.initState();
+  }
+
+  Future refresh() async {
+    isLoading.value = true;
+    await controller.getPostsExpired();
+    isLoading.value = false;
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<RealEstatePostEntity>>(
-      future: controller.getPostsExpired(),
-      builder: (context, snapShot) {
-        if (!snapShot.hasData) {
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        } else {
-          List<RealEstatePostEntity> data = snapShot.data!;
-          if (data.isEmpty) {
-            return Center(
-              child: Text(
-                "Chưa có tin hết hạn",
-                style: AppTextStyles.bold20.copyWith(color: AppColors.green),
-              ),
-            );
-          } else {
-            return ListView.builder(
-              itemCount: controller.expiredPosts.length,
-              itemBuilder: (context, index) {
-                return ItemPost(
-                  statusCode: PostStatusManagement.exprired,
-                  status:
-                      "Tin đã hết hạn từ ${controller.expiredPosts[index].expiryDate?.toHMDMYString()}",
-                  post: controller.expiredPosts[index],
-                  funcs: const [
-                    "Xóa tin",
-                    "Gia hạn",
-                  ],
-                  iconFuncs: const [
-                    Icons.delete_outline,
-                    Icons.timer_outlined,
-                  ],
-                  onSelectedMenu: onSelectedMenu,
-                  onTap: (RealEstatePostEntity post) {},
-                );
-              },
-            );
-          }
-        }
-      },
+    return RefreshIndicator(
+      onRefresh: refresh,
+      child: Obx(
+        () => isLoading.value
+            ? const Center(
+                child: CircularProgressIndicator(),
+              )
+            : controller.expiredPosts.isEmpty
+                ? Center(
+                    child: Text(
+                      "Chưa có tin hết hạn",
+                      style:
+                          AppTextStyles.bold20.copyWith(color: AppColors.green),
+                    ),
+                  )
+                : ListView.builder(
+                    itemCount: controller.expiredPosts.length,
+                    itemBuilder: (context, index) {
+                      return ItemPost(
+                        statusCode: PostStatusManagement.exprired,
+                        status:
+                            "Tin đã hết hạn từ ${controller.expiredPosts[index].expiryDate?.toHMDMYString()}",
+                        post: controller.expiredPosts[index],
+                        funcs: const [
+                          "Xóa tin",
+                          "Gia hạn",
+                        ],
+                        iconFuncs: const [
+                          Icons.delete_outline,
+                          Icons.timer_outlined,
+                        ],
+                        onSelectedMenu: onSelectedMenu,
+                        onTap: (RealEstatePostEntity post) {},
+                      );
+                    },
+                  ),
+      ),
     );
   }
 }
