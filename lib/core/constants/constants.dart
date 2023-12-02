@@ -1,7 +1,8 @@
 const String baseUrl = "http://192.168.9.218:8000";
 const String apiDevUrl = "$baseUrl/api/v1";
 const String apiProductionUrl = "https://nha-gia-re-server.onrender.com/api/v1";
-const String apiUrl = apiDevUrl;
+const String apiUrl = apiProductionUrl;
+
 const String kGetMe = '/users/profile';
 const String kSignIn = '/auth/sign-in';
 const String kSignUp = '/auth/sign-up';

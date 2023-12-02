@@ -3,26 +3,15 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/enums/post_status_management.dart';
-import '../../../../../config/theme/app_color.dart';
-import '../../../../../config/theme/text_styles.dart';
 import '../post_management_controller.dart';
+import 'base_list_posts.dart';
 import 'item_post.dart';
 
-class ListPostsExpried extends StatefulWidget {
-  const ListPostsExpried({super.key});
+class ListPostsExpried extends StatelessWidget {
+  ListPostsExpried({super.key});
 
-  @override
-  State<ListPostsExpried> createState() => _ListPostsExpriedState();
-}
-
-class _ListPostsExpriedState extends State<ListPostsExpried> {
   final PostManagementController controller =
       Get.find<PostManagementController>();
-
-  RxBool isLoading = false.obs;
-  int page = 1;
-  int numOfPage = 1;
-  final scrollController = ScrollController();
 
   void onSelectedMenu(int i, RealEstatePostEntity post) {
     if (i == 0) {
@@ -32,75 +21,31 @@ class _ListPostsExpriedState extends State<ListPostsExpried> {
     }
   }
 
-  @override
-  void initState() {
-    refresh();
-    scrollController.addListener(() {
-      if (scrollController.position.maxScrollExtent ==
-          scrollController.offset) {}
-    });
-
-    super.initState();
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  Future fetchMore() async {
-    isLoading.value = true;
-    await controller.getPostsExpired();
-    isLoading.value = false;
-  }
-
-  Future refresh() async {
-    isLoading.value = true;
-    await controller.getPostsExpired();
-    isLoading.value = false;
+  ItemPost buildItem(RealEstatePostEntity post) {
+    return ItemPost(
+      statusCode: PostStatusManagement.exprired,
+      status: "Tin đã hết hạn từ ${post.expiryDate?.toHMDMYString()}",
+      post: post,
+      funcs: const [
+        "Xóa tin",
+        "Gia hạn",
+      ],
+      iconFuncs: const [
+        Icons.delete_outline,
+        Icons.timer_outlined,
+      ],
+      onSelectedMenu: onSelectedMenu,
+      onTap: (RealEstatePostEntity post) {},
+    );
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: refresh,
-      child: Obx(
-        () => isLoading.value
-            ? const Center(
-                child: CircularProgressIndicator(),
-              )
-            : controller.expiredPosts.isEmpty
-                ? Center(
-                    child: Text(
-                      "Chưa có tin hết hạn",
-                      style:
-                          AppTextStyles.bold20.copyWith(color: AppColors.green),
-                    ),
-                  )
-                : ListView.builder(
-                    controller: scrollController,
-                    itemCount: controller.expiredPosts.length,
-                    itemBuilder: (context, index) {
-                      return ItemPost(
-                        statusCode: PostStatusManagement.exprired,
-                        status:
-                            "Tin đã hết hạn từ ${controller.expiredPosts[index].expiryDate?.toHMDMYString()}",
-                        post: controller.expiredPosts[index],
-                        funcs: const [
-                          "Xóa tin",
-                          "Gia hạn",
-                        ],
-                        iconFuncs: const [
-                          Icons.delete_outline,
-                          Icons.timer_outlined,
-                        ],
-                        onSelectedMenu: onSelectedMenu,
-                        onTap: (RealEstatePostEntity post) {},
-                      );
-                    },
-                  ),
-      ),
+    return BaseListPosts(
+      titleNull: "Chưa có tin hết hạn",
+      getPosts: controller.getPostsExpired,
+      postsList: controller.expiredPosts,
+      buildItem: buildItem,
     );
   }
 }

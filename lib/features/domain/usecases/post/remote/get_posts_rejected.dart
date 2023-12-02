@@ -5,13 +5,13 @@ import '../../../../../core/resources/pair.dart';
 import '../../../entities/posts/real_estate_post.dart';
 
 class GetPostsRejectUseCase
-    implements UseCase<DataState<Pair<int, List<RealEstatePostEntity>>>, void> {
+    implements UseCase<DataState<Pair<int, List<RealEstatePostEntity>>>, int?> {
   final PostRepository _postRepository;
 
   GetPostsRejectUseCase(this._postRepository);
 
   @override
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> call({void params}) {
-    return _postRepository.getPostsRejected();
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> call({int? params}) {
+    return _postRepository.getPostsRejected(params);
   }
 }

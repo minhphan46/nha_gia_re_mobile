@@ -5,6 +5,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_e
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_hided.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_pending.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/resources/pair.dart';
 import '../../../../injection_container.dart';
@@ -40,59 +41,50 @@ class PostManagementController extends GetxController {
       {int? page = 1}) async {
     final dataState = await _getPostsApprovedUseCase(params: page);
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
-      //approvedPosts.value = dataState.data!.second;
       return dataState.data!;
     } else {
-      //approvedPosts.value = [];
       return Pair(1, []);
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsPending({int? page = 1}) async {
-    final dataState = await _getPostsPendingUseCase();
-    pendingPosts.clear();
+  Future<Pair<int, List<RealEstatePostEntity>>> getPostsPending(
+      {int? page = 1}) async {
+    final dataState = await _getPostsPendingUseCase(params: page);
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       pendingPosts.value = dataState.data!.second;
-      return dataState.data!.second;
+      return dataState.data!;
     } else {
-      pendingPosts.value = [];
-      return [];
+      return Pair(1, []);
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsExpired({int? page = 1}) async {
-    final dataState = await _getPostsExpiredUseCase();
-    expiredPosts.clear();
+  Future<Pair<int, List<RealEstatePostEntity>>> getPostsExpired(
+      {int? page = 1}) async {
+    final dataState = await _getPostsExpiredUseCase(params: page);
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
-      expiredPosts.value = dataState.data!.second;
-      return dataState.data!.second;
+      return dataState.data!;
     } else {
-      expiredPosts.value = [];
-      return [];
+      return Pair(1, []);
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsRejected({int? page = 1}) async {
-    final dataState = await _getPostsRejectUseCase();
-    rejectedPosts.clear();
+  Future<Pair<int, List<RealEstatePostEntity>>> getPostsRejected(
+      {int? page = 1}) async {
+    final dataState = await _getPostsRejectUseCase(params: page);
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
-      rejectedPosts.value = dataState.data!.second;
-      return dataState.data!.second;
+      return dataState.data!;
     } else {
-      rejectedPosts.value = [];
-      return [];
+      return Pair(1, []);
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsHided({int? page = 1}) async {
-    final dataState = await _getPostsHidedUseCase();
-    hidedPosts.clear();
+  Future<Pair<int, List<RealEstatePostEntity>>> getPostsHided(
+      {int? page = 1}) async {
+    final dataState = await _getPostsHidedUseCase(params: page);
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
-      hidedPosts.value = dataState.data!.second;
-      return dataState.data!.second;
+      return dataState.data!;
     } else {
-      hidedPosts.value = [];
-      return [];
+      return Pair(1, []);
     }
   }
 
@@ -105,7 +97,7 @@ class PostManagementController extends GetxController {
   }
 
   void navigateToDetailSceen(RealEstatePostEntity post) {
-    //Get.toNamed(AppRoutes.post_detail, arguments: post);
+    Get.toNamed(AppRoutes.postDetail, arguments: post);
   }
 
   void showPost(RealEstatePostEntity post) async {

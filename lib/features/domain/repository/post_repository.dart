@@ -7,14 +7,14 @@ import '../entities/posts/real_estate_post.dart';
 abstract class PostRepository {
   // API remote
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPosts(
-      String? idUser);
+      String? idUser, int? page);
   Future<DataState<RealEstatePostEntity>> getSinglePost(String id);
   Future<DataState<void>> createPost(RealEstatePostEntity post);
   Future<DataState<void>> updatePost(RealEstatePostEntity post);
   Future<DataState<void>> deletePost(String id);
 
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsSearch(
-      PostFilter filter);
+      PostFilter filter, int? page);
 
   Future<DataState<List<String>>> uploadImages(List<File> images);
 
@@ -23,8 +23,12 @@ abstract class PostRepository {
   // management
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsApproved(
       int? page);
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsHided();
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsPending();
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsRejected();
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsExpired();
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsHided(
+      int? page);
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsPending(
+      int? page);
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsRejected(
+      int? page);
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsExpired(
+      int? page);
 }

@@ -15,12 +15,13 @@ import '../local/authentication_local_data_source.dart';
 
 abstract class PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
-      String? userId);
+      String? userId, int? page);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsSearch(
-      PostFilter query);
+      PostFilter query, int? page);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
       String status, int? page);
-  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired();
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired(
+      int? page);
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
   Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
@@ -33,13 +34,16 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
-      String? userId) async {
+      String? userId, int? page) async {
     var url = '$apiUrl$kGetPostEndpoint';
+    int pageQuery = page ?? 1;
     if (userId != null) {
       url += QueryBuilder()
           .addQuery('post_user_id', Operation.equals, '\'$userId\'')
+          .addPage(pageQuery)
           .build();
     }
+    print(success("url: $url"));
     return await DatabaseHelper().getPosts(url, client);
   }
 
@@ -54,9 +58,10 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>>
-      getPostsExpired() async {
-    const url = '$apiUrl$kGetPostEndpoint';
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired(
+      int? page) async {
+    int pageQuery = page ?? 1;
+    String url = '$apiUrl$kGetPostEndpoint?page=$pageQuery';
 
     try {
       final response = await client.get(url);
@@ -197,9 +202,12 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsSearch(
-      PostFilter query) async {
+      PostFilter query, int? page) async {
     String url = '$apiUrl$kGetPostEndpoint';
+    int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
+
+    queryBuilder.addPage(pageQuery);
 
     if (query.textSearch != null && query.textSearch!.isNotEmpty) {
       queryBuilder.addSearch(query.textSearch!);

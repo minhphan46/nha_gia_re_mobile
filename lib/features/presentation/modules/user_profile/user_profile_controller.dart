@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/resources/pair.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/posts/real_estate_post.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
@@ -17,8 +18,10 @@ class UserProfileController extends GetxController {
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
-  Future<List<RealEstatePostEntity>> getAllPosts() async {
-    final dataState = await _getPostsUseCase(params: user!.id);
+  Future<List<RealEstatePostEntity>> getAllPosts({int? page = 1}) async {
+    final dataState = await _getPostsUseCase(
+      params: Pair(user!.id, page),
+    );
 
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       return dataState.data!.second;

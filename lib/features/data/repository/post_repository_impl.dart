@@ -15,9 +15,9 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPosts(
-      String? userId) async {
+      String? userId, int? page) async {
     try {
-      final httpResponse = await _dataSrc.getAllPosts(userId);
+      final httpResponse = await _dataSrc.getAllPosts(userId, page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -97,10 +97,10 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
-      getPostsExpired() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsExpired(
+      int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsExpired();
+      final httpResponse = await _dataSrc.getPostsExpired(page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -118,10 +118,10 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
-      getPostsHided() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsHided(
+      int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("hided", 0);
+      final httpResponse = await _dataSrc.getPostsStatus("hided", page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -139,10 +139,10 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
-      getPostsPending() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsPending(
+      int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("pending", 0);
+      final httpResponse = await _dataSrc.getPostsStatus("pending", page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -160,10 +160,10 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
-      getPostsRejected() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsRejected(
+      int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("rejected", 0);
+      final httpResponse = await _dataSrc.getPostsStatus("rejected", page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -202,9 +202,9 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsSearch(
-      PostFilter? query) async {
+      PostFilter? query, int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsSearch(query!);
+      final httpResponse = await _dataSrc.getPostsSearch(query!, page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

@@ -6,14 +6,15 @@ import '../../../entities/posts/real_estate_post.dart';
 
 class GetPostsUseCase
     implements
-        UseCase<DataState<Pair<int, List<RealEstatePostEntity>>>, String?> {
+        UseCase<DataState<Pair<int, List<RealEstatePostEntity>>>,
+            Pair<String?, int?>?> {
   final PostRepository _postRepository;
 
   GetPostsUseCase(this._postRepository);
 
   @override
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> call(
-      {String? params}) {
-    return _postRepository.getPosts(params);
+      {Pair<String?, int?>? params}) {
+    return _postRepository.getPosts(params!.first, params.second);
   }
 }

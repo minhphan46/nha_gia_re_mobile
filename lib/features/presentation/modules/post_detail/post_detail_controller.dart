@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/motel_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/office_card.dart';
@@ -42,8 +43,8 @@ class PostDetailController extends GetxController {
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
-  Future<List<RealEstatePostEntity>> getRelatePosts() async {
-    final dataState = await _getPostsUseCase();
+  Future<List<RealEstatePostEntity>> getRelatePosts({int? page}) async {
+    final dataState = await _getPostsUseCase(params: Pair(null, page));
 
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       return dataState.data!.second;

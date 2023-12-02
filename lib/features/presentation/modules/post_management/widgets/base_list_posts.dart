@@ -4,7 +4,6 @@ import 'package:nhagiare_mobile/features/presentation/modules/post_management/wi
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../../core/resources/pair.dart';
-import '../../../../../core/utils/ansi_color.dart';
 import '../../../../domain/entities/posts/real_estate_post.dart';
 
 class BaseListPosts extends StatefulWidget {
@@ -12,10 +11,12 @@ class BaseListPosts extends StatefulWidget {
       getPosts;
   final RxList<RealEstatePostEntity> postsList;
   final ItemPost Function(RealEstatePostEntity post) buildItem;
+  final String titleNull;
   const BaseListPosts(
       {required this.getPosts,
       required this.postsList,
       required this.buildItem,
+      this.titleNull = "Chưa có tin đã đăng",
       super.key});
 
   @override
@@ -58,8 +59,6 @@ class _BaseListPostsState extends State<BaseListPosts> {
     } else {
       hasMore.value = false;
     }
-
-    print(success(hasMore.value.toString()));
   }
 
   Future refresh() async {
@@ -69,6 +68,7 @@ class _BaseListPostsState extends State<BaseListPosts> {
     await widget.getPosts().then((value) {
       numOfPage = value.first;
       widget.postsList.value = value.second;
+      numOfPage == 1 ? hasMore.value = false : hasMore.value = true;
     });
     isLoading.value = false;
   }
@@ -85,7 +85,7 @@ class _BaseListPostsState extends State<BaseListPosts> {
             : widget.postsList.isEmpty
                 ? Center(
                     child: Text(
-                      "Chưa có tin đã đăng",
+                      widget.titleNull,
                       style:
                           AppTextStyles.bold20.copyWith(color: AppColors.green),
                     ),

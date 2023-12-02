@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
-import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_me.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_out.dart';

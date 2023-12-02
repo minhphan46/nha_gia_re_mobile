@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
+import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/core/utils/check_time_date.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
@@ -64,8 +65,8 @@ class HomeController extends GetxController {
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
-  Future<List<RealEstatePostEntity>> getAllPosts() async {
-    final dataState = await _getPostsUseCase();
+  Future<List<RealEstatePostEntity>> getAllPosts({int? page}) async {
+    final dataState = await _getPostsUseCase(params: Pair(null, page));
 
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       return dataState.data!.second;

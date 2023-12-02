@@ -7,6 +7,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_se
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/resources/pair.dart';
 import '../../../../core/utils/filter_values.dart';
 import '../../../../core/utils/list_check_service.dart';
 import '../../../../core/utils/radio_service.dart';
@@ -183,10 +184,10 @@ class MySearchController extends GetxController {
     toggleLoadingGetPosts(false);
   }
 
-  Future<void> getPosts(PostFilter filter) async {
+  Future<void> getPosts(PostFilter filter, {int? page = 1}) async {
     final GetPostSearchsUseCase getPostSearchsUseCase =
         sl<GetPostSearchsUseCase>();
-    final dataState = await getPostSearchsUseCase(params: filter);
+    final dataState = await getPostSearchsUseCase(params: Pair(filter, page));
     searchPosts.value = [];
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       searchPosts.value = [...dataState.data!.second];
