@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/local/authentication_local_data_source.dart';
+import 'package:nhagiare_mobile/features/data/models/user/user.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/constants/constants.dart';
@@ -19,6 +20,7 @@ abstract class AuthenRemoteDataSrc {
       String email, String password, String code);
   Future<HttpResponse<void>> resendOTP(String email);
   Future<HttpResponse<String>> refreshToken(String refreshToken);
+  Future<HttpResponse<UserModel>> getMe();
 }
 
 class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
@@ -204,5 +206,35 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
     } catch (error) {
       throw ApiException(message: error.toString(), statusCode: 505);
     }
+  }
+
+  @override
+  Future<HttpResponse<UserModel>> getMe() {
+    const url = '$apiUrl$kGetMe';
+    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+    String? accessToken = localDataSrc.getAccessToken();
+    if (accessToken == null) {
+      throw const ApiException(
+          message: 'Access token is null', statusCode: 505);
+    }
+    return client
+        .get(url,
+            options:
+                Options(headers: {'Authorization': 'Bearer ${accessToken}'}))
+        .then((response) {
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+      final DataMap data = DataMap.from(response.data["result"]);
+
+      UserModel user = UserModel.fromJson(data);
+
+      return HttpResponse(user, response);
+    });
   }
 }

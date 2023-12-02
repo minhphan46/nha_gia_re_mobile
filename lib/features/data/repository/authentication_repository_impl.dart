@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
+import 'package:nhagiare_mobile/features/data/models/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/repository/authentication_repository.dart';
 import '../data_sources/local/authentication_local_data_source.dart';
 import '../data_sources/remote/authentication_remote_data_source.dart';
@@ -206,6 +207,25 @@ class AuthenticationRepositoryImpl implements AuthenticationRepository {
         type: DioExceptionType.badCertificate,
         requestOptions: RequestOptions(path: ""),
       ));
+    }
+  }
+
+  @override
+  Future<DataState<UserModel>> getMe() async {
+    try {
+      final httpResponse = await _dataRemoteSrc.getMe();
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
     }
   }
 }
