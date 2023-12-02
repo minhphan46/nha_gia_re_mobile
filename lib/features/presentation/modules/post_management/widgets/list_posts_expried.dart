@@ -19,9 +19,9 @@ class _ListPostsExpriedState extends State<ListPostsExpried> {
   final PostManagementController controller =
       Get.find<PostManagementController>();
 
+  RxBool isLoading = false.obs;
   int page = 1;
   int numOfPage = 1;
-  RxBool isLoading = false.obs;
   final scrollController = ScrollController();
 
   void onSelectedMenu(int i, RealEstatePostEntity post) {

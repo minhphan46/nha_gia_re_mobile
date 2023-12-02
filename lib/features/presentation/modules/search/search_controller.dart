@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:nhagiare_mobile/core/extensions/string_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/filter_request.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';

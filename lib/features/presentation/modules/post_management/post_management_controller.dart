@@ -6,6 +6,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_h
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_pending.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
 import '../../../../core/resources/data_state.dart';
+import '../../../../core/resources/pair.dart';
 import '../../../../injection_container.dart';
 
 class PostManagementController extends GetxController {
@@ -35,19 +36,19 @@ class PostManagementController extends GetxController {
       sl<GetPostsRejectUseCase>();
   final GetPostsHidedUseCase _getPostsHidedUseCase = sl<GetPostsHidedUseCase>();
 
-  Future<List<RealEstatePostEntity>> getPostsApproved() async {
-    final dataState = await _getPostsApprovedUseCase();
-    approvedPosts.clear();
+  Future<Pair<int, List<RealEstatePostEntity>>> getPostsApproved(
+      {int? page = 1}) async {
+    final dataState = await _getPostsApprovedUseCase(params: page);
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
-      approvedPosts.value = dataState.data!.second;
-      return dataState.data!.second;
+      //approvedPosts.value = dataState.data!.second;
+      return dataState.data!;
     } else {
-      approvedPosts.value = [];
-      return [];
+      //approvedPosts.value = [];
+      return Pair(1, []);
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsPending() async {
+  Future<List<RealEstatePostEntity>> getPostsPending({int? page = 1}) async {
     final dataState = await _getPostsPendingUseCase();
     pendingPosts.clear();
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
@@ -59,7 +60,7 @@ class PostManagementController extends GetxController {
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsExpired() async {
+  Future<List<RealEstatePostEntity>> getPostsExpired({int? page = 1}) async {
     final dataState = await _getPostsExpiredUseCase();
     expiredPosts.clear();
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
@@ -71,7 +72,7 @@ class PostManagementController extends GetxController {
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsRejected() async {
+  Future<List<RealEstatePostEntity>> getPostsRejected({int? page = 1}) async {
     final dataState = await _getPostsRejectUseCase();
     rejectedPosts.clear();
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
@@ -83,7 +84,7 @@ class PostManagementController extends GetxController {
     }
   }
 
-  Future<List<RealEstatePostEntity>> getPostsHided() async {
+  Future<List<RealEstatePostEntity>> getPostsHided({int? page = 1}) async {
     final dataState = await _getPostsHidedUseCase();
     hidedPosts.clear();
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {

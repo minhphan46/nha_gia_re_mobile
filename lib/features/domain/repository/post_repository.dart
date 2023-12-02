@@ -21,7 +21,8 @@ abstract class PostRepository {
   Future<DataState<List<String>>> getSuggestKeywords(String keyword);
 
   // management
-  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsApproved();
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsApproved(
+      int? page);
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsHided();
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsPending();
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsRejected();

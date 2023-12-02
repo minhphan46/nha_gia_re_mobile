@@ -19,7 +19,7 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsSearch(
       PostFilter query);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
-      String status);
+      String status, int? page);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired();
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
@@ -45,9 +45,10 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
-      String status) async {
+      String status, int? page) async {
+    int pageQuery = page ?? 1;
     String url =
-        '$apiUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addOrderBy('posted_date', OrderBy.desc).build()}';
+        '$apiUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addPage(pageQuery).addOrderBy('posted_date', OrderBy.desc).build()}';
 
     return await DatabaseHelper().getPosts(url, client);
   }
