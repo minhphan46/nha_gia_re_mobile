@@ -5,4 +5,5 @@ abstract class TransactionRepository {
   // Future<DataState<List<TransactionEntity>>> getTransactions();
 
   Future<DataState<TransactionEntity>> getTransactionByAppTransId(String id);
+  Future<DataState<List<TransactionEntity>>> getAllTransactions();
 }

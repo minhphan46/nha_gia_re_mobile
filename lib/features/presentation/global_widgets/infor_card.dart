@@ -51,6 +51,10 @@ class InforCard extends StatelessWidget {
                   fit: BoxFit.fill,
                   height: 110,
                   width: widthBox,
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  errorWidget: (context, url, error) => const Icon(Icons.error),
                 ),
               ),
               Padding(

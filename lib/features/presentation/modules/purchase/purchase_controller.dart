@@ -4,6 +4,7 @@ import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/order_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/transaction.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_all_transactions.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
@@ -26,6 +27,8 @@ class PurchaseController extends GetxController {
   final getTransactionUseCase = sl<GetTransactionUseCase>();
   final GetOrderMembershipPackageUseCase getOrderMembershipPackageUseCase =
       sl<GetOrderMembershipPackageUseCase>();
+  final GetAllTransactionUseCase getAllTransactionUseCase =
+      sl<GetAllTransactionUseCase>();
 
   Future<List<MembershipPackageEntity>> getMembershipPackages() async {
     final result = await getMembershipPackageUseCase();
@@ -78,6 +81,15 @@ class PurchaseController extends GetxController {
     } else {
       return CreateOrderResult(
           isCreateSuccess: false, message: 'Tạo đơn hàng thất bại');
+    }
+  }
+
+  Future<List<TransactionEntity>> getAllTransactions() async {
+    final result = await getAllTransactionUseCase(params: 0);
+    if (result is DataSuccess) {
+      return result.data!;
+    } else {
+      return [];
     }
   }
 }
