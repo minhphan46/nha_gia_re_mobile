@@ -5,6 +5,7 @@ import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
 import 'package:nhagiare_mobile/features/data/models/post/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
+import '../../../core/resources/pair.dart';
 import '../../domain/entities/posts/filter_request.dart';
 import '../../domain/entities/posts/real_estate_post.dart';
 
@@ -13,7 +14,8 @@ class PostRepositoryImpl implements PostRepository {
   PostRepositoryImpl(this._dataSrc);
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPosts(String? userId) async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPosts(
+      String? userId) async {
     try {
       final httpResponse = await _dataSrc.getAllPosts(userId);
 
@@ -74,7 +76,8 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPostsApproved() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
+      getPostsApproved() async {
     try {
       final httpResponse = await _dataSrc.getPostsStatus("approved");
 
@@ -94,7 +97,8 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPostsExpired() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
+      getPostsExpired() async {
     try {
       final httpResponse = await _dataSrc.getPostsExpired();
 
@@ -114,7 +118,8 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPostsHided() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
+      getPostsHided() async {
     try {
       final httpResponse = await _dataSrc.getPostsStatus("hided");
 
@@ -134,7 +139,8 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPostsPending() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
+      getPostsPending() async {
     try {
       final httpResponse = await _dataSrc.getPostsStatus("pending");
 
@@ -154,7 +160,8 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPostsRejected() async {
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
+      getPostsRejected() async {
     try {
       final httpResponse = await _dataSrc.getPostsStatus("rejected");
 
@@ -194,7 +201,7 @@ class PostRepositoryImpl implements PostRepository {
   }
 
   @override
-  Future<DataState<List<RealEstatePostEntity>>> getPostsSearch(
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsSearch(
       PostFilter? query) async {
     try {
       final httpResponse = await _dataSrc.getPostsSearch(query!);

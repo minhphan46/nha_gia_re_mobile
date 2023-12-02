@@ -4,6 +4,7 @@ import 'package:nhagiare_mobile/core/utils/ansi_color.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
+import '../../../../core/resources/pair.dart';
 import '../../../../core/utils/query_builder.dart';
 import '../../../../core/utils/typedef.dart';
 import '../../../../injection_container.dart';
@@ -13,11 +14,13 @@ import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
 
 abstract class PostRemoteDataSrc {
-  Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts(String? userId);
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsSearch(
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
+      String? userId);
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsSearch(
       PostFilter query);
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsStatus(String status);
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired();
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
+      String status);
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired();
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
   Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
@@ -29,7 +32,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   PostRemoteDataSrcImpl(this.client);
 
   @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getAllPosts(
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
       String? userId) async {
     var url = '$apiUrl$kGetPostEndpoint';
     if (userId != null) {
@@ -41,7 +44,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsStatus(
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
       String status) async {
     String url =
         '$apiUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addOrderBy('posted_date', OrderBy.desc).build()}';
@@ -50,7 +53,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired() async {
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>>
+      getPostsExpired() async {
     const url = '$apiUrl$kGetPostEndpoint';
 
     try {
@@ -64,14 +68,18 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
         );
       }
 
+      final int numOfPages = response.data["num_of_pages"];
+
       final List<DataMap> taskDataList =
           List<DataMap>.from(response.data["result"]);
 
-      List<RealEstatePostModel> value = taskDataList
+      List<RealEstatePostModel> posts = taskDataList
           .map((postJson) => RealEstatePostModel.fromJson(postJson))
           //.where((post) => post.isActive!)
           //.where((post) => post.expiryDate!.isBefore(DateTime.now()))
           .toList();
+
+      final value = Pair(numOfPages, posts);
 
       return HttpResponse(value, response);
     } on ApiException {
@@ -187,7 +195,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
-  Future<HttpResponse<List<RealEstatePostModel>>> getPostsSearch(
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsSearch(
       PostFilter query) async {
     String url = '$apiUrl$kGetPostEndpoint';
     QueryBuilder queryBuilder = QueryBuilder();

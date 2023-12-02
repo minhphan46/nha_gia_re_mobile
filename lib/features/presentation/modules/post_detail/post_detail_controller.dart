@@ -45,8 +45,8 @@ class PostDetailController extends GetxController {
   Future<List<RealEstatePostEntity>> getRelatePosts() async {
     final dataState = await _getPostsUseCase();
 
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      return dataState.data!;
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      return dataState.data!.second;
     } else if (dataState is DataFailed) {
       return [];
     } else {

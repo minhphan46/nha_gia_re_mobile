@@ -92,8 +92,8 @@ class MySearchController extends GetxController {
     final GetPostsUseCase getPostsUseCase = sl<GetPostsUseCase>();
     final dataState = await getPostsUseCase();
 
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      return dataState.data!;
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      return dataState.data!.second;
     } else if (dataState is DataFailed) {
       return [];
     } else {
@@ -189,8 +189,8 @@ class MySearchController extends GetxController {
         sl<GetPostSearchsUseCase>();
     final dataState = await getPostSearchsUseCase(params: filter);
     searchPosts.value = [];
-    if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      searchPosts.value = [...dataState.data!];
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      searchPosts.value = [...dataState.data!.second];
     } else {
       searchPosts.value = [];
     }
