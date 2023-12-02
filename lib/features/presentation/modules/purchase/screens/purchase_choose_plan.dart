@@ -58,48 +58,93 @@ class PurchaseChoosePlanScreen extends StatelessWidget {
               )),
         ),
       ),
-      body: ListView.builder(
-        itemCount: months.length,
-        itemBuilder: (context, index) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-            child: Obx(() {
-              return ListTile(
-                tileColor: selectedRadio.value == index
-                    ? AppColors.green.withOpacity(0.15)
-                    : null,
-                onTap: () {
-                  selectedRadio.value = index;
+      body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            children: [
+              ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: months.length,
+                itemBuilder: (context, index) {
+                  return Obx(() {
+                    return Padding(
+                      padding: const EdgeInsets.symmetric(
+                        vertical: 8,
+                      ),
+                      child: ListTile(
+                        tileColor: selectedRadio.value == index
+                            ? AppColors.green.withOpacity(0.15)
+                            : null,
+                        onTap: () {
+                          selectedRadio.value = index;
+                        },
+                        shape: RoundedRectangleBorder(
+                          side: const BorderSide(
+                            color: AppColors.green,
+                            width: 1.5,
+                          ),
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                        leading: Radio(
+                          fillColor: MaterialStateProperty.resolveWith(
+                            (states) => AppColors.green,
+                          ),
+                          value: index,
+                          groupValue: selectedRadio.value,
+                          onChanged: (val) {
+                            selectedRadio.value = val as int;
+                          },
+                        ),
+                        title: Text(
+                          "Gói ${months[index]} tháng",
+                          style: AppTextStyles.bold16.colorEx(AppColors.green),
+                        ),
+                        subtitle: Text(
+                          "${(package.pricePerMonth * months[index]).toInt().formatNumberWithCommas}đ",
+                          style: AppTextStyles.regular14,
+                        ),
+                      ),
+                    );
+                  });
                 },
-                shape: RoundedRectangleBorder(
-                  side: const BorderSide(
-                    color: AppColors.green,
-                    width: 1.5,
-                  ),
-                  borderRadius: BorderRadius.circular(5),
+              ),
+              Padding(
+                padding: const EdgeInsets.only(top: 8),
+                child: Row(
+                  children: [
+                    Expanded(
+                      child: TextField(
+                        decoration: InputDecoration(
+                          labelText: "Mã giảm giá",
+                          labelStyle: AppTextStyles.regular14,
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                        ),
+                      ),
+                    ),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        // Code xử lý khi nút "Áp dụng" được nhấn
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.green,
+                      ),
+                      child: const Text(
+                        "Áp dụng",
+                        style: TextStyle(color: AppColors.white),
+                      ),
+                    ),
+                  ],
                 ),
-                leading: Radio(
-                  fillColor: MaterialStateProperty.resolveWith(
-                    (states) => AppColors.green,
-                  ),
-                  value: index,
-                  groupValue: selectedRadio.value,
-                  onChanged: (val) {
-                    selectedRadio.value = val as int;
-                  },
-                ),
-                title: Text(
-                  "Gói ${months[index]} tháng",
-                  style: AppTextStyles.bold16.colorEx(AppColors.green),
-                ),
-                subtitle: Text(
-                  "${(package.pricePerMonth * months[index]).toInt().formatNumberWithCommas}đ",
-                  style: AppTextStyles.regular14,
-                ),
-              );
-            }),
-          );
-        },
+              ),
+            ],
+          ),
+        ),
       ),
     );
   }

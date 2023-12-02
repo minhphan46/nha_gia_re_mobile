@@ -1,13 +1,15 @@
 import 'package:equatable/equatable.dart';
+import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
 
 class Subscription extends Equatable {
   final String id;
   final String userId;
   final String packageId;
-  final String transactionId;
+  final String? transactionId;
   final DateTime startingDate;
   final DateTime expirationDate;
   final bool isActive;
+  final MembershipPackageEntity? package;
 
   const Subscription({
     required this.id,
@@ -17,6 +19,7 @@ class Subscription extends Equatable {
     required this.startingDate,
     required this.expirationDate,
     required this.isActive,
+    this.package,
   });
 
   @override

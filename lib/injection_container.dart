@@ -1,33 +1,35 @@
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nhagiare_mobile/core/utils/filter_values.dart';
-import 'package:nhagiare_mobile/features/data/data_sources/remote/blog_data_source.dart';
-import 'package:nhagiare_mobile/features/data/data_sources/remote/conversation_remote_data_source.dart';
-import 'package:nhagiare_mobile/features/data/data_sources/remote/membership_package_data_source.dart';
-import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
-import 'package:nhagiare_mobile/features/data/data_sources/remote/transaction_data_source.dart';
-import 'package:nhagiare_mobile/features/data/repository/blog_repository_impl.dart';
-import 'package:nhagiare_mobile/features/data/repository/membership_package_respository_impl.dart';
-import 'package:nhagiare_mobile/features/data/repository/transaction_repository_impl.dart';
-import 'package:nhagiare_mobile/features/domain/repository/blog_repository.dart';
-import 'package:nhagiare_mobile/features/domain/repository/membership_package_repository.dart';
-import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
-import 'package:nhagiare_mobile/features/domain/repository/transaction_repository.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_access_token.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_user_id.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_up.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/blog/remote/get_all_blogs.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/address/get_address.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_search.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/upload_images.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_membership_package.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
+import '../core/utils/filter_values.dart';
+import '../features/data/data_sources/remote/blog_data_source.dart';
+import '../features/data/data_sources/remote/conversation_remote_data_source.dart';
+import '../features/data/data_sources/remote/membership_package_data_source.dart';
+import '../features/data/data_sources/remote/post_remote_data_sources.dart';
+import 'features/data/data_sources/remote/transaction_remote_data_source.dart';
+import '../features/data/repository/blog_repository_impl.dart';
+import '../features/data/repository/membership_package_respository_impl.dart';
+import '../features/data/repository/transaction_repository_impl.dart';
+import '../features/domain/repository/blog_repository.dart';
+import '../features/domain/repository/membership_package_repository.dart';
+import '../features/domain/repository/post_repository.dart';
+import '../features/domain/repository/transaction_repository.dart';
+import '../features/domain/usecases/authentication/get_access_token.dart';
+import '../features/domain/usecases/authentication/get_user_id.dart';
+import '../features/domain/usecases/authentication/sign_up.dart';
+import '../features/domain/usecases/blog/remote/get_all_blogs.dart';
+import '../features/domain/usecases/address/get_address.dart';
+import '../features/domain/usecases/address/get_province_names.dart';
+import '../features/domain/usecases/post/remote/create_post.dart';
+import '../features/domain/usecases/post/remote/get_post_search.dart';
+import '../features/domain/usecases/post/remote/get_posts.dart';
+import '../features/domain/usecases/post/remote/get_posts_approved.dart';
+import '../features/domain/usecases/post/remote/get_posts_rejected.dart';
+import '../features/domain/usecases/post/remote/upload_images.dart';
+import '../features/domain/usecases/purchase/get_membership_package.dart';
+import '../features/domain/usecases/purchase/get_order.dart';
+import '../features/domain/usecases/purchase/get_transaction.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'features/data/data_sources/local/authentication_local_data_source.dart';
 import 'features/data/data_sources/remote/authentication_remote_data_source.dart';
@@ -44,6 +46,7 @@ import 'features/domain/usecases/authentication/sign_out.dart';
 import 'features/domain/usecases/post/remote/get_posts_expired.dart';
 import 'features/domain/usecases/post/remote/get_posts_hided.dart';
 import 'features/domain/usecases/post/remote/get_posts_pending.dart';
+import 'features/domain/usecases/purchase/get_all_transactions.dart';
 
 final sl = GetIt.instance;
 
@@ -177,6 +180,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<TransactionRemoteDataSrc>(
     TransactionRemoteDataSrcImpl(
       sl<Dio>(),
+      sl<AuthenLocalDataSrc>().getAccessToken() ?? '',
     ),
   );
 
@@ -193,11 +197,19 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  sl.registerSingleton(GetAllTransactionUseCase(
+    sl<TransactionRepository>(),
+  ));
+
   sl.registerSingleton<GetOrderMembershipPackageUseCase>(
     GetOrderMembershipPackageUseCase(
       sl<MembershipPackageRepository>(),
     ),
   );
+
+  sl.registerSingleton(GetCurrentSubscriptionUseCase(
+    sl<TransactionRepository>(),
+  ));
 
   // Blog =====================================================
   // blog repository

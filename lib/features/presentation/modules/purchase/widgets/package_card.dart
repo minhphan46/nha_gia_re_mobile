@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
@@ -7,10 +8,15 @@ import '../../../../../config/theme/app_color.dart';
 
 class MembershipPackageCard extends StatelessWidget {
   final MembershipPackageEntity package;
+  final bool isCurrent;
   final Function(MembershipPackageEntity package)? onTapBuy;
 
-  const MembershipPackageCard(
-      {required this.package, this.onTapBuy, super.key});
+  const MembershipPackageCard({
+    required this.package,
+    this.onTapBuy,
+    this.isCurrent = false,
+    super.key,
+  });
 
   Widget textWithCheckIcon(String text, bool isCheck) {
     return Padding(
@@ -22,10 +28,11 @@ class MembershipPackageCard extends StatelessWidget {
             color: isCheck ? AppColors.green : AppColors.red,
           ),
           Expanded(
-              child: Text(
-            text,
-            style: AppTextStyles.regular14,
-          )),
+            child: Text(
+              text,
+              style: AppTextStyles.regular14,
+            ),
+          ),
         ],
       ),
     );
@@ -37,11 +44,15 @@ class MembershipPackageCard extends StatelessWidget {
       decoration: BoxDecoration(
           color: AppColors.white,
           borderRadius: BorderRadius.circular(20),
-          border: Border.all(width: 2.0, color: AppColors.green)),
+          border: Border.all(
+            width: 2.0,
+            color: AppColors.green,
+          )),
       child: Padding(
         padding: const EdgeInsets.all(30.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisSize: MainAxisSize.min,
           children: [
             Text(
               package.name,
@@ -77,20 +88,24 @@ class MembershipPackageCard extends StatelessWidget {
                 "Ưu tiên hiển thị tin", package.displayPriorityPoint > 0),
             textWithCheckIcon(
                 "Ưu tiên duyệt tin", package.postApprovalPriorityPoint > 0),
-            FractionallySizedBox(
-              widthFactor: 1,
-              child: ElevatedButton(
-                onPressed: onTapBuy != null ? () => onTapBuy!(package) : null,
-                style: ElevatedButton.styleFrom(
-                    backgroundColor: AppColors.green,
-                    shape: const RoundedRectangleBorder(
-                        borderRadius: BorderRadius.all(Radius.circular(20)))),
-                child: Text(
-                  "Mua ngay",
-                  style: AppTextStyles.bold16.colorEx(AppColors.white),
-                ),
-              ),
-            )
+            isCurrent
+                ? const SizedBox()
+                : FractionallySizedBox(
+                    widthFactor: 1,
+                    child: ElevatedButton(
+                      onPressed:
+                          onTapBuy != null ? () => onTapBuy!(package) : null,
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: AppColors.green,
+                          shape: const RoundedRectangleBorder(
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(20)))),
+                      child: Text(
+                        "Mua ngay",
+                        style: AppTextStyles.bold16.colorEx(AppColors.white),
+                      ),
+                    ),
+                  )
           ],
         ),
       ),
