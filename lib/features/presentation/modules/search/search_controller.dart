@@ -150,7 +150,7 @@ class MySearchController extends GetxController {
   }
 
   /// update suggestions
-  void updateSuggestions(String query) async {
+  Future updateSuggestions(String query) async {
     suggestions.value = await getSuggestions(query);
   }
 
