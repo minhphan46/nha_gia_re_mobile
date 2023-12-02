@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
 import '../core/utils/filter_values.dart';
 import '../features/data/data_sources/remote/blog_data_source.dart';
@@ -154,6 +155,9 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  sl.registerSingleton(GetSuggestKeywordsUseCase(
+    sl<PostRepository>(),
+  ));
   //MembershipPackage=====================================================
   // datasource
   sl.registerSingleton<MembershipPackageRemoteDataSrc>(

@@ -5,6 +5,7 @@ import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.
 import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_province_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_search.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/utils/filter_values.dart';
@@ -28,6 +29,8 @@ class MySearchController extends GetxController {
 // type of navigate when navigate from home
   TypeNavigate typeNavigate = TypeNavigate.search;
   String? provinceHome;
+  final GetSuggestKeywordsUseCase getSuggestKeywordsUseCase =
+      sl<GetSuggestKeywordsUseCase>();
 
   void setTypeResult(TypeNavigate type) {
     typeNavigate = type;
@@ -134,29 +137,21 @@ class MySearchController extends GetxController {
   }
 
   /// get list Suggestions
-  List<String> getSuggestions(String query) {
-    // xu ly in hoa, in thuong, co dau, khong dau
+  Future<List<String>> getSuggestions(String query) async {
+    if (query.trim().isEmpty) return history;
     List<String> results = [];
     if (query.isEmpty) {
       results = [...history];
     } else {
-      // sửa lấy lại list result ở đây
-      for (String value in searchStrings) {
-        if (value
-            .noAccentVietnamese()
-            .toLowerCase()
-            .startsWith(query.noAccentVietnamese().toLowerCase())) {
-          results.add(value);
-        }
-      }
-      //====================================
+      results = await getSuggestKeywordsUseCase(params: query);
     }
+    print(results);
     return results;
   }
 
   /// update suggestions
-  void updateSuggestions(String query) async {
-    suggestions.value = getSuggestions(query);
+  Future updateSuggestions(String query) async {
+    suggestions.value = await getSuggestions(query);
   }
 
   /// navigator to filter screen

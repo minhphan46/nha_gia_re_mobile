@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:avatar_glow/avatar_glow.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -88,10 +90,15 @@ class MySearchDelegate extends SearchDelegate<String> {
     super.showResults(context);
   }
 
+  Timer? _debounce;
   // Suggestions list while typing (this.query).
   @override
   Widget buildSuggestions(BuildContext context) {
-    controller.updateSuggestions(query);
+    // controller.updateSuggestions(query);
+    if (_debounce?.isActive ?? false) _debounce!.cancel();
+    _debounce = Timer(const Duration(milliseconds: 500), () async {
+      await controller.updateSuggestions(query);
+    });
 
     return SuggestionList(
       query: query,
