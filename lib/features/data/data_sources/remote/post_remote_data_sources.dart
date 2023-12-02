@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:nhagiare_mobile/core/utils/ansi_color.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
@@ -187,21 +188,43 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   @override
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsSearch(
       PostFilter query) async {
-    var url = '$apiUrl$kGetPostEndpoint';
+    String url = '$apiUrl$kGetPostEndpoint';
+    QueryBuilder queryBuilder = QueryBuilder();
 
     if (query.textSearch != null && query.textSearch!.isNotEmpty) {
-      url += QueryBuilder().addSearch(query.textSearch!).build();
+      queryBuilder.addSearch(query.textSearch!);
     }
 
     if (query.isLease != null) {
-      url += QueryBuilder()
-          .addQuery('post_is_lease', Operation.equals, query.isLease!)
-          .build();
+      queryBuilder.addQuery('post_is_lease', Operation.equals, query.isLease!);
     }
 
     if (query.provinceCode != null) {
-      url += QueryBuilder().addProvince(query.provinceCode!).build();
+      queryBuilder.addProvince(query.provinceCode!);
     }
+
+    // if (query.postedBy != null) {
+    //   url += QueryBuilder()
+    //       .addQuery('post_user_id', Operation.equals, query.postedBy!.userId)
+    //       .build();
+    // }
+
+    if (query.minPrice != null && query.maxPrice != null) {
+      queryBuilder.addQuery('post_price', Operation.between,
+          '${query.minPrice},${query.maxPrice}');
+    }
+
+    // area
+    if (query.minArea != null && query.maxArea != null) {
+      queryBuilder.addQuery(
+          'post_area', Operation.between, '${query.minArea},${query.maxArea}');
+    }
+
+    url += queryBuilder.build();
+
+    print(success(query.toString()));
+
+    print(success("url: $url"));
 
     return await DatabaseHelper().getPosts(url, client);
   }

@@ -14,6 +14,14 @@ enum ApartmentTypes {
         "Can't parse ApartmentTypes! Your input value is \"$value\"");
   }
 
+  static ApartmentTypes parseVi(String value) {
+    for (ApartmentTypes type in ApartmentTypes.values) {
+      if (getStringVi(type) == value) return type;
+    }
+    throw Exception(
+        "Can't parse ApartmentTypes! Your input value is \"$value\"");
+  }
+
   @override
   String toString() {
     switch (this) {

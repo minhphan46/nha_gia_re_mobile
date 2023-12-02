@@ -131,6 +131,8 @@ dependencies:
   # slider
   flutter_xlider: ^3.5.0
 
+  # color debug print
+  ansicolor: ^2.0.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

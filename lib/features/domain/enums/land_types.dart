@@ -11,6 +11,13 @@ enum LandTypes {
     throw Exception("Can't parse LandTypes! Your input value is \"$value\"");
   }
 
+  static LandTypes parseVi(String value) {
+    for (LandTypes type in LandTypes.values) {
+      if (getStringVi(type) == value) return type;
+    }
+    throw Exception("Can't parse LandTypes! Your input value is \"$value\"");
+  }
+
   @override
   String toString() {
     switch (this) {

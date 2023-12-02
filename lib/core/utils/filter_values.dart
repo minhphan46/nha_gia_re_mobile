@@ -28,7 +28,7 @@ class FilterValues {
   ];
 // Price range
   double lowerPrice = 0;
-  double upperPrice = 300000000000;
+  double upperPrice = 3000000000;
 // Area range
   double lowerArea = 0;
   double upperArea = 10000;

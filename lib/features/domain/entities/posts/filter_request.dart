@@ -1,4 +1,3 @@
-import 'package:nhagiare_mobile/core/utils/query_builder.dart';
 import '../../enums/apartment_types.dart';
 import '../../enums/direction.dart';
 import '../../enums/furniture_status.dart';
@@ -6,15 +5,14 @@ import '../../enums/house_types.dart';
 import '../../enums/land_types.dart';
 import '../../enums/legal_document_status.dart';
 import '../../enums/office_types.dart';
+import '../../enums/order_by_types.dart';
 import '../../enums/posted_by.dart';
 
 class PostFilter {
   String? textSearch;
-  OrderBy? orderBy;
+  OrderByTypes? orderBy;
   String? postedByUserID;
   bool? isLease;
-  int? from;
-  int? to;
   int? minPrice;
   int? maxPrice;
   int? minArea;
@@ -27,22 +25,19 @@ class PostFilter {
     this.isLease,
     this.postedByUserID,
     this.orderBy,
-    this.from,
-    this.to,
     this.minPrice,
     this.maxPrice,
     this.minArea,
     this.maxArea,
-    this.provinceCode,
+    this.provinceCode = 0,
     required this.postedBy,
-  }) : assert((from != null && to != null && from < to) ||
-            (from == null && to == null));
+  });
 
   void setTextSearch(String text) {
     textSearch = text;
   }
 
-  void setOrderBy(OrderBy orderBy) {
+  void setOrderBy(OrderByTypes orderBy) {
     this.orderBy = orderBy;
   }
 
@@ -56,6 +51,12 @@ class PostFilter {
 
   void setProvinceCode(int provinceCode) {
     this.provinceCode = provinceCode;
+  }
+
+  //toString
+  @override
+  String toString() {
+    return 'PostFilter{textSearch: $textSearch, orderBy: $orderBy, postedByUserID: $postedByUserID, isLease: $isLease, minPrice: $minPrice, maxPrice: $maxPrice, minArea: $minArea, maxArea: $maxArea, provinceCode: $provinceCode, postedBy: $postedBy}';
   }
 }
 
@@ -74,8 +75,6 @@ class ApartmentFilter extends PostFilter {
     super.postedByUserID,
     bool? isLease,
     required super.orderBy,
-    required int super.from,
-    required int super.to,
     required int super.minPrice,
     required int super.maxPrice,
     required int super.minArea,
@@ -90,6 +89,14 @@ class ApartmentFilter extends PostFilter {
     this.legalStatus = const [],
     this.furnitureStatus = const [],
   });
+
+  @override
+  String toString() {
+    String value = super.toString();
+    value +=
+        '\nApartmentFilter{isHandedOver: $isHandedOver, apartmentTypes: $apartmentTypes, isCorner: $isCorner, numOfBedrooms: $numOfBedrooms, mainDoorDirections: $mainDoorDirections, balconyDirections: $balconyDirections, legalStatus: $legalStatus, furnitureStatus: $furnitureStatus}';
+    return value;
+  }
 }
 
 class HouseFilter extends PostFilter {
@@ -107,8 +114,6 @@ class HouseFilter extends PostFilter {
     super.textSearch,
     bool? isLease,
     required super.orderBy,
-    required int super.from,
-    required int super.to,
     required int super.minPrice,
     required int super.maxPrice,
     required int super.minArea,
@@ -123,6 +128,14 @@ class HouseFilter extends PostFilter {
     this.legalStatus = const [],
     this.furnitureStatus = const [],
   });
+
+  @override
+  String toString() {
+    String value = super.toString();
+    value +=
+        '\nHouseFilter{hasWideAlley: $hasWideAlley, isFacade: $isFacade, isWidensTowardsTheBack: $isWidensTowardsTheBack, houseTypes: $houseTypes, numOfBedrooms: $numOfBedrooms, mainDoorDirections: $mainDoorDirections, legalStatus: $legalStatus, furnitureStatus: $furnitureStatus}';
+    return value;
+  }
 }
 
 class LandFilter extends PostFilter {
@@ -138,8 +151,6 @@ class LandFilter extends PostFilter {
     super.postedByUserID,
     bool? isLease,
     required super.orderBy,
-    required int super.from,
-    required int super.to,
     required int super.minPrice,
     required int super.maxPrice,
     required int super.minArea,
@@ -152,6 +163,14 @@ class LandFilter extends PostFilter {
     this.landDirections = const [],
     this.legalStatus = const [],
   });
+
+  @override
+  String toString() {
+    String value = super.toString();
+    value +=
+        '\nLandFilter{hasWideAlley: $hasWideAlley, isFacade: $isFacade, isWidensTowardsTheBack: $isWidensTowardsTheBack, landTypes: $landTypes, landDirections: $landDirections, legalStatus: $legalStatus}';
+    return value;
+  }
 }
 
 class OfficeFilter extends PostFilter {
@@ -165,8 +184,6 @@ class OfficeFilter extends PostFilter {
     super.textSearch,
     bool? isLease,
     required super.orderBy,
-    required int super.from,
-    required int super.to,
     required int super.minPrice,
     required int super.maxPrice,
     required int super.minArea,
@@ -177,6 +194,14 @@ class OfficeFilter extends PostFilter {
     this.legalStatus = const [],
     this.furnitureStatus = const [],
   });
+
+  @override
+  String toString() {
+    String value = super.toString();
+    value +=
+        '\nOfficeFilter{officeTypes: $officeTypes, mainDoorDirections: $mainDoorDirections, legalStatus: $legalStatus, furnitureStatus: $furnitureStatus}';
+    return value;
+  }
 }
 
 class MotelFilter extends PostFilter {
@@ -187,8 +212,6 @@ class MotelFilter extends PostFilter {
     super.postedByUserID,
     bool? isLease,
     required super.orderBy,
-    required int super.from,
-    required int super.to,
     required int super.minPrice,
     required int super.maxPrice,
     required int super.minArea,
@@ -196,4 +219,11 @@ class MotelFilter extends PostFilter {
     required super.postedBy,
     this.furnitureStatus = const [],
   });
+
+  @override
+  String toString() {
+    String value = super.toString();
+    value += '\nMotelFilter{furnitureStatus: $furnitureStatus}';
+    return value;
+  }
 }

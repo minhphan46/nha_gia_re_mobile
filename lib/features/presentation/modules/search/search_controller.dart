@@ -11,7 +11,15 @@ import '../../../../core/utils/filter_values.dart';
 import '../../../../core/utils/list_check_service.dart';
 import '../../../../core/utils/radio_service.dart';
 import '../../../../injection_container.dart';
+import '../../../domain/enums/apartment_types.dart';
+import '../../../domain/enums/direction.dart';
+import '../../../domain/enums/furniture_status.dart';
+import '../../../domain/enums/house_types.dart';
+import '../../../domain/enums/land_types.dart';
+import '../../../domain/enums/legal_document_status.dart';
 import '../../../domain/enums/navigate_type.dart';
+import '../../../domain/enums/office_types.dart';
+import '../../../domain/enums/order_by_types.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 import 'screens/filter_screen.dart';
 
@@ -247,8 +255,264 @@ class MySearchController extends GetxController {
     isLoadingFilter.value = check;
   }
 
-  void deleteFilter() {
+  Future<void> applyFilter() async {
+    toggleLoadingFilter(true);
+
+    if (radioCategory.isEqualValue(0)) {
+      // Tất cả bất động sản
+      postFilter = getPostFilter();
+    } else if (radioCategory.isEqualValue(1)) {
+      // Căn Hộ/chung Cư
+      postFilter = getApartmentFilter();
+    } else if (radioCategory.isEqualValue(2)) {
+      // Nhà ở
+      postFilter = getHouseFilter();
+    } else if (radioCategory.isEqualValue(3)) {
+      // Đất
+      postFilter = getLandFilter();
+    } else if (radioCategory.isEqualValue(4)) {
+      // Văn Phòng, Mặt bằng kinh doanh
+      postFilter = getOfficeFilter();
+    } else {
+      // Phòng trọ
+      postFilter = getMotelFilter();
+    }
+    await getPosts(postFilter);
+    // reset provinces
+    changeSelectedProvince(provinceNames[0]['name']);
     // reset all
+    deleteFilter();
+    toggleLoadingFilter(false);
+    // pop screen when done
+    popScreen();
+  }
+
+  OrderByTypes getOrderBy() {
+    if (radioSortType.isEqualValue(0)) {
+      return OrderByTypes.relatedDesc;
+    } else if (radioSortType.isEqualValue(1)) {
+      return OrderByTypes.createdAtDesc;
+    } else if (radioSortType.isEqualValue(2)) {
+      return OrderByTypes.priceAsc;
+    } else {
+      return OrderByTypes.nearByAsc;
+    }
+  }
+
+  PostedBy getPostBy() {
+    if (radiopostedBy.isEqualValue(0)) {
+      // ca nhan
+      return PostedBy.individual;
+    } else {
+      // moi gioi
+      return PostedBy.proSeller;
+    }
+  }
+
+  // get post filter
+  // all
+  PostFilter getPostFilter() {
+    return PostFilter(
+      textSearch: typeNavigate == TypeNavigate.search ? query : null,
+      isLease: typeNavigate == TypeNavigate.sell
+          ? false
+          : typeNavigate == TypeNavigate.rent
+              ? true
+              : null,
+      orderBy: getOrderBy(),
+      minPrice: lowerPriceValue.value.toInt(),
+      maxPrice: upperPriceValue.value.toInt(),
+      minArea: lowerAreaValue.value.toInt(),
+      maxArea: upperAreaValue.value.toInt(),
+      postedBy: getPostBy(),
+    );
+  }
+
+  // ApartmentFilter
+  ApartmentFilter getApartmentFilter() {
+    return ApartmentFilter(
+        textSearch: typeNavigate == TypeNavigate.search ? query : null,
+        isLease: typeNavigate == TypeNavigate.sell
+            ? false
+            : typeNavigate == TypeNavigate.rent
+                ? true
+                : null,
+        orderBy: getOrderBy(),
+        minPrice: lowerPriceValue.value.toInt(),
+        maxPrice: upperPriceValue.value.toInt(),
+        minArea: lowerAreaValue.value.toInt(),
+        maxArea: upperAreaValue.value.toInt(),
+        postedBy: getPostBy(),
+        isHandedOver: apartmentStatus.isEqualValue(0)
+            ? null
+            : apartmentStatus.isEqualValue(1)
+                ? false
+                : true,
+        apartmentTypes: apartmentTypes
+            .getListSelected()
+            .map((e) => ApartmentTypes.parseVi(e))
+            .toList(),
+        isCorner: apartmentCharacteristics.isEqualValue(0) ? null : true,
+        numOfBedrooms: apartmentBedroomNumber.getListSelected().map(
+          (e) {
+            if (e == "Nhiều hơn 10") {
+              return 11;
+            } else {
+              return int.parse(e);
+            }
+          },
+        ).toList(),
+        mainDoorDirections: apartmentMainDirection
+            .getListSelected()
+            .map((e) => Direction.parseVi(e))
+            .toList(),
+        balconyDirections: apartmentBalconyDirection
+            .getListSelected()
+            .map((e) => Direction.parseVi(e))
+            .toList(),
+        legalStatus: apartmentLegalDocuments
+            .getListSelected()
+            .map((e) => LegalDocumentStatus.parseVi(e))
+            .toList(),
+        furnitureStatus: apartmentInteriorStatus
+            .getListSelected()
+            .map((e) => FurnitureStatus.parseVi(e))
+            .toList());
+  }
+
+  // HouseFilter
+  HouseFilter getHouseFilter() {
+    return HouseFilter(
+        textSearch: typeNavigate == TypeNavigate.search ? query : null,
+        isLease: typeNavigate == TypeNavigate.sell
+            ? false
+            : typeNavigate == TypeNavigate.rent
+                ? true
+                : null,
+        orderBy: getOrderBy(),
+        minPrice: lowerPriceValue.value.toInt(),
+        maxPrice: upperPriceValue.value.toInt(),
+        minArea: lowerAreaValue.value.toInt(),
+        maxArea: upperAreaValue.value.toInt(),
+        postedBy: getPostBy(),
+        houseTypes: houseTypes
+            .getListSelected()
+            .map((e) => HouseTypes.parseVi(e))
+            .toList(),
+        hasWideAlley: houseCharacteristics.isEqualValue(0),
+        isFacade: houseCharacteristics.isEqualValue(1),
+        isWidensTowardsTheBack: houseCharacteristics.isEqualValue(2),
+        numOfBedrooms: houseBedroomNumber.getListSelected().map(
+          (e) {
+            if (e == "Nhiều hơn 10") {
+              return 11;
+            } else {
+              return int.parse(e);
+            }
+          },
+        ).toList(),
+        mainDoorDirections: houseMainDirection
+            .getListSelected()
+            .map((e) => Direction.parseVi(e))
+            .toList(),
+        legalStatus: houseLegalDocuments
+            .getListSelected()
+            .map((e) => LegalDocumentStatus.parseVi(e))
+            .toList(),
+        furnitureStatus: houseInteriorStatus
+            .getListSelected()
+            .map((e) => FurnitureStatus.parseVi(e))
+            .toList());
+  }
+
+  // LandFilter
+  LandFilter getLandFilter() {
+    return LandFilter(
+      textSearch: typeNavigate == TypeNavigate.search ? query : null,
+      isLease: typeNavigate == TypeNavigate.sell
+          ? false
+          : typeNavigate == TypeNavigate.rent
+              ? true
+              : null,
+      orderBy: getOrderBy(),
+      minPrice: lowerPriceValue.value.toInt(),
+      maxPrice: upperPriceValue.value.toInt(),
+      minArea: lowerAreaValue.value.toInt(),
+      maxArea: upperAreaValue.value.toInt(),
+      postedBy: getPostBy(),
+      landTypes:
+          landTypes.getListSelected().map((e) => LandTypes.parseVi(e)).toList(),
+      hasWideAlley: landCharacteristics.isEqualValue(0),
+      isFacade: landCharacteristics.isEqualValue(1),
+      isWidensTowardsTheBack: landCharacteristics.isEqualValue(2),
+      landDirections: landDirection
+          .getListSelected()
+          .map((e) => Direction.parseVi(e))
+          .toList(),
+      legalStatus: landLegalDocuments
+          .getListSelected()
+          .map((e) => LegalDocumentStatus.parseVi(e))
+          .toList(),
+    );
+  }
+
+  // OfficeFilter
+  OfficeFilter getOfficeFilter() {
+    return OfficeFilter(
+      textSearch: typeNavigate == TypeNavigate.search ? query : null,
+      isLease: typeNavigate == TypeNavigate.sell
+          ? false
+          : typeNavigate == TypeNavigate.rent
+              ? true
+              : null,
+      orderBy: getOrderBy(),
+      minPrice: lowerPriceValue.value.toInt(),
+      maxPrice: upperPriceValue.value.toInt(),
+      minArea: lowerAreaValue.value.toInt(),
+      maxArea: upperAreaValue.value.toInt(),
+      postedBy: getPostBy(),
+      officeTypes: officeType
+          .getListSelected()
+          .map((e) => OfficeTypes.parseVi(e))
+          .toList(),
+      mainDoorDirections: officeDirection
+          .getListSelected()
+          .map((e) => Direction.parseVi(e))
+          .toList(),
+      legalStatus: landLegalDocuments
+          .getListSelected()
+          .map((e) => LegalDocumentStatus.parseVi(e))
+          .toList(),
+      furnitureStatus: officeInteriorStatus
+          .getListSelected()
+          .map((e) => FurnitureStatus.parseVi(e))
+          .toList(),
+    );
+  }
+
+  // MotelFilter
+  MotelFilter getMotelFilter() {
+    return MotelFilter(
+      textSearch: typeNavigate == TypeNavigate.search ? query : null,
+      isLease: typeNavigate == TypeNavigate.sell
+          ? false
+          : typeNavigate == TypeNavigate.rent
+              ? true
+              : null,
+      orderBy: getOrderBy(),
+      minPrice: lowerPriceValue.value.toInt(),
+      maxPrice: upperPriceValue.value.toInt(),
+      minArea: lowerAreaValue.value.toInt(),
+      maxArea: upperAreaValue.value.toInt(),
+      postedBy: getPostBy(),
+      furnitureStatus: rentInteriorStatus
+          .getListSelected()
+          .map((e) => FurnitureStatus.parseVi(e))
+          .toList(),
+    );
+  }
+
+  void deleteFilter() {
     // reset all
     radioCategory.reset();
     radioSortType.reset();
@@ -259,15 +523,6 @@ class MySearchController extends GetxController {
         sl.get<FilterValues>().lowerPrice, sl.get<FilterValues>().upperPrice);
     changeAreaValue(
         sl.get<FilterValues>().lowerArea, sl.get<FilterValues>().upperArea);
-  }
-
-  Future<void> applyFilter() async {
-    toggleLoadingFilter(true);
-    // reset all
-    deleteFilter();
-    // pop screen when done
-    toggleLoadingFilter(false);
-    popScreen();
   }
 
 // Category type ==================================
