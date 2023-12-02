@@ -217,7 +217,7 @@ class MySearchController extends GetxController {
   void changeSelectedProvince(String newValue) async {
     for (Map<String, dynamic> province in provinceNames) {
       if ((province['name'] as String).contains(newValue)) {
-        selectedProvince!.value = province['name'] as String;
+        selectedProvince = (province['name'] as String).obs;
         break;
       }
     }
