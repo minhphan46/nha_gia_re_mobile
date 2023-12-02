@@ -20,6 +20,7 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<RealEstatePostModel>>> getPostsExpired();
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
+  Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -227,5 +228,29 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     print(success("url: $url"));
 
     return await DatabaseHelper().getPosts(url, client);
+  }
+
+  @override
+  Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword) {
+    String url = kGetSuggestKeywordsEndpoint.replaceAll('KEY_WORD', keyword);
+
+    return client.get(url).then((response) {
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      final List<Map<String, dynamic>> taskDataList =
+          List<Map<String, dynamic>>.from(response.data["results"] ?? []);
+      List<String> values = [];
+      for (var item in taskDataList) {
+        if (item['formal'] != null) {
+          values.add(item['formal'] as String);
+        }
+      }
+      return HttpResponse(values, response);
+    });
   }
 }

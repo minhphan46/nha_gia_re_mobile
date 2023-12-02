@@ -16,6 +16,8 @@ abstract class PostRepository {
 
   Future<DataState<List<String>>> uploadImages(List<File> images);
 
+  Future<DataState<List<String>>> getSuggestKeywords(String keyword);
+
   // management
   Future<DataState<List<RealEstatePostEntity>>> getPostsApproved();
   Future<DataState<List<RealEstatePostEntity>>> getPostsHided();
