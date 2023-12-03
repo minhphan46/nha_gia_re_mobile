@@ -1,8 +1,11 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_me.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/remote/user_remote_date_source.dart';
+import 'package:nhagiare_mobile/features/data/repository/user_respository_impl.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
+import '../features/domain/usecases/authentication/get_me.dart';
+import '../features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
+import '../features/domain/usecases/purchase/get_current_subscription.dart';
 import '../core/utils/filter_values.dart';
 import '../features/data/data_sources/remote/blog_data_source.dart';
 import '../features/data/data_sources/remote/conversation_remote_data_source.dart';
@@ -41,6 +44,7 @@ import 'features/data/repository/provinces_repository_impl.dart';
 import 'features/domain/repository/authentication_repository.dart';
 import 'features/domain/repository/conversation_repository.dart';
 import 'features/domain/repository/provinces_repository.dart';
+import 'features/domain/repository/user_repository.dart';
 import 'features/domain/usecases/authentication/check_token.dart';
 import 'features/domain/usecases/authentication/sign_in.dart';
 import 'features/domain/usecases/authentication/sign_out.dart';
@@ -48,6 +52,7 @@ import 'features/domain/usecases/post/remote/get_posts_expired.dart';
 import 'features/domain/usecases/post/remote/get_posts_hided.dart';
 import 'features/domain/usecases/post/remote/get_posts_pending.dart';
 import 'features/domain/usecases/purchase/get_all_transactions.dart';
+import 'features/domain/usecases/user/FollowOrUnfollowUserUseCase.dart';
 
 final sl = GetIt.instance;
 
@@ -297,4 +302,29 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton(
       GetMeUseCase(repository: sl<AuthenticationRepository>()));
+
+  sl.registerSingleton<UserRemoteDataSource>(
+    UserRemoteDataSourceImpl(
+      sl<Dio>(),
+      sl<AuthenLocalDataSrc>(),
+    ),
+  );
+
+  sl.registerSingleton<UserRepository>(
+    UserRepositoryImpl(
+      sl<UserRemoteDataSource>(),
+    ),
+  );
+
+  sl.registerSingleton<GetFollowersAndFollowingsCount>(
+    GetFollowersAndFollowingsCount(
+      sl<UserRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<FollowOrUnfollowUserUseCase>(
+    FollowOrUnfollowUserUseCase(
+      sl<UserRepository>(),
+    ),
+  );
 }

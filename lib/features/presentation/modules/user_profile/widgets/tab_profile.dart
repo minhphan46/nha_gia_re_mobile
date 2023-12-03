@@ -1,20 +1,19 @@
 import 'package:flutter/material.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/user_posts.dart';
 
 import '../../../../../config/theme/app_color.dart';
 import '../user_profile_controller.dart';
 
 class TabProfile extends StatefulWidget {
-  const TabProfile({super.key});
-
+  final List<RealEstatePostEntity>? data;
+  const TabProfile({super.key, required this.data});
   @override
   State<TabProfile> createState() => _TabProfileState();
 }
 
 class _TabProfileState extends State<TabProfile> with TickerProviderStateMixin {
-  final UserProfileController controller = UserProfileController();
-
   late TabController _tabController;
 
   @override
@@ -63,7 +62,15 @@ class _TabProfileState extends State<TabProfile> with TickerProviderStateMixin {
                 physics: const NeverScrollableScrollPhysics(),
                 controller: _tabController,
                 children: [
-                  UserPosts(),
+                  widget.data == null
+                      ? const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      : widget.data!.isEmpty
+                          ? const Center(
+                              child: Text('Chưa có bài viết'),
+                            )
+                          : UserPosts(data: widget.data!), // posts
                   const Scaffold(
                     body: Center(
                       child: Text('Chưa có tin nhắn'),

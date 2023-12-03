@@ -1,4 +1,4 @@
-const String baseUrl = "http://192.168.9.218:8000";
+const String baseUrl = "http://192.168.137.1:8000";
 const String apiDevUrl = "$baseUrl/api/v1";
 const String apiProductionUrl = "https://nha-gia-re-server.onrender.com/api/v1";
 const String apiUrl = apiDevUrl;
@@ -27,3 +27,6 @@ const String kGetBlogEndpoint = '/blogs';
 const String kPostImages = '/media/upload';
 
 const String kGetOrCreateConversation = '/conversations/user/:id';
+
+const kGetFollowersAndFollowingsCountEndpoint = '/users/follows';
+const kFollowUserEndpoint = '/users/follow/:id';

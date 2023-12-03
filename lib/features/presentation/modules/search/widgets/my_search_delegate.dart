@@ -100,9 +100,10 @@ class MySearchDelegate extends SearchDelegate<String> {
       await controller.updateSuggestions(query);
     });
 
+    RxList<String> suggestions = RxList.from(controller.suggestions);
     return SuggestionList(
       query: query,
-      suggestions: controller.suggestions,
+      suggestions: suggestions,
       onSelected: (String suggestion) {
         // event when tap in suggestion
         query = suggestion;

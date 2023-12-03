@@ -121,7 +121,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
       getPostsHided() async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("hided", 0);
+      final httpResponse = await _dataSrc.getPostsStatus("hided", 1);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -142,7 +142,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
       getPostsPending() async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("pending", 0);
+      final httpResponse = await _dataSrc.getPostsStatus("pending", 1);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
@@ -163,7 +163,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>>
       getPostsRejected() async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("rejected", 0);
+      final httpResponse = await _dataSrc.getPostsStatus("rejected", 1);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
