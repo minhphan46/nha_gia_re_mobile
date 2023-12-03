@@ -5,6 +5,7 @@ const String apiDevUrl = "$baseUrlDev/api/v1";
 const String apiProductionUrl = "$baseUrlProduction/api/v1";
 const String baseAppUrl = isProduction ? baseUrlProduction : baseUrlDev;
 const String apiAppUrl = isProduction ? apiProductionUrl : apiDevUrl;
+
 const String kGetMe = '/users/profile';
 const String kSignIn = '/auth/sign-in';
 const String kSignUp = '/auth/sign-up';

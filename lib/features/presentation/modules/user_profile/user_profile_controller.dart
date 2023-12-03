@@ -2,9 +2,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
-
 import '../../../../core/resources/data_state.dart';
-import '../../../../core/resources/pair.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/posts/real_estate_post.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';

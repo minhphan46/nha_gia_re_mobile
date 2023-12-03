@@ -35,7 +35,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   @override
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
       String? userId, int? page) async {
-    var url = '$apiUrl$kGetPostEndpoint';
+    var url = '$apiAppUrl$kGetPostEndpoint';
     int pageQuery = page ?? 1;
     if (userId != null) {
       url += QueryBuilder()
@@ -61,7 +61,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired(
       int? page) async {
     int pageQuery = page ?? 1;
-    String url = '$apiUrl$kGetPostEndpoint?page=$pageQuery';
+    String url = '$apiAppUrl$kGetPostEndpoint?page=$pageQuery';
 
     try {
       final response = await client.get(url);
@@ -203,7 +203,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   @override
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsSearch(
       PostFilter query, int? page) async {
-    String url = '$apiUrl$kGetPostEndpoint';
+    String url = '$apiAppUrl$kGetPostEndpoint';
     int pageQuery = page ?? 1;
     QueryBuilder queryBuilder = QueryBuilder();
 

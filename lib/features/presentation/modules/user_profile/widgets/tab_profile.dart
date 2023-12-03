@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/user_posts.dart';
-
 import '../../../../../config/theme/app_color.dart';
-import '../user_profile_controller.dart';
 
 class TabProfile extends StatefulWidget {
   final List<RealEstatePostEntity>? data;

@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
-import 'package:nhagiare_mobile/features/presentation/modules/user_profile/user_profile_controller.dart';
-
 import '../../../../domain/entities/posts/real_estate_post.dart';
 import '../../../global_widgets/infor_card.dart';
 
