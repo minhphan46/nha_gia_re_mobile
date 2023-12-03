@@ -19,7 +19,7 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
 
   @override
   Future<HttpResponse<TransactionModel>> getTransactionByAppTransId(String id) {
-    String url = '$apiUrl$kGetTransactionEndpoint?id[eq]=$id';
+    String url = '$apiUrl$kGetTransactionEndpoint?app_trans_id[eq]=\'$id\'';
     try {
       return client
           .get(url,
