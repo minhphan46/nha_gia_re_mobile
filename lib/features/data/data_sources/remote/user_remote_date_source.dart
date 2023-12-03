@@ -21,7 +21,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
 
   @override
   Future<HttpResponse<bool>> followOrUnfollowUser(String userId) {
-    String url = '$apiUrl$kFollowUserEndpoint'.replaceAll(':id', userId);
+    String url = '$apiAppUrl$kFollowUserEndpoint'.replaceAll(':id', userId);
     try {
       return client
           .post(url,
@@ -51,7 +51,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   @override
   Future<HttpResponse<Pair<int, int>>> getFollowersAndFollowingsCount(
       String userId) {
-    String url = '$apiUrl$kGetFollowersAndFollowingsCountEndpoint';
+    String url = '$apiAppUrl$kGetFollowersAndFollowingsCountEndpoint';
     try {
       return client
           .get(

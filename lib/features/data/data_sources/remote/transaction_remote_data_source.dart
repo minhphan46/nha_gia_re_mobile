@@ -19,7 +19,7 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
 
   @override
   Future<HttpResponse<TransactionModel>> getTransactionByAppTransId(String id) {
-    String url = '$apiUrl$kGetTransactionEndpoint?app_trans_id[eq]=\'$id\'';
+    String url = '$apiAppUrl$kGetTransactionEndpoint?app_trans_id[eq]=\'$id\'';
     try {
       return client
           .get(url,
@@ -58,7 +58,7 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
 
   @override
   Future<HttpResponse<List<TransactionModel>>> getAllTransactions() async {
-    String url = '$apiUrl$kGetTransactionEndpoint';
+    String url = '$apiAppUrl$kGetTransactionEndpoint';
     try {
       final httpResponse = await client.get(url,
           options: Options(headers: {
@@ -75,14 +75,7 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
       List<TransactionModel> value = taskDataList
           .map((dynamic item) => TransactionModel.fromJson(item))
           .toList();
-      if (value.isEmpty) {
-        throw const ApiException(
-          message: "No data found",
-          statusCode: 404,
-        );
-      } else {
-        return HttpResponse(value, httpResponse);
-      }
+      return HttpResponse(value, httpResponse);
     } on ApiException catch (e) {
       printError(info: e.toString());
       rethrow;
@@ -94,7 +87,7 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
 
   @override
   Future<HttpResponse<SubscriptionModel?>> getCurrentSubscription() async {
-    String url = '$apiUrl$kGetCurrentSubscriptionEndpoint';
+    String url = '$apiAppUrl$kGetCurrentSubscriptionEndpoint';
     try {
       final httpResponse = await client.get(url,
           options: Options(headers: {
@@ -109,7 +102,9 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
 
       SubscriptionModel? value;
       try {
-        value = SubscriptionModel.fromJson(httpResponse.data['result']);
+        value = httpResponse.data['result'] != null
+            ? SubscriptionModel.fromJson(httpResponse.data['result'])
+            : null;
       } catch (e) {
         print(e);
         value = null;

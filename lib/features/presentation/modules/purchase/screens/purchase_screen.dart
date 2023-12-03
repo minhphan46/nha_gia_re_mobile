@@ -28,27 +28,6 @@ class _PurchaseScreenState extends State<PurchaseScreen>
 
   late final TabController tabController;
 
-  //   "id": "3fbee465-766a-43c1-b851-21aa0d84dc8c",
-  // "name": "Gói cơ bản",
-  // "description": "Phù hợp cho môi giới mới vào nghề",
-  // "price_per_month": "100000",
-  // "monthly_post_limit": 1000,
-  // "post_approval_priority_point": 0,
-  // "display_priority_point": 1,
-  // "is_active": true,
-  // "created_at": "2023-11-01T23:39:46.000Z"
-
-  MembershipPackageEntity current = MembershipPackageEntity(
-      id: "3fbee465-766a-43c1-b851-21aa0d84dc8c",
-      name: "Gói cơ bản",
-      description: "Phù hợp cho môi giới mới vào nghề",
-      pricePerMonth: 100000,
-      monthlyPostLimit: 1000,
-      postApprovalPriorityPoint: 0,
-      displayPriorityPoint: 1,
-      isActive: true,
-      createdAt: DateTime.parse("2023-11-01T23:39:46.000Z"));
-
   @override
   void initState() {
     super.initState();
@@ -161,26 +140,24 @@ class _PurchaseScreenState extends State<PurchaseScreen>
                   ),
                 );
               }),
-          SingleChildScrollView(
-              padding: const EdgeInsets.all(8),
-              child: FutureBuilder<Subscription?>(
-                  future: controller.getCurrentSubscription(),
-                  builder: (context, snapshot) {
-                    if (!snapshot.hasData) {
-                      return const Center(
-                        child: CircularProgressIndicator(),
-                      );
-                    }
-                    if (snapshot.data == null) {
-                      return const Center(
-                        child: Text("Bạn chưa đăng ký gói nào"),
-                      );
-                    }
-                    return MembershipPackageCard(
-                      package: snapshot.data!.package!,
-                      isCurrent: true,
-                    );
-                  })),
+          FutureBuilder<Subscription?>(
+              future: controller.getCurrentSubscription(),
+              builder: (context, snapshot) {
+                if (snapshot.connectionState == ConnectionState.waiting) {
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
+                }
+                if (snapshot.data == null) {
+                  return const Center(
+                    child: Text("Bạn chưa đăng ký gói nào"),
+                  );
+                }
+                return MembershipPackageCard(
+                  package: snapshot.data!.package!,
+                  isCurrent: true,
+                );
+              }),
           FutureBuilder<List<TransactionEntity>>(
               future: controller.getAllTransactions(),
               builder: (context, snapShot) {
@@ -190,6 +167,13 @@ class _PurchaseScreenState extends State<PurchaseScreen>
                   );
                 }
                 List<TransactionEntity> transactions = snapShot.data!;
+
+                if (transactions.isEmpty) {
+                  return const Center(
+                    child: Text("Bạn chưa có giao dịch nào"),
+                  );
+                }
+
                 return ListView.builder(
                   shrinkWrap: true,
                   itemCount: transactions.length,

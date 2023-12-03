@@ -39,7 +39,7 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   final Dio client;
 
   ConversationRemoteDataSourceImpl(this.client) {
-    socket = IO.io('$baseUrl/conversations', <String, dynamic>{
+    socket = IO.io('$baseAppUrl/conversations', <String, dynamic>{
       'transports': ['websocket'],
       'autoConnect': false
     });
@@ -223,7 +223,7 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   @override
   Future<HttpResponse<ConversationModel>> getOrCreateConversation(
       String userId) {
-    String url = '$apiUrl$kGetOrCreateConversation';
+    String url = '$apiAppUrl$kGetOrCreateConversation';
     url = url.replaceAll(":id", userId);
     try {
       return client
