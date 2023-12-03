@@ -140,7 +140,7 @@ class MySearchController extends GetxController {
 
   /// get list Suggestions
   Future<List<String>> getSuggestions(String query) async {
-    if (query.trim().isEmpty) return history;
+    if (query.trim().isEmpty) return [...history];
     List<String> results = [];
     if (query.isEmpty) {
       results = [...history];

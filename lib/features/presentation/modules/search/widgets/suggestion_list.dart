@@ -41,11 +41,17 @@ class SuggestionList extends StatelessWidget {
             // Highlight the substring that matched the query.
             title: RichText(
               text: TextSpan(
-                text: suggestion.substring(0, query.length),
+                text: suggestion.substring(
+                    0,
+                    query.length > suggestion.length
+                        ? suggestion.length
+                        : query.length),
                 style: textTheme.copyWith(fontWeight: FontWeight.bold),
                 children: <TextSpan>[
                   TextSpan(
-                    text: suggestion.substring(query.length),
+                    text: suggestion.substring(query.length > suggestion.length
+                        ? suggestion.length
+                        : query.length),
                     style: textTheme,
                   ),
                 ],

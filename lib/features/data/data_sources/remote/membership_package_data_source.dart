@@ -22,7 +22,7 @@ class MembershipPackageRemoteDataSrcImpl
   @override
   Future<HttpResponse<List<MembershipPackageModel>>>
       getAllMembershipPackages() {
-    const url = '$apiUrl$kGetMembershipPackageEndpoint';
+    const url = '$apiAppUrl$kGetMembershipPackageEndpoint';
 
     try {
       return client.get(url).then((response) {
@@ -52,7 +52,7 @@ class MembershipPackageRemoteDataSrcImpl
   @override
   Future<HttpResponse<OrderMembershipPackageModel>> createOrder(
       String id, int numOfMonth) {
-    const url = '$apiUrl$kCreateOrderEndpoint';
+    const url = '$apiAppUrl$kCreateOrderEndpoint';
     try {
       return client.post(url, data: {
         "membership_package_id": id,

@@ -52,7 +52,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       String status, int? page) async {
     int pageQuery = page ?? 1;
     String url =
-        '$apiUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addPage(pageQuery).addOrderBy('posted_date', OrderBy.desc).build()}';
+        '$apiAppUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addPage(pageQuery).addOrderBy('posted_date', OrderBy.desc).build()}';
 
     return await DatabaseHelper().getPosts(url, client);
   }
@@ -97,7 +97,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> createPost(RealEstatePostModel postModel) async {
-    const url = '$apiUrl$kCreatePostEndpoint';
+    const url = '$apiAppUrl$kCreatePostEndpoint';
     try {
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
@@ -141,7 +141,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<List<String>>> uploadImages(List<File> images) async {
-    const url = '$apiUrl$kPostImages';
+    const url = '$apiAppUrl$kPostImages';
 
     // Tạo danh sách các FormData để chứa từng file
     List<FormData> formDataList = [];

@@ -45,7 +45,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
   @override
   Future<HttpResponse<Map<String, String>>> login(
       String email, String password) async {
-    const url = '$apiUrl$kSignIn';
+    const url = '$apiAppUrl$kSignIn';
     try {
       // Gửi yêu cầu đăng nhập
       final response = await client.post(
@@ -82,7 +82,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
   @override
   Future<HttpResponse<String>> refreshToken(String refreshToken) async {
-    const url = '$apiUrl$kRefreshToken';
+    const url = '$apiAppUrl$kRefreshToken';
     try {
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
       String? refreshToken = localDataSrc.getRefreshToken();
@@ -132,7 +132,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> signOut() async {
-    const url = '$apiUrl$kSignOut';
+    const url = '$apiAppUrl$kSignOut';
     try {
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
@@ -170,7 +170,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
   @override
   Future<HttpResponse<String>> signUp(
       String email, String password, String confirmPassword) async {
-    const url = '$apiUrl$kSignUp';
+    const url = '$apiAppUrl$kSignUp';
     try {
       // Gửi yêu cầu đăng ky
       final response = await client.post(
@@ -210,7 +210,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
 
   @override
   Future<HttpResponse<UserModel>> getMe() {
-    const url = '$apiUrl$kGetMe';
+    const url = '$apiAppUrl$kGetMe';
     AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
     String? accessToken = localDataSrc.getAccessToken();
     if (accessToken == null) {

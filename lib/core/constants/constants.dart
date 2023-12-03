@@ -1,8 +1,10 @@
-const String baseUrl = "http://192.168.9.218:8000";
-const String apiDevUrl = "$baseUrl/api/v1";
-const String apiProductionUrl = "https://nha-gia-re-server.onrender.com/api/v1";
-const String apiUrl = apiProductionUrl;
-
+const isProduction = true;
+const String baseUrlDev = "http://192.168.137.1:8000";
+const String baseUrlProduction = "https://nha-gia-re-server.onrender.com";
+const String apiDevUrl = "$baseUrlDev/api/v1";
+const String apiProductionUrl = "$baseUrlProduction/api/v1";
+const String baseAppUrl = isProduction ? baseUrlProduction : baseUrlDev;
+const String apiAppUrl = isProduction ? apiProductionUrl : apiDevUrl;
 const String kGetMe = '/users/profile';
 const String kSignIn = '/auth/sign-in';
 const String kSignUp = '/auth/sign-up';
@@ -28,3 +30,6 @@ const String kGetBlogEndpoint = '/blogs';
 const String kPostImages = '/media/upload';
 
 const String kGetOrCreateConversation = '/conversations/user/:id';
+
+const kGetFollowersAndFollowingsCountEndpoint = '/users/follows';
+const kFollowUserEndpoint = '/users/follow/:id';

@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
 
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/resources/pair.dart';
@@ -9,12 +11,9 @@ import '../../../domain/usecases/post/remote/get_posts.dart';
 
 class UserProfileController extends GetxController {
   UserEntity? user = Get.arguments;
-
-  int numberPost = 122;
-  int numberFollower = 332;
-  int numberFollowing = 94;
-
   bool isFollow = false;
+
+  RxString numOfPosts = "-".obs;
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
@@ -24,11 +23,34 @@ class UserProfileController extends GetxController {
     );
 
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      numOfPosts.value = dataState.data!.second.length.toString();
       return dataState.data!.second;
     } else if (dataState is DataFailed) {
       return [];
     } else {
       return [];
+    }
+  }
+
+  Future<void> followOrUnfollowUser() async {
+    // final dataState = await _followOrUnfollowUserUseCase(params: user!.id);
+    // if (dataState is DataSuccess) {
+    //   isFollow = dataState.data!;
+    //   update();
+    // }
+  }
+
+  final GetFollowersAndFollowingsCount _getFollowersAndFollowingsCountUseCase =
+      sl<GetFollowersAndFollowingsCount>();
+
+  Future<Pair<int, int>> getFollowersAndFollowingsCount() async {
+    try {
+      final data =
+          await _getFollowersAndFollowingsCountUseCase(params: user!.id!);
+      return data;
+    } catch (e) {
+      Get.snackbar("Lỗi", "Lỗi khi lấy dữ liệu");
+      return Pair(0, 0);
     }
   }
 }

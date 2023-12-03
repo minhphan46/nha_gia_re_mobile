@@ -99,7 +99,7 @@ class PurchaseController extends GetxController {
   }
 
   Future<Subscription?> getCurrentSubscription() async {
-    final result = await getCurrentSubscriptionUseCase();
+    final result = await getCurrentSubscriptionUseCase.call();
     return result;
   }
 }

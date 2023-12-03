@@ -11,7 +11,7 @@ class OrderMembershipPackageModel extends OrderMembershipPackage {
 
   factory OrderMembershipPackageModel.fromJson(Map<String, dynamic> json) {
     return OrderMembershipPackageModel(
-      transactionId: json['transaction_id'],
+      transactionId: json['transaction']['id'],
       orderUrl: json['order_url'],
       zpTransToken: json['zp_trans_token'],
       orderToken: json['order_token'],
