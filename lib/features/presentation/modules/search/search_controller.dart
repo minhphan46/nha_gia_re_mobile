@@ -1,5 +1,4 @@
 import 'package:get/get.dart';
-import 'package:nhagiare_mobile/core/utils/ansi_color.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/filter_request.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';
@@ -191,9 +190,9 @@ class MySearchController extends GetxController {
       {int? page = 1}) async {
     final GetPostSearchsUseCase getPostSearchsUseCase =
         sl<GetPostSearchsUseCase>();
-    print(success("page: $page"));
     if (page == 1 || page == null) {
       toggleLoadingGetPosts(true);
+      searchPosts.value = [];
     }
     final dataState =
         await getPostSearchsUseCase(params: Pair(postFilter, page));
@@ -202,13 +201,14 @@ class MySearchController extends GetxController {
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       if (page == 1 || page == null) {
         searchPosts.value = dataState.data!.second;
-        hasMore.value = true;
+        if (dataState.data!.second.length < 10) {
+          hasMore.value = false;
+        } else {
+          hasMore.value = true;
+        }
       } else {
         searchPosts.addAll(dataState.data!.second);
       }
-      print(success("num page: ${dataState.data!.first}"));
-      print(success("num post: ${dataState.data!.second.length}"));
-      print(success("search Posts: ${searchPosts.length}"));
       return dataState.data!;
     } else {
       return Pair(1, []);
@@ -302,10 +302,10 @@ class MySearchController extends GetxController {
     // reset provinces
     changeSelectedProvince(provinceNames[0]['name']);
     // reset all
-    deleteFilter();
     toggleLoadingFilter(false);
     // pop screen when done
     popScreen();
+    deleteFilter();
   }
 
   OrderByTypes getOrderBy() {

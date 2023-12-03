@@ -10,7 +10,10 @@ import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../../../../core/resources/data_state.dart';
+import '../../../domain/entities/posts/filter_request.dart';
 import '../../../domain/enums/navigate_type.dart';
+import '../../../domain/enums/posted_by.dart';
+import '../../../domain/usecases/post/remote/get_post_search.dart';
 
 class HomeController extends GetxController {
   String nameUser = "Minh Phan";
@@ -65,8 +68,63 @@ class HomeController extends GetxController {
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
+  final GetPostSearchsUseCase getPostSearchsUseCase =
+      sl<GetPostSearchsUseCase>();
   Future<List<RealEstatePostEntity>> getAllPosts({int? page}) async {
     final dataState = await _getPostsUseCase(params: Pair(null, page));
+
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      return dataState.data!.second;
+    } else if (dataState is DataFailed) {
+      return [];
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<RealEstatePostEntity>> getPostsNearBy({int? page}) async {
+    PostFilter postFilter = PostFilter(
+      postedBy: PostedBy.all,
+      provinceCode: 1,
+    );
+    final dataState =
+        await getPostSearchsUseCase(params: Pair(postFilter, page));
+
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      return dataState.data!.second;
+    } else if (dataState is DataFailed) {
+      return [];
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<RealEstatePostEntity>> getPostsRent({int? page}) async {
+    PostFilter postFilter = PostFilter(
+      isLease: true,
+      postedBy: PostedBy.all,
+      provinceCode: 0,
+    );
+    final dataState =
+        await getPostSearchsUseCase(params: Pair(postFilter, page));
+
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      return dataState.data!.second;
+    } else if (dataState is DataFailed) {
+      return [];
+    } else {
+      return [];
+    }
+  }
+
+  Future<List<RealEstatePostEntity>> getPostsSell({int? page}) async {
+    PostFilter postFilter = PostFilter(
+      isLease: false,
+      postedBy: PostedBy.all,
+      provinceCode: 0,
+    );
+    final dataState =
+        await getPostSearchsUseCase(params: Pair(postFilter, page));
 
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       return dataState.data!.second;

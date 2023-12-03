@@ -238,9 +238,30 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
           'post_area', Operation.between, '${query.minArea},${query.maxArea}');
     }
 
+    // filter by post type
+    if (query is ApartmentFilter) {
+      queryBuilder.addQuery("post_type_id", Operation.equals, '\'apartment\'');
+    }
+
+    if (query is HouseFilter) {
+      queryBuilder.addQuery("post_type_id", Operation.equals, '\'house\'');
+    }
+
+    if (query is LandFilter) {
+      queryBuilder.addQuery("post_type_id", Operation.equals, '\'land\'');
+    }
+
+    if (query is OfficeFilter) {
+      queryBuilder.addQuery("post_type_id", Operation.equals, '\'office\'');
+    }
+
+    if (query is MotelFilter) {
+      queryBuilder.addQuery("post_type_id", Operation.equals, '\'motel\'');
+    }
+
     url += queryBuilder.build();
 
-    print(success(query.toString()));
+    print(error(query.toString()));
 
     print(success("url: $url"));
 

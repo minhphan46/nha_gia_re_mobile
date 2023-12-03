@@ -68,7 +68,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 15),
               InforCardList(
                 title: 'Gần bạn',
-                getListFunc: () => controller.getAllPosts(),
+                getListFunc: () => controller.getPostsNearBy(),
                 //list: data[1],
               ),
               const SizedBox(height: 15),
@@ -77,7 +77,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 15),
               InforCardList(
                 title: 'Mua bán',
-                getListFunc: () => controller.getAllPosts(),
+                getListFunc: () => controller.getPostsSell(),
                 //list: data[1],
               ),
               const SizedBox(height: 15),
@@ -86,7 +86,7 @@ class HomeScreen extends StatelessWidget {
               const SizedBox(height: 15),
               InforCardList(
                 title: 'Cho thuê',
-                getListFunc: () => controller.getAllPosts(),
+                getListFunc: () => controller.getPostsRent(),
                 //list: data[1],
               ),
               const SizedBox(height: 15),
