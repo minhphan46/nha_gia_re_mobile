@@ -15,6 +15,9 @@ class GetPostsUseCase
   @override
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> call(
       {Pair<String?, int?>? params}) {
-    return _postRepository.getPosts(params!.first, params.second);
+    if (params == null) {
+      return _postRepository.getPosts(null, null);
+    }
+    return _postRepository.getPosts(params.first, params.second);
   }
 }

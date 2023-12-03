@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/core/utils/ansi_color.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/filter_request.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';
@@ -43,6 +44,7 @@ class MySearchController extends GetxController {
 
 // loading
   RxBool isLoadingGetPosts = false.obs;
+  RxBool hasMore = true.obs;
 
   void toggleLoadingGetPosts(bool check) {
     isLoadingGetPosts.value = check;
@@ -145,7 +147,6 @@ class MySearchController extends GetxController {
     } else {
       results = await getSuggestKeywordsUseCase(params: query);
     }
-    print(results);
     return results;
   }
 
@@ -176,23 +177,41 @@ class MySearchController extends GetxController {
     provinceCode: 0,
   );
 
-  Future<void> initPosts(bool isLease) async {
-    toggleLoadingGetPosts(true);
+  Future<void> initPosts(bool isLease, {int? page = 1}) async {
     postFilter.setIsLease(isLease);
     postFilter.setTextSearch(query);
-    await getPosts(postFilter);
-    toggleLoadingGetPosts(false);
+    // return await getPosts(postFilter).then(
+    //   (value) {
+    //     return value;
+    //   },
+    // );
   }
 
-  Future<void> getPosts(PostFilter filter, {int? page = 1}) async {
+  Future<Pair<int, List<RealEstatePostEntity>>> getPosts(
+      {int? page = 1}) async {
     final GetPostSearchsUseCase getPostSearchsUseCase =
         sl<GetPostSearchsUseCase>();
-    final dataState = await getPostSearchsUseCase(params: Pair(filter, page));
-    searchPosts.value = [];
+    print(success("page: $page"));
+    if (page == 1 || page == null) {
+      toggleLoadingGetPosts(true);
+    }
+    final dataState =
+        await getPostSearchsUseCase(params: Pair(postFilter, page));
+
+    toggleLoadingGetPosts(false);
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
-      searchPosts.value = [...dataState.data!.second];
+      if (page == 1 || page == null) {
+        searchPosts.value = dataState.data!.second;
+        hasMore.value = true;
+      } else {
+        searchPosts.addAll(dataState.data!.second);
+      }
+      print(success("num page: ${dataState.data!.first}"));
+      print(success("num post: ${dataState.data!.second.length}"));
+      print(success("search Posts: ${searchPosts.length}"));
+      return dataState.data!;
     } else {
-      searchPosts.value = [];
+      return Pair(1, []);
     }
   }
 
@@ -217,17 +236,16 @@ class MySearchController extends GetxController {
     }
   }
 
-  RxString? selectedProvince;
+  RxString? selectedProvince = "".obs;
 
   /// change new value to selectedTypeItem
   void changeSelectedProvince(String newValue) async {
     for (Map<String, dynamic> province in provinceNames) {
       if ((province['name'] as String).contains(newValue)) {
-        selectedProvince = (province['name'] as String).obs;
+        selectedProvince!.value = (province['name'] as String);
         break;
       }
     }
-    //selectedProvince!.value = newValue;
     // search in provinceNames to get provinceCode
     int provinceCode = 0;
     for (Map<String, dynamic> province in provinceNames) {
@@ -240,9 +258,15 @@ class MySearchController extends GetxController {
     await getPostByProvince(provinceCode);
   }
 
-  Future<void> getPostByProvince(int proviceCode) async {
+  Future<Pair<int, List<RealEstatePostEntity>>> getPostByProvince(
+      int proviceCode,
+      {int? page = 1}) async {
     postFilter.setProvinceCode(proviceCode);
-    await getPosts(postFilter);
+    return await getPosts(page: page).then(
+      (value) {
+        return value;
+      },
+    );
   }
 
   // FILTER =================================================================
@@ -274,7 +298,7 @@ class MySearchController extends GetxController {
       // Phòng trọ
       postFilter = getMotelFilter();
     }
-    await getPosts(postFilter);
+    await getPosts();
     // reset provinces
     changeSelectedProvince(provinceNames[0]['name']);
     // reset all

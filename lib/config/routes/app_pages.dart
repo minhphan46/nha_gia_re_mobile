@@ -100,7 +100,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.purchase,
-      page: () => PurchaseScreen(),
+      page: () => const PurchaseScreen(),
       binding: PurchaseBinding(),
     ),
     GetPage(

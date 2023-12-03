@@ -1,37 +1,44 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import '../../../../../config/theme/app_color.dart';
-import '../../../../../config/theme/text_styles.dart';
-import '../../../../../core/resources/pair.dart';
-import '../../../../domain/entities/posts/real_estate_post.dart';
 
-class BaseListPosts extends StatefulWidget {
+import '../../../../../../config/theme/app_color.dart';
+import '../../../../../../config/theme/text_styles.dart';
+import '../../../../../../core/resources/pair.dart';
+import '../../../../../domain/entities/posts/real_estate_post.dart';
+
+class BaseSearchListPosts extends StatefulWidget {
   final Future<Pair<int, List<RealEstatePostEntity>>> Function({int? page})
       getPosts;
   final RxList<RealEstatePostEntity> postsList;
   final Widget? Function(RealEstatePostEntity post) buildItem;
   final String titleNull;
-  const BaseListPosts(
+  final RxBool isLoading;
+  final RxBool hasMore;
+
+  const BaseSearchListPosts(
       {required this.getPosts,
       required this.postsList,
       required this.buildItem,
+      required this.isLoading,
+      required this.hasMore,
       this.titleNull = "Chưa có tin đã đăng",
       super.key});
 
   @override
-  State<BaseListPosts> createState() => _BaseListPostsState();
+  State<BaseSearchListPosts> createState() => _BaseListPostsState();
 }
 
-class _BaseListPostsState extends State<BaseListPosts> {
-  RxBool isLoading = false.obs;
+class _BaseListPostsState extends State<BaseSearchListPosts> {
   int page = 1;
   int numOfPage = 1;
   final scrollController = ScrollController();
-  RxBool hasMore = true.obs;
 
   @override
   void initState() {
-    refresh();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      // executes after build
+      refresh();
+    });
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.offset) {
@@ -54,33 +61,37 @@ class _BaseListPostsState extends State<BaseListPosts> {
       await widget.getPosts(page: page).then((value) {
         numOfPage = value.first;
         final newPosts = value.second;
-        widget.postsList.addAll(newPosts);
-        hasMore.value = true;
+        //widget.postsList.addAll(newPosts);
+        if (newPosts.length < 10) {
+          widget.hasMore.value = false;
+        } else {
+          widget.hasMore.value = true;
+        }
       });
     } else {
       // No more pages to fetch
-      hasMore.value = false;
+      widget.hasMore.value = false;
     }
   }
 
   Future refresh() async {
-    isLoading.value = true;
     page = 1;
-    hasMore.value = true;
-    await widget.getPosts().then((value) {
+    widget.hasMore.value = true;
+    await widget.getPosts(page: 1).then((value) {
       numOfPage = value.first;
-      widget.postsList.value = value.second;
-      numOfPage == 1 ? hasMore.value = false : hasMore.value = true;
+      //widget.postsList.value = value.second;
+      numOfPage == 1
+          ? widget.hasMore.value = false
+          : widget.hasMore.value = true;
     });
-    isLoading.value = false;
   }
 
   @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: refresh,
-      child: Obx(
-        () => isLoading.value
+    return Obx(
+      () => RefreshIndicator(
+        onRefresh: refresh,
+        child: widget.isLoading.value
             ? const Center(
                 child: CircularProgressIndicator(),
               )
@@ -99,16 +110,14 @@ class _BaseListPostsState extends State<BaseListPosts> {
                       if (index < widget.postsList.length) {
                         return widget.buildItem(widget.postsList[index]);
                       } else {
-                        return Obx(
-                          () => hasMore.value
-                              ? const Padding(
-                                  padding: EdgeInsets.all(12.0),
-                                  child: Center(
-                                    child: CircularProgressIndicator(),
-                                  ),
-                                )
-                              : const SizedBox(height: 20),
-                        );
+                        return widget.hasMore.value
+                            ? const Padding(
+                                padding: EdgeInsets.all(12.0),
+                                child: Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              )
+                            : const SizedBox(height: 20);
                       }
                     },
                   ),
