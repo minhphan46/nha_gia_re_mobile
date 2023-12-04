@@ -51,7 +51,7 @@ class RealEstatePostModel extends RealEstatePostEntity {
         addressPoint: null,
         //Point(json['address_point']['x'], json['address_point']['y']),
         price: json['price'],
-        deposit: json['deposit'],
+        deposit: json['deposit'] != null ? int.parse(json['deposit']) : null,
         isLease: json['is_lease'],
         postedDate: DateTime.parse(json['posted_date']),
         expiryDate: DateTime.parse(json['expiry_date']),

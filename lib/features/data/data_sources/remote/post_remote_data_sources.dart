@@ -1,9 +1,11 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:nhagiare_mobile/core/utils/ansi_color.dart';
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
+import '../../../../core/extensions/file_ex.dart';
 import '../../../../core/resources/pair.dart';
 import '../../../../core/utils/query_builder.dart';
 import '../../../../core/utils/typedef.dart';
@@ -12,6 +14,7 @@ import '../../../domain/entities/posts/filter_request.dart';
 import '../../models/post/real_estate_post.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
+import 'package:path/path.dart';
 
 abstract class PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
@@ -143,46 +146,39 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<List<String>>> uploadImages(List<File> images) async {
     const url = '$apiAppUrl$kPostImages';
 
-    // Tạo danh sách các FormData để chứa từng file
     List<FormData> formDataList = [];
 
     for (int i = 0; i < images.length; i++) {
+      // Kiểm tra đuôi file
       String fileName = images[i].path.split('/').last;
-      FormData formData = FormData.fromMap({
-        'file': await MultipartFile.fromFile(images[i].path,
-            filename: 'image_${i}_$fileName.png'),
-      });
-      formDataList.add(formData);
-    }
+      String fileExtension = extension(fileName).toLowerCase();
+      String fileFormat = FileExt.getFileFormat(fileName);
+      String fileType = FileExt.getFileType(fileName);
 
-    // get access token
-    AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
-    String? accessToken = localDataSrc.getAccessToken();
-    if (accessToken == null) {
-      throw const ApiException(
-          message: 'Access token is null', statusCode: 505);
+      // Chỉ thêm vào danh sách nếu là đuôi jpg
+      if (fileExtension == '.jpg' || fileExtension == '.jpeg') {
+        FormData formData = FormData.fromMap(
+          {
+            FileType.file: await MultipartFile.fromFile(
+              images[i].path,
+              filename: fileName,
+              contentType: MediaType(fileType, fileFormat),
+            ),
+          },
+        );
+        formDataList.add(formData);
+      } else {
+        print(
+            'File $fileName không phải là đuôi jpg, không được thêm vào danh sách.');
+      }
     }
 
     try {
-      // Gửi request POST để upload từng file
       Response response = await client.post(
         url,
-        data: FormData.fromMap({
-          'files': formDataList,
-        }),
-        options: Options(
-          sendTimeout: const Duration(seconds: 10),
-          headers: {
-            'Authorization': 'Bearer $accessToken',
-            'Content-Type':
-                'multipart/form-data; boundary=<calculated when request is sent>'
-          },
-        ),
+        data: formDataList[0],
       );
 
-      print(response.toString());
-
-      // Xử lý kết quả response
       if (response.statusCode == 200) {
         List<String> imageUrls = List<String>.from(response.data['result']);
         return HttpResponse<List<String>>(

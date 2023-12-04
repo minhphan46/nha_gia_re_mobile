@@ -77,7 +77,7 @@ class InforCardList extends StatelessWidget {
                       ),
                     ),
                     child: Text(
-                      'Xem thêm 12.345 mẫu tin khác'.tr,
+                      'Xem thêm các mẫu tin khác'.tr,
                       style: AppTextStyles.regular12.copyWith(
                         color: AppColors.grey500,
                         //decoration: TextDecoration.underline,

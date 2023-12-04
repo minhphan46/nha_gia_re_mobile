@@ -33,7 +33,9 @@ class CreatePostController extends GetxController {
     toggleIsLoading(true);
     CreatePostsUseCase createPostsUseCase = sl<CreatePostsUseCase>();
 
-    final dataState = await createPostsUseCase(params: getFinalPost());
+    final RealEstatePostEntity post = await getFinalPost();
+
+    final dataState = await createPostsUseCase(params: post);
 
     if (dataState is DataSuccess) {
       toggleIsLoading(false);
@@ -55,22 +57,30 @@ class CreatePostController extends GetxController {
     }
   }
 
-  RealEstatePostEntity getFinalPost() {
+  Future<RealEstatePostEntity> getFinalPost() async {
+    List<String> images = await uploadImages();
+    var imagesDefault = [
+      "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
+      "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
+      "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
+      "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg",
+    ];
+    images = [...images, ...imagesDefault];
     switch (selectedPropertyType.value!) {
       case PropertyTypes.motel:
-        return createMotel();
+        return createMotel(images);
       case PropertyTypes.apartment:
-        return createApartment();
+        return createApartment(images);
       case PropertyTypes.office:
-        return createOffice();
+        return createOffice(images);
       case PropertyTypes.house:
-        return createHouse();
+        return createHouse(images);
       case PropertyTypes.land:
-        return createLand();
+        return createLand(images);
     }
   }
 
-  RealEstatePostEntity createMotel() {
+  RealEstatePostEntity createMotel(List<String> images) {
     return RealEstatePostEntity(
       typeId: "motel",
       unitId: "m2",
@@ -80,12 +90,7 @@ class CreatePostController extends GetxController {
       deposit: motelDeposit != null ? int.parse(motelDeposit ?? "0") : null,
       area: double.parse(motelArea ?? "0"),
       address: null,
-      images: const [
-        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
-        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
-        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
-        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
-      ],
+      images: images,
       features: Motel(
         motelWaterPrice,
         motelElectricPrice,
@@ -96,7 +101,7 @@ class CreatePostController extends GetxController {
     );
   }
 
-  RealEstatePostEntity createApartment() {
+  RealEstatePostEntity createApartment(List<String> images) {
     return RealEstatePostEntity(
       typeId: "apartment",
       unitId: "m2",
@@ -106,12 +111,7 @@ class CreatePostController extends GetxController {
       deposit: apartmentDeposit != null ? int.parse(apartmentDeposit!) : null,
       area: double.parse(apartmentArea!),
       address: null,
-      images: const [
-        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
-        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
-        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
-        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
-      ],
+      images: images,
       features: Apartment(
         apartmentType.value,
         apartmentIsHandOver.value,
@@ -130,7 +130,7 @@ class CreatePostController extends GetxController {
     );
   }
 
-  RealEstatePostEntity createOffice() {
+  RealEstatePostEntity createOffice(List<String> images) {
     return RealEstatePostEntity(
       typeId: "office",
       unitId: "m2",
@@ -140,12 +140,7 @@ class CreatePostController extends GetxController {
       deposit: officeDeposit != null ? int.parse(officeDeposit!) : null,
       area: double.parse(officeArea ?? "0"),
       address: null,
-      images: const [
-        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
-        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
-        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
-        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
-      ],
+      images: images,
       features: Office(
         officeType.value,
         officeIsFacade.value,
@@ -162,7 +157,7 @@ class CreatePostController extends GetxController {
     );
   }
 
-  RealEstatePostEntity createHouse() {
+  RealEstatePostEntity createHouse(List<String> images) {
     return RealEstatePostEntity(
       typeId: "house",
       unitId: "m2",
@@ -172,12 +167,7 @@ class CreatePostController extends GetxController {
       deposit: houseDeposit != null ? int.parse(houseDeposit!) : null,
       area: double.parse(houseArea!),
       address: null,
-      images: const [
-        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
-        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
-        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
-        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
-      ],
+      images: images,
       features: House(
         houseType.value,
         int.parse(houseNumOfBedRooms ?? "0"),
@@ -200,7 +190,7 @@ class CreatePostController extends GetxController {
     );
   }
 
-  RealEstatePostEntity createLand() {
+  RealEstatePostEntity createLand(List<String> images) {
     return RealEstatePostEntity(
       typeId: "land",
       unitId: "ha",
@@ -210,12 +200,7 @@ class CreatePostController extends GetxController {
       deposit: landDeposit != null ? int.parse(landDeposit!) : null,
       area: double.parse(landArea!),
       address: null,
-      images: const [
-        "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
-        "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
-        "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
-        "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg"
-      ],
+      images: images,
       features: Land(
         landType.value,
         landLotCode,
@@ -241,8 +226,10 @@ class CreatePostController extends GetxController {
 
     if (dataState is DataSuccess) {
       toggleIsLoading(false);
+      print("dataState.data! ${dataState.data!}");
       return dataState.data!;
     } else {
+      print("dataState.error! ${dataState.error!}");
       toggleIsLoading(false);
       return [];
     }

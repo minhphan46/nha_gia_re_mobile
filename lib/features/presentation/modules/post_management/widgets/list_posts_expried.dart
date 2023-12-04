@@ -35,7 +35,7 @@ class ListPostsExpried extends StatelessWidget {
         Icons.timer_outlined,
       ],
       onSelectedMenu: onSelectedMenu,
-      onTap: (RealEstatePostEntity post) {},
+      onTap: controller.navigateToDetailSceen,
     );
   }
 

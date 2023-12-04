@@ -8,7 +8,6 @@ import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts.d
 import 'package:nhagiare_mobile/features/presentation/modules/search/widgets/my_search_delegate.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 import 'package:url_launcher/url_launcher.dart';
-
 import '../../../../core/resources/data_state.dart';
 import '../../../domain/entities/posts/filter_request.dart';
 import '../../../domain/enums/navigate_type.dart';
