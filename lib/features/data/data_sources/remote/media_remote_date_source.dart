@@ -26,7 +26,8 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
       case 'mp4':
         return MediaType('video', 'mp4');
       default:
-        return MediaType('image', 'jpg');
+        throw const ApiException(
+            message: 'Media type not supported', statusCode: 505);
     }
   }
 
