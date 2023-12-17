@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
 import 'package:retrofit/retrofit.dart';
@@ -28,16 +26,13 @@ class DatabaseHelper {
           List<DataMap>.from(response.data["result"]);
 
       List<RealEstatePostModel> posts = [];
-      taskDataList.forEach((element) {
+      for (var element in taskDataList) {
         try {
           posts.add(RealEstatePostModel.fromJson(element));
         } catch (error) {
-          print(element);
           error.printInfo();
-          //Print stack trace
-          print(error);
         }
-      });
+      }
 
       final value = Pair(numOfPages, posts);
 

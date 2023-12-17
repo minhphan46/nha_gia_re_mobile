@@ -1,7 +1,6 @@
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 void main() {
-  print("Hello World");
   IO.Socket socket =
       IO.io('http://localhost:8000/conversations', <String, dynamic>{
     'transports': ['websocket'],

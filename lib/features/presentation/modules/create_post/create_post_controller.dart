@@ -59,13 +59,6 @@ class CreatePostController extends GetxController {
 
   Future<RealEstatePostEntity> getFinalPost() async {
     List<String> images = await uploadImages();
-    var imagesDefault = [
-      "https://cdn.chotot.com/SXSnpDkjXu9UW0DxEjUAtBaVQ-sKQTdQcz6m8QaIDeg/preset:view/plain/f383d60848ae496a8464d9a8686970f4-2848018247746142852.jpg",
-      "https://cdn.chotot.com/0cb0i8JTjoXyGNiGww76q5hsJTlbbwcs9bWhQfwPQrU/preset:view/plain/da4a1e0d0784c80a6560842120155652-2848018247795789418.jpg",
-      "https://cdn.chotot.com/vZ9mSUUEcDwk-XEOP9hG9dIPAtOd9j5CSc_ARMPtOLQ/preset:view/plain/5ccb0c88de8a6198da298a375db9780a-2848018250111110762.jpg",
-      "https://cdn.chotot.com/jlHI6xKmRuQGLaCWr5OglTO5PI1pDEhDKX7a1W1oN24/preset:view/plain/7769b3c0f8e54662c1b2b74c7451961a-2848018249642033796.jpg",
-    ];
-    images = [...images, ...imagesDefault];
     switch (selectedPropertyType.value!) {
       case PropertyTypes.motel:
         return createMotel(images);
@@ -226,10 +219,8 @@ class CreatePostController extends GetxController {
 
     if (dataState is DataSuccess) {
       toggleIsLoading(false);
-      print("dataState.data! ${dataState.data!}");
       return dataState.data!;
     } else {
-      print("dataState.error! ${dataState.error!}");
       toggleIsLoading(false);
       return [];
     }

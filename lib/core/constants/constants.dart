@@ -1,4 +1,4 @@
-const isProduction = false;
+const isProduction = true;
 const String baseUrlDev = "http://192.168.137.1:8000";
 const String baseUrlProduction = "https://nha-gia-re-server.onrender.com";
 const String apiDevUrl = "$baseUrlDev/api/v1";

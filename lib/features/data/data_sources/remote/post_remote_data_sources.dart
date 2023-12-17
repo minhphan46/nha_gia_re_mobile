@@ -14,6 +14,7 @@ import '../../../domain/entities/posts/filter_request.dart';
 import '../../models/post/real_estate_post.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
 abstract class PostRemoteDataSrc {
@@ -23,11 +24,14 @@ abstract class PostRemoteDataSrc {
       PostFilter query, int? page);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
       String status, int? page);
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsHided(
+      int? page);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired(
       int? page);
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
   Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
+  Future<HttpResponse<void>> deletePost(String postId);
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -39,14 +43,18 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
       String? userId, int? page) async {
     var url = '$apiAppUrl$kGetPostEndpoint';
+
+    QueryBuilder queryBuilder = QueryBuilder();
     int pageQuery = page ?? 1;
+    queryBuilder.addPage(pageQuery);
+
     if (userId != null) {
-      url += QueryBuilder()
-          .addQuery('post_user_id', Operation.equals, '\'$userId\'')
-          .addPage(pageQuery)
-          .build();
+      queryBuilder.addQuery('post_user_id', Operation.equals, '\'$userId\'');
     }
-    print(success("url: $url"));
+    // post_is_active[eq]=true
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
+
+    url += queryBuilder.build();
     return await DatabaseHelper().getPosts(url, client);
   }
 
@@ -54,8 +62,28 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
       String status, int? page) async {
     int pageQuery = page ?? 1;
-    String url =
-        '$apiAppUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addPage(pageQuery).addOrderBy('posted_date', OrderBy.desc).build()}';
+    QueryBuilder queryBuilder = QueryBuilder();
+    queryBuilder.addPage(pageQuery);
+    queryBuilder.addQuery('post_status', Operation.equals, '\'$status\'');
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
+    queryBuilder.addOrderBy('posted_date', OrderBy.desc);
+
+    String url = '$apiAppUrl$kGetPostEndpoint${queryBuilder.build()}';
+
+    return await DatabaseHelper().getPosts(url, client);
+  }
+
+  @override
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsHided(
+      int? page) async {
+    int pageQuery = page ?? 1;
+
+    QueryBuilder queryBuilder = QueryBuilder();
+    queryBuilder.addPage(pageQuery);
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'false');
+    queryBuilder.addOrderBy('posted_date', OrderBy.desc);
+
+    String url = '$apiAppUrl$kGetPostEndpoint${queryBuilder.build()}';
 
     return await DatabaseHelper().getPosts(url, client);
   }
@@ -143,6 +171,46 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
+  Future<HttpResponse<void>> deletePost(String postId) async {
+    String url = '$apiAppUrl$kGetPostEndpoint' '/$postId';
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
+      }
+
+      final response = await client.delete(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+      return HttpResponse(null, response);
+    } on DioException catch (e) {
+      throw ApiException(
+        message: e.message!,
+        statusCode: e.response?.statusCode ?? 505,
+      );
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
   Future<HttpResponse<List<String>>> uploadImages(List<File> images) async {
     const url = '$apiAppUrl$kPostImages';
 
@@ -174,23 +242,29 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     }
 
     try {
-      Response response = await client.post(
-        url,
-        data: formDataList[0],
+      List<String> imageUrls = [];
+      Response response = Response<dynamic>(
+        data: {},
+        statusCode: 404,
+        requestOptions: RequestOptions(path: ''),
       );
+      for (int i = 0; i < formDataList.length; i++) {
+        response = await client.post(
+          url,
+          data: formDataList[i],
+        );
 
-      if (response.statusCode == 200) {
-        List<String> imageUrls = List<String>.from(response.data['result']);
-        return HttpResponse<List<String>>(
-          imageUrls,
-          response,
-        );
-      } else {
-        return HttpResponse<List<String>>(
-          [],
-          response,
-        );
+        if (response.statusCode == 200) {
+          List<String> results = List<String>.from(response.data['result']);
+          imageUrls.addAll(results);
+        }
       }
+
+      print(success('imageUrls: $imageUrls'));
+      return HttpResponse<List<String>>(
+        imageUrls,
+        response,
+      );
     } catch (e) {
       throw ApiException(message: e.toString(), statusCode: 505);
     }
