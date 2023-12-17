@@ -11,6 +11,7 @@ import 'package:nhagiare_mobile/features/domain/entities/chat/message.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_controler.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/chat/widgets/media_row.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 class ChatDetailScreen extends StatefulWidget {
@@ -155,6 +156,18 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     },
                   ),
                 ),
+                Obx(() => Visibility(
+                      visible: controller.mediaPicker.isNotEmpty,
+                      child: MediaRow(
+                        media: controller.mediaPicker,
+                        onRemove: (file) {
+                          controller.mediaPicker.remove(file);
+                        },
+                        onClear: () {
+                          controller.mediaPicker.clear();
+                        },
+                      ),
+                    )),
                 _buildMessageInput(),
               ],
             );
@@ -247,7 +260,19 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                   color: AppColors.green,
                 ),
                 onPressed: () {
-                  // Implement the logic to handle image
+                  controller.pickMedias();
+                },
+              ),
+            ),
+            Visibility(
+              visible: isShowButtons.value,
+              child: IconButton(
+                icon: const Icon(
+                  HeroiconsSolid.camera,
+                  color: AppColors.green,
+                ),
+                onPressed: () {
+                  controller.takeAPhoto();
                 },
               ),
             ),
