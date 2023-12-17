@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nhagiare_mobile/core/utils/ansi_color.dart';
-
 import '../../../../../../config/theme/app_color.dart';
 import '../../../../../../config/theme/text_styles.dart';
 import '../../../../../../core/resources/pair.dart';
@@ -43,7 +41,6 @@ class _BaseListPostsState extends State<BaseSearchListPosts> {
     scrollController.addListener(() {
       if (scrollController.position.maxScrollExtent ==
           scrollController.offset) {
-        print("Load more");
         fetchMore();
       }
     });
@@ -58,7 +55,6 @@ class _BaseListPostsState extends State<BaseSearchListPosts> {
 
   Future fetchMore() async {
     page++;
-    print(error("Page fetch more: $page"));
     if (page <= numOfPage) {
       // Fetch more data and add to the list
       await widget.getPosts(page: page).then((value) {

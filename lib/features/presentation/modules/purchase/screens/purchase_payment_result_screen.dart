@@ -154,19 +154,18 @@ class _PurchasePaymentResultScreenState
                                 customText("Loại giao dịch",
                                     "Mua ${transaction.package?.name ?? "Gói Dịch Vụ"} ${transaction.numOfSubscriptionMonth} tháng"),
                                 customText("Ngày bắt đầu",
-                                    DateTime.now().toDMYString() ?? ""),
+                                    DateTime.now().toDMYString()),
                                 customText(
                                     "Ngày kết thúc",
                                     // Now + transaction.numOfSubscriptionMonth
                                     //     .months
                                     DateTime(
-                                                DateTime.now().year,
-                                                DateTime.now().month +
-                                                    transaction
-                                                        .numOfSubscriptionMonth,
-                                                DateTime.now().day)
-                                            .toDMYString() ??
-                                        ""),
+                                            DateTime.now().year,
+                                            DateTime.now().month +
+                                                transaction
+                                                    .numOfSubscriptionMonth,
+                                            DateTime.now().day)
+                                        .toDMYString()),
                               ],
                             ),
                           ),

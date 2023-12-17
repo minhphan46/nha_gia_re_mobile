@@ -14,6 +14,7 @@ import '../../../domain/entities/posts/filter_request.dart';
 import '../../models/post/real_estate_post.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
+// ignore: depend_on_referenced_packages
 import 'package:path/path.dart';
 
 abstract class PostRemoteDataSrc {
@@ -47,7 +48,6 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
           .addPage(pageQuery)
           .build();
     }
-    print(success("url: $url"));
     return await DatabaseHelper().getPosts(url, client);
   }
 

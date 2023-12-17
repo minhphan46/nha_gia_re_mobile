@@ -219,10 +219,8 @@ class CreatePostController extends GetxController {
 
     if (dataState is DataSuccess) {
       toggleIsLoading(false);
-      print("dataState.data! ${dataState.data!}");
       return dataState.data!;
     } else {
-      print("dataState.error! ${dataState.error!}");
       toggleIsLoading(false);
       return [];
     }
