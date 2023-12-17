@@ -59,8 +59,24 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<DataState<void>> deletePost(String id) async {
-    // TODO: implement deletePost
-    throw UnimplementedError();
+    try {
+      final httpResponse = await _dataSrc.deletePost(id);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return const DataSuccess(null);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 
   @override

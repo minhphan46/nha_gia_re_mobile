@@ -28,6 +28,7 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
   Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
+  Future<HttpResponse<void>> deletePost(String postId);
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -143,6 +144,46 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   }
 
   @override
+  Future<HttpResponse<void>> deletePost(String postId) async {
+    String url = '$apiAppUrl$kGetPostEndpoint' '/$postId';
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
+      }
+
+      final response = await client.delete(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+      return HttpResponse(null, response);
+    } on DioException catch (e) {
+      throw ApiException(
+        message: e.message!,
+        statusCode: e.response?.statusCode ?? 505,
+      );
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
   Future<HttpResponse<List<String>>> uploadImages(List<File> images) async {
     const url = '$apiAppUrl$kPostImages';
 
@@ -174,23 +215,29 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     }
 
     try {
-      Response response = await client.post(
-        url,
-        data: formDataList[0],
+      List<String> imageUrls = [];
+      Response response = Response<dynamic>(
+        data: {},
+        statusCode: 404,
+        requestOptions: RequestOptions(path: ''),
       );
+      for (int i = 0; i < formDataList.length; i++) {
+        response = await client.post(
+          url,
+          data: formDataList[i],
+        );
 
-      if (response.statusCode == 200) {
-        List<String> imageUrls = List<String>.from(response.data['result']);
-        return HttpResponse<List<String>>(
-          imageUrls,
-          response,
-        );
-      } else {
-        return HttpResponse<List<String>>(
-          [],
-          response,
-        );
+        if (response.statusCode == 200) {
+          List<String> results = List<String>.from(response.data['result']);
+          imageUrls.addAll(results);
+        }
       }
+
+      print(success('imageUrls: $imageUrls'));
+      return HttpResponse<List<String>>(
+        imageUrls,
+        response,
+      );
     } catch (e) {
       throw ApiException(message: e.toString(), statusCode: 505);
     }

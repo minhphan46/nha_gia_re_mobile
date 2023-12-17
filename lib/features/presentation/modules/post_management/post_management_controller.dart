@@ -1,11 +1,14 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_approved.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_expired.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_hided.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_pending.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_posts_rejected.dart';
 import '../../../../config/routes/app_routes.dart';
+import '../../../../config/theme/app_color.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../core/resources/pair.dart';
 import '../../../../injection_container.dart';
@@ -121,8 +124,24 @@ class PostManagementController extends GetxController {
   }
 
   void deletePost(RealEstatePostEntity post) async {
-    //await repository.deletePost(post.id);
-    await getPostsInit();
+    DeletePostUseCase deletePostUseCase = sl<DeletePostUseCase>();
+    final dataState = await deletePostUseCase(params: post.id);
+    if (dataState is DataSuccess) {
+      await getPostsInit();
+      Get.snackbar(
+        'Cập nhập',
+        'Xóa bài thành công',
+        backgroundColor: AppColors.green,
+        colorText: Colors.white,
+      );
+    } else {
+      Get.snackbar(
+        'Cập nhập',
+        'Xóa bài thất bại',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
   }
 
   void extensionPost(RealEstatePostEntity post) async {
