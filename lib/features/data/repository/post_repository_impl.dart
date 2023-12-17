@@ -87,8 +87,25 @@ class PostRepositoryImpl implements PostRepository {
 
   @override
   Future<DataState<void>> updatePost(RealEstatePostEntity post) async {
-    // TODO: implement updatePost
-    throw UnimplementedError();
+    try {
+      final httpResponse =
+          await _dataSrc.updatePost(RealEstatePostModel.fromEntity(post));
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(
+          DioException(
+            error: httpResponse.response.statusMessage,
+            response: httpResponse.response,
+            type: DioExceptionType.badResponse,
+            requestOptions: httpResponse.response.requestOptions,
+          ),
+        );
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
   }
 
   @override

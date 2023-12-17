@@ -32,6 +32,7 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<String>>> uploadImages(List<File> images);
   Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
   Future<HttpResponse<void>> deletePost(String postId);
+  Future<HttpResponse<void>> updatePost(RealEstatePostModel post);
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -139,9 +140,56 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       }
 
       // Gửi yêu cầu đến server
-      print(postModel.toJson());
+      //print(postModel.toJson());
 
       final response = await client.post(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+        data: postModel.toJson(),
+      );
+
+      if (response.statusCode != 200) {
+        throw ApiException(
+          message: response.data['message'],
+          statusCode: response.statusCode!,
+        );
+      }
+
+      // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+      return HttpResponse(null, response);
+    } on DioException catch (e) {
+      throw ApiException(
+        message: e.message!,
+        statusCode: e.response?.statusCode ?? 505,
+      );
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<void>> updatePost(RealEstatePostModel postModel) async {
+    String url = '$apiAppUrl$kGetPostEndpoint/${postModel.id}';
+    print(error('url: $url'));
+    print(error('postModel: ${postModel.toJson()}'));
+
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
+      }
+
+      // Gửi yêu cầu đến server
+      //print(postModel.toJson());
+
+      final response = await client.patch(
         url,
         options: Options(
             sendTimeout: const Duration(seconds: 10),
@@ -260,7 +308,6 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
         }
       }
 
-      print(success('imageUrls: $imageUrls'));
       return HttpResponse<List<String>>(
         imageUrls,
         response,
@@ -331,9 +378,9 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
     url += queryBuilder.build();
 
-    print(error(query.toString()));
+    //print(error(query.toString()));
 
-    print(success("url: $url"));
+    //print(success("url: $url"));
 
     return await DatabaseHelper().getPosts(url, client);
   }

@@ -3,6 +3,7 @@ import 'package:get_it/get_it.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/user_remote_date_source.dart';
 import 'package:nhagiare_mobile/features/data/repository/user_respository_impl.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/hide_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
 import '../features/domain/usecases/authentication/get_me.dart';
 import '../features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
@@ -152,6 +153,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<DeletePostUseCase>(
     DeletePostUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<HidePostsUseCase>(
+    HidePostsUseCase(
       sl<PostRepository>(),
     ),
   );
