@@ -24,6 +24,8 @@ abstract class PostRemoteDataSrc {
       PostFilter query, int? page);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
       String status, int? page);
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsHided(
+      int? page);
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired(
       int? page);
   Future<HttpResponse<void>> createPost(RealEstatePostModel post);
@@ -41,13 +43,18 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getAllPosts(
       String? userId, int? page) async {
     var url = '$apiAppUrl$kGetPostEndpoint';
+
+    QueryBuilder queryBuilder = QueryBuilder();
     int pageQuery = page ?? 1;
+    queryBuilder.addPage(pageQuery);
+
     if (userId != null) {
-      url += QueryBuilder()
-          .addQuery('post_user_id', Operation.equals, '\'$userId\'')
-          .addPage(pageQuery)
-          .build();
+      queryBuilder.addQuery('post_user_id', Operation.equals, '\'$userId\'');
     }
+    // post_is_active[eq]=true
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
+
+    url += queryBuilder.build();
     return await DatabaseHelper().getPosts(url, client);
   }
 
@@ -55,8 +62,28 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsStatus(
       String status, int? page) async {
     int pageQuery = page ?? 1;
-    String url =
-        '$apiAppUrl$kGetPostEndpoint${QueryBuilder().addQuery('post_status', Operation.equals, '\'$status\'').addPage(pageQuery).addOrderBy('posted_date', OrderBy.desc).build()}';
+    QueryBuilder queryBuilder = QueryBuilder();
+    queryBuilder.addPage(pageQuery);
+    queryBuilder.addQuery('post_status', Operation.equals, '\'$status\'');
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
+    queryBuilder.addOrderBy('posted_date', OrderBy.desc);
+
+    String url = '$apiAppUrl$kGetPostEndpoint${queryBuilder.build()}';
+
+    return await DatabaseHelper().getPosts(url, client);
+  }
+
+  @override
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsHided(
+      int? page) async {
+    int pageQuery = page ?? 1;
+
+    QueryBuilder queryBuilder = QueryBuilder();
+    queryBuilder.addPage(pageQuery);
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'false');
+    queryBuilder.addOrderBy('posted_date', OrderBy.desc);
+
+    String url = '$apiAppUrl$kGetPostEndpoint${queryBuilder.build()}';
 
     return await DatabaseHelper().getPosts(url, client);
   }

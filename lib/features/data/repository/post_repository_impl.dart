@@ -137,7 +137,7 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsHided(
       int? page) async {
     try {
-      final httpResponse = await _dataSrc.getPostsStatus("hided", page);
+      final httpResponse = await _dataSrc.getPostsHided(page);
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);
