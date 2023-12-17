@@ -1,6 +1,9 @@
 import 'dart:async';
+import 'dart:io';
 
+import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
@@ -99,5 +102,30 @@ class ChatController extends GetxController {
     _conversationsStreamController.close();
     _messagesStreamController.close();
     super.onClose();
+  }
+
+  RxList<File> mediaPicker = RxList<File>();
+  Future<void> pickMedias() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      allowMultiple: true,
+      type: FileType.media,
+    );
+    if (result != null) {
+      mediaPicker.addAll(result.files.map((e) => File(e.path!)).toList());
+      update();
+    }
+  }
+
+  Future<void> takeAPhoto() async {
+    final imagePicker = ImagePicker();
+    XFile? xFile = await imagePicker.pickImage(source: ImageSource.camera);
+    if (xFile != null) {
+      mediaPicker.add(File(xFile.path));
+    }
+  }
+
+  void removeMedia(File file) {
+    mediaPicker.remove(file);
+    update();
   }
 }
