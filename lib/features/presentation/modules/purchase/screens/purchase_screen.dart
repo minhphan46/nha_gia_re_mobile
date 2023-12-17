@@ -153,9 +153,14 @@ class _PurchaseScreenState extends State<PurchaseScreen>
                     child: Text("Bạn chưa đăng ký gói nào"),
                   );
                 }
-                return MembershipPackageCard(
-                  package: snapshot.data!.package!,
-                  isCurrent: true,
+                return SingleChildScrollView(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: MembershipPackageCard(
+                      package: snapshot.data!.package!,
+                      isCurrent: true,
+                    ),
+                  ),
                 );
               }),
           FutureBuilder<List<TransactionEntity>>(

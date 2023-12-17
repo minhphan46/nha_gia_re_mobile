@@ -153,15 +153,19 @@ class _PurchasePaymentResultScreenState
                                     transaction.timestamp.toHMDMYString()),
                                 customText("Loại giao dịch",
                                     "Mua ${transaction.package?.name ?? "Gói Dịch Vụ"} ${transaction.numOfSubscriptionMonth} tháng"),
-                                customText(
-                                    "Ngày bắt đầu",
-                                    transaction.subscription?.startingDate
-                                            .toHMDMYString() ??
-                                        ""),
+                                customText("Ngày bắt đầu",
+                                    DateTime.now().toDMYString() ?? ""),
                                 customText(
                                     "Ngày kết thúc",
-                                    transaction.subscription?.expirationDate
-                                            .toHMDMYString() ??
+                                    // Now + transaction.numOfSubscriptionMonth
+                                    //     .months
+                                    DateTime(
+                                                DateTime.now().year,
+                                                DateTime.now().month +
+                                                    transaction
+                                                        .numOfSubscriptionMonth,
+                                                DateTime.now().day)
+                                            .toDMYString() ??
                                         ""),
                               ],
                             ),

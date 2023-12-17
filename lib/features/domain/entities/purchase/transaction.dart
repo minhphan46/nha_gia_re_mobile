@@ -19,7 +19,7 @@ class TransactionEntity extends Equatable {
   final Subscription? subscription;
   final MembershipPackageEntity? package;
 
-  bool get isPaid => status == 'success';
+  bool get isPaid => status == 'paid';
 
   const TransactionEntity({
     required this.id,

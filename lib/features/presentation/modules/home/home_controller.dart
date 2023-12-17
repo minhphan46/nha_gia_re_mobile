@@ -17,8 +17,8 @@ import '../../../domain/usecases/post/remote/get_post_search.dart';
 class HomeController extends GetxController {
   String nameUser = "Minh Phan";
 
-  RxInt unreadMessCount = 1.obs;
-  RxInt unreadNotiCount = 1.obs;
+  RxInt unreadMessCount = 0.obs;
+  RxInt unreadNotiCount = 0.obs;
 
   // appbar
   Greeting getGreeting() {
