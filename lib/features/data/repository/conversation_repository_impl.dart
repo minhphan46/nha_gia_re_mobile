@@ -91,4 +91,9 @@ class ConversationRepositoryImpl extends ConversationRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  void sendMediaMessage(String conversationId, List<File> media) {
+    _conversationRemoteDataSource.sendMediaMessage(conversationId, media);
+  }
 }

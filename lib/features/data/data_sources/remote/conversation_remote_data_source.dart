@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:typed_data';
+
 import 'package:retrofit/dio.dart';
 import 'package:dio/dio.dart';
 import 'package:retrofit/retrofit.dart';
@@ -27,6 +30,8 @@ abstract class ConversationRemoteDataSource {
   void setAuthToken(String token);
   Future<HttpResponse<ConversationModel>> getOrCreateConversation(
       String userId);
+
+  void sendMediaMessage(String conversationId, List<File> media);
 }
 
 class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
@@ -179,6 +184,7 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   void sendTextMessage(String conversationId, String message) {
     socket.emit('send_message', {
       "conversation_id": conversationId,
+      "type": "text",
       "content": message,
     });
   }
@@ -249,5 +255,27 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
     } catch (error) {
       throw ApiException(message: error.toString(), statusCode: 505);
     }
+  }
+
+  @override
+  void sendMediaMessage(String conversationId, List<File> media) {
+    List<Future<Uint8List>> medias = [];
+    for (var element in media) {
+      medias.add(element.readAsBytes());
+    }
+    Future.wait(medias).then((value) {
+      List<dynamic> data = [];
+      media.asMap().forEach((index, element) {
+        data.add({
+          "file_name": element.path.split("/").last,
+          "bytes": value[index],
+        });
+      });
+      socket.emit('send_media_message', {
+        "conversation_id": conversationId,
+        "type": "media",
+        "content": data,
+      });
+    });
   }
 }

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
@@ -16,4 +18,5 @@ abstract class ConversationRepository {
   void disconnect();
   void deleteConversation(String conversationId);
   Future<DataState<ConversationModel>> getOrCreateConversation(String userId);
+  void sendMediaMessage(String conversationId, List<File> media);
 }

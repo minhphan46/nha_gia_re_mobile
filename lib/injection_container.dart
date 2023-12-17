@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/remote/media_remote_date_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/user_remote_date_source.dart';
 import 'package:nhagiare_mobile/features/data/repository/user_respository_impl.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
@@ -40,10 +41,12 @@ import 'features/data/data_sources/local/authentication_local_data_source.dart';
 import 'features/data/data_sources/remote/authentication_remote_data_source.dart';
 import 'features/data/repository/authentication_repository_impl.dart';
 import 'features/data/repository/conversation_repository_impl.dart';
+import 'features/data/repository/media_repository_impl.dart';
 import 'features/data/repository/post_repository_impl.dart';
 import 'features/data/repository/provinces_repository_impl.dart';
 import 'features/domain/repository/authentication_repository.dart';
 import 'features/domain/repository/conversation_repository.dart';
+import 'features/domain/repository/media_repository.dart';
 import 'features/domain/repository/provinces_repository.dart';
 import 'features/domain/repository/user_repository.dart';
 import 'features/domain/usecases/authentication/check_token.dart';
@@ -332,6 +335,18 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<FollowOrUnfollowUserUseCase>(
     FollowOrUnfollowUserUseCase(
       sl<UserRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<MediaRemoteDataSource>(
+    MediaRemoteDataSourceImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<MediaRepository>(
+    MediaRepositoryImpl(
+      mediaDataSource: sl<MediaRemoteDataSource>(),
     ),
   );
 }

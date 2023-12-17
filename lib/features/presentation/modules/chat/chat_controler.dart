@@ -9,6 +9,7 @@ import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dar
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:nhagiare_mobile/features/domain/repository/authentication_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/conversation_repository.dart';
+import 'package:nhagiare_mobile/features/domain/repository/media_repository.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 
 class ChatController extends GetxController {
@@ -90,7 +91,12 @@ class ChatController extends GetxController {
   }
 
   void sendMessage(String message) {
-    _conversationRepository.sendTextMessage(conversationId, message);
+    print("Send message...");
+    if (mediaPicker.isNotEmpty) {
+      sendMedia();
+    } else if (message.isNotEmpty) {
+      _conversationRepository.sendTextMessage(conversationId, message);
+    }
   }
 
   void deleteConversation(String conversationId) {
@@ -127,5 +133,16 @@ class ChatController extends GetxController {
   void removeMedia(File file) {
     mediaPicker.remove(file);
     update();
+  }
+
+  final MediaRepository _mediaRepository = sl.get<MediaRepository>();
+  void sendMedia() {
+    _mediaRepository.uploadMedia(mediaPicker).then((value) {
+      if (value is DataSuccess) {
+        final data = value.data!;
+        print(data);
+        update();
+      }
+    });
   }
 }
