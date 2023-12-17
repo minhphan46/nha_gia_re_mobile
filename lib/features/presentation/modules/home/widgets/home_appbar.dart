@@ -77,39 +77,39 @@ class HomeAppbar extends StatelessWidget {
                       ),
                     ),
             ),
-            Obx(
-              () => controller.unreadNotiCount.value == 0
-                  ? GestureDetector(
-                      onTap: () {
-                        controller.navigateToNotificationScreen();
-                      },
-                      child: Padding(
-                        padding: const EdgeInsets.only(right: 0),
-                        child: Image.asset(Assets.notification, width: 25),
-                      ),
-                    )
-                  : Padding(
-                      padding: const EdgeInsets.only(right: 0),
-                      child: GestureDetector(
-                        onTap: () {
-                          controller.navigateToNotificationScreen();
-                        },
-                        child: badges.Badge(
-                          position:
-                              badges.BadgePosition.topStart(top: -8, start: 18),
-                          badgeContent: Text(
-                            controller.unreadNotiCount.value.toString(),
-                            style:
-                                AppTextStyles.bold10.colorEx(AppColors.white),
-                          ),
-                          badgeStyle: const badges.BadgeStyle(
-                            badgeColor: AppColors.green,
-                          ),
-                          child: Image.asset(Assets.notification, width: 25),
-                        ),
-                      ),
-                    ),
-            ),
+            // Obx(
+            //   () => controller.unreadNotiCount.value == 0
+            //       ? GestureDetector(
+            //           onTap: () {
+            //             controller.navigateToNotificationScreen();
+            //           },
+            //           child: Padding(
+            //             padding: const EdgeInsets.only(right: 0),
+            //             child: Image.asset(Assets.notification, width: 25),
+            //           ),
+            //         )
+            //       : Padding(
+            //           padding: const EdgeInsets.only(right: 0),
+            //           child: GestureDetector(
+            //             onTap: () {
+            //               controller.navigateToNotificationScreen();
+            //             },
+            //             child: badges.Badge(
+            //               position:
+            //                   badges.BadgePosition.topStart(top: -8, start: 18),
+            //               badgeContent: Text(
+            //                 controller.unreadNotiCount.value.toString(),
+            //                 style:
+            //                     AppTextStyles.bold10.colorEx(AppColors.white),
+            //               ),
+            //               badgeStyle: const badges.BadgeStyle(
+            //                 badgeColor: AppColors.green,
+            //               ),
+            //               child: Image.asset(Assets.notification, width: 25),
+            //             ),
+            //           ),
+            //         ),
+            // ),
           ],
         )
       ],

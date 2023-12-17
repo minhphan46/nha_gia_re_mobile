@@ -1,4 +1,7 @@
+import 'dart:math';
+
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/resources/pair.dart';
@@ -24,10 +27,17 @@ class DatabaseHelper {
       final List<DataMap> taskDataList =
           List<DataMap>.from(response.data["result"]);
 
-      List<RealEstatePostModel> posts = taskDataList
-          .map((postJson) => RealEstatePostModel.fromJson(postJson))
-          .where((post) => post.isActive!)
-          .toList();
+      List<RealEstatePostModel> posts = [];
+      taskDataList.forEach((element) {
+        try {
+          posts.add(RealEstatePostModel.fromJson(element));
+        } catch (error) {
+          print(element);
+          error.printInfo();
+          //Print stack trace
+          print(error);
+        }
+      });
 
       final value = Pair(numOfPages, posts);
 
@@ -35,6 +45,7 @@ class DatabaseHelper {
     } on ApiException {
       rethrow;
     } catch (error) {
+      error.printError();
       throw ApiException(message: error.toString(), statusCode: 505);
     }
   }
