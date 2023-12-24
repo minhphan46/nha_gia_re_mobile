@@ -2,6 +2,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:nhagiare_mobile/core/resources/pair.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/entities/properties/apartment.dart';
 import 'package:nhagiare_mobile/features/domain/entities/properties/house.dart';
@@ -12,6 +14,8 @@ import 'package:nhagiare_mobile/features/domain/enums/direction.dart';
 import 'package:nhagiare_mobile/features/domain/enums/furniture_status.dart';
 import 'package:nhagiare_mobile/features/domain/enums/land_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_names.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/upload_images.dart';
 import '../../../../config/theme/app_color.dart';
@@ -21,6 +25,7 @@ import '../../../domain/entities/properties/office.dart';
 import '../../../domain/enums/house_types.dart';
 import '../../../domain/enums/legal_document_status.dart';
 import '../../../domain/enums/property_types.dart';
+import '../../../domain/usecases/address/get_province_names.dart';
 
 class CreatePostController extends GetxController {
   RxBool isLoading = false.obs;
@@ -82,7 +87,7 @@ class CreatePostController extends GetxController {
       price: motelPrice ?? "",
       deposit: motelDeposit != null ? int.parse(motelDeposit ?? "0") : null,
       area: double.parse(motelArea ?? "0"),
-      address: null,
+      address: postAddress,
       images: images,
       features: Motel(
         motelWaterPrice,
@@ -103,7 +108,7 @@ class CreatePostController extends GetxController {
       price: apartmentPrice,
       deposit: apartmentDeposit != null ? int.parse(apartmentDeposit!) : null,
       area: double.parse(apartmentArea!),
-      address: null,
+      address: postAddress,
       images: images,
       features: Apartment(
         apartmentType.value,
@@ -132,7 +137,7 @@ class CreatePostController extends GetxController {
       price: officePrice,
       deposit: officeDeposit != null ? int.parse(officeDeposit!) : null,
       area: double.parse(officeArea ?? "0"),
-      address: null,
+      address: postAddress,
       images: images,
       features: Office(
         officeType.value,
@@ -159,7 +164,7 @@ class CreatePostController extends GetxController {
       price: housePrice,
       deposit: houseDeposit != null ? int.parse(houseDeposit!) : null,
       area: double.parse(houseArea!),
-      address: null,
+      address: postAddress,
       images: images,
       features: House(
         houseType.value,
@@ -192,7 +197,7 @@ class CreatePostController extends GetxController {
       price: landPrice,
       deposit: landDeposit != null ? int.parse(landDeposit!) : null,
       area: double.parse(landArea!),
-      address: null,
+      address: postAddress,
       images: images,
       features: Land(
         landType.value,
@@ -263,6 +268,117 @@ class CreatePostController extends GetxController {
   String? block;
   String? floor;
   String? address;
+
+  // address
+  AddressEntity postAddress = AddressEntity();
+  int provinceCode = 0;
+  int districtCode = 0;
+  int wardCode = 0;
+
+  void createAddress() {
+    if (provinceCode != 0 && districtCode != 0 && wardCode != 0) {
+      postAddress = AddressEntity(
+        provinceCode: provinceCode,
+        districtCode: districtCode,
+        wardCode: wardCode,
+      );
+    }
+
+    addressTextController.text = postAddress.getDetailAddress();
+  }
+
+  Rxn<String> selectedProvince = Rxn(null);
+
+  void changeSelectedProvince(String value) {
+    selectedProvince.value = value;
+    // search in provinceNames to get provinceCode
+    for (Map<String, dynamic> province in provinceNames) {
+      if ((province['name'] as String).contains(value)) {
+        provinceCode = province['code'] as int;
+        break;
+      }
+    }
+    getDistrictNames(provinceCode);
+    wardCode = 0;
+  }
+
+  Rxn<String> selectedDistrict = Rxn(null);
+
+  void changeSelectedDistrict(String value) {
+    selectedDistrict.value = value;
+    // search in districtNames to get districtCode
+    for (Map<String, dynamic> district in districtNames) {
+      if ((district['name'] as String).contains(value)) {
+        districtCode = district['code'] as int;
+        break;
+      }
+    }
+    getWardNames(provinceCode, districtCode);
+  }
+
+  Rxn<String> selectedWard = Rxn(null);
+
+  void changeSelectedWard(String value) {
+    selectedWard.value = value;
+    // search in wardNames to get wardCode
+    for (Map<String, dynamic> ward in wardNames) {
+      if ((ward['name'] as String).contains(value)) {
+        wardCode = ward['code'] as int;
+        break;
+      }
+    }
+  }
+
+  RxList<Map<String, dynamic>> provinceNames = <Map<String, dynamic>>[].obs;
+
+  List<Map<String, dynamic>> getProvinceNames() {
+    final GetProvinceNamesUseCase getProvinceNamesUseCase =
+        sl<GetProvinceNamesUseCase>();
+    final dataState = getProvinceNamesUseCase();
+
+    if (dataState is DataSuccess) {
+      provinceNames.clear();
+      provinceNames.value = [...dataState.data!];
+      return dataState.data!;
+    } else {
+      provinceNames.clear();
+      return [];
+    }
+  }
+
+  RxList<Map<String, dynamic>> districtNames = <Map<String, dynamic>>[].obs;
+
+  List<Map<String, dynamic>> getDistrictNames(int provinceCode) {
+    final GetDistrictNamesUseCase getDistrictNamesUseCase =
+        sl<GetDistrictNamesUseCase>();
+    final dataState = getDistrictNamesUseCase(params: provinceCode);
+
+    if (dataState is DataSuccess) {
+      districtNames.clear();
+      districtNames.value = [...dataState.data!];
+      return dataState.data!;
+    } else {
+      districtNames.clear();
+      return [];
+    }
+  }
+
+  RxList<Map<String, dynamic>> wardNames = <Map<String, dynamic>>[].obs;
+
+  List<Map<String, dynamic>> getWardNames(int provinceCode, int districtCode) {
+    final GetWardNamesUseCase getWardNamesUseCase = sl<GetWardNamesUseCase>();
+    final dataState =
+        getWardNamesUseCase(params: Pair(provinceCode, districtCode));
+
+    if (dataState is DataSuccess) {
+      wardNames.clear();
+      wardNames.value = [...dataState.data!];
+      return dataState.data!;
+    } else {
+      wardNames.clear();
+      return [];
+    }
+  }
 
   // hinh anh
   bool? photoController;

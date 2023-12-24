@@ -35,6 +35,7 @@ abstract class AppRoutes {
 
   // create post
   static const createPost = '/createPost';
+  static const address = '/createPost/address';
 
   // notifications
   static const notifications = '/notifications';

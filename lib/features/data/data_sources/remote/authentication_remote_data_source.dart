@@ -219,8 +219,7 @@ class AuthenRemoteDataSrcImpl implements AuthenRemoteDataSrc {
     }
     return client
         .get(url,
-            options:
-                Options(headers: {'Authorization': 'Bearer ${accessToken}'}))
+            options: Options(headers: {'Authorization': 'Bearer $accessToken'}))
         .then((response) {
       if (response.statusCode != 200) {
         throw ApiException(

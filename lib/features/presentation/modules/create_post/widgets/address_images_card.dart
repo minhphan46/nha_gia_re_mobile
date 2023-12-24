@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/domain/enums/property_types.dart';
@@ -105,7 +106,9 @@ class AddressImagesCard extends StatelessWidget {
           onTapOutside: (event) {
             _addressFocusNode.unfocus();
           },
-          onTap: () {},
+          onTap: () {
+            Get.toNamed(AppRoutes.address);
+          },
           onSaved: (value) {
             controller.address = value!.trim();
           },

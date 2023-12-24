@@ -141,4 +141,56 @@ class ProvincesRepositoryImpl implements ProvincesRepository {
       return DataFailed(e);
     }
   }
+
+  @override
+  DataState<List<Map<String, dynamic>>> getDistrictMap(int proviceCode) {
+    try {
+      List<Map<String, dynamic>> districtsMap = [];
+      // search for province
+      for (Map<String, Object> province in provincesVietNam) {
+        if (province['code'] == proviceCode) {
+          // search for districts
+          for (Map<String, Object> district in province['districts'] as List) {
+            Map<String, dynamic> namCode = {
+              'name': district['name'] as String,
+              'code': district['code'] as int,
+            };
+            districtsMap.add(namCode);
+          }
+        }
+      }
+      return DataSuccess(districtsMap);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  DataState<List<Map<String, dynamic>>> getWardMap(
+      int proviceCode, int districtCode) {
+    try {
+      List<Map<String, dynamic>> wardsMap = [];
+      // search for province
+      for (Map<String, Object> province in provincesVietNam) {
+        if (province['code'] == proviceCode) {
+          // search for districts
+          for (Map<String, Object> district in province['districts'] as List) {
+            if (district['code'] == districtCode) {
+              // search for wards
+              for (Map<String, Object> ward in district['wards'] as List) {
+                Map<String, dynamic> namCode = {
+                  'name': ward['name'] as String,
+                  'code': ward['code'] as int,
+                };
+                wardsMap.add(namCode);
+              }
+            }
+          }
+        }
+      }
+      return DataSuccess(wardsMap);
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

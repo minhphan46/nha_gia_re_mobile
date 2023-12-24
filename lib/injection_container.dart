@@ -3,6 +3,8 @@ import 'package:get_it/get_it.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/media_remote_date_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/user_remote_date_source.dart';
 import 'package:nhagiare_mobile/features/data/repository/user_respository_impl.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_names.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/hide_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
@@ -265,6 +267,18 @@ Future<void> initializeDependencies() async {
   // use cases
   sl.registerSingleton<GetAddressUseCase>(
     GetAddressUseCase(
+      sl<ProvincesRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetDistrictNamesUseCase>(
+    GetDistrictNamesUseCase(
+      sl<ProvincesRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetWardNamesUseCase>(
+    GetWardNamesUseCase(
       sl<ProvincesRepository>(),
     ),
   );

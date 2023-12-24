@@ -8,6 +8,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_binding.
 import 'package:nhagiare_mobile/features/presentation/modules/chat/screens/chat_detail_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/screens/chat_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_binding.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/create_post/screens/address_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/screens/create_post_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/home_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/screens/home_screen.dart';
@@ -86,6 +87,11 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.createPost,
       page: () => CreatePostScreen(),
+      binding: CreatePostBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.address,
+      page: () => AddressScreen(),
       binding: CreatePostBinding(),
     ),
     GetPage(
