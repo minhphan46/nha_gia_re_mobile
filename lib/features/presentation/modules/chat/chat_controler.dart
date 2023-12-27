@@ -93,7 +93,7 @@ class ChatController extends GetxController {
   void sendMessage(String message) {
     print("Send message...");
     if (mediaPicker.isNotEmpty) {
-      sendMedia();
+      _conversationRepository.sendMediaMessage(conversationId, mediaPicker);
     } else if (message.isNotEmpty) {
       _conversationRepository.sendTextMessage(conversationId, message);
     }
@@ -118,7 +118,6 @@ class ChatController extends GetxController {
     );
     if (result != null) {
       mediaPicker.addAll(result.files.map((e) => File(e.path!)).toList());
-      update();
     }
   }
 
@@ -133,16 +132,5 @@ class ChatController extends GetxController {
   void removeMedia(File file) {
     mediaPicker.remove(file);
     update();
-  }
-
-  final MediaRepository _mediaRepository = sl.get<MediaRepository>();
-  void sendMedia() {
-    _mediaRepository.uploadMedia(mediaPicker).then((value) {
-      if (value is DataSuccess) {
-        final data = value.data!;
-        print(data);
-        update();
-      }
-    });
   }
 }

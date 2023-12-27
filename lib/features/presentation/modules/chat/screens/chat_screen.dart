@@ -12,6 +12,7 @@ import 'package:nhagiare_mobile/features/domain/entities/chat/conversation.dart'
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/screens/chat_detail_screen.dart';
+import '../../../../domain/enums/message_types.dart';
 import '../chat_controler.dart';
 
 class ChatScreen extends StatelessWidget {
@@ -111,8 +112,9 @@ class ChatScreen extends StatelessWidget {
                   ),
                 ),
                 subtitle: Text(
-                  conversation.lastMessage?.content['text'] ??
-                      'Bắt đầu cuộc trò chuyện ngay',
+                  conversation.lastMessage?.contentType == MessageTypes.text
+                      ? conversation.lastMessage?.content['text'] ?? ''
+                      : 'Đã gửi một hình ảnh',
                   style: conversation.isRead ?? true
                       ? AppTextStyles.semiBold14
                       : AppTextStyles.regular14,

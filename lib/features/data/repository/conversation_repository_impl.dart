@@ -7,12 +7,17 @@ import 'package:nhagiare_mobile/features/data/data_sources/remote/conversation_r
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:nhagiare_mobile/features/domain/repository/conversation_repository.dart';
+import 'package:nhagiare_mobile/features/domain/repository/media_repository.dart';
+
+import '../../domain/enums/conversation_enums.dart';
+import '../../domain/enums/message_types.dart';
 
 class ConversationRepositoryImpl extends ConversationRepository {
   final ConversationRemoteDataSource _conversationRemoteDataSource;
   final AuthenLocalDataSrc _authenLocalDataSrc;
-  ConversationRepositoryImpl(
-      this._conversationRemoteDataSource, this._authenLocalDataSrc);
+  final MediaRepository _mediaRepository;
+  ConversationRepositoryImpl(this._conversationRemoteDataSource,
+      this._authenLocalDataSrc, this._mediaRepository);
 
   @override
   void addConversationListener(Function(List<ConversationModel> p1) listener) {
@@ -50,8 +55,8 @@ class ConversationRepositoryImpl extends ConversationRepository {
   }
 
   @override
-  void sendTextMessage(String conversationId, String message) {
-    _conversationRemoteDataSource.sendTextMessage(conversationId, message);
+  void sendMessage(String conversationId, MessageTypes type, dynamic content) {
+    _conversationRemoteDataSource.sendMessage(conversationId, type, content);
   }
 
   @override
@@ -93,7 +98,17 @@ class ConversationRepositoryImpl extends ConversationRepository {
   }
 
   @override
-  void sendMediaMessage(String conversationId, List<File> media) {
-    _conversationRemoteDataSource.sendMediaMessage(conversationId, media);
+  Future<void> sendMediaMessage(String conversationId, List<File> media) async {
+    DataState urls = await _mediaRepository.uploadMedia(media);
+    if (urls is DataSuccess) {
+      _conversationRemoteDataSource.sendMessage(
+          conversationId, MessageTypes.media, urls.data);
+    }
+  }
+
+  @override
+  void sendTextMessage(String conversationId, String content) {
+    _conversationRemoteDataSource.sendMessage(
+        conversationId, MessageTypes.text, content);
   }
 }
