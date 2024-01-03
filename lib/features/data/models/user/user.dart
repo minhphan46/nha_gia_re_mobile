@@ -39,10 +39,14 @@ class UserModel extends UserEntity {
       dob: json['dob'],
       phone: json['phone'],
       banReason: json['ban_reason'],
-      lastActiveAt: DateTime.parse(json['last_active_at']),
+      lastActiveAt: json['last_active_at'] != null
+          ? DateTime.parse(json['last_active_at'])
+          : null,
       createdAt: DateTime.parse(json['created_at']),
       updatedAt: DateTime.parse(json['updated_at']),
-      bannedUtil: DateTime.tryParse(json['banned_util'] ?? ""),
+      bannedUtil: json['banned_util'] != null
+          ? DateTime.tryParse(json['banned_util'] ?? "")
+          : null,
     );
   }
 

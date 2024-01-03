@@ -1,6 +1,5 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:nhagiare_mobile/config/theme/app_color.dart';
 
 class PickedMedia extends StatelessWidget {
   final File file;

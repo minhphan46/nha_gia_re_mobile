@@ -102,7 +102,9 @@ class UserEntity extends Equatable {
       dob: json['dob'] ?? "",
       phone: json['phone'] ?? "",
       banReason: json['ban_reason'] ?? "",
-      lastActiveAt: DateTime.parse(json['last_active_at'] ?? ""),
+      lastActiveAt: json['last_active_at'] != null
+          ? DateTime.parse(json['last_active_at'])
+          : null,
       createdAt: DateTime.parse(json['created_at'] ?? ""),
       updatedAt: json['updated_at'] != null
           ? DateTime.parse(json['updated_at'])
