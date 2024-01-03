@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
+import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/blog/blog.dart';
@@ -96,6 +97,23 @@ class _BlogListScreenState extends State<BlogListScreen> {
                                 ),
                                 const SizedBox(
                                   height: 10,
+                                ),
+                                Row(
+                                  children: [
+                                    const Icon(
+                                      Icons.watch_later_outlined,
+                                      color: AppColors.grey500,
+                                      size: 15,
+                                    ),
+                                    const SizedBox(
+                                      width: 3,
+                                    ),
+                                    Text(
+                                      data[index].createdAt.getTimeAgoVi(),
+                                      style: AppTextStyles.light12
+                                          .copyWith(color: AppColors.grey500),
+                                    )
+                                  ],
                                 ),
                                 const SizedBox(height: 4),
                               ],

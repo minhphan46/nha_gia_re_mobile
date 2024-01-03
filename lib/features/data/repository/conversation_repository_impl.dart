@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/local/authentication_local_data_source.dart';
@@ -8,8 +7,6 @@ import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dar
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:nhagiare_mobile/features/domain/repository/conversation_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/media_repository.dart';
-
-import '../../domain/enums/conversation_enums.dart';
 import '../../domain/enums/message_types.dart';
 
 class ConversationRepositoryImpl extends ConversationRepository {
