@@ -10,6 +10,8 @@ import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
 
 import '../../../../core/errors/exceptions.dart';
+import '../../../domain/enums/conversation_enums.dart';
+import '../../../domain/enums/message_types.dart';
 
 abstract class ConversationRemoteDataSource {
   List<ConversationModel> getConversations();
@@ -23,7 +25,7 @@ abstract class ConversationRemoteDataSource {
   void notifyMessageListeners(String conversationId);
   void notifyMessageListenersAll();
   List<MessageModel>? initChat({String? conversationId, String? userId});
-  void sendTextMessage(String conversationId, String message);
+  void sendMessage(String conversationId, MessageTypes type, dynamic content);
   void deleteConversation(String conversationId);
   void disconnect();
   void connect();
@@ -181,11 +183,20 @@ class ConversationRemoteDataSourceImpl implements ConversationRemoteDataSource {
   }
 
   @override
-  void sendTextMessage(String conversationId, String message) {
+  void sendMessage(String conversationId, MessageTypes type, dynamic content) {
+    switch (type) {
+      case MessageTypes.text:
+        assert(content is String);
+        break;
+      case MessageTypes.media:
+        assert(content is List<String>);
+        break;
+      default:
+    }
     socket.emit('send_message', {
       "conversation_id": conversationId,
-      "type": "text",
-      "content": message,
+      "type": type.toString().split(".").last,
+      "content": content,
     });
   }
 

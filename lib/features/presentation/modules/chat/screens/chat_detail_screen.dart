@@ -11,8 +11,12 @@ import 'package:nhagiare_mobile/features/domain/entities/chat/message.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_controler.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/chat/widgets/media_grid.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/widgets/media_row.dart';
 import 'package:url_launcher/url_launcher.dart';
+
+import '../../../../domain/enums/conversation_enums.dart';
+import '../../../../domain/enums/message_types.dart';
 
 class ChatDetailScreen extends StatefulWidget {
   const ChatDetailScreen({super.key});
@@ -74,19 +78,20 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
             messages.sort((a, b) => a.sentAt.compareTo(b.sentAt));
 
 // Bước 2 và 3: Nhóm tin nhắn theo ngày
-            Map<String, List<Message>> groupedMessages = {};
+            Map<DateTime, List<Message>> groupedMessages = {};
             for (Message message in messages) {
-              DateTime dateTime = DateTime.fromMillisecondsSinceEpoch(
-                  message.sentAt.millisecondsSinceEpoch);
-              String dateKey =
-                  '${dateTime.year}-${dateTime.month}-${dateTime.day}';
-              if (!groupedMessages.containsKey(dateKey)) {
-                groupedMessages[dateKey] = [];
+              DateTime date = DateTime(
+                message.sentAt.year,
+                message.sentAt.month,
+                message.sentAt.day,
+              );
+              if (groupedMessages.containsKey(date)) {
+                groupedMessages[date]!.add(message);
+              } else {
+                groupedMessages[date] = [message];
               }
-              groupedMessages[dateKey]!.add(message);
             }
-
-            final List<String> keys = groupedMessages.keys.toList();
+            final List<DateTime> keys = groupedMessages.keys.toList();
             keys.sort((a, b) => b.compareTo(a));
             return Column(
               children: [
@@ -95,8 +100,8 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                     itemCount: keys.length,
                     reverse: true,
                     itemBuilder: (context, index) {
-                      String dateKey = keys[index];
-                      List<Message> messagesOfDay = groupedMessages[dateKey]!;
+                      DateTime date = keys[index];
+                      List<Message> messagesOfDay = groupedMessages[date]!;
 
                       // Hiển thị ngày
                       Widget dateWidget = Center(
@@ -109,7 +114,7 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                             borderRadius: BorderRadius.circular(25),
                           ),
                           child: Text(
-                            dateKey,
+                            '${date.day}/${date.month}/${date.year}',
                             style: AppTextStyles.regular14,
                           ),
                         ),
@@ -124,28 +129,53 @@ class _ChatDetailScreenState extends State<ChatDetailScreen> {
                               ? MainAxisAlignment.end
                               : MainAxisAlignment.start,
                           children: [
-                            Container(
-                              constraints: BoxConstraints(
-                                maxWidth:
-                                    MediaQuery.of(context).size.width * 0.7,
-                              ),
-                              margin: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              padding: const EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 8,
-                              ),
-                              decoration: BoxDecoration(
-                                color: isMe
-                                    ? AppColors.green800
-                                    : AppColors.grey100,
-                                borderRadius: BorderRadius.circular(25),
-                              ),
-                              child: _buildTextMessage(
-                                  message.content["text"], isMe),
-                            ),
+                            message.contentType == MessageTypes.media
+                                ? Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.7,
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    child: MediaGrid(
+                                      List<String>.from(
+                                        (message.content["media"]
+                                                as List<dynamic>)
+                                            .map((dynamic item) =>
+                                                item.toString()),
+                                      ),
+                                    ),
+                                  )
+                                : Container(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width *
+                                              0.7,
+                                    ),
+                                    margin: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    padding: const EdgeInsets.symmetric(
+                                      horizontal: 16,
+                                      vertical: 8,
+                                    ),
+                                    decoration: BoxDecoration(
+                                      color: isMe
+                                          ? AppColors.green800
+                                          : AppColors.grey100,
+                                      borderRadius: BorderRadius.circular(25),
+                                    ),
+                                    child: _buildTextMessage(
+                                        message.content["text"], isMe),
+                                  ),
                           ],
                         );
                       }).toList();

@@ -1,10 +1,13 @@
 import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class PickedMedia extends StatelessWidget {
   final File file;
   final Function(File)? onRemove;
-  const PickedMedia({super.key, required this.file, this.onRemove});
+
+  const PickedMedia({Key? key, required this.file, this.onRemove})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,18 +28,14 @@ class PickedMedia extends StatelessWidget {
         Positioned(
           top: 0,
           right: 0,
-          child: Positioned(
-            top: 0,
-            right: 0,
-            child: IconButton(
-              icon: const Icon(Icons.close),
-              color: Colors.white,
-              onPressed: () {
-                onRemove?.call(file);
-              },
-              splashRadius: 14,
-              padding: EdgeInsets.zero,
-            ),
+          child: IconButton(
+            icon: const Icon(Icons.close),
+            color: Colors.white,
+            onPressed: () {
+              onRemove?.call(file);
+            },
+            splashRadius: 14,
+            padding: EdgeInsets.zero,
           ),
         ),
       ],

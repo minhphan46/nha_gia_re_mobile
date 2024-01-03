@@ -64,10 +64,10 @@ import 'features/domain/usecases/user/FollowOrUnfollowUserUseCase.dart';
 final sl = GetIt.instance;
 
 Future<void> initializeDependencies() async {
+  sl.registerSingleton<Dio>(Dio());
   // Filter
   sl.registerSingleton<FilterValues>(FilterValues());
   // Dio
-  sl.registerSingleton<Dio>(Dio());
   // Login =====================================================
   // datasource
   sl.registerSingleton<AuthenRemoteDataSrc>(
@@ -290,10 +290,23 @@ Future<void> initializeDependencies() async {
     ),
   );
 
+  sl.registerSingleton<MediaRemoteDataSource>(
+    MediaRemoteDataSourceImpl(
+      sl<Dio>(),
+    ),
+  );
+
+  sl.registerSingleton<MediaRepository>(
+    MediaRepositoryImpl(
+      mediaDataSource: sl<MediaRemoteDataSource>(),
+    ),
+  );
+
   sl.registerSingleton<ConversationRepository>(
     ConversationRepositoryImpl(
       sl<ConversationRemoteDataSource>(),
       sl<AuthenLocalDataSrc>(),
+      sl<MediaRepository>(),
     ),
   );
 
@@ -356,18 +369,6 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<FollowOrUnfollowUserUseCase>(
     FollowOrUnfollowUserUseCase(
       sl<UserRepository>(),
-    ),
-  );
-
-  sl.registerSingleton<MediaRemoteDataSource>(
-    MediaRemoteDataSourceImpl(
-      sl<Dio>(),
-    ),
-  );
-
-  sl.registerSingleton<MediaRepository>(
-    MediaRepositoryImpl(
-      mediaDataSource: sl<MediaRemoteDataSource>(),
     ),
   );
 }

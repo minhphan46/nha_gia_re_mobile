@@ -42,6 +42,7 @@ class MediaGrid extends StatelessWidget {
                 ),
               ),
               imageUrl: medias[index],
+              errorWidget: (context, url, error) => const Icon(Icons.error),
             ),
           ),
         );

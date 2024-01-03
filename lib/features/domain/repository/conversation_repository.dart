@@ -4,6 +4,8 @@ import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 
+import '../enums/conversation_enums.dart';
+
 abstract class ConversationRepository {
   void addConversationListener(Function(List<ConversationModel>) listener);
   void removeConversationListener(Function(List<ConversationModel>) listener);
@@ -13,7 +15,7 @@ abstract class ConversationRepository {
   void removeMessageListener(
       String conversationId, Function(List<MessageModel>) listener);
   List<MessageModel>? initChat({String? conversationId, String? userId});
-  void sendTextMessage(String conversationId, String message);
+  void sendTextMessage(String conversationId, String content);
   void connect();
   void disconnect();
   void deleteConversation(String conversationId);
