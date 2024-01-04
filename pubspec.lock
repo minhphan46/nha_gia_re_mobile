@@ -720,6 +720,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.0.0"
+  onesignal_flutter:
+    dependency: "direct main"
+    description:
+      name: onesignal_flutter
+      sha256: e47b739747bffb6c414b176f156dad8d179ba35c64c2a1dec643876aaea4c3e8
+      url: "https://pub.dev"
+    source: hosted
+    version: "5.0.4"
   otp_text_field:
     dependency: "direct main"
     description:
@@ -1390,5 +1398,10 @@ packages:
     source: hosted
     version: "1.1.0"
 sdks:
+<<<<<<< Updated upstream
   dart: ">=3.2.0 <4.0.0"
   flutter: ">=3.16.0"
+=======
+  dart: ">=3.2.0-194.0.dev <4.0.0"
+  flutter: ">=3.13.0"
+>>>>>>> Stashed changes
