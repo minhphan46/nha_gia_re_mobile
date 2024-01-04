@@ -54,4 +54,5 @@ class Assets {
   static const String purchaseFailed = '$ilustrationPath/purchase-fail.png';
   static const String purchaseSuccess = '$ilustrationPath/purchase-success.png';
   static const String emptyChat = '$ilustrationPath/empty_chat.png';
+  static const String emptyNotification = '$ilustrationPath/empty_noti.svg';
 }
