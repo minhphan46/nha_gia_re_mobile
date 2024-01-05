@@ -5,6 +5,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/core/utils/convert_number.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/limit_post.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/entities/properties/apartment.dart';
 import 'package:nhagiare_mobile/features/domain/entities/properties/house.dart';
@@ -18,6 +19,7 @@ import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_limit_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/update_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/upload_images.dart';
 import '../../../../config/theme/app_color.dart';
@@ -46,6 +48,22 @@ class CreatePostController extends GetxController {
       post.value = Get.arguments as RealEstatePostEntity;
       isEdit.value = true;
       setPostEdit(post.value!);
+    } else {
+      getIsLimitPost();
+    }
+  }
+
+  // get is limit post
+  RxBool isGetingLimitPost = false.obs;
+  Rx<LitmitPostEntity> limitPost = Rx(const LitmitPostEntity());
+  Future<void> getIsLimitPost() async {
+    final GetLimitPostsUseCase getIsLimitPostUseCase =
+        sl<GetLimitPostsUseCase>();
+    isGetingLimitPost.value = true;
+    final dataState = await getIsLimitPostUseCase();
+    isGetingLimitPost.value = false;
+    if (dataState is DataSuccess) {
+      limitPost.value = dataState.data!;
     }
   }
 

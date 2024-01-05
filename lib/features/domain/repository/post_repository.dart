@@ -2,6 +2,7 @@ import 'dart:io';
 import '../../../../core/resources/data_state.dart';
 import '../../../core/resources/pair.dart';
 import '../entities/posts/filter_request.dart';
+import '../entities/posts/limit_post.dart';
 import '../entities/posts/real_estate_post.dart';
 
 abstract class PostRepository {
@@ -31,4 +32,6 @@ abstract class PostRepository {
       int? page);
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsExpired(
       int? page);
+
+  Future<DataState<LitmitPostEntity>> getLimitPosts();
 }
