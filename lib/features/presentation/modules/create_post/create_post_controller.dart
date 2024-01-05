@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
+import 'package:nhagiare_mobile/core/utils/convert_number.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/address.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/entities/properties/apartment.dart';
@@ -133,6 +134,7 @@ class CreatePostController extends GetxController {
         apartmentLegalDocumentStatus.value,
         apartmentNumber,
         isShowapartmentNumber.value,
+        apartmentIsCorner.value,
       ).toJson(),
       isLease: isLease.value,
       isProSeller: isProSeller.value,
@@ -290,172 +292,215 @@ class CreatePostController extends GetxController {
   }
 
   void setMotelEdit(RealEstatePostEntity post) {
-    if (post.features!['waterPrice'] != null) {
-      motelWaterPrice = post.features!['waterPrice'];
-      motelWaterPriceTC.text = post.features!['waterPrice'].toString();
+    if (post.features!['water_price'] != null) {
+      motelWaterPrice =
+          ConverNumber.convertIntToDouble(post.features!['water_price']);
+      motelWaterPriceTC.text = post.features!['water_price'].toString();
     }
-    if (post.features!['electricPrice'] != null) {
-      motelElectricPrice = post.features!['electricPrice'];
-      motelElectricPriceTC.text = post.features!['electricPrice'].toString();
+    if (post.features!['electric_price'] != null) {
+      motelElectricPrice =
+          ConverNumber.convertIntToDouble(post.features!['electric_price']);
+      motelElectricPriceTC.text = post.features!['electric_price'].toString();
     }
-    if (post.features!['furnitureStatus'] != null) {
+    if (post.features!['furniture_status'] != null) {
       motelSelectedFurnitureStatus.value =
-          FurnitureStatus.parse(post.features!['furnitureStatus']);
+          FurnitureStatus.parse(post.features!['furniture_status']);
     }
-    if (post.features!['area'] != null) {
-      motelArea = post.features!['area'].toString();
-      motelAreaTC.text = post.features!['area'].toString();
+    if (post.area != null) {
+      motelArea = post.area.toString();
+      motelAreaTC.text = post.area.toString();
     }
-    if (post.features!['price'] != null) {
-      motelPrice = post.features!['price'].toString();
-      motelPriceTC.text = post.features!['price'].toString();
+    if (post.price != null) {
+      motelPrice = post.price.toString();
+      motelPriceTC.text = post.price.toString();
     }
-    if (post.features!['deposit'] != null) {
-      motelDeposit = post.features!['deposit'].toString();
-      motelDepositTC.text = post.features!['deposit'].toString();
+    if (post.deposit != null) {
+      motelDeposit = post.deposit.toString();
+      motelDepositTC.text = post.deposit.toString();
     }
   }
 
   void setApartmentEdit(RealEstatePostEntity post) {
-    if (post.features!['type'] != null) {
-      apartmentType.value = ApartmentTypes.parse(post.features!['type']);
+    if (post.features!['apartment_type'] != null) {
+      apartmentType.value =
+          ApartmentTypes.parse(post.features!['apartment_type']);
     }
-    if (post.features!['isHandOver'] != null) {
-      apartmentIsHandOver.value = post.features!['isHandOver'];
+    if (post.features!['is_hand_over'] != null) {
+      apartmentIsHandOver.value = post.features!['is_hand_over'];
     }
-    if (post.features!['numOfBedRooms'] != null) {
-      apartmentNumOfBedRooms = post.features!['numOfBedRooms'].toString();
+    if (post.features!['num_of_bed_rooms'] != null) {
+      apartmentNumOfBedRooms = post.features!['num_of_bed_rooms'].toString();
       apartmentNumOfBedRoomsTC.text =
-          post.features!['numOfBedRooms'].toString();
+          post.features!['num_of_bed_rooms'].toString();
     }
-    if (post.features!['numOfToilets'] != null) {
-      apartmentNumOfToilets = post.features!['numOfToilets'].toString();
-      apartmentNumOfToiletsTC.text = post.features!['numOfToilets'].toString();
+    if (post.features!['num_of_toilets'] != null) {
+      apartmentNumOfToilets = post.features!['num_of_toilets'].toString();
+      apartmentNumOfToiletsTC.text =
+          post.features!['num_of_toilets'].toString();
     }
-    if (post.features!['balconyDirection'] != null) {
+    if (post.features!['balcony_direction'] != null) {
       apartmentBalconyDirection.value =
-          Direction.parse(post.features!['balconyDirection']);
+          Direction.parse(post.features!['balcony_direction']);
     }
-    if (post.features!['number'] != null) {
-      apartmentNumber = post.features!['number'];
-      apartmentNumberTC.text = post.features!['number'];
+    if (post.features!['apartment_number'] != null) {
+      apartmentNumber = post.features!['apartment_number'];
+      apartmentNumberTC.text = post.features!['apartment_number'];
     }
-    if (post.features!['isShowName'] != null) {
-      isShowapartmentNumber.value = post.features!['isShowName'];
+    if (post.features!['show_apartment_number'] != null) {
+      isShowapartmentNumber.value = post.features!['show_apartment_number'];
     }
-    if (post.features!['area'] != null) {
-      apartmentArea = post.features!['area'].toString();
-      apartmentAreaTC.text = post.features!['area'].toString();
+    if (post.area != null) {
+      apartmentArea = post.area.toString();
+      apartmentAreaTC.text = post.area.toString();
     }
-    if (post.features!['price'] != null) {
-      apartmentPrice = post.features!['price'].toString();
-      apartmentPriceTC.text = post.features!['price'].toString();
+    if (post.price != null) {
+      apartmentPrice = post.price.toString();
+      apartmentPriceTC.text = post.price.toString();
     }
-    if (post.features!['deposit'] != null) {
-      apartmentDeposit = post.features!['deposit'].toString();
-      apartmentDepositTC.text = post.features!['deposit'].toString();
+    if (post.deposit != null) {
+      apartmentDeposit = post.deposit.toString();
+      apartmentDepositTC.text = post.deposit.toString();
     }
-    if (post.features!['furnitureStatus'] != null) {
+    if (post.features!['furniture_status'] != null) {
       apartmentFurnitureStatus.value =
-          FurnitureStatus.parse(post.features!['furnitureStatus']);
+          FurnitureStatus.parse(post.features!['furniture_status']);
     }
-    if (post.features!['legalDocumentStatus'] != null) {
+    if (post.features!['legal_document_status'] != null) {
       apartmentLegalDocumentStatus.value =
-          LegalDocumentStatus.parse(post.features!['legalDocumentStatus']);
+          LegalDocumentStatus.parse(post.features!['legal_document_status']);
     }
-    if (post.features!['isCorner'] != null) {
-      apartmentIsCorner.value = post.features!['isCorner'];
+    if (post.features!['is_corner'] != null) {
+      apartmentIsCorner.value = post.features!['is_corner'];
+    }
+    if (post.features!['block'] != null) {
+      block = post.features!['block'];
+      blockTextController.text = post.features!['block'];
+    }
+    if (post.features!['floor'] != null) {
+      floor = post.features!['floor'];
+      floorTextController.text = post.features!['floor'];
     }
   }
 
   void setOfficeEdit(RealEstatePostEntity post) {
-    if (post.features!['type'] != null) {
-      officeType.value = OfficeTypes.parse(post.features!['type']);
+    if (post.features!['office_type'] != null) {
+      officeType.value = OfficeTypes.parse(post.features!['office_type']);
     }
-    if (post.features!['isFacade'] != null) {
-      officeIsFacade.value = post.features!['isFacade'];
+    if (post.features!['is_facade'] != null) {
+      officeIsFacade.value = post.features!['is_facade'];
     }
-    if (post.features!['mainDoorDirection'] != null) {
+    if (post.features!['main_door_direction'] != null) {
       officeMainDoorDirection.value =
-          Direction.parse(post.features!['mainDoorDirection']);
+          Direction.parse(post.features!['main_door_direction']);
     }
-    if (post.features!['number'] != null) {
-      officeNumber = post.features!['number'];
-      officeNumberTC.text = post.features!['number'];
+    if (post.features!['office_number'] != null) {
+      officeNumber = post.features!['office_number'];
+      officeNumberTC.text = post.features!['office_number'];
     }
-    if (post.features!['isShowName'] != null) {
-      officeIsShowName.value = post.features!['isShowName'];
+    if (post.features!['show_office_number'] != null) {
+      officeIsShowName.value = post.features!['show_office_number'];
     }
-    if (post.features!['area'] != null) {
-      officeArea = post.features!['area'].toString();
-      officeAreaTC.text = post.features!['area'].toString();
+    if (post.area != null) {
+      officeArea = post.area.toString();
+      officeAreaTC.text = post.area.toString();
     }
-    if (post.features!['price'] != null) {
-      officePrice = post.features!['price'].toString();
-      officePriceTC.text = post.features!['price'].toString();
+    if (post.price != null) {
+      officePrice = post.price.toString();
+      officePriceTC.text = post.price.toString();
     }
-    if (post.features!['deposit'] != null) {
-      officeDeposit = post.features!['deposit'].toString();
-      officeDepositTC.text = post.features!['deposit'].toString();
+    if (post.deposit != null) {
+      officeDeposit = post.deposit.toString();
+      officeDepositTC.text = post.deposit.toString();
     }
-    if (post.features!['furnitureStatus'] != null) {
+    if (post.features!['furniture_status'] != null) {
       officeFurnitureStatus.value =
-          FurnitureStatus.parse(post.features!['furnitureStatus']);
+          FurnitureStatus.parse(post.features!['furniture_status']);
     }
-    if (post.features!['legalDocumentStatus'] != null) {
+    if (post.features!['legal_document_status'] != null) {
       officeLegalDocumentStatus.value =
-          LegalDocumentStatus.parse(post.features!['legalDocumentStatus']);
+          LegalDocumentStatus.parse(post.features!['legal_document_status']);
+    }
+    if (post.features!['block'] != null) {
+      block = post.features!['block'];
+      blockTextController.text = post.features!['block'];
+    }
+    if (post.features!['floor'] != null) {
+      floor = post.features!['floor'];
+      floorTextController.text = post.features!['floor'];
     }
   }
 
   void setHouseEdit(RealEstatePostEntity post) {
-    if (post.features!['type'] != null) {
-      houseType.value = HouseTypes.parse(post.features!['type']);
+    if (post.features!['house_type'] != null) {
+      houseType.value = HouseTypes.parse(post.features!['house_type']);
     }
-    if (post.features!['numOfBedRooms'] != null) {
-      houseNumOfBedRooms = post.features!['numOfBedRooms'].toString();
-      houseNumOfBedRoomsTC.text = post.features!['numOfBedRooms'].toString();
+    if (post.features!['num_of_bed_rooms'] != null) {
+      houseNumOfBedRooms = post.features!['num_of_bed_rooms'].toString();
+      houseNumOfBedRoomsTC.text = post.features!['num_of_bed_rooms'].toString();
     }
-    if (post.features!['numOfToilets'] != null) {
-      houseNumOfToilets = post.features!['numOfToilets'].toString();
-      houseNumOfToiletsTC.text = post.features!['numOfToilets'].toString();
+    if (post.features!['num_of_toilets'] != null) {
+      houseNumOfToilets = post.features!['num_of_toilets'].toString();
+      houseNumOfToiletsTC.text =
+          post.features!['numOnum_of_toiletsfToilets'].toString();
     }
-    if (post.features!['numOfFloors'] != null) {
-      houseNumOfFloors = post.features!['numOfFloors'].toString();
-      houseNumOfFloorsTC.text = post.features!['numOfFloors'].toString();
+    if (post.features!['num_of_floors'] != null) {
+      houseNumOfFloors = post.features!['num_of_floors'].toString();
+      houseNumOfFloorsTC.text = post.features!['num_of_floors'].toString();
     }
-    if (post.features!['mainDoorDirection'] != null) {
+    if (post.features!['main_door_direction'] != null) {
       houseMainDoorDirection.value =
-          Direction.parse(post.features!['mainDoorDirection']);
+          Direction.parse(post.features!['main_door_direction']);
     }
-    if (post.features!['number'] != null) {
-      houseNumber = post.features!['number'];
-      houseNumberTC.text = post.features!['number'];
+    if (post.features!['house_number'] != null) {
+      houseNumber = post.features!['house_number'];
+      houseNumberTC.text = post.features!['house_number'];
     }
-    if (post.features!['isShowName'] != null) {
-      isShowHouseNumber.value = post.features!['isShowName'];
+    if (post.features!['show_house_number'] != null) {
+      isShowHouseNumber.value = post.features!['show_house_number'];
     }
-    if (post.features!['area'] != null) {
-      houseArea = post.features!['area'].toString();
-      houseAreaTC.text = post.features!['area'].toString();
+    if (post.area != null) {
+      houseArea = post.area.toString();
+      houseAreaTC.text = post.area.toString();
     }
-    if (post.features!['areaUsed'] != null) {
-      houseAreaUsed = post.features!['areaUsed'].toString();
-      houseAreaUsedTC.text = post.features!['areaUsed'].toString();
+    if (post.features!['area_used'] != null) {
+      houseAreaUsed = post.features!['area_used'].toString();
+      houseAreaUsedTC.text = post.features!['area_used'].toString();
     }
-    if (post.features!['price'] != null) {
-      housePrice = post.features!['price'].toString();
-      housePriceTC.text = post.features!['price'].toString();
+    if (post.price != null) {
+      housePrice = post.price.toString();
+      housePriceTC.text = post.price.toString();
     }
-    if (post.features!['deposit'] != null) {
-      houseDeposit = post.features!['deposit'].toString();
-      houseDepositTC.text = post.features!['deposit'].toString();
+    if (post.deposit != null) {
+      houseDeposit = post.deposit.toString();
+      houseDepositTC.text = post.deposit.toString();
     }
-    if (post.features!['furnitureStatus'] != null) {
+    if (post.features!['furniture_status'] != null) {
       {
         houseFurnitureStatus.value =
-            FurnitureStatus.parse(post.features!['furnitureStatus']);
+            FurnitureStatus.parse(post.features!['furniture_status']);
       }
+    }
+    if (post.features!['legal_document_status'] != null) {
+      houseLegalDocumentStatus.value =
+          LegalDocumentStatus.parse(post.features!['legal_document_status']);
+    }
+    if (post.features!['has_wide_alley'] != null) {
+      houseHasWideAlley.value = post.features!['has_wide_alley'];
+    }
+    if (post.features!['is_facade'] != null) {
+      houseIsFacade.value = post.features!['is_facade'];
+    }
+    if (post.features!['is_widens_towards_the_back'] != null) {
+      houseIsWidensTowardsTheBack.value =
+          post.features!['is_widens_towards_the_back'];
+    }
+    if (post.features!['width'] != null) {
+      houseWidth = post.features!['width'].toString();
+      houseWidthTC.text = post.features!['width'].toString();
+    }
+    if (post.features!['length'] != null) {
+      houseLength = post.features!['length'].toString();
+      houseLengthTC.text = post.features!['length'].toString();
     }
   }
 
