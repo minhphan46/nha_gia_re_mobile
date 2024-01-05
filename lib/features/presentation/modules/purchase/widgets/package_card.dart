@@ -7,13 +7,17 @@ import '../../../../../config/theme/app_color.dart';
 
 class MembershipPackageCard extends StatelessWidget {
   final MembershipPackageEntity package;
-  final bool isCurrent;
-  final Function(MembershipPackageEntity package)? onTapBuy;
+  final bool isShowButton;
+  final String buttonText;
+  final Color? buttonColor;
+  final Function(MembershipPackageEntity package)? onButtonClick;
 
   const MembershipPackageCard({
     required this.package,
-    this.onTapBuy,
-    this.isCurrent = false,
+    required this.buttonText,
+    this.onButtonClick,
+    this.isShowButton = true,
+    this.buttonColor = AppColors.green,
     super.key,
   });
 
@@ -87,24 +91,25 @@ class MembershipPackageCard extends StatelessWidget {
                 "Ưu tiên hiển thị tin", package.displayPriorityPoint > 0),
             textWithCheckIcon(
                 "Ưu tiên duyệt tin", package.postApprovalPriorityPoint > 0),
-            isCurrent
-                ? const SizedBox()
-                : FractionallySizedBox(
-                    widthFactor: 1,
-                    child: ElevatedButton(
-                      onPressed:
-                          onTapBuy != null ? () => onTapBuy!(package) : null,
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.green,
-                          shape: const RoundedRectangleBorder(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(20)))),
-                      child: Text(
-                        "Mua ngay",
-                        style: AppTextStyles.bold16.colorEx(AppColors.white),
-                      ),
-                    ),
-                  )
+            Visibility(
+              visible: isShowButton,
+              child: FractionallySizedBox(
+                widthFactor: 1,
+                child: ElevatedButton(
+                  onPressed: onButtonClick != null
+                      ? () => onButtonClick!(package)
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: buttonColor,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(20)))),
+                  child: Text(
+                    buttonText,
+                    style: AppTextStyles.bold16.colorEx(AppColors.white),
+                  ),
+                ),
+              ),
+            )
           ],
         ),
       ),

@@ -6,18 +6,20 @@ import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../../core/utils/typedef.dart';
+import '../local/authentication_local_data_source.dart';
 
 abstract class MembershipPackageRemoteDataSrc {
   Future<HttpResponse<List<MembershipPackageModel>>> getAllMembershipPackages();
   Future<HttpResponse<OrderMembershipPackageModel>> createOrder(
       String id, int numOfMonth);
+  Future<HttpResponse<bool>> unsubscribe();
 }
 
 class MembershipPackageRemoteDataSrcImpl
     implements MembershipPackageRemoteDataSrc {
   final Dio client;
-
-  MembershipPackageRemoteDataSrcImpl(this.client);
+  AuthenLocalDataSrc localDataSrc;
+  MembershipPackageRemoteDataSrcImpl(this.client, this.localDataSrc);
 
   @override
   Future<HttpResponse<List<MembershipPackageModel>>>
@@ -77,6 +79,40 @@ class MembershipPackageRemoteDataSrcImpl
     } catch (e) {
       e.printInfo();
       throw ApiException(message: e.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<bool>> unsubscribe() {
+    const url = '$apiAppUrl$kUnsubscribeEndpoint';
+
+    String? accessToken = localDataSrc.getAccessToken();
+    try {
+      return client
+          .post(url,
+              options: Options(headers: {
+                "Authorization": "Bearer ${accessToken ?? ""}",
+              }))
+          .then((response) {
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data,
+            statusCode: response.statusCode!,
+          );
+        }
+
+        final DataMap res = DataMap.from(response.data);
+
+        // bool value = res["success"];
+        bool value =
+            bool.tryParse(res['result'].toString() ?? 'false') ?? false;
+
+        return HttpResponse(value, response);
+      });
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
     }
   }
 }

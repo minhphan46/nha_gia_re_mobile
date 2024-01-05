@@ -7,6 +7,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_na
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/hide_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/purchase/unsubcribe.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
 import '../features/domain/usecases/authentication/get_me.dart';
 import '../features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
@@ -186,9 +187,7 @@ Future<void> initializeDependencies() async {
   //MembershipPackage=====================================================
   // datasource
   sl.registerSingleton<MembershipPackageRemoteDataSrc>(
-    MembershipPackageRemoteDataSrcImpl(
-      sl<Dio>(),
-    ),
+    MembershipPackageRemoteDataSrcImpl(sl<Dio>(), sl<AuthenLocalDataSrc>()),
   );
   // membership package repository'
   sl.registerSingleton<MembershipPackageRepository>(
@@ -369,6 +368,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<FollowOrUnfollowUserUseCase>(
     FollowOrUnfollowUserUseCase(
       sl<UserRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<UnsubscribeUseCase>(
+    UnsubscribeUseCase(
+      sl<MembershipPackageRepository>(),
     ),
   );
 }

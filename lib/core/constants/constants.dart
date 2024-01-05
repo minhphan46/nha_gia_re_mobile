@@ -1,5 +1,5 @@
-const isProduction = true;
-const String ipconfig = '192.168.137.1';
+const isProduction = false;
+const String ipconfig = '192.168.1.135';
 const String baseUrlDev = "http://$ipconfig:8000";
 const String baseUrlProduction = "https://nha-gia-re-server.onrender.com";
 const String apiDevUrl = "$baseUrlDev/api/v1";
@@ -27,6 +27,7 @@ const String kGetTransactionEndpoint = '/membership-package/transactions';
 const String kCreateOrderEndpoint = '/membership-package/check-out';
 const String kGetCurrentSubscriptionEndpoint =
     '/membership-package/current-subscription';
+const String kUnsubscribeEndpoint = '/membership-package/unsubscribe';
 const String kGetBlogEndpoint = '/blogs';
 
 const String kPostImages = '/media/upload';
