@@ -21,6 +21,12 @@ abstract class AppColors {
   static const Color neon = Color(0xff04C048);
 
   static const Color green800 = Color(0xff065F46);
+  static const Color green700 = Color(0xff0B6C52);
+  static const Color green600 = Color(0xff0F7A5E);
+  static const Color green500 = Color(0xff14886A);
+  static const Color green400 = Color(0xff1A9676);
+  static const Color green300 = Color(0xff1FA482);
+  static const Color green200 = Color(0xff25B28E);
   static const Color green100 = Color(0xffD1FAE5);
 
   static const Color red800 = Color(0xff991B1B);

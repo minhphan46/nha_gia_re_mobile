@@ -25,7 +25,6 @@ class PurchaseScreen extends StatefulWidget {
 class _PurchaseScreenState extends State<PurchaseScreen>
     with TickerProviderStateMixin {
   final PurchaseController controller = Get.find<PurchaseController>();
-
   late final TabController tabController;
 
   @override

@@ -14,6 +14,6 @@ class GetOrderMembershipPackageUseCase
   Future<DataState<OrderMembershipPackage>> call(
       {Map<String, dynamic>? params}) {
     return _membershipPackageRepository.createOrder(
-        params!['package_id'], params['num_of_month']);
+        params!['package_id'], params['num_of_month'], params['discount_code']);
   }
 }
