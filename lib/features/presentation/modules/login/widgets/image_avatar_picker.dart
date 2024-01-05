@@ -1,20 +1,26 @@
+import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/values/asset_image.dart';
-import '../login_controller.dart';
 
 // ignore: must_be_immutable
 class ImageAvatarPicker extends StatefulWidget {
-  const ImageAvatarPicker({super.key});
+  const ImageAvatarPicker({
+    required this.getImageFromCamera,
+    required this.getImageFromGallery,
+    required this.imageAvatar,
+    super.key,
+  });
+  final Function getImageFromCamera;
+  final Function getImageFromGallery;
+  final File? imageAvatar;
+
   @override
   State<ImageAvatarPicker> createState() => _ImageAvatarPickerState();
 }
 
 class _ImageAvatarPickerState extends State<ImageAvatarPicker> {
-  final LoginController controller = Get.find<LoginController>();
-
   Future<void> showImageSoure(BuildContext context) async {
     return showModalBottomSheet(
       context: context,
@@ -26,7 +32,7 @@ class _ImageAvatarPickerState extends State<ImageAvatarPicker> {
               leading: const Icon(Icons.camera_alt),
               title: const Text('Camera'),
               onTap: () async {
-                await controller.getImageFromCamera();
+                await widget.getImageFromCamera();
                 setState(() {});
               },
             ),
@@ -34,7 +40,7 @@ class _ImageAvatarPickerState extends State<ImageAvatarPicker> {
               leading: const Icon(Icons.image),
               title: const Text('Gallery'),
               onTap: () async {
-                await controller.getImageFromGallery();
+                await widget.getImageFromGallery();
                 setState(() {});
               },
             )
@@ -85,9 +91,9 @@ class _ImageAvatarPickerState extends State<ImageAvatarPicker> {
 
   Widget showFace() {
     int imageSize = 30;
-    if (controller.imageAvatar != null) {
+    if (widget.imageAvatar != null) {
       return Image.file(
-        controller.imageAvatar!,
+        widget.imageAvatar!,
         fit: BoxFit.cover,
         width: imageSize.wp,
         height: imageSize.wp,

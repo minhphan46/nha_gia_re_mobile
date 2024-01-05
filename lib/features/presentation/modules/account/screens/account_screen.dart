@@ -10,6 +10,7 @@ import 'package:nhagiare_mobile/features/presentation/global_widgets/not_identit
 import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/values/asset_image.dart';
+import 'liked_post_screen.dart';
 
 class AccountScreen extends StatelessWidget {
   AccountScreen({super.key});
@@ -97,7 +98,9 @@ class AccountScreen extends StatelessWidget {
                         'Đã lưu',
                         style: AppTextStyles.medium16,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        Get.to(() => LikedPostScreen());
+                      },
                       leading: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Icon(
@@ -175,7 +178,9 @@ class AccountScreen extends StatelessWidget {
                         'Cập nhập thông tin',
                         style: AppTextStyles.medium16,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        controller.navToUpdateInfo();
+                      },
                       leading: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Icon(

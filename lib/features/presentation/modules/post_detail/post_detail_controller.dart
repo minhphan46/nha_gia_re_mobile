@@ -19,7 +19,6 @@ import '../../../domain/entities/properties/office.dart';
 import '../../../domain/entities/properties/property_feature.dart';
 import '../../../domain/usecases/authentication/get_user_id.dart';
 import '../../../domain/usecases/post/remote/get_post_search.dart';
-import '../../../domain/usecases/post/remote/get_posts.dart';
 import 'widgets/apartment_card.dart';
 import 'widgets/house_card.dart';
 import 'widgets/land_card.dart';

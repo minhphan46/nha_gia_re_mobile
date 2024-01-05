@@ -11,6 +11,7 @@ class Assets {
   static const String avatarDefault = '$imagePath/avatar.png';
   static const String avatar2 = '$imagePath/avatar_2.png';
   static const String forgotPassword = '$imagePath/forgot.png';
+  static const String defaultImage = '$imagePath/default-image.jpg';
   // icon
   static const String home = '$iconPath/home (1).png';
   static const String homeGreen = '$iconPath/home.png';

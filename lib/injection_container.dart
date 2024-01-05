@@ -7,6 +7,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_na
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/hide_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/update_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_discount_codes_usercase.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/unsubcribe.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
@@ -172,6 +173,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<GetPostSearchsUseCase>(
     GetPostSearchsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<UpdatePostsUseCase>(
+    UpdatePostsUseCase(
       sl<PostRepository>(),
     ),
   );

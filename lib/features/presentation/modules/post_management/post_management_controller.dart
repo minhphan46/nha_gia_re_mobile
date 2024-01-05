@@ -147,13 +147,7 @@ class PostManagementController extends GetxController {
   }
 
   void editPost(RealEstatePostEntity post) async {
-    // TODO: implement editPost
-    // edit post
-
-    // Get.toNamed(AppRoutes.post, parameters: {
-    //   "id": post.id,
-    //   'type': post.type.toString(),
-    // });
+    Get.toNamed(AppRoutes.createPost, arguments: post);
   }
 
   void deletePost(RealEstatePostEntity post) async {

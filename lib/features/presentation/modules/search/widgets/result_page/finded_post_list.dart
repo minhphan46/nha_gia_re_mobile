@@ -32,16 +32,19 @@ class _FindedPostListState extends State<FindedPostList> {
 
   @override
   Widget build(BuildContext context) {
-    return BaseSearchListPosts(
-      titleNull: "Không tìm thấy bài đăng nào",
-      getPosts: ({int? page}) async {
-        var value = await searchController.getPosts(page: page);
-        return value;
-      },
-      postsList: searchController.searchPosts,
-      buildItem: buildItem,
-      isLoading: searchController.isLoadingGetPosts,
-      hasMore: searchController.hasMore,
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+      child: BaseSearchListPosts(
+        titleNull: "Không tìm thấy bài đăng nào",
+        getPosts: ({int? page}) async {
+          var value = await searchController.getPosts(page: page);
+          return value;
+        },
+        postsList: searchController.searchPosts,
+        buildItem: buildItem,
+        isLoading: searchController.isLoadingGetPosts,
+        hasMore: searchController.hasMore,
+      ),
     );
   }
 }

@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:image_preview/image_preview.dart';
+import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import '../../../../../../config/theme/app_color.dart';
 
@@ -20,6 +21,15 @@ class _ImageCardState extends State<ImageCard> {
 
   final double aspectRatio = 1.9;
   final double indicatorSize = 8;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.images.isEmpty) {
+      widget.images.add(Assets.defaultImage);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     if (widget.images.length > 1) {

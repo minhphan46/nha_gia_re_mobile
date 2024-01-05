@@ -248,7 +248,9 @@ class CreatePostScreen extends StatelessWidget {
                         onPressed: controller.isLoading.value
                             ? null
                             : () {
-                                controller.createPost();
+                                controller.isEdit.value
+                                    ? controller.editPost()
+                                    : controller.createPost();
                               },
                         style: ElevatedButton.styleFrom(
                           backgroundColor: AppColors.green,
@@ -270,7 +272,9 @@ class CreatePostScreen extends StatelessWidget {
                                 ),
                               )
                             : Text(
-                                'Đăng bài'.tr,
+                                controller.isEdit.value
+                                    ? 'Cập nhật'.tr
+                                    : 'Đăng bài'.tr,
                                 style: AppTextStyles.bold14
                                     .colorEx(AppColors.white),
                               ),

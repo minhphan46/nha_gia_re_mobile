@@ -15,6 +15,7 @@ class Apartment implements PropertyFeature {
   final LegalDocumentStatus? legalDocumentStatus;
   final String? apartmentNumber;
   final bool? showApartmentNumber;
+  final bool? isCorner;
 
   Apartment(
     this.apartmentType,
@@ -28,6 +29,7 @@ class Apartment implements PropertyFeature {
     this.legalDocumentStatus,
     this.apartmentNumber,
     this.showApartmentNumber,
+    this.isCorner,
   );
 
   factory Apartment.fromJson(Map<String, dynamic> json) {
@@ -49,6 +51,7 @@ class Apartment implements PropertyFeature {
           : null,
       json['apartment_number'],
       json['show_apartment_number'],
+      json['is_corner'],
     );
   }
 
@@ -65,6 +68,7 @@ class Apartment implements PropertyFeature {
       'legal_document_status': legalDocumentStatus?.toString(),
       'apartment_number': apartmentNumber,
       'show_apartment_number': showApartmentNumber,
+      'is_corner': isCorner,
     };
   }
 }

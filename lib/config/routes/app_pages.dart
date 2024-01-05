@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/account_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/screens/account_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/account/screens/update_info_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/bottom_bar/bottom_bar_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/bottom_bar/bottom_bar_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_binding.dart';
@@ -91,17 +92,22 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.address,
-      page: () => AddressScreen(),
+      page: () => const AddressScreen(),
       binding: CreatePostBinding(),
     ),
     GetPage(
       name: AppRoutes.notifications,
-      page: () => NotificationScreen(),
+      page: () => const NotificationScreen(),
       binding: NotificationBinding(),
     ),
     GetPage(
       name: AppRoutes.account,
       page: () => AccountScreen(),
+      binding: AccountBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.updateInfoAccount,
+      page: () => const UpdateInfoAccountScreen(),
       binding: AccountBinding(),
     ),
     GetPage(
@@ -125,7 +131,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.resultArg,
-      page: () => ResultArgScreen(),
+      page: () => const ResultArgScreen(),
       binding: SearchBinding(),
     ),
     GetPage(

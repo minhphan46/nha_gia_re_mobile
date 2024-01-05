@@ -30,10 +30,12 @@ class PostDetailScreen extends StatelessWidget {
             onPressed: () {
               controller.navToEditPost();
             },
-            icon: const Icon(
-              Icons.edit_outlined,
-              color: AppColors.green,
-            ),
+            icon: Obx(() => controller.isYourPost.value
+                ? const Icon(
+                    Icons.edit_outlined,
+                    color: AppColors.green,
+                  )
+                : const SizedBox()),
           )
         ],
       ),
