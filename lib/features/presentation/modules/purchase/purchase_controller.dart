@@ -1,6 +1,7 @@
 import 'package:flutter_zalopay_sdk/flutter_zalopay_sdk.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
+import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/order_membership_package.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/subscription.dart';
@@ -12,6 +13,8 @@ import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 
+import '../../../domain/entities/purchase/discount_code.dart';
+import '../../../domain/usecases/purchase/get_discount_codes_usercase.dart';
 import '../../../domain/usecases/purchase/unsubcribe.dart';
 
 class CreateOrderResult {
@@ -68,9 +71,17 @@ class PurchaseController extends GetxController {
   }
 
   Future<OrderMembershipPackage?> _createOrder(
-      String packageId, int numOfMonth) async {
-    final result = await getOrderMembershipPackageUseCase(
-        params: {'package_id': packageId, 'num_of_month': numOfMonth});
+      String packageId, int numOfMonth, String? discountCode) async {
+    print('create order');
+    print(packageId);
+    print(numOfMonth);
+    print(discountCode);
+    // return null;
+    final result = await getOrderMembershipPackageUseCase(params: {
+      'package_id': packageId,
+      'num_of_month': numOfMonth,
+      'discount_code': discountCode
+    });
     if (result is DataSuccess) {
       return result.data!;
     } else {
@@ -79,8 +90,8 @@ class PurchaseController extends GetxController {
   }
 
   Future<CreateOrderResult> createOrder(
-      String packageId, int numOfMonth) async {
-    final result = await _createOrder(packageId, numOfMonth);
+      String packageId, int numOfMonth, String? discountCode) async {
+    final result = await _createOrder(packageId, numOfMonth, discountCode);
     await Future.delayed(const Duration(seconds: 1));
     if (result != null) {
       FlutterZaloPayStatus payResult =
@@ -131,5 +142,13 @@ class PurchaseController extends GetxController {
         membershipPackages: membershipPackages,
         transactions: transactions,
         currentSubscription: currentSubscription);
+  }
+
+  final getDiscountCodeUseCase = sl<GetDiscountCodeUseCase>();
+  Future<Pair<int, List<DiscountCodeEntity>>> getAllDiscountCodes(
+      int page, String packageId) async {
+    final result = await getDiscountCodeUseCase(
+        params: GetDiscountCodeUseCaseParams(page, packageId));
+    return result;
   }
 }

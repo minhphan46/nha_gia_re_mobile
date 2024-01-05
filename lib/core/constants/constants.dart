@@ -36,3 +36,4 @@ const String kGetOrCreateConversation = '/conversations/user/:id';
 
 const kGetFollowersAndFollowingsCountEndpoint = '/users/follows';
 const kFollowUserEndpoint = '/users/follow/:id';
+const kGetDiscountCodeEndpoint = '/membership-package/discounts';
