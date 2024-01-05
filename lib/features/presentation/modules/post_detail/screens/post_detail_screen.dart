@@ -135,7 +135,10 @@ class PostDetailScreen extends StatelessWidget {
             const SizedBox(height: 20),
             ExpandableContainer(
               title: 'Chi tiết'.tr,
-              minHeight: 130,
+              //minHeight: 130,
+              minHeight: (controller.getNumOfFeaturesNotNull() / 2) < 3
+                  ? controller.getNumOfFeaturesNotNull() / 2 * 40
+                  : 130,
               child: controller.getDetailCard(),
             ),
             // description

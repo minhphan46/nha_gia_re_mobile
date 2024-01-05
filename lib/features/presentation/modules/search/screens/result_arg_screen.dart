@@ -5,15 +5,26 @@ import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.d
 import '../search_controller.dart';
 import 'result_page.dart';
 
-class ResultArgScreen extends StatelessWidget {
-  ResultArgScreen({super.key});
+class ResultArgScreen extends StatefulWidget {
+  const ResultArgScreen({super.key});
 
+  @override
+  State<ResultArgScreen> createState() => _ResultArgScreenState();
+}
+
+class _ResultArgScreenState extends State<ResultArgScreen> {
   final MySearchController searchController = Get.find<MySearchController>();
+
   final String title = Get.arguments['title'];
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
     searchController.setTypeResult(Get.arguments['type']);
+    super.initState();
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Scaffold(
       appBar: MyAppbar(title: title, isShowBack: true),
       body: ResultPage(),

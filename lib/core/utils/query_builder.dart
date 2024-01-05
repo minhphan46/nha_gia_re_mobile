@@ -82,7 +82,7 @@ class QueryBuilder {
     }
     // +param if orderBy == asc
     // -param if orderBy == desc
-    _orderBy += '${orderBy == OrderBy.asc ? '+' : '-'}$param';
+    _orderBy += '${orderBy == OrderBy.asc ? '' : '-'}$param';
     return this;
   }
 

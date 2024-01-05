@@ -160,6 +160,7 @@ class MySearchController extends GetxController {
   }
 
   void popScreen() {
+    searchPosts.clear();
     Get.back();
   }
 
@@ -192,7 +193,7 @@ class MySearchController extends GetxController {
         sl<GetPostSearchsUseCase>();
     if (page == 1 || page == null) {
       toggleLoadingGetPosts(true);
-      searchPosts.value = [];
+      searchPosts.clear();
     }
     final dataState =
         await getPostSearchsUseCase(params: Pair(postFilter, page));

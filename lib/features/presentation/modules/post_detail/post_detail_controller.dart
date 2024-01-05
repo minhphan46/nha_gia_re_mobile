@@ -2,12 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
+import 'package:nhagiare_mobile/features/domain/enums/order_by_types.dart';
+import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/motel_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/office_card.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
+import '../../../domain/entities/posts/filter_request.dart';
 import '../../../domain/entities/properties/apartment.dart';
 import '../../../domain/entities/properties/house.dart';
 import '../../../domain/entities/properties/land.dart';
@@ -15,6 +18,7 @@ import '../../../domain/entities/properties/motel.dart';
 import '../../../domain/entities/properties/office.dart';
 import '../../../domain/entities/properties/property_feature.dart';
 import '../../../domain/usecases/authentication/get_user_id.dart';
+import '../../../domain/usecases/post/remote/get_post_search.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 import 'widgets/apartment_card.dart';
 import 'widgets/house_card.dart';
@@ -32,6 +36,16 @@ class PostDetailController extends GetxController {
       isYourPost.value = true;
     }
     super.onInit();
+  }
+
+  int getNumOfFeaturesNotNull() {
+    int count = 0;
+    for (var i in post.features!.values) {
+      if (i != null) {
+        count++;
+      }
+    }
+    return count;
   }
 
   Widget getDetailCard() {
@@ -52,9 +66,11 @@ class PostDetailController extends GetxController {
   }
 
   // get all posts
-  final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
+  final GetPostSearchsUseCase getPostSearchsUseCase =
+      sl<GetPostSearchsUseCase>();
   Future<List<RealEstatePostEntity>> getRelatePosts({int? page}) async {
-    final dataState = await _getPostsUseCase(params: Pair(null, page));
+    final dataState =
+        await getPostSearchsUseCase(params: Pair(getPostFilter(), page));
 
     if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
       return dataState.data!.second;
@@ -63,6 +79,14 @@ class PostDetailController extends GetxController {
     } else {
       return [];
     }
+  }
+
+  PostFilter getPostFilter() {
+    return PostFilter(
+      textSearch: post.title,
+      orderBy: OrderByTypes.relatedDesc,
+      postedBy: PostedBy.all,
+    );
   }
 
   void likePost() async {

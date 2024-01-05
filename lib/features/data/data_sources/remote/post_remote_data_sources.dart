@@ -55,6 +55,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     // post_is_active[eq]=true
     queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
 
+    queryBuilder.addQuery('post_status', Operation.equals, '\'approved\'');
+
     queryBuilder.addOrderBy('display_priority_point', OrderBy.desc);
 
     url += queryBuilder.build();
@@ -392,6 +394,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'motel\'');
       queryBuilder.addText(query.toParam());
     }
+
+    queryBuilder.addQuery('post_status', Operation.equals, '\'approved\'');
 
     url += queryBuilder.build();
 
