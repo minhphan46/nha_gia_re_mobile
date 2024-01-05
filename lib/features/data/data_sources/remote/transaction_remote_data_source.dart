@@ -61,9 +61,16 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
     String url = '$apiAppUrl$kGetTransactionEndpoint';
     try {
       final httpResponse = await client.get(url,
-          options: Options(headers: {
-            'Authorization': 'Bearer $accessToken',
-          }));
+          options: Options(
+            headers: {
+              'Authorization': 'Bearer $accessToken',
+            },
+          ),
+          queryParameters: {
+            'orders': '-timestamp',
+            'status[eq]': '\'paid\'',
+            'page': 'all',
+          });
       if (httpResponse.statusCode != 200) {
         throw ApiException(
           message: httpResponse.data,
