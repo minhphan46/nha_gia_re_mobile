@@ -11,23 +11,23 @@ enum OrderByTypes {
   String get filterString {
     switch (this) {
       case priceAsc:
-        return 'post_price';
+        return 'price';
       case priceDesc:
-        return 'post_price';
+        return 'price';
       case createdAtAsc:
         return 'posted_date';
       case createdAtDesc:
         return 'posted_date';
       case relatedAsc:
-        return '';
+        return 'display_priority_point';
       case relatedDesc:
-        return '';
+        return 'display_priority_point';
       case nearByAsc:
-        return '';
+        return 'display_priority_point';
       case nearByDesc:
-        return '';
+        return 'display_priority_point';
       default:
-        return '';
+        return 'display_priority_point';
     }
   }
   //(this == priceAsc || this == priceDesc) ? 'price' : 'posted_date';

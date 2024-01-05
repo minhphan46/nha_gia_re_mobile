@@ -55,6 +55,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     // post_is_active[eq]=true
     queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
 
+    queryBuilder.addOrderBy('display_priority_point', OrderBy.desc);
+
     url += queryBuilder.build();
     return await DatabaseHelper().getPosts(url, client);
   }
@@ -344,6 +346,16 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     //       .build();
     // }
 
+    if (query.orderBy != null) {
+      if (query.orderBy!.isAsc == true) {
+        queryBuilder.addOrderBy(query.orderBy!.filterString, OrderBy.asc);
+      } else {
+        queryBuilder.addOrderBy(query.orderBy!.filterString, OrderBy.desc);
+      }
+    } else {
+      queryBuilder.addOrderBy('display_priority_point', OrderBy.desc);
+    }
+
     if (query.minPrice != null && query.maxPrice != null) {
       queryBuilder.addQuery('post_price', Operation.between,
           '${query.minPrice},${query.maxPrice}');
@@ -358,31 +370,26 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     // filter by post type
     if (query is ApartmentFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'apartment\'');
-      print("query: ${query.toParam()}");
       queryBuilder.addText(query.toParam());
     }
 
     if (query is HouseFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'house\'');
-      print("query: ${query.toParam()}");
       queryBuilder.addText(query.toParam());
     }
 
     if (query is LandFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'land\'');
-      print("query: ${query.toParam()}");
       queryBuilder.addText(query.toParam());
     }
 
     if (query is OfficeFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'office\'');
-      print("query: ${query.toParam()}");
       queryBuilder.addText(query.toParam());
     }
 
     if (query is MotelFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'motel\'');
-      print("query: ${query.toParam()}");
       queryBuilder.addText(query.toParam());
     }
 

@@ -207,7 +207,7 @@ class MySearchController extends GetxController {
           hasMore.value = true;
         }
       } else {
-        searchPosts.addAll(dataState.data!.second);
+        searchPosts.value = [...searchPosts, ...dataState.data!.second];
       }
       return dataState.data!;
     } else {
