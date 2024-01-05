@@ -43,249 +43,306 @@ class CreatePostScreen extends StatelessWidget {
         title:
             controller.post.value != null ? 'Chỉnh sửa bài đăng' : 'Đăng tin',
       ),
-      body: ListView(
-        children: [
-          Form(
-            key: formKey,
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: <Widget>[
-                // choose is lease
-                BaseCard(
-                  title: "Loại bài đăng",
-                  isvisible: true,
-                  child: ChooseLeaseCard(),
-                ),
-                // card choose type property
-                BaseCard(
-                  title: "Loại bất động sản",
-                  isvisible: true,
-                  child: ChooseTypePropertyCard(),
-                ),
-                // card choose type of user
-                Obx(
-                  () => BaseCard(
-                    title: "Bạn là",
-                    isvisible: controller.selectedPropertyType.value != null,
-                    child: ChooseTypeUserCard(),
-                  ),
-                ),
-                // post info card
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin bài đăng",
-                    isvisible: controller.selectedPropertyType.value != null,
-                    child: PostInfoCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Địa chỉ & Hình ảnh",
-                    isvisible: controller.selectedPropertyType.value != null,
-                    child: AddressImagesCard(),
-                  ),
-                ),
-
-                // Motel ======================================================
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin chi tiết",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.motel,
-                    child: MotelInfoCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Diện tích & Giá",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.motel,
-                    child: MotelAreaPricesCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin khác",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.motel,
-                    child: MotelMoreInfoCard(),
-                  ),
-                ),
-
-                // van phong ============================================
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin chung",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.office,
-                    child: OfficeNameCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin chi tiết",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.office,
-                    child: OfficeInfoCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Diện tích & Giá",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.office,
-                    child: OfficeAreaPricesCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin khác",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.office,
-                    child: OfficeMoreInfoCard(),
-                  ),
-                ),
-                // dat ============================================
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin chi tiết",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.land,
-                    child: LandInfoCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Diện tích & Giá",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.land,
-                    child: LandAreaPricesCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin khác",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.land,
-                    child: LandMoreInfoCard(),
-                  ),
-                ),
-                // nha ban ============================================
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin chi tiết",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.house,
-                    child: HouseInfoCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Diện tích & Giá",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.house,
-                    child: HouseAreaPricesCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin khác",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.house,
-                    child: HouseMoreInfoCard(),
-                  ),
-                ),
-                // chung cu ============================================
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin chi tiết",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.apartment,
-                    child: ApartmentInfoCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Diện tích & Giá",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.apartment,
-                    child: ApartmentAreaPricesCard(),
-                  ),
-                ),
-                Obx(
-                  () => BaseCard(
-                    title: "Thông tin khác",
-                    isvisible: controller.selectedPropertyType.value != null &&
-                        controller.selectedPropertyType.value ==
-                            PropertyTypes.apartment,
-                    child: ApartmentMoreInfoCard(),
-                  ),
-                ),
-                // dang bai ============================================
-                Obx(
-                  () => Visibility(
-                    visible: controller.selectedPropertyType.value != null,
+      body: Obx(
+        () => controller.isGetingLimitPost.value
+            ? const Center(child: CircularProgressIndicator())
+            : controller.limitPost.value.isExceeded!
+                ? Center(
                     child: Padding(
-                      padding: const EdgeInsets.symmetric(
-                          horizontal: 20, vertical: 10),
-                      child: ElevatedButton(
-                        onPressed: controller.isLoading.value
-                            ? null
-                            : () {
-                                controller.isEdit.value
-                                    ? controller.editPost()
-                                    : controller.createPost();
-                              },
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: AppColors.green,
-                          padding: const EdgeInsets.symmetric(vertical: 15),
-                          textStyle: const TextStyle(color: AppColors.white),
-                          elevation: 10,
-                          minimumSize: Size(100.wp, 55),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                        ),
-                        child: controller.isLoading.value
-                            ? const SizedBox(
-                                width: 20,
-                                height: 20,
-                                child: CircularProgressIndicator(
-                                  color: Colors.white,
-                                  strokeWidth: 2,
-                                ),
-                              )
-                            : Text(
-                                controller.isEdit.value
-                                    ? 'Cập nhật'.tr
-                                    : 'Đăng bài'.tr,
-                                style: AppTextStyles.bold14
-                                    .colorEx(AppColors.white),
-                              ),
+                      padding: const EdgeInsets.all(10.0),
+                      child: Text(
+                        'Bạn đã đăng quá số lượng bài đăng cho phép trong tháng: ${controller.limitPost.value.countPostInMonth}/${controller.limitPost.value.limitPostInMonth}',
+                        style: AppTextStyles.bold14.colorEx(AppColors.red),
+                        textAlign: TextAlign.center,
                       ),
                     ),
+                  )
+                : ListView(
+                    children: [
+                      Form(
+                        key: formKey,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            // choose is lease
+                            BaseCard(
+                              title: "Loại bài đăng",
+                              isvisible: true,
+                              child: ChooseLeaseCard(),
+                            ),
+                            // card choose type property
+                            BaseCard(
+                              title: "Loại bất động sản",
+                              isvisible: true,
+                              child: ChooseTypePropertyCard(),
+                            ),
+                            // card choose type of user
+                            Obx(
+                              () => BaseCard(
+                                title: "Bạn là",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                        null,
+                                child: ChooseTypeUserCard(),
+                              ),
+                            ),
+                            // post info card
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin bài đăng",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                        null,
+                                child: PostInfoCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Địa chỉ & Hình ảnh",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                        null,
+                                child: AddressImagesCard(),
+                              ),
+                            ),
+
+                            // Motel ======================================================
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin chi tiết",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.motel,
+                                child: MotelInfoCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Diện tích & Giá",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.motel,
+                                child: MotelAreaPricesCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin khác",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.motel,
+                                child: MotelMoreInfoCard(),
+                              ),
+                            ),
+
+                            // van phong ============================================
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin chung",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.office,
+                                child: OfficeNameCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin chi tiết",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.office,
+                                child: OfficeInfoCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Diện tích & Giá",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.office,
+                                child: OfficeAreaPricesCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin khác",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.office,
+                                child: OfficeMoreInfoCard(),
+                              ),
+                            ),
+                            // dat ============================================
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin chi tiết",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.land,
+                                child: LandInfoCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Diện tích & Giá",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.land,
+                                child: LandAreaPricesCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin khác",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.land,
+                                child: LandMoreInfoCard(),
+                              ),
+                            ),
+                            // nha ban ============================================
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin chi tiết",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.house,
+                                child: HouseInfoCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Diện tích & Giá",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.house,
+                                child: HouseAreaPricesCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin khác",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.house,
+                                child: HouseMoreInfoCard(),
+                              ),
+                            ),
+                            // chung cu ============================================
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin chi tiết",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.apartment,
+                                child: ApartmentInfoCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Diện tích & Giá",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.apartment,
+                                child: ApartmentAreaPricesCard(),
+                              ),
+                            ),
+                            Obx(
+                              () => BaseCard(
+                                title: "Thông tin khác",
+                                isvisible:
+                                    controller.selectedPropertyType.value !=
+                                            null &&
+                                        controller.selectedPropertyType.value ==
+                                            PropertyTypes.apartment,
+                                child: ApartmentMoreInfoCard(),
+                              ),
+                            ),
+                            // dang bai ============================================
+                            Obx(
+                              () => Visibility(
+                                visible:
+                                    controller.selectedPropertyType.value !=
+                                        null,
+                                child: Padding(
+                                  padding: const EdgeInsets.symmetric(
+                                      horizontal: 20, vertical: 10),
+                                  child: ElevatedButton(
+                                    onPressed: controller.isLoading.value
+                                        ? null
+                                        : () {
+                                            controller.isEdit.value
+                                                ? controller.editPost()
+                                                : controller.createPost();
+                                          },
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: AppColors.green,
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 15),
+                                      textStyle: const TextStyle(
+                                          color: AppColors.white),
+                                      elevation: 10,
+                                      minimumSize: Size(100.wp, 55),
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(10),
+                                      ),
+                                    ),
+                                    child: controller.isLoading.value
+                                        ? const SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 2,
+                                            ),
+                                          )
+                                        : Text(
+                                            controller.isEdit.value
+                                                ? 'Cập nhật'.tr
+                                                : 'Đăng bài'.tr,
+                                            style: AppTextStyles.bold14
+                                                .colorEx(AppColors.white),
+                                          ),
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ),
-              ],
-            ),
-          ),
-        ],
       ),
     );
   }

@@ -3,6 +3,7 @@ import 'package:dio/dio.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/post_remote_data_sources.dart';
 import 'package:nhagiare_mobile/features/data/models/post/real_estate_post.dart';
+import 'package:nhagiare_mobile/features/domain/entities/posts/limit_post.dart';
 import 'package:nhagiare_mobile/features/domain/repository/post_repository.dart';
 import '../../../core/resources/pair.dart';
 import '../../domain/entities/posts/filter_request.dart';
@@ -257,6 +258,26 @@ class PostRepositoryImpl implements PostRepository {
   Future<DataState<List<String>>> getSuggestKeywords(String keyword) async {
     try {
       final httpResponse = await _dataSrc.getSuggestKeywords(keyword);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
+
+  @override
+  Future<DataState<LitmitPostEntity>> getLimitPosts() async {
+    try {
+      final httpResponse = await _dataSrc.getLimitPosts();
 
       if (httpResponse.response.statusCode == HttpStatus.ok) {
         return DataSuccess(httpResponse.data);

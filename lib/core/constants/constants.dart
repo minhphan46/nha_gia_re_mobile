@@ -21,6 +21,7 @@ const String kGetPostEndpoint = '/posts';
 const String kCreatePostEndpoint = '/posts/create';
 const String kGetSuggestKeywordsEndpoint =
     'https://gateway.chotot.com/v2/public/search-suggestion/search?keywords=KEY_WORD&site_id=3';
+const String kGetLimitPostEndpoint = '/posts/check-limit-post';
 
 const String kGetMembershipPackageEndpoint = '/membership-package';
 const String kGetTransactionEndpoint = '/membership-package/transactions';

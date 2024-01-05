@@ -11,6 +11,7 @@ import '../../../../core/utils/query_builder.dart';
 import '../../../../core/utils/typedef.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/posts/filter_request.dart';
+import '../../models/post/limit_post.dart';
 import '../../models/post/real_estate_post.dart';
 import '../db/database_helper.dart';
 import '../local/authentication_local_data_source.dart';
@@ -33,6 +34,9 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
   Future<HttpResponse<void>> deletePost(String postId);
   Future<HttpResponse<void>> updatePost(RealEstatePostModel post);
+
+  // get limit post
+  Future<HttpResponse<LitmitPostModel>> getLimitPosts();
 
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsFavorite(
       int? page);
@@ -431,6 +435,44 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       }
       return HttpResponse(values, response);
     });
+  }
+
+  @override
+  Future<HttpResponse<LitmitPostModel>> getLimitPosts() async {
+    const url = '$apiAppUrl$kGetLimitPostEndpoint';
+
+    print(success('url: $url'));
+
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+
+      return client
+          .get(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      )
+          .then((response) {
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data,
+            statusCode: response.statusCode!,
+          );
+        }
+
+        final LitmitPostModel data =
+            LitmitPostModel.fromJson(response.data["result"]);
+
+        return HttpResponse(data, response);
+      });
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
   }
 
   @override
