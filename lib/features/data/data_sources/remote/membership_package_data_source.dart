@@ -31,7 +31,11 @@ class MembershipPackageRemoteDataSrcImpl
     const url = '$apiAppUrl$kGetMembershipPackageEndpoint';
 
     try {
-      return client.get(url).then((response) {
+      return client.get(url, queryParameters: {
+        "page": 'all',
+        "is_active[eq]": true,
+        'orders': '-created_at'
+      }).then((response) {
         if (response.statusCode != 200) {
           throw ApiException(
             message: response.data,
