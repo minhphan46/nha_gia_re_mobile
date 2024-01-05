@@ -27,7 +27,9 @@ class PostDetailScreen extends StatelessWidget {
         title: controller.post.title ?? "",
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              controller.navToEditPost();
+            },
             icon: const Icon(
               Icons.edit_outlined,
               color: AppColors.green,

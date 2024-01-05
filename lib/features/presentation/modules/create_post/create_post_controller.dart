@@ -33,14 +33,24 @@ class CreatePostController extends GetxController {
     isLoading.value = value;
   }
 
+  Rxn<RealEstatePostEntity?> post = Rxn(null);
+
+  @override
+  onInit() {
+    super.onInit();
+    if (Get.arguments != null) {
+      post.value = Get.arguments as RealEstatePostEntity;
+    }
+  }
+
   // create Post
   Future<void> createPost() async {
     toggleIsLoading(true);
     CreatePostsUseCase createPostsUseCase = sl<CreatePostsUseCase>();
 
-    final RealEstatePostEntity post = await getFinalPost();
+    post.value = await getFinalPost();
 
-    final dataState = await createPostsUseCase(params: post);
+    final dataState = await createPostsUseCase(params: post.value);
 
     if (dataState is DataSuccess) {
       toggleIsLoading(false);

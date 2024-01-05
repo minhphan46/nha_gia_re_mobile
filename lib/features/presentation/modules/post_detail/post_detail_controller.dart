@@ -99,4 +99,8 @@ class PostDetailController extends GetxController {
   void launchSms() {
     launchUrl(Uri.parse("sms://${post.user!.phone}"));
   }
+
+  void navToEditPost() {
+    Get.toNamed(AppRoutes.createPost, arguments: post);
+  }
 }
