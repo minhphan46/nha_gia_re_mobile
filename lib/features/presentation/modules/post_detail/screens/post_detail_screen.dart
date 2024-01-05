@@ -11,7 +11,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widget
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/user_card.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../../../global_widgets/carousel_ad.dart';
+import '../../../global_widgets/image_card.dart';
 import '../../../global_widgets/info_card_list.dart';
 import '../widgets/expandable_container.dart';
 
@@ -42,14 +42,9 @@ class PostDetailScreen extends StatelessWidget {
         child: Column(
           children: [
             // images
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              child: CarouselAd(
-                imgList: controller.post.images ?? [],
-                aspectRatio: 1.72,
-                indicatorSize: 8,
-              ),
-            ),
+            const SizedBox(height: 10),
+            ImageCard(images: controller.post.images ?? []),
+            const SizedBox(height: 10),
             SizedBox(
               width: double.infinity,
               child: Column(
