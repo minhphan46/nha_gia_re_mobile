@@ -63,18 +63,19 @@ class _PurchaseScreenState extends State<PurchaseScreen>
         ],
         title: 'Gói dịch vụ',
       ),
-      body: TabBarView(
-        controller: tabController,
-        children: [
-          FutureBuilder<List<MembershipPackageEntity>>(
-              future: controller.getMembershipPackages(),
-              builder: (context, snapshot) {
-                if (!snapshot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                return SingleChildScrollView(
+      body: FutureBuilder<PurchaseState>(
+          future: controller.getPurchaseState(),
+          builder: (context, snapshot) {
+            if (!snapshot.hasData) {
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
+            }
+            PurchaseState purchaseState = snapshot.data!;
+            return TabBarView(
+              controller: tabController,
+              children: [
+                SingleChildScrollView(
                   child: Stack(
                     children: [
                       Container(
@@ -122,112 +123,119 @@ class _PurchaseScreenState extends State<PurchaseScreen>
                             const SizedBox(
                               height: 20,
                             ),
-                            ...snapshot.data!.map((e) => Container(
-                                  padding: const EdgeInsets.only(bottom: 20),
-                                  width: double.infinity,
-                                  child: MembershipPackageCard(
-                                    package: e,
-                                    onTapBuy: (package) {
-                                      Get.toNamed(AppRoutes.purchaseChoosePlan,
-                                          arguments: package);
-                                    },
-                                  ),
-                                )),
+                            ...purchaseState.membershipPackages
+                                .map((e) => Container(
+                                      padding:
+                                          const EdgeInsets.only(bottom: 20),
+                                      width: double.infinity,
+                                      child: MembershipPackageCard(
+                                        isShowButton:
+                                            purchaseState.currentSubscription ==
+                                                null,
+                                        package: e,
+                                        onButtonClick: (package) {
+                                          Get.toNamed(
+                                              AppRoutes.purchaseChoosePlan,
+                                              arguments: package);
+                                        },
+                                        buttonText: "Mua ngay",
+                                      ),
+                                    )),
                           ],
                         ),
                       ),
                     ],
                   ),
-                );
-              }),
-          FutureBuilder<Subscription?>(
-              future: controller.getCurrentSubscription(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                if (snapshot.data == null) {
-                  return const Center(
-                    child: Text("Bạn chưa đăng ký gói nào"),
-                  );
-                }
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: MembershipPackageCard(
-                      package: snapshot.data!.package!,
-                      isCurrent: true,
-                    ),
-                  ),
-                );
-              }),
-          FutureBuilder<List<TransactionEntity>>(
-              future: controller.getAllTransactions(),
-              builder: (context, snapShot) {
-                if (!snapShot.hasData) {
-                  return const Center(
-                    child: CircularProgressIndicator(),
-                  );
-                }
-                List<TransactionEntity> transactions = snapShot.data!;
+                ),
+                purchaseState.currentSubscription == null
+                    ? const Center(
+                        child: Text("Bạn chưa đăng ký gói nào"),
+                      )
+                    : SingleChildScrollView(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: MembershipPackageCard(
+                            package:
+                                purchaseState.currentSubscription!.package!,
+                            isShowButton: true,
+                            buttonColor: AppColors.red,
+                            buttonText: "Hủy gói",
+                            onButtonClick: (package) async {
+                              final res = await controller.unsubscribe();
+                              if (res) {
+                                Get.snackbar(
+                                  "Hủy gói thành công",
+                                  "Bạn đã hủy gói thành công",
+                                  backgroundColor: AppColors.green,
+                                  colorText: AppColors.white,
+                                );
 
-                if (transactions.isEmpty) {
-                  return const Center(
-                    child: Text("Bạn chưa có giao dịch nào"),
-                  );
-                }
-
-                return ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: transactions.length,
-                  itemBuilder: (context, index) {
-                    TransactionEntity transaction = transactions[index];
-                    return Container(
-                      margin: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
-                      decoration: BoxDecoration(
-                          color: AppColors.white,
-                          borderRadius: BorderRadius.circular(8),
-                          boxShadow: [
-                            BoxShadow(
-                              color: AppColors.black.withOpacity(0.1),
-                              blurRadius: 4,
-                              offset: const Offset(0, 2),
-                            )
-                          ],
-                          border: Border.all(
-                            color: AppColors.grey100,
-                          )),
-                      child: ListTile(
-                        leading: const Icon(
-                          HeroiconsSolid.creditCard,
-                          color: AppColors.green,
-                        ),
-                        title: Text(
-                          "${transaction.package!.name} ${transaction.numOfSubscriptionMonth} tháng",
-                          style: AppTextStyles.semiBold16,
-                        ),
-                        subtitle: Text(
-                          "Thời gian giao dịch:\n${transaction.timestamp.toHMDMYString()}",
-                          style: AppTextStyles.regular14,
-                        ),
-                        trailing: Text(
-                          "${transaction.amount.formatNumberWithCommas}đ",
-                          style: AppTextStyles.semiBold14.copyWith(
-                            color: AppColors.orange,
+                                // Refresh
+                                setState(() {});
+                              } else {
+                                Get.snackbar(
+                                  "Hủy gói thất bại",
+                                  "Đã có lỗi xảy ra, vui lòng thử lại sau",
+                                  backgroundColor: AppColors.red,
+                                  colorText: AppColors.white,
+                                );
+                              }
+                            },
                           ),
                         ),
                       ),
-                    );
-                  },
-                );
-              })
-        ],
-      ),
+                purchaseState.transactions.isEmpty
+                    ? Text("Bạn chưa có giao dịch nào")
+                    : ListView.builder(
+                        shrinkWrap: true,
+                        itemCount: purchaseState.transactions.length,
+                        itemBuilder: (context, index) {
+                          TransactionEntity transaction =
+                              purchaseState.transactions[index];
+                          return Container(
+                            margin: const EdgeInsets.symmetric(
+                              horizontal: 8,
+                              vertical: 4,
+                            ),
+                            decoration: BoxDecoration(
+                                color: AppColors.white,
+                                borderRadius: BorderRadius.circular(8),
+                                boxShadow: [
+                                  BoxShadow(
+                                    color: AppColors.black.withOpacity(0.1),
+                                    blurRadius: 4,
+                                    offset: const Offset(0, 2),
+                                  )
+                                ],
+                                border: Border.all(
+                                  color: AppColors.grey100,
+                                )),
+                            child: ListTile(
+                              leading: const Icon(
+                                HeroiconsSolid.creditCard,
+                                color: AppColors.green,
+                              ),
+                              title: Text(
+                                "${transaction.package!.name} ${transaction.numOfSubscriptionMonth} tháng",
+                                style: AppTextStyles.semiBold16,
+                              ),
+                              subtitle: Text(
+                                "Thời gian giao dịch:\n${transaction.timestamp.toHMDMYString()}",
+                                style: AppTextStyles.regular14,
+                              ),
+                              trailing: Text(
+                                "${transaction.amount.formatNumberWithCommas}đ",
+                                style: AppTextStyles.semiBold14.copyWith(
+                                  color: AppColors.orange,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      )
+              ],
+            );
+          }),
     );
   }
 }

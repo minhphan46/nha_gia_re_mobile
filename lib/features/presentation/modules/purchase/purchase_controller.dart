@@ -12,6 +12,8 @@ import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_order.dart
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_transaction.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 
+import '../../../domain/usecases/purchase/unsubcribe.dart';
+
 class CreateOrderResult {
   final String? appTransId;
   final bool isCreateSuccess;
@@ -22,6 +24,18 @@ class CreateOrderResult {
       this.appTransId,
       this.payResult,
       this.message});
+}
+
+// All membership package, current subscription, transaction
+class PurchaseState {
+  final List<MembershipPackageEntity> membershipPackages;
+  final List<TransactionEntity> transactions;
+  final Subscription? currentSubscription;
+  PurchaseState({
+    required this.membershipPackages,
+    required this.transactions,
+    required this.currentSubscription,
+  });
 }
 
 class PurchaseController extends GetxController {
@@ -67,6 +81,7 @@ class PurchaseController extends GetxController {
   Future<CreateOrderResult> createOrder(
       String packageId, int numOfMonth) async {
     final result = await _createOrder(packageId, numOfMonth);
+    await Future.delayed(const Duration(seconds: 1));
     if (result != null) {
       FlutterZaloPayStatus payResult =
           await FlutterZaloPaySdk.payOrder(zpToken: result.zpTransToken);
@@ -101,5 +116,20 @@ class PurchaseController extends GetxController {
   Future<Subscription?> getCurrentSubscription() async {
     final result = await getCurrentSubscriptionUseCase.call();
     return result;
+  }
+
+  final unsubscribeUseCase = sl<UnsubscribeUseCase>();
+  Future<bool> unsubscribe() async {
+    return await unsubscribeUseCase.call();
+  }
+
+  Future<PurchaseState> getPurchaseState() async {
+    final membershipPackages = await getMembershipPackages();
+    final transactions = await getAllTransactions();
+    final currentSubscription = await getCurrentSubscription();
+    return PurchaseState(
+        membershipPackages: membershipPackages,
+        transactions: transactions,
+        currentSubscription: currentSubscription);
   }
 }

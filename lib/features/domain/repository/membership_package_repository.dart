@@ -7,4 +7,5 @@ abstract class MembershipPackageRepository {
   Future<DataState<List<MembershipPackageEntity>>> getMembershipPackages();
   Future<DataState<OrderMembershipPackageModel>> createOrder(
       String packageId, int numOfMonth);
+  Future<DataState<bool>> unsubscribe();
 }
