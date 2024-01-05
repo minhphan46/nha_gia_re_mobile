@@ -23,7 +23,18 @@ class PostDetailScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppbar(title: controller.post.title ?? ""),
+      appBar: MyAppbar(
+        title: controller.post.title ?? "",
+        actions: [
+          IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.edit_outlined,
+              color: AppColors.green,
+            ),
+          )
+        ],
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 20),
         child: Column(
@@ -145,75 +156,77 @@ class PostDetailScreen extends StatelessWidget {
           ],
         ),
       ),
-      bottomNavigationBar: (!controller.isYourPost)
-          ? BottomAppBar(
-              padding: const EdgeInsets.all(0),
-              color: Colors.white,
-              child: SizedBox(
-                child: Row(children: [
-                  Expanded(
-                      child: MaterialButton(
-                          elevation: 0,
-                          onPressed: controller.launchPhone,
-                          color: AppColors.green,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.phone_in_talk_outlined,
-                                  size: 24,
-                                  color: Colors.white,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'Gọi điện'.tr,
-                                  style: AppTextStyles.regular12
-                                      .copyWith(color: Colors.white),
-                                )
-                              ]))),
-                  Expanded(
-                      child: MaterialButton(
-                          onPressed: controller.navToChat,
-                          color: Colors.white,
-                          elevation: 0,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                Image.asset(
-                                  Assets.chatGreen,
-                                  width: 24,
-                                  color: AppColors.green,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'Nhắn tin'.tr,
-                                  style: AppTextStyles.regular12
-                                      .copyWith(color: AppColors.green),
-                                )
-                              ]))),
-                  Expanded(
-                      child: MaterialButton(
-                          onPressed: controller.launchSms,
-                          color: Colors.white,
-                          elevation: 0,
-                          child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: [
-                                const Icon(
-                                  Icons.sms_outlined,
-                                  size: 24,
-                                  color: AppColors.green,
-                                ),
-                                const SizedBox(height: 5),
-                                Text(
-                                  'SMS'.tr,
-                                  style: AppTextStyles.regular12
-                                      .copyWith(color: AppColors.green),
-                                )
-                              ])))
-                ]),
-              ))
-          : null,
+      bottomNavigationBar: Obx(
+        () => (!controller.isYourPost.value)
+            ? BottomAppBar(
+                padding: const EdgeInsets.all(0),
+                color: Colors.white,
+                child: SizedBox(
+                  child: Row(children: [
+                    Expanded(
+                        child: MaterialButton(
+                            elevation: 0,
+                            onPressed: controller.launchPhone,
+                            color: AppColors.green,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.phone_in_talk_outlined,
+                                    size: 24,
+                                    color: Colors.white,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    'Gọi điện'.tr,
+                                    style: AppTextStyles.regular12
+                                        .copyWith(color: Colors.white),
+                                  )
+                                ]))),
+                    Expanded(
+                        child: MaterialButton(
+                            onPressed: controller.navToChat,
+                            color: Colors.white,
+                            elevation: 0,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Image.asset(
+                                    Assets.chatGreen,
+                                    width: 24,
+                                    color: AppColors.green,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    'Nhắn tin'.tr,
+                                    style: AppTextStyles.regular12
+                                        .copyWith(color: AppColors.green),
+                                  )
+                                ]))),
+                    Expanded(
+                        child: MaterialButton(
+                            onPressed: controller.launchSms,
+                            color: Colors.white,
+                            elevation: 0,
+                            child: Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  const Icon(
+                                    Icons.sms_outlined,
+                                    size: 24,
+                                    color: AppColors.green,
+                                  ),
+                                  const SizedBox(height: 5),
+                                  Text(
+                                    'SMS'.tr,
+                                    style: AppTextStyles.regular12
+                                        .copyWith(color: AppColors.green),
+                                  )
+                                ])))
+                  ]),
+                ))
+            : const SizedBox(),
+      ),
     );
   }
 }

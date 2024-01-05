@@ -9,7 +9,6 @@ import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dar
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:nhagiare_mobile/features/domain/repository/authentication_repository.dart';
 import 'package:nhagiare_mobile/features/domain/repository/conversation_repository.dart';
-import 'package:nhagiare_mobile/features/domain/repository/media_repository.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 
 class ChatController extends GetxController {

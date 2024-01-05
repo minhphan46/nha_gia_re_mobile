@@ -28,6 +28,12 @@ class RangeSliderCustom extends StatelessWidget {
     super.key,
   });
 
+  TextEditingController lowerValueController = TextEditingController();
+  TextEditingController upperValueController = TextEditingController();
+
+  FocusNode lowerValueFocusNode = FocusNode();
+  FocusNode upperValueFocusNode = FocusNode();
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -51,6 +57,107 @@ class RangeSliderCustom extends StatelessWidget {
               ]),
             ),
           ),
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            IntrinsicWidth(
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: lowerValueController,
+                focusNode: lowerValueFocusNode,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: lower.toInt().toString(),
+                  hintStyle: highlightText,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  filled: true,
+                  fillColor: AppColors.grey100,
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                ),
+                style: highlightText,
+                onTapOutside: (event) {
+                  lowerValueFocusNode.unfocus();
+                },
+                onChanged: (value) {
+                  if (isValidValue(value)) {
+                    lowerValue.value = double.parse(value);
+                  }
+                },
+                onFieldSubmitted: (value) {
+                  if (isValidValue(value)) {
+                    lowerValue.value = double.parse(value);
+                  }
+                  lowerValueFocusNode.unfocus();
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Không rỗng';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Không hợp lệ';
+                  }
+                  if (double.parse(value) < lower) {
+                    return 'Không nhỏ hơn $lower';
+                  }
+                  if (double.parse(value) > upper) {
+                    return 'Không lớn hơn $upper';
+                  }
+                  return null;
+                },
+              ),
+            ),
+            IntrinsicWidth(
+              child: TextFormField(
+                autovalidateMode: AutovalidateMode.onUserInteraction,
+                controller: upperValueController,
+                focusNode: upperValueFocusNode,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintText: upper.toInt().toString(),
+                  hintStyle: highlightText,
+                  border: InputBorder.none,
+                  contentPadding: const EdgeInsets.symmetric(
+                      vertical: 5.0, horizontal: 10.0),
+                  filled: true,
+                  fillColor: AppColors.grey100,
+                  floatingLabelBehavior: FloatingLabelBehavior.always,
+                ),
+                style: highlightText,
+                onTapOutside: (event) {
+                  upperValueFocusNode.unfocus();
+                },
+                onChanged: (value) {
+                  if (isValidValue(value)) {
+                    upperValue.value = double.parse(value);
+                  }
+                },
+                onFieldSubmitted: (value) {
+                  if (isValidValue(value)) {
+                    upperValue.value = double.parse(value);
+                  }
+                  upperValueFocusNode.unfocus();
+                },
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Không rỗng';
+                  }
+                  if (double.tryParse(value) == null) {
+                    return 'Không hợp lệ';
+                  }
+                  if (double.parse(value) < lower) {
+                    return 'Không nhỏ hơn $lower';
+                  }
+                  if (double.parse(value) > upper) {
+                    return 'Không lớn hơn $upper';
+                  }
+                  return null;
+                },
+              ),
+            ),
+          ],
         ),
         Obx(
           () => FlutterSlider(
@@ -78,11 +185,29 @@ class RangeSliderCustom extends StatelessWidget {
             disabled: false,
             onDragging: (handlerIndex, lower, upper) {
               onChangeValue(lower, upper);
+              lowerValueController.text = lowerValue.value.toInt().toString();
+              upperValueController.text = upperValue.value.toInt().toString();
             },
           ),
         ),
       ],
     );
+  }
+
+  bool isValidValue(String value) {
+    if (value.isEmpty) {
+      return false;
+    }
+    if (double.tryParse(value) == null) {
+      return false;
+    }
+    if (double.parse(value) < lower) {
+      return false;
+    }
+    if (double.parse(value) > upper) {
+      return false;
+    }
+    return true;
   }
 
   TextStyle nomalText = AppTextStyles.regular14.copyWith(

@@ -1,10 +1,7 @@
 import 'dart:io';
-
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
-
-import '../enums/conversation_enums.dart';
 
 abstract class ConversationRepository {
   void addConversationListener(Function(List<ConversationModel>) listener);

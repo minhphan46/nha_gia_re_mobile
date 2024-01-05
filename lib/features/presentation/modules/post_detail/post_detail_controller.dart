@@ -14,6 +14,7 @@ import '../../../domain/entities/properties/land.dart';
 import '../../../domain/entities/properties/motel.dart';
 import '../../../domain/entities/properties/office.dart';
 import '../../../domain/entities/properties/property_feature.dart';
+import '../../../domain/usecases/authentication/get_user_id.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 import 'widgets/apartment_card.dart';
 import 'widgets/house_card.dart';
@@ -22,7 +23,16 @@ import 'widgets/land_card.dart';
 class PostDetailController extends GetxController {
   final RealEstatePostEntity post = Get.arguments as RealEstatePostEntity;
   PropertyFeature? feature;
-  late bool isYourPost = false;
+  late RxBool isYourPost = false.obs;
+
+  GetUserIdUseCase getUserIdUseCase = sl<GetUserIdUseCase>();
+  @override
+  void onInit() async {
+    if (post.user!.id == await getUserIdUseCase()) {
+      isYourPost.value = true;
+    }
+    super.onInit();
+  }
 
   Widget getDetailCard() {
     feature = PropertyFeature.fromJson(post.typeId!, post.features!);

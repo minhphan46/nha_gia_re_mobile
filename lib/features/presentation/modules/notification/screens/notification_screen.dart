@@ -2,9 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
-
 import '../../../../../config/theme/app_color.dart';
-import '../../../../../config/theme/text_styles.dart';
 import '../../../../data/models/notification.dart';
 import '../notification_controller.dart';
 import '../widgets/NotificationItem.dart';
@@ -68,6 +66,5 @@ class _NotificationScreenState extends State<NotificationScreen> {
         },
       ),
     );
-    ;
   }
 }

@@ -17,30 +17,6 @@
   - Manage user accounts.
   - Subscribe to a pro listing package.
 
-## Screenshots
-
-<p align="center">
-  <img src="assets/images/screenshot/loading.png" alt="Screenshot 1" width="150">
-  <img src="assets/images/screenshot/login.png" alt="Screenshot 2" width="150">
-  <img src="assets/images/screenshot/forgot.png" alt="Screenshot 3" width="150">
-  <img src="assets/images/screenshot/update.png" alt="Screenshot 4" width="150">
-  <img src="assets/images/screenshot/otp.png" alt="Screenshot 5" width="150">
-</p>
-<p align="center">
-  <img src="assets/images/screenshot/home.png" alt="Screenshot 6" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/detail.png" alt="Screenshot 7" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/post.png" alt="Screenshot 8" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/search.png" alt="Screenshot 9" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/fillter.png" alt="Screenshot 10" width="150" style="vertical-align: top;">
-</p>
-<p align="center">
-  <img src="assets/images/screenshot/account.png" alt="Screenshot 11" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/Blog.png" alt="Screenshot 12" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/chat_detail.png" alt="Screenshot 13" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/management.png" alt="Screenshot 14" width="150" style="vertical-align: top;">
-  <img src="assets/images/screenshot/purchase.png" alt="Screenshot 15" width="150" style="vertical-align: top;">
-</p>
-
 ## Getting Started
 
 To run any Android application built with Flutter you need to configure the enviroments in your machine, you can do this following the the tutorial provided by Google in [Flutter website](https://flutter.dev/docs/get-started/install)
@@ -64,6 +40,12 @@ To run any Android application built with Flutter you need to configure the envi
 2. Open the project in your preferred IDE (e.g. Android Studio, VS Code)
 3. Run `flutter pub get` to install the required dependencies
 4. Run the project in an emulator or on a physical device
+
+# Architecture
+
+The Flutter codebase follows Clean Architecture principles, a design philosophy that emphasizes separation of concerns and maintainability.
+
+<img src="assets/images/architecture.png" alt="architecture" width="500">
 
 # Project stucture
 
@@ -112,6 +94,30 @@ To run any Android application built with Flutter you need to configure the envi
 - injection_container.dart: contains dependency injection
 - main.dart
 ```
+
+## Screenshots
+
+<p align="center">
+  <img src="assets/images/screenshot/loading.png" alt="Screenshot 1" width="150">
+  <img src="assets/images/screenshot/login.png" alt="Screenshot 2" width="150">
+  <img src="assets/images/screenshot/forgot.png" alt="Screenshot 3" width="150">
+  <img src="assets/images/screenshot/update.png" alt="Screenshot 4" width="150">
+  <img src="assets/images/screenshot/otp.png" alt="Screenshot 5" width="150">
+</p>
+<p align="center">
+  <img src="assets/images/screenshot/home.png" alt="Screenshot 6" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/detail.png" alt="Screenshot 7" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/post.png" alt="Screenshot 8" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/search.png" alt="Screenshot 9" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/fillter.png" alt="Screenshot 10" width="150" style="vertical-align: top;">
+</p>
+<p align="center">
+  <img src="assets/images/screenshot/account.png" alt="Screenshot 11" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/Blog.png" alt="Screenshot 12" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/chat_detail.png" alt="Screenshot 13" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/management.png" alt="Screenshot 14" width="150" style="vertical-align: top;">
+  <img src="assets/images/screenshot/purchase.png" alt="Screenshot 15" width="150" style="vertical-align: top;">
+</p>
 
 # References
 
