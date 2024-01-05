@@ -14,8 +14,6 @@ import 'package:nhagiare_mobile/features/presentation/modules/chat/chat_controle
 import 'package:nhagiare_mobile/features/presentation/modules/chat/widgets/media_grid.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/chat/widgets/media_row.dart';
 import 'package:url_launcher/url_launcher.dart';
-
-import '../../../../domain/enums/conversation_enums.dart';
 import '../../../../domain/enums/message_types.dart';
 
 class ChatDetailScreen extends StatefulWidget {

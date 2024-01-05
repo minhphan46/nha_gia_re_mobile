@@ -8,9 +8,7 @@ import 'package:nhagiare_mobile/core/constants/constants.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
-
 import '../../../../core/errors/exceptions.dart';
-import '../../../domain/enums/conversation_enums.dart';
 import '../../../domain/enums/message_types.dart';
 
 abstract class ConversationRemoteDataSource {
