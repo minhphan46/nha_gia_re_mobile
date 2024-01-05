@@ -6,6 +6,7 @@ import 'package:nhagiare_mobile/features/data/repository/user_respository_impl.d
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_fav.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/hide_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/update_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_discount_codes_usercase.dart';
@@ -388,6 +389,12 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetDiscountCodeUseCase>(
     GetDiscountCodeUseCase(
       sl<MembershipPackageRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<GetPostFavorite>(
+    GetPostFavorite(
+      sl<PostRepository>(),
     ),
   );
 }

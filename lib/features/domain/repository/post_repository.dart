@@ -31,4 +31,8 @@ abstract class PostRepository {
       int? page);
   Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsExpired(
       int? page);
+
+  //Get favorite posts
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsFavorite(
+      int? page);
 }

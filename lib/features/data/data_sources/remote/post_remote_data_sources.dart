@@ -33,6 +33,9 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<List<String>>> getSuggestKeywords(String keyword);
   Future<HttpResponse<void>> deletePost(String postId);
   Future<HttpResponse<void>> updatePost(RealEstatePostModel post);
+
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsFavorite(
+      int? page);
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -428,5 +431,45 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       }
       return HttpResponse(values, response);
     });
+  }
+
+  @override
+  Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsFavorite(
+      int? page) async {
+    const url = '$apiAppUrl$kGetPostFavoriteEndpoint';
+    try {
+      final response = await client.get(url,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sl<AuthenLocalDataSrc>().getAccessToken()}',
+          }));
+      //print('${response.statusCode} : ${response.data["message"].toString()}');
+      if (response.statusCode != 200) {
+        //print('${response.statusCode} : ${response.data["result"].toString()}');
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      final int numOfPages = response.data["num_of_pages"];
+
+      final List<DataMap> taskDataList =
+          List<DataMap>.from(response.data["result"]);
+
+      List<RealEstatePostModel> posts = taskDataList
+          .map((postJson) => RealEstatePostModel.fromJson(postJson))
+          //.where((post) => post.isActive!)
+          //.where((post) => post.expiryDate!.isBefore(DateTime.now()))
+          .toList();
+
+      final value = Pair(numOfPages, posts);
+
+      return HttpResponse(value, response);
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
   }
 }

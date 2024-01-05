@@ -9,6 +9,7 @@ import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_me.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_out.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_fav.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 
 import '../../../../config/theme/app_color.dart';
@@ -161,5 +162,14 @@ class AccountController extends GetxController {
 
   navToUpdateInfo() {
     Get.toNamed(AppRoutes.updateInfoAccount, arguments: userEntity);
+  }
+
+  final getPostFavoriteUseCase = sl<GetPostFavorite>();
+  Future<Pair<int, List<RealEstatePostEntity>>> getPostFavorite(
+      int page) async {
+    final dataState = await getPostFavoriteUseCase(
+      params: page,
+    );
+    return dataState;
   }
 }
