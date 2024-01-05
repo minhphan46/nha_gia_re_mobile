@@ -160,6 +160,7 @@ class MySearchController extends GetxController {
   }
 
   void popScreen() {
+    searchPosts.clear();
     Get.back();
   }
 
@@ -192,7 +193,7 @@ class MySearchController extends GetxController {
         sl<GetPostSearchsUseCase>();
     if (page == 1 || page == null) {
       toggleLoadingGetPosts(true);
-      searchPosts.value = [];
+      searchPosts.clear();
     }
     final dataState =
         await getPostSearchsUseCase(params: Pair(postFilter, page));
@@ -207,7 +208,7 @@ class MySearchController extends GetxController {
           hasMore.value = true;
         }
       } else {
-        searchPosts.addAll(dataState.data!.second);
+        searchPosts.value = [...searchPosts, ...dataState.data!.second];
       }
       return dataState.data!;
     } else {
@@ -371,7 +372,7 @@ class MySearchController extends GetxController {
                 : true,
         apartmentTypes: apartmentTypes
             .getListSelected()
-            .map((e) => ApartmentTypes.parse(e))
+            .map((e) => ApartmentTypes.parseVi(e))
             .toList(),
         isCorner: apartmentCharacteristics.isEqualValue(0) ? null : true,
         numOfBedrooms: apartmentBedroomNumber.getListSelected().map(
@@ -385,19 +386,19 @@ class MySearchController extends GetxController {
         ).toList(),
         mainDoorDirections: apartmentMainDirection
             .getListSelected()
-            .map((e) => Direction.parse(e))
+            .map((e) => Direction.parseVi(e))
             .toList(),
         balconyDirections: apartmentBalconyDirection
             .getListSelected()
-            .map((e) => Direction.parse(e))
+            .map((e) => Direction.parseVi(e))
             .toList(),
         legalStatus: apartmentLegalDocuments
             .getListSelected()
-            .map((e) => LegalDocumentStatus.parse(e))
+            .map((e) => LegalDocumentStatus.parseVi(e))
             .toList(),
         furnitureStatus: apartmentInteriorStatus
             .getListSelected()
-            .map((e) => FurnitureStatus.parse(e))
+            .map((e) => FurnitureStatus.parseVi(e))
             .toList());
   }
 
@@ -418,7 +419,7 @@ class MySearchController extends GetxController {
         postedBy: getPostBy(),
         houseTypes: houseTypes
             .getListSelected()
-            .map((e) => HouseTypes.parse(e))
+            .map((e) => HouseTypes.parseVi(e))
             .toList(),
         hasWideAlley: houseCharacteristics.isEqualValue(0),
         isFacade: houseCharacteristics.isEqualValue(1),
@@ -434,15 +435,15 @@ class MySearchController extends GetxController {
         ).toList(),
         mainDoorDirections: houseMainDirection
             .getListSelected()
-            .map((e) => Direction.parse(e))
+            .map((e) => Direction.parseVi(e))
             .toList(),
         legalStatus: houseLegalDocuments
             .getListSelected()
-            .map((e) => LegalDocumentStatus.parse(e))
+            .map((e) => LegalDocumentStatus.parseVi(e))
             .toList(),
         furnitureStatus: houseInteriorStatus
             .getListSelected()
-            .map((e) => FurnitureStatus.parse(e))
+            .map((e) => FurnitureStatus.parseVi(e))
             .toList());
   }
 
@@ -462,17 +463,17 @@ class MySearchController extends GetxController {
       maxArea: upperAreaValue.value.toInt(),
       postedBy: getPostBy(),
       landTypes:
-          landTypes.getListSelected().map((e) => LandTypes.parse(e)).toList(),
+          landTypes.getListSelected().map((e) => LandTypes.parseVi(e)).toList(),
       hasWideAlley: landCharacteristics.isEqualValue(0),
       isFacade: landCharacteristics.isEqualValue(1),
       isWidensTowardsTheBack: landCharacteristics.isEqualValue(2),
       landDirections: landDirection
           .getListSelected()
-          .map((e) => Direction.parse(e))
+          .map((e) => Direction.parseVi(e))
           .toList(),
       legalStatus: landLegalDocuments
           .getListSelected()
-          .map((e) => LegalDocumentStatus.parse(e))
+          .map((e) => LegalDocumentStatus.parseVi(e))
           .toList(),
     );
   }
@@ -494,19 +495,19 @@ class MySearchController extends GetxController {
       postedBy: getPostBy(),
       officeTypes: officeType
           .getListSelected()
-          .map((e) => OfficeTypes.parse(e))
+          .map((e) => OfficeTypes.parseVi(e))
           .toList(),
       mainDoorDirections: officeDirection
           .getListSelected()
-          .map((e) => Direction.parse(e))
+          .map((e) => Direction.parseVi(e))
           .toList(),
       legalStatus: landLegalDocuments
           .getListSelected()
-          .map((e) => LegalDocumentStatus.parse(e))
+          .map((e) => LegalDocumentStatus.parseVi(e))
           .toList(),
       furnitureStatus: officeInteriorStatus
           .getListSelected()
-          .map((e) => FurnitureStatus.parse(e))
+          .map((e) => FurnitureStatus.parseVi(e))
           .toList(),
     );
   }
@@ -528,7 +529,7 @@ class MySearchController extends GetxController {
       postedBy: getPostBy(),
       furnitureStatus: rentInteriorStatus
           .getListSelected()
-          .map((e) => FurnitureStatus.parse(e))
+          .map((e) => FurnitureStatus.parseVi(e))
           .toList(),
     );
   }

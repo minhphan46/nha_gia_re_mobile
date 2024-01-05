@@ -40,7 +40,8 @@ class CreatePostScreen extends StatelessWidget {
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       appBar: MyAppbar(
-        title: 'Đăng tin',
+        title:
+            controller.post.value != null ? 'Chỉnh sửa bài đăng' : 'Đăng tin',
       ),
       body: ListView(
         children: [

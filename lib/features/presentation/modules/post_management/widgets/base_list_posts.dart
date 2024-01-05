@@ -54,7 +54,7 @@ class _BaseListPostsState extends State<BaseListPosts> {
       await widget.getPosts(page: page).then((value) {
         numOfPage = value.first;
         final newPosts = value.second;
-        widget.postsList.addAll(newPosts);
+        widget.postsList.value = [...widget.postsList, ...newPosts];
         hasMore.value = true;
       });
     } else {

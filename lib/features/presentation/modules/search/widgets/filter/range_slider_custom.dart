@@ -59,14 +59,16 @@ class RangeSliderCustom extends StatelessWidget {
           ),
         ),
         Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IntrinsicWidth(
+            SizedBox(
+              width: 150,
               child: TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: lowerValueController,
                 focusNode: lowerValueFocusNode,
                 keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: lower.toInt().toString(),
                   hintStyle: highlightText,
@@ -109,12 +111,21 @@ class RangeSliderCustom extends StatelessWidget {
                 },
               ),
             ),
-            IntrinsicWidth(
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10),
+              child: Text(
+                '-',
+                style: highlightText.copyWith(fontSize: 20),
+              ),
+            ),
+            SizedBox(
+              width: 150,
               child: TextFormField(
                 autovalidateMode: AutovalidateMode.onUserInteraction,
                 controller: upperValueController,
                 focusNode: upperValueFocusNode,
                 keyboardType: TextInputType.number,
+                textAlign: TextAlign.center,
                 decoration: InputDecoration(
                   hintText: upper.toInt().toString(),
                   hintStyle: highlightText,
