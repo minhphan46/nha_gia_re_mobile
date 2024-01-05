@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/create_post/create_post_controller.dart';
@@ -49,11 +50,19 @@ class CreatePostScreen extends StatelessWidget {
             : controller.limitPost.value.isExceeded!
                 ? Center(
                     child: Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: Text(
-                        'Bạn đã đăng quá số lượng bài đăng cho phép trong tháng: ${controller.limitPost.value.countPostInMonth}/${controller.limitPost.value.limitPostInMonth}',
-                        style: AppTextStyles.bold14.colorEx(AppColors.red),
-                        textAlign: TextAlign.center,
+                      padding: const EdgeInsets.all(20.0),
+                      child: Column(
+                        children: [
+                          SizedBox(height: 20.hp),
+                          Image.asset(Assets.limited, width: 60.wp),
+                          const SizedBox(height: 20),
+                          Text(
+                            'Bạn đã đăng quá số lượng bài đăng cho phép trong tháng: ${controller.limitPost.value.countPostInMonth}/${controller.limitPost.value.limitPostInMonth}',
+                            style: AppTextStyles.bold16
+                                .colorEx(Colors.yellow.shade900),
+                            textAlign: TextAlign.center,
+                          ),
+                        ],
                       ),
                     ),
                   )
