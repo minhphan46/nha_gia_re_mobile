@@ -5,6 +5,7 @@ import 'package:nhagiare_mobile/features/domain/enums/post_status_management.dar
 
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
+import '../../../../../config/values/asset_image.dart';
 
 class ItemPost extends StatefulWidget {
   final RealEstatePostEntity post;
@@ -95,23 +96,30 @@ class _ItemPostState extends State<ItemPost> {
                     width: sizeImage,
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(8),
-                      child: CachedNetworkImage(
-                        imageUrl: widget.post.images![0],
-                        fit: BoxFit.cover,
-                        errorWidget: (context, error, stackTrace) {
-                          return Image.asset(
-                            "assets/images/default_image.png",
-                            fit: BoxFit.cover,
-                          );
-                        },
-                        progressIndicatorBuilder: (ctx, str, prc) {
-                          return Center(
-                            child: CircularProgressIndicator(
-                              value: prc.progress,
+                      child: widget.post.images!.isEmpty
+                          ? Image.asset(
+                              Assets.defaultImage,
+                              fit: BoxFit.cover,
+                            )
+                          : CachedNetworkImage(
+                              imageUrl: widget.post.images!.isNotEmpty
+                                  ? widget.post.images![0]
+                                  : "",
+                              fit: BoxFit.cover,
+                              errorWidget: (context, error, stackTrace) {
+                                return Image.asset(
+                                  Assets.defaultImage,
+                                  fit: BoxFit.cover,
+                                );
+                              },
+                              progressIndicatorBuilder: (ctx, str, prc) {
+                                return Center(
+                                  child: CircularProgressIndicator(
+                                    value: prc.progress,
+                                  ),
+                                );
+                              },
                             ),
-                          );
-                        },
-                      ),
                     ),
                   ),
                   const SizedBox(width: 10),

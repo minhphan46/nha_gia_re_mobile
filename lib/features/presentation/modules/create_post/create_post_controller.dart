@@ -18,6 +18,7 @@ import 'package:nhagiare_mobile/features/domain/enums/office_types.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/create_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/update_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/upload_images.dart';
 import '../../../../config/theme/app_color.dart';
 import '../../../../core/resources/data_state.dart';
@@ -36,11 +37,14 @@ class CreatePostController extends GetxController {
 
   Rxn<RealEstatePostEntity?> post = Rxn(null);
 
+  RxBool isEdit = false.obs;
+
   @override
   onInit() {
     super.onInit();
     if (Get.arguments != null) {
       post.value = Get.arguments as RealEstatePostEntity;
+      isEdit.value = true;
       setPostEdit(post.value!);
     }
   }
@@ -74,8 +78,41 @@ class CreatePostController extends GetxController {
     }
   }
 
+  // edit Post
+  Future<void> editPost() async {
+    toggleIsLoading(true);
+    UpdatePostsUseCase createPostsUseCase = sl<UpdatePostsUseCase>();
+
+    var newPost = await getFinalPost();
+    post.value = newPost.copyWith(id: post.value!.id);
+
+    final dataState = await createPostsUseCase(params: post.value);
+
+    if (dataState is DataSuccess) {
+      toggleIsLoading(false);
+      Get.back();
+      Get.snackbar(
+        'Sửa bài thành công',
+        'Vào mục quản lý tin để xem bài của bạn',
+        backgroundColor: AppColors.green,
+        colorText: Colors.white,
+      );
+    } else {
+      toggleIsLoading(false);
+      Get.snackbar(
+        'Sửa bài thất bại',
+        '',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+    }
+  }
+
   Future<RealEstatePostEntity> getFinalPost() async {
     List<String> images = await uploadImages();
+    if (isEdit.value) {
+      images = [...images, ...imageUrlList];
+    }
     switch (selectedPropertyType.value!) {
       case PropertyTypes.motel:
         return createMotel(images);

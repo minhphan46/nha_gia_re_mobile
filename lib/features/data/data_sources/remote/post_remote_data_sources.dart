@@ -191,7 +191,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       }
 
       // Gửi yêu cầu đến server
-      //print(postModel.toJson());
+      print(postModel.toJson());
 
       final response = await client.patch(
         url,
