@@ -1,4 +1,4 @@
-const isProduction = false;
+const isProduction = true;
 const String ipconfig = '192.168.1.135';
 const String baseUrlDev = "http://$ipconfig:8000";
 const String baseUrlProduction = "https://nha-gia-re-server.onrender.com";

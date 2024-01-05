@@ -4,22 +4,25 @@ import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
+import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/dropdown_with_title.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/image_avatar_picker.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/login/widgets/text_field_with_title.dart';
-import '../../../../../config/routes/app_routes.dart';
-import '../login_controller.dart';
 import '../../../global_widgets/my_appbar.dart';
 
-class UpdateInfoScreen extends StatefulWidget {
-  const UpdateInfoScreen({super.key});
+class UpdateInfoAccountScreen extends StatefulWidget {
+  const UpdateInfoAccountScreen({super.key});
 
   @override
-  State<UpdateInfoScreen> createState() => _UpdateInfoScreenState();
+  State<UpdateInfoAccountScreen> createState() =>
+      _UpdateInfoAccountScreenState();
 }
 
-class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
-  final LoginController controller = Get.find<LoginController>();
+class _UpdateInfoAccountScreenState extends State<UpdateInfoAccountScreen> {
+  UserEntity user = Get.arguments;
+
+  final AccountController controller = Get.find<AccountController>();
 
   final _fnameFocusNode = FocusNode();
   final _lnameFocusNode = FocusNode();
@@ -40,7 +43,20 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
   }
 
   String getEmail() {
-    return "minhphan46@gmail.com";
+    return user.email!;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    controller.fnamUpdateInfoTextController.text = user.firstName!;
+    controller.lnameUpdateInfoTextController.text = user.lastName!;
+    controller.phoneUpdateInfoTextController.text = user.phone!;
+    controller.emailUpdateInfoTextController.text = user.email!;
+    controller.birthUpdateInfoTextController.text = user.dob!;
+    controller.addressUpdateInfoTextController.text =
+        user.address!.getDetailAddress();
+    print(user.firstName!);
   }
 
   @override
@@ -58,9 +74,9 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
             children: [
 // image avatar
               ImageAvatarPicker(
+                imageAvatar: controller.imageAvatar,
                 getImageFromCamera: controller.getImageFromCamera,
                 getImageFromGallery: controller.getImageFromGallery,
-                imageAvatar: controller.imageAvatar,
               ),
               const SizedBox(height: 12),
 // text avatar
@@ -179,8 +195,7 @@ class _UpdateInfoScreenState extends State<UpdateInfoScreen> {
               const SizedBox(height: 14),
               ElevatedButton(
                 onPressed: () {
-                  controller.handleRegister();
-                  Get.toNamed(AppRoutes.bottomBar);
+                  controller.updateInfo();
                 },
                 style: ElevatedButton.styleFrom(
                   backgroundColor: AppColors.green,

@@ -1,5 +1,9 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:intl/intl.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
@@ -8,6 +12,11 @@ import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_out
 import 'package:nhagiare_mobile/injection_container.dart';
 
 import '../../../../config/theme/app_color.dart';
+import '../../../../core/resources/pair.dart';
+import '../../../../core/service/device_service.dart';
+import '../../../../core/utils/date_picker.dart';
+import '../../../domain/entities/posts/real_estate_post.dart';
+import '../../../domain/usecases/post/remote/get_posts.dart';
 
 class AccountController extends GetxController {
   bool isIdentity = true;
@@ -76,5 +85,81 @@ class AccountController extends GetxController {
 
   void navToAccountInfo() {
     Get.toNamed(AppRoutes.userProfile, arguments: userEntity);
+  }
+
+  final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
+  Future<List<RealEstatePostEntity>> getAllPosts({int? page = 1}) async {
+    final dataState = await _getPostsUseCase(
+      params: Pair(userEntity.id, page),
+    );
+
+    if (dataState is DataSuccess && dataState.data!.second.isNotEmpty) {
+      return dataState.data!.second;
+    } else if (dataState is DataFailed) {
+      return [];
+    } else {
+      return [];
+    }
+  }
+
+  // update info
+
+  RxBool isLoading = false.obs;
+  final updateInfoFormKey = GlobalKey<FormState>();
+
+  var fnamUpdateInfoTextController = TextEditingController();
+  var lnameUpdateInfoTextController = TextEditingController();
+  var phoneUpdateInfoTextController = TextEditingController();
+  var emailUpdateInfoTextController = TextEditingController();
+  var birthUpdateInfoTextController = TextEditingController();
+  var genderUpdateInfoTextController = TextEditingController();
+  var addressUpdateInfoTextController = TextEditingController();
+
+  File? imageAvatar; // file image of user
+
+  void cancelImages() {
+    imageAvatar = null;
+  }
+
+  /// get image from camera
+  Future<void> getImageFromCamera() async {
+    final image = await DeviceService.pickImage(ImageSource.camera);
+    if (image == null) return;
+    imageAvatar = image;
+    Get.back();
+  }
+
+  /// get image from gallery
+  Future<void> getImageFromGallery() async {
+    final image = await DeviceService.pickImage(ImageSource.gallery);
+    if (image == null) return;
+    imageAvatar = image;
+    Get.back();
+  }
+
+  /// get day from date picker
+  Future<void> handleDatePicker() async {
+    DateTime? date = await DatePickerHelper.getDatePicker();
+    if (date != null) {
+      birthUpdateInfoTextController.text =
+          DateFormat('dd/MM/yyyy').format(date);
+    }
+  }
+
+  /// data gender
+  RxString gender = "Nam".obs;
+
+  void changeGender(String? newValue) {
+    gender.value = newValue!;
+  }
+
+  void updateInfo() async {
+    if (updateInfoFormKey.currentState!.validate()) {
+      isLoading.value = true;
+    }
+  }
+
+  navToUpdateInfo() {
+    Get.toNamed(AppRoutes.updateInfoAccount, arguments: userEntity);
   }
 }
