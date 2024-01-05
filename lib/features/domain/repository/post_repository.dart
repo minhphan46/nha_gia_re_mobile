@@ -34,4 +34,8 @@ abstract class PostRepository {
       int? page);
 
   Future<DataState<LitmitPostEntity>> getLimitPosts();
+
+  //Get favorite posts
+  Future<DataState<Pair<int, List<RealEstatePostEntity>>>> getPostsFavorite(
+      int? page);
 }
