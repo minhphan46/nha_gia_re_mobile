@@ -1,3 +1,4 @@
+import '../../../../core/utils/query_builder.dart';
 import '../../enums/apartment_types.dart';
 import '../../enums/direction.dart';
 import '../../enums/furniture_status.dart';
@@ -58,6 +59,23 @@ class PostFilter {
   String toString() {
     return 'PostFilter{textSearch: $textSearch, orderBy: $orderBy, postedByUserID: $postedByUserID, isLease: $isLease, minPrice: $minPrice, maxPrice: $maxPrice, minArea: $minArea, maxArea: $maxArea, provinceCode: $provinceCode, postedBy: $postedBy}';
   }
+
+  String get preParam => "post_features->>";
+
+  String toParam() {
+    return '';
+  }
+
+  String getListValue(List<dynamic> list) {
+    String value = '';
+    for (int i = 0; i < list.length; i++) {
+      if (i != 0) {
+        value += ',';
+      }
+      value += "'${list[i].toString()}'";
+    }
+    return value;
+  }
 }
 
 class ApartmentFilter extends PostFilter {
@@ -96,6 +114,44 @@ class ApartmentFilter extends PostFilter {
     value +=
         '\nApartmentFilter{isHandedOver: $isHandedOver, apartmentTypes: $apartmentTypes, isCorner: $isCorner, numOfBedrooms: $numOfBedrooms, mainDoorDirections: $mainDoorDirections, balconyDirections: $balconyDirections, legalStatus: $legalStatus, furnitureStatus: $furnitureStatus}';
     return value;
+  }
+
+  @override
+  String toParam() {
+    QueryBuilder queryBuilder = QueryBuilder();
+    if (isHandedOver != null) {
+      queryBuilder.addQuery(
+          '${super.preParam}is_hand_over', Operation.equals, "'$isHandedOver'");
+    }
+    if (isCorner != null) {
+      queryBuilder.addQuery(
+          '${super.preParam}is_corner', Operation.equals, "'$isCorner'");
+    }
+    if (apartmentTypes.isNotEmpty) {
+      queryBuilder.addQuery('${super.preParam}apartment_type',
+          Operation.inValue, super.getListValue(apartmentTypes));
+    }
+    if (numOfBedrooms.isNotEmpty) {
+      queryBuilder.addQuery('${super.preParam}num_of_bedrooms',
+          Operation.inValue, super.getListValue(numOfBedrooms));
+    }
+    if (mainDoorDirections.isNotEmpty) {
+      queryBuilder.addQuery('${super.preParam}main_door_direction',
+          Operation.inValue, super.getListValue(mainDoorDirections));
+    }
+    if (balconyDirections.isNotEmpty) {
+      queryBuilder.addQuery('${super.preParam}balcony_direction',
+          Operation.inValue, super.getListValue(balconyDirections));
+    }
+    if (legalStatus.isNotEmpty) {
+      queryBuilder.addQuery('${super.preParam}legal_status', Operation.inValue,
+          super.getListValue(legalStatus));
+    }
+    if (furnitureStatus.isNotEmpty) {
+      queryBuilder.addQuery('${super.preParam}furniture_status',
+          Operation.inValue, super.getListValue(furnitureStatus));
+    }
+    return queryBuilder.buildParam();
   }
 }
 

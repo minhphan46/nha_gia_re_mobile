@@ -358,7 +358,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     // filter by post type
     if (query is ApartmentFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'apartment\'');
-      print(query.toString());
+      print("query: ${query.toParam()}");
+      queryBuilder.addText(query.toParam());
     }
 
     if (query is HouseFilter) {

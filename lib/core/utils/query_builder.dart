@@ -61,6 +61,7 @@ class QueryBuilder {
   int page = 1;
   String search = '';
   int provinceCode = 0;
+  String text = "";
 
   QueryBuilder();
 
@@ -101,6 +102,11 @@ class QueryBuilder {
     return this;
   }
 
+  QueryBuilder addText(String text) {
+    this.text = text;
+    return this;
+  }
+
   String build() {
     if (_query.isNotEmpty) {
       _query += '&';
@@ -117,6 +123,13 @@ class QueryBuilder {
     if (provinceCode != 0) {
       _query += '&post_address->>province_code[eq]=\'$provinceCode\'';
     }
+    if (text.isNotEmpty) {
+      _query += "&$text";
+    }
     return _query;
+  }
+
+  String buildParam() {
+    return _query.substring(1);
   }
 }
