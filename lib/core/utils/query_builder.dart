@@ -130,6 +130,9 @@ class QueryBuilder {
   }
 
   String buildParam() {
+    if (_query.isEmpty) {
+      return '';
+    }
     return _query.substring(1);
   }
 }

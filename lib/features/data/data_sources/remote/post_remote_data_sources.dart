@@ -364,22 +364,26 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
     if (query is HouseFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'house\'');
-      print(query.toString());
+      print("query: ${query.toParam()}");
+      queryBuilder.addText(query.toParam());
     }
 
     if (query is LandFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'land\'');
-      print(query.toString());
+      print("query: ${query.toParam()}");
+      queryBuilder.addText(query.toParam());
     }
 
     if (query is OfficeFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'office\'');
-      print(query.toString());
+      print("query: ${query.toParam()}");
+      queryBuilder.addText(query.toParam());
     }
 
     if (query is MotelFilter) {
       queryBuilder.addQuery("post_type_id", Operation.equals, '\'motel\'');
-      print(query.toString());
+      print("query: ${query.toParam()}");
+      queryBuilder.addText(query.toParam());
     }
 
     url += queryBuilder.build();
