@@ -10,6 +10,7 @@ import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_me.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_out.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_fav.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 
 import '../../../../config/theme/app_color.dart';
@@ -17,16 +18,33 @@ import '../../../../core/resources/pair.dart';
 import '../../../../core/service/device_service.dart';
 import '../../../../core/utils/date_picker.dart';
 import '../../../domain/entities/posts/real_estate_post.dart';
+import '../../../domain/entities/purchase/subscription.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 
 class AccountController extends GetxController {
   bool isIdentity = true;
   RxBool isLoadingLogout = false.obs;
-  int servicePack = 1;
+  RxInt servicePack = 0.obs;
 
-  void changeServicePack(int value) {
-    servicePack = value;
-    update();
+  void initServicePack() async {
+    final currentSubscription = await getCurrentSubscription();
+    if (currentSubscription == null) {
+      servicePack.value = 0;
+    } else if (currentSubscription.package!.name == "Gói cơ bản") {
+      servicePack.value = 1;
+    } else if (currentSubscription.package!.name == "Gói doanh nghiệp") {
+      servicePack.value = 2;
+    } else if (currentSubscription.package!.name == "Gói chuyên nghiệp") {
+      servicePack.value = 3;
+    }
+  }
+
+  final GetCurrentSubscriptionUseCase getCurrentSubscriptionUseCase =
+      sl<GetCurrentSubscriptionUseCase>();
+
+  Future<Subscription?> getCurrentSubscription() async {
+    final result = await getCurrentSubscriptionUseCase.call();
+    return result;
   }
 
   void navToPurchase() {

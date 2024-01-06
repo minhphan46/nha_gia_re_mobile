@@ -10,15 +10,25 @@ import 'package:nhagiare_mobile/features/presentation/global_widgets/not_identit
 import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/values/asset_image.dart';
-import 'liked_post_screen.dart';
 
-class AccountScreen extends StatelessWidget {
-  AccountScreen({super.key});
+class AccountScreen extends StatefulWidget {
+  const AccountScreen({super.key});
+
+  @override
+  State<AccountScreen> createState() => _AccountScreenState();
+}
+
+class _AccountScreenState extends State<AccountScreen> {
   final AccountController controller = Get.find();
 
   @override
+  void initState() {
+    controller.initServicePack();
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    controller.servicePack = 1;
     return Scaffold(
       appBar:
           MyAppbar(title: "Tài khoản", isShowBack: false, actions: const []),
@@ -118,32 +128,36 @@ class AccountScreen extends StatelessWidget {
                             style: AppTextStyles.medium16,
                           ),
                           const SizedBox(height: 2),
-                          if (controller.servicePack != 0)
-                            Container(
-                              padding: const EdgeInsets.symmetric(
-                                  horizontal: 8, vertical: 2),
-                              decoration: BoxDecoration(
-                                color: controller.servicePack == 1
-                                    ? AppColors.green100
-                                    : controller.servicePack == 2
-                                        ? AppColors.blue100
-                                        : AppColors.red100,
-                                borderRadius: BorderRadius.circular(4),
-                              ),
-                              child: Text(
-                                controller.servicePack == 1
-                                    ? "Gói cơ bản"
-                                    : controller.servicePack == 2
-                                        ? "Gói chuyên nghiệp"
-                                        : "Gói doanh nghiệp",
-                                style: AppTextStyles.medium12
-                                    .colorEx(controller.servicePack == 1
-                                        ? AppColors.green800
-                                        : controller.servicePack == 2
-                                            ? AppColors.blue800
-                                            : AppColors.red),
-                              ),
-                            )
+                          Obx(
+                            () => (controller.servicePack.value != 0)
+                                ? Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 8, vertical: 2),
+                                    decoration: BoxDecoration(
+                                      color: controller.servicePack.value == 1
+                                          ? AppColors.green100
+                                          : controller.servicePack.value == 2
+                                              ? AppColors.blue100
+                                              : AppColors.red100,
+                                      borderRadius: BorderRadius.circular(4),
+                                    ),
+                                    child: Text(
+                                      controller.servicePack.value == 1
+                                          ? "Gói cơ bản"
+                                          : controller.servicePack.value == 2
+                                              ? "Gói chuyên nghiệp"
+                                              : "Gói doanh nghiệp",
+                                      style: AppTextStyles.medium12.colorEx(
+                                          controller.servicePack.value == 1
+                                              ? AppColors.green800
+                                              : controller.servicePack.value ==
+                                                      2
+                                                  ? AppColors.blue800
+                                                  : AppColors.red),
+                                    ),
+                                  )
+                                : const SizedBox(),
+                          ),
                         ],
                       ),
                       onTap: () {
