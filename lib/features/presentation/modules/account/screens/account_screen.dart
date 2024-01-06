@@ -20,16 +20,8 @@ class AccountScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     controller.servicePack = 1;
     return Scaffold(
-      appBar: MyAppbar(title: "Tài khoản", isShowBack: false, actions: [
-        Padding(
-          padding: const EdgeInsets.only(right: 25),
-          child: Image.asset(
-            Assets.chat,
-            width: 25,
-            height: 25,
-          ),
-        ),
-      ]),
+      appBar:
+          MyAppbar(title: "Tài khoản", isShowBack: false, actions: const []),
       body: FutureBuilder<UserEntity?>(
           future: controller.getUserInfo(),
           builder: (context, snapshot) {
@@ -91,29 +83,29 @@ class AccountScreen extends StatelessWidget {
                       ),
                     ),
                     // favorite
-                    ListTile(
-                      contentPadding: const EdgeInsets.symmetric(
-                          horizontal: 30, vertical: 2),
-                      title: Text(
-                        'Đã lưu',
-                        style: AppTextStyles.medium16,
-                      ),
-                      onTap: () {
-                        Get.to(() => LikedPostScreen());
-                      },
-                      leading: const Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 5),
-                        child: Icon(
-                          Icons.favorite,
-                          color: AppColors.red,
-                          size: 25,
-                        ),
-                      ),
-                      trailing: const Icon(
-                        Icons.arrow_forward_ios_rounded,
-                        size: 18,
-                      ),
-                    ),
+                    // ListTile(
+                    //   contentPadding: const EdgeInsets.symmetric(
+                    //       horizontal: 30, vertical: 2),
+                    //   title: Text(
+                    //     'Đã lưu',
+                    //     style: AppTextStyles.medium16,
+                    //   ),
+                    //   onTap: () {
+                    //     Get.to(() => LikedPostScreen());
+                    //   },
+                    //   leading: const Padding(
+                    //     padding: EdgeInsets.symmetric(horizontal: 5),
+                    //     child: Icon(
+                    //       Icons.favorite,
+                    //       color: AppColors.red,
+                    //       size: 25,
+                    //     ),
+                    //   ),
+                    //   trailing: const Icon(
+                    //     Icons.arrow_forward_ios_rounded,
+                    //     size: 18,
+                    //   ),
+                    // ),
                     // purchase
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(

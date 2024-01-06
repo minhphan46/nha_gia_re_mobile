@@ -160,20 +160,23 @@ class _ItemProductState extends State<ItemProduct> {
           ),
 
           // heart
-          Positioned(
-            bottom: 0,
-            right: 0,
-            child: GestureDetector(
-              onTap: () {
-                //toggleFav();
-              },
-              child: SizedBox(
-                child: widget.isFavourited
-                    ? const Icon(
-                        Icons.favorite_sharp,
-                        color: AppColors.red,
-                      )
-                    : const Icon(Icons.favorite_border_rounded),
+          Visibility(
+            visible: false,
+            child: Positioned(
+              bottom: 0,
+              right: 0,
+              child: GestureDetector(
+                onTap: () {
+                  //toggleFav();
+                },
+                child: SizedBox(
+                  child: widget.isFavourited
+                      ? const Icon(
+                          Icons.favorite_sharp,
+                          color: AppColors.red,
+                        )
+                      : const Icon(Icons.favorite_border_rounded),
+                ),
               ),
             ),
           ),

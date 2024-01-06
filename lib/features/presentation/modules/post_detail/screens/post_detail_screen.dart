@@ -77,10 +77,13 @@ class PostDetailScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Image.asset(
-                        Assets.heart,
-                        width: 25,
-                        height: 25,
+                      Visibility(
+                        visible: false,
+                        child: Image.asset(
+                          Assets.heart,
+                          width: 25,
+                          height: 25,
+                        ),
                       ),
                     ],
                   ),
