@@ -4,6 +4,7 @@ import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/enums/order_by_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/like_post.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/motel_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/office_card.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -27,6 +28,8 @@ class PostDetailController extends GetxController {
   final RealEstatePostEntity post = Get.arguments as RealEstatePostEntity;
   PropertyFeature? feature;
   late RxBool isYourPost = false.obs;
+  RxBool isLiked = false.obs;
+  RxBool isLoading = false.obs;
 
   GetUserIdUseCase getUserIdUseCase = sl<GetUserIdUseCase>();
   @override
@@ -88,23 +91,21 @@ class PostDetailController extends GetxController {
     );
   }
 
+  LikePostUseCase likePostUseCase = sl<LikePostUseCase>();
   void likePost() async {
-    // PostRepository postRepo = GetIt.instance<PostRepository>();
-    // if (!liked.value && !isLoading) {
-    //   isLoading = true;
-    //   await postRepo.likePost(post.id).then((value) {
-    //     liked.value = true;
-    //     numOfLikes.value++;
-    //     isLoading = false;
-    //   });
-    // } else if (liked.value && !isLoading) {
-    //   isLoading = true;
-    //   await postRepo.unlikePost(post.id).then((value) {
-    //     liked.value = false;
-    //     numOfLikes.value--;
-    //     isLoading = false;
-    //   });
-    // }
+    if (!isLiked.value && !isLoading.value) {
+      isLoading.value = true;
+      await likePostUseCase(params: post.id).then((value) {
+        isLiked.value = true;
+        isLoading.value = false;
+      });
+    } else if (isLiked.value && !isLoading.value) {
+      isLoading.value = true;
+      await likePostUseCase(params: post.id).then((value) {
+        isLiked.value = false;
+        isLoading.value = false;
+      });
+    }
   }
 
   void navToChat() {

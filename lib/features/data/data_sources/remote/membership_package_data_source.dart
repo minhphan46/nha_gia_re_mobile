@@ -113,8 +113,9 @@ class MembershipPackageRemoteDataSrcImpl
         final DataMap res = DataMap.from(response.data);
 
         // bool value = res["success"];
-        bool value =
-            bool.tryParse(res['result'].toString() ?? 'false') ?? false;
+        bool value = bool.tryParse(
+                res['result'] != null ? res['result'].toString() : 'false') ??
+            false;
 
         return HttpResponse(value, response);
       });

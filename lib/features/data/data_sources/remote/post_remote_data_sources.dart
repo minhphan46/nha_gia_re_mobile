@@ -40,6 +40,9 @@ abstract class PostRemoteDataSrc {
 
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsFavorite(
       int? page);
+
+  // like post
+  Future<HttpResponse<bool>> likePost(String postId);
 }
 
 class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
@@ -508,6 +511,52 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
       final value = Pair(numOfPages, posts);
 
       return HttpResponse(value, response);
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<bool>> likePost(String postId) {
+    String url = '$apiAppUrl$kMarkFavEndpoint/$postId';
+
+    try {
+      // get access token
+      AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
+      String? accessToken = localDataSrc.getAccessToken();
+      if (accessToken == null) {
+        throw const ApiException(
+            message: 'Access token is null', statusCode: 505);
+      }
+
+      final response = client.post(
+        url,
+        options: Options(
+            sendTimeout: const Duration(seconds: 10),
+            headers: {'Authorization': 'Bearer $accessToken'}),
+      );
+
+      return response.then((response) {
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data['message'],
+            statusCode: response.statusCode!,
+          );
+        }
+
+        // Nếu yêu cầu thành công, giải mã dữ liệu JSON
+        bool isLikePost =
+            response.data['message'].toString().contains("Favorite");
+
+        return HttpResponse(isLikePost, response);
+      });
+    } on DioException catch (e) {
+      throw ApiException(
+        message: e.message!,
+        statusCode: e.response?.statusCode ?? 505,
+      );
     } on ApiException {
       rethrow;
     } catch (error) {

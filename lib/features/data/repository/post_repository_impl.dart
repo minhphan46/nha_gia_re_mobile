@@ -314,4 +314,24 @@ class PostRepositoryImpl implements PostRepository {
       return Future(() => DataFailed(e));
     }
   }
+
+  @override
+  Future<DataState<bool>> markFavPost(String id) async {
+    try {
+      final httpResponse = await _dataSrc.likePost(id);
+
+      if (httpResponse.response.statusCode == HttpStatus.ok) {
+        return DataSuccess(httpResponse.data);
+      } else {
+        return DataFailed(DioException(
+          error: httpResponse.response.statusMessage,
+          response: httpResponse.response,
+          type: DioExceptionType.badResponse,
+          requestOptions: httpResponse.response.requestOptions,
+        ));
+      }
+    } on DioException catch (e) {
+      return DataFailed(e);
+    }
+  }
 }

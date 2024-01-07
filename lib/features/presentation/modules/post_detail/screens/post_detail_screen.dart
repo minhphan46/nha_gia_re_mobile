@@ -77,12 +77,31 @@ class PostDetailScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-                      Visibility(
-                        visible: false,
-                        child: Image.asset(
-                          Assets.heart,
-                          width: 25,
-                          height: 25,
+                      Obx(
+                        () => Visibility(
+                          visible: true,
+                          child: controller.isLoading.value
+                              ? const SizedBox(
+                                  width: 25,
+                                  height: 25,
+                                  child: CircularProgressIndicator(
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : GestureDetector(
+                                  onTap: () {
+                                    controller.likePost();
+                                  },
+                                  child: SizedBox(
+                                    child: controller.isLiked.value
+                                        ? const Icon(
+                                            Icons.favorite_sharp,
+                                            color: AppColors.red,
+                                          )
+                                        : const Icon(
+                                            Icons.favorite_border_rounded),
+                                  ),
+                                ),
                         ),
                       ),
                     ],

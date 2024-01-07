@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/conversation_model.dart';
 import 'package:nhagiare_mobile/features/data/models/chat/message_model.dart';
+import 'package:nhagiare_mobile/features/domain/enums/message_types.dart';
 
 abstract class ConversationRepository {
   void addConversationListener(Function(List<ConversationModel>) listener);
@@ -18,4 +19,5 @@ abstract class ConversationRepository {
   void deleteConversation(String conversationId);
   Future<DataState<ConversationModel>> getOrCreateConversation(String userId);
   void sendMediaMessage(String conversationId, List<File> media);
+  void sendMessage(String conversationId, MessageTypes type, dynamic content);
 }

@@ -9,6 +9,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_fav.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_limit_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/hide_post.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/like_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/update_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_discount_codes_usercase.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/unsubcribe.dart';
@@ -187,6 +188,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<UpdatePostsUseCase>(
     UpdatePostsUseCase(
+      sl<PostRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<LikePostUseCase>(
+    LikePostUseCase(
       sl<PostRepository>(),
     ),
   );

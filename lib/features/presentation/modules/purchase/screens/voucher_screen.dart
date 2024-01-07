@@ -134,9 +134,10 @@ class DiscountCard extends StatelessWidget {
   }
 }
 
+// ignore: must_be_immutable
 class VoucherScreen extends StatefulWidget {
   String? currentSelectedDiscountCode;
-  String packageId;
+  final String packageId;
 
   VoucherScreen({
     super.key,
@@ -145,10 +146,10 @@ class VoucherScreen extends StatefulWidget {
   });
 
   @override
-  _VoucherScreenState createState() => _VoucherScreenState();
+  VoucherScreenState createState() => VoucherScreenState();
 }
 
-class _VoucherScreenState extends State<VoucherScreen> {
+class VoucherScreenState extends State<VoucherScreen> {
   final List<DiscountCodeEntity> discountList = [];
   final PurchaseController controller = Get.find<PurchaseController>();
   int currentPage = 1;

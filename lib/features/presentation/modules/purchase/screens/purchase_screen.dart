@@ -7,8 +7,6 @@ import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
-import 'package:nhagiare_mobile/features/domain/entities/purchase/membership_package.dart';
-import 'package:nhagiare_mobile/features/domain/entities/purchase/subscription.dart';
 import 'package:nhagiare_mobile/features/domain/entities/purchase/transaction.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/purchase/widgets/package_card.dart';
@@ -184,7 +182,7 @@ class _PurchaseScreenState extends State<PurchaseScreen>
                         ),
                       ),
                 purchaseState.transactions.isEmpty
-                    ? Text("Bạn chưa có giao dịch nào")
+                    ? const Text("Bạn chưa có giao dịch nào")
                     : ListView.builder(
                         shrinkWrap: true,
                         itemCount: purchaseState.transactions.length,
