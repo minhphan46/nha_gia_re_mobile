@@ -27,7 +27,7 @@ class LikedPostScreen extends StatelessWidget {
         future: controller.getPostFavorite(page),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return CircularProgressIndicator(); // Display a loading indicator while data is being fetched
+            return const CircularProgressIndicator(); // Display a loading indicator while data is being fetched
           } else if (snapshot.hasError) {
             return Text("Error: ${snapshot.error}");
           } else {
@@ -57,7 +57,7 @@ class LikedPostScreen extends StatelessWidget {
                 itemBuilder: (context, index) {
                   // Build your list item here using snapshot.data.second[index]
                   return ListTile(
-                    title: Text(snapshot.data!.second[index]!.title ?? ""),
+                    title: Text(snapshot.data!.second[index].title ?? ""),
                     // Add other relevant widget properties
                   );
                 },

@@ -1,7 +1,5 @@
 import 'package:coupon_uikit/coupon_uikit.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
@@ -14,8 +12,9 @@ class DiscountCard extends StatelessWidget {
   final DiscountCodeEntity discount;
   final Function(DiscountCodeEntity)? onSelected;
 
-  DiscountCard(
-      {required this.discount,
+  const DiscountCard(
+      {super.key,
+      required this.discount,
       this.currentSelectedDiscountCode,
       this.onSelected});
   String calculateRemainingTime(DateTime expirationDate) {
@@ -140,10 +139,10 @@ class VoucherScreen extends StatefulWidget {
   String packageId;
 
   VoucherScreen({
-    Key? key,
+    super.key,
     this.currentSelectedDiscountCode,
     required this.packageId,
-  }) : super(key: key);
+  });
 
   @override
   _VoucherScreenState createState() => _VoucherScreenState();
