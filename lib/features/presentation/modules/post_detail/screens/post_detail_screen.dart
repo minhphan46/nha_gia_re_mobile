@@ -161,7 +161,7 @@ class PostDetailScreen extends StatelessWidget {
               title: 'Chi tiết'.tr,
               //minHeight: 130,
               minHeight: (controller.getNumOfFeaturesNotNull() / 2) < 3
-                  ? controller.getNumOfFeaturesNotNull() / 2 * 40
+                  ? controller.getNumOfFeaturesNotNull() / 2 * 55
                   : 130,
               child: controller.getDetailCard(),
             ),

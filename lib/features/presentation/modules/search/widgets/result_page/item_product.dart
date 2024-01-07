@@ -161,7 +161,7 @@ class _ItemProductState extends State<ItemProduct> {
 
           // heart
           Visibility(
-            visible: false,
+            visible: true,
             child: Positioned(
               bottom: 0,
               right: 0,

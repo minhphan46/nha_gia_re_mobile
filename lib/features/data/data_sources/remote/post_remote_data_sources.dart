@@ -531,7 +531,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
             message: 'Access token is null', statusCode: 505);
       }
 
-      final response = client.post(
+      final response = client.put(
         url,
         options: Options(
             sendTimeout: const Duration(seconds: 10),

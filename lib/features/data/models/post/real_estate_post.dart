@@ -71,30 +71,6 @@ class RealEstatePostModel extends RealEstatePostEntity {
   }
 
   Map<String, dynamic> toJson() {
-    // return {
-    //   'type_id': typeId,
-    //   'unit_id': unitId,
-    //   'title': title,
-    //   'description': description,
-    //   'area': area!.toString(),
-    //   'address': address!.toJson(),
-    //   'price': price,
-    //   'deposit': deposit,
-    //   'is_lease': isLease,
-    //   'images': images,
-    //   'videos': videos,
-    //   'is_pro_seller': isProSeller,
-    //   'info_message': infoMessage,
-    //   'display_priority_point': displayPriorityPoint,
-    //   'features': features,
-    //   'post_approval_priority_point': postApprovalPriorityPoint,
-    //   'update_count': updateCount,
-    //   'is_active': isActive,
-    //   'num_favourites': numFavourites,
-    //   'num_views': numViews,
-    //   'is_favorite': isFavorite,
-    // };
-
     return {
       'type_id': typeId,
       'unit_id': unitId,

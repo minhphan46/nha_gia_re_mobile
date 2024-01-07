@@ -34,9 +34,11 @@ class PostDetailController extends GetxController {
   GetUserIdUseCase getUserIdUseCase = sl<GetUserIdUseCase>();
   @override
   void onInit() async {
+    print(post.isFavorite);
     if (post.user!.id == await getUserIdUseCase()) {
       isYourPost.value = true;
     }
+    isLiked.value = post.isFavorite!;
     super.onInit();
   }
 
@@ -96,13 +98,13 @@ class PostDetailController extends GetxController {
     if (!isLiked.value && !isLoading.value) {
       isLoading.value = true;
       await likePostUseCase(params: post.id).then((value) {
-        isLiked.value = true;
+        isLiked.value = value.data!;
         isLoading.value = false;
       });
     } else if (isLiked.value && !isLoading.value) {
       isLoading.value = true;
       await likePostUseCase(params: post.id).then((value) {
-        isLiked.value = false;
+        isLiked.value = value.data!;
         isLoading.value = false;
       });
     }
