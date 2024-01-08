@@ -33,7 +33,7 @@ class MediaRemoteDataSourceImpl implements MediaRemoteDataSource {
 
   @override
   Future<HttpResponse<List<String>>> uploadMedia(List<File> media) async {
-    const url = '$apiAppUrl/media/upload';
+    final url = '$apiAppUrl/media/upload';
     try {
       final formData = FormData.fromMap({
         "files": media

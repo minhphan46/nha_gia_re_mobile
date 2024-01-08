@@ -28,7 +28,7 @@ class MembershipPackageRemoteDataSrcImpl
   @override
   Future<HttpResponse<List<MembershipPackageModel>>>
       getAllMembershipPackages() {
-    const url = '$apiAppUrl$kGetMembershipPackageEndpoint';
+    final url = '$apiAppUrl$kGetMembershipPackageEndpoint';
 
     try {
       return client.get(url, queryParameters: {
@@ -62,7 +62,7 @@ class MembershipPackageRemoteDataSrcImpl
   @override
   Future<HttpResponse<OrderMembershipPackageModel>> createOrder(
       String id, int numOfMonth, String? discountCode) {
-    const url = '$apiAppUrl$kCreateOrderEndpoint';
+    final url = '$apiAppUrl$kCreateOrderEndpoint';
     try {
       return client.post(url, data: {
         "membership_package_id": id,
@@ -93,7 +93,7 @@ class MembershipPackageRemoteDataSrcImpl
 
   @override
   Future<HttpResponse<bool>> unsubscribe() {
-    const url = '$apiAppUrl$kUnsubscribeEndpoint';
+    final url = '$apiAppUrl$kUnsubscribeEndpoint';
 
     String? accessToken = localDataSrc.getAccessToken();
     try {
@@ -128,7 +128,7 @@ class MembershipPackageRemoteDataSrcImpl
   @override
   Future<HttpResponse<Pair<int, List<DiscountCodeModel>>>> getAllDiscountCodes(
       int page, String packageId) {
-    const url = '$apiAppUrl$kGetDiscountCodeEndpoint';
+    final url = '$apiAppUrl$kGetDiscountCodeEndpoint';
     try {
       return client.get(url, queryParameters: {
         "page": page,

@@ -8,10 +8,12 @@ import 'package:nhagiare_mobile/config/values/app_string.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
 import 'config/theme/app_theme.dart';
 import 'package:onesignal_flutter/onesignal_flutter.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   ansiColorDisabled = false;
+  await dotenv.load(fileName: ".env");
   await initializeDependencies();
   OneSignal.initialize('f8ec53cc-0f67-482a-8a58-09ebba348a1a');
   OneSignal.Notifications.requestPermission(true).then((value) {
