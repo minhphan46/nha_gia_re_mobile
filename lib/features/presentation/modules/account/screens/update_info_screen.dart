@@ -56,7 +56,6 @@ class _UpdateInfoAccountScreenState extends State<UpdateInfoAccountScreen> {
     controller.birthUpdateInfoTextController.text = user.dob!;
     controller.addressUpdateInfoTextController.text =
         user.address!.getDetailAddress();
-    print(user.firstName!);
   }
 
   @override
@@ -77,6 +76,7 @@ class _UpdateInfoAccountScreenState extends State<UpdateInfoAccountScreen> {
                 imageAvatar: controller.imageAvatar,
                 getImageFromCamera: controller.getImageFromCamera,
                 getImageFromGallery: controller.getImageFromGallery,
+                imageAvatarUrl: user.avatar!,
               ),
               const SizedBox(height: 12),
 // text avatar
@@ -132,7 +132,6 @@ class _UpdateInfoAccountScreenState extends State<UpdateInfoAccountScreen> {
                 keyBoardType: TextInputType.phone,
                 focusNode: _phoneFocusNode,
                 textController: controller.phoneUpdateInfoTextController,
-                weightField: 70,
                 validateFunc: (value) => (!(value == null || value == ''))
                     ? null
                     : 'Làm ơn nhập số điện thoại'.tr,

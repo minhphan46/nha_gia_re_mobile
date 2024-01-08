@@ -10,7 +10,7 @@ class TextFieldWithTitle extends StatelessWidget {
     this.region,
     required this.titleText,
     required this.hintText,
-    required this.weightField,
+    this.weightField,
     required this.keyBoardType,
     required this.focusNode,
     required this.enable,
@@ -27,13 +27,53 @@ class TextFieldWithTitle extends StatelessWidget {
   final bool canTap;
   final String titleText;
   final String hintText;
-  final int weightField;
+  final int? weightField;
   final TextInputType keyBoardType;
   final FocusNode focusNode;
   final FocusNode? nexFocusNode;
   final TextEditingController textController;
   final Function validateFunc;
   final Function? onTap;
+
+  Widget buildTextField(BuildContext context) {
+    return TextFormField(
+      enabled: enable,
+      focusNode: focusNode,
+      controller: textController,
+      keyboardType: keyBoardType,
+      readOnly: !canTap,
+      textInputAction: TextInputAction.next,
+      style: AppTextStyles.regular14,
+      inputFormatters: keyBoardType == TextInputType.phone
+          ? <TextInputFormatter>[FilteringTextInputFormatter.digitsOnly]
+          : null,
+      decoration: InputDecoration(
+        hintText: hintText,
+        contentPadding:
+            const EdgeInsets.symmetric(vertical: 18.0, horizontal: 20.0),
+        border: const OutlineInputBorder(
+          borderRadius: BorderRadius.all(Radius.circular(10)),
+        ),
+        filled: !enable,
+        fillColor: enable ? AppColors.white : AppColors.grey100,
+        suffixIcon: !canTap
+            ? const Icon(
+                Icons.calendar_month,
+                color: AppColors.grey300,
+              )
+            : null,
+      ),
+      validator: (value) => validateFunc(value),
+      onTapOutside: (event) {
+        focusNode.unfocus();
+      },
+      onFieldSubmitted: (_) {
+        // chuyen qua textfill tiep theo
+        FocusScope.of(context).requestFocus(nexFocusNode);
+      },
+      onTap: onTap as void Function()?,
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -60,48 +100,12 @@ class TextFieldWithTitle extends StatelessWidget {
                   style: AppTextStyles.regular16.colorEx(AppColors.green),
                 ),
               ),
-            SizedBox(
-              width: weightField.wp,
-              child: TextFormField(
-                enabled: enable,
-                focusNode: focusNode,
-                controller: textController,
-                keyboardType: keyBoardType,
-                readOnly: !canTap,
-                textInputAction: TextInputAction.next,
-                style: AppTextStyles.regular14,
-                inputFormatters: keyBoardType == TextInputType.phone
-                    ? <TextInputFormatter>[
-                        FilteringTextInputFormatter.digitsOnly
-                      ]
-                    : null,
-                decoration: InputDecoration(
-                  hintText: hintText,
-                  contentPadding: const EdgeInsets.symmetric(
-                      vertical: 18.0, horizontal: 20.0),
-                  border: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+            weightField == null
+                ? Expanded(child: buildTextField(context))
+                : SizedBox(
+                    width: weightField?.wp,
+                    child: buildTextField(context),
                   ),
-                  filled: !enable,
-                  fillColor: enable ? AppColors.white : AppColors.grey100,
-                  suffixIcon: !canTap
-                      ? const Icon(
-                          Icons.calendar_month,
-                          color: AppColors.grey300,
-                        )
-                      : null,
-                ),
-                validator: (value) => validateFunc(value),
-                onTapOutside: (event) {
-                  focusNode.unfocus();
-                },
-                onFieldSubmitted: (_) {
-                  // chuyen qua textfill tiep theo
-                  FocusScope.of(context).requestFocus(nexFocusNode);
-                },
-                onTap: onTap as void Function()?,
-              ),
-            ),
           ],
         ),
       ],

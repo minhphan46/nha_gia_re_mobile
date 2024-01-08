@@ -10,11 +10,13 @@ class ImageAvatarPicker extends StatefulWidget {
     required this.getImageFromCamera,
     required this.getImageFromGallery,
     required this.imageAvatar,
+    this.imageAvatarUrl,
     super.key,
   });
   final Function getImageFromCamera;
   final Function getImageFromGallery;
   final File? imageAvatar;
+  final String? imageAvatarUrl;
 
   @override
   State<ImageAvatarPicker> createState() => _ImageAvatarPickerState();
@@ -94,6 +96,13 @@ class _ImageAvatarPickerState extends State<ImageAvatarPicker> {
     if (widget.imageAvatar != null) {
       return Image.file(
         widget.imageAvatar!,
+        fit: BoxFit.cover,
+        width: imageSize.wp,
+        height: imageSize.wp,
+      );
+    } else if (widget.imageAvatarUrl != null) {
+      return Image.network(
+        widget.imageAvatarUrl!,
         fit: BoxFit.cover,
         width: imageSize.wp,
         height: imageSize.wp,

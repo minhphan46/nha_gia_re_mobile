@@ -45,9 +45,9 @@ class CreatePostScreen extends StatelessWidget {
             controller.post.value != null ? 'Chỉnh sửa bài đăng' : 'Đăng tin',
       ),
       body: Obx(
-        () => controller.isGetingLimitPost.value
+        () => !controller.isEdit.value && controller.isGetingLimitPost.value
             ? const Center(child: CircularProgressIndicator())
-            : controller.limitPost.value.isExceeded!
+            : !controller.isEdit.value && controller.limitPost.value.isExceeded!
                 ? Center(
                     child: Padding(
                       padding: const EdgeInsets.all(20.0),

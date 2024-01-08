@@ -5,6 +5,7 @@ import 'package:nhagiare_mobile/features/presentation/modules/account/account_co
 import '../../../../../core/resources/pair.dart';
 import '../../../../domain/entities/posts/real_estate_post.dart';
 
+// ignore: must_be_immutable
 class LikedPostScreen extends StatelessWidget {
   LikedPostScreen({super.key});
 
