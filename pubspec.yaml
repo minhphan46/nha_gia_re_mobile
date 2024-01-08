@@ -142,7 +142,12 @@ dependencies:
 
   #iamge preview
   image_preview: ^1.0.4
+
   flutter_dotenv: ^5.1.0
+
+  lottie: ^2.7.0
+
+  easy_stepper: ^0.7.2
 dev_dependencies:
   flutter_test:
     sdk: flutter

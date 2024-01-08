@@ -1,4 +1,4 @@
-import 'package:nhagiare_mobile/features/domain/entities/notification.dart';
+import 'package:nhagiare_mobile/features/domain/entities/noti/notification.dart';
 
 import '../../domain/enums/notification_type.dart';
 

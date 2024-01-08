@@ -3,11 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import '../../../../../config/theme/app_color.dart';
-import '../../../../../core/resources/pair.dart';
-import '../../../../data/models/notification.dart';
-import '../../../../domain/entities/notification.dart';
+import '../../../../domain/entities/noti/notification.dart';
 import '../notification_controller.dart';
-import '../widgets/NotificationItem.dart';
+import '../widgets/notificationItem.dart';
 
 class NotificationScreen extends StatefulWidget {
   const NotificationScreen({super.key});
@@ -23,7 +21,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
   int totalPage = 1;
   RxBool isLoading = RxBool(false);
   Rx<List<NotificationEntity>?> listNoti = Rx<List<NotificationEntity>?>(null);
-  ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController = ScrollController();
   void _loadMore() async {
     page++;
     isLoading.value = true;

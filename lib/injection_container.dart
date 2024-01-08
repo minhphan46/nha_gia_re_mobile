@@ -1,12 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:get_it/get_it.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/media_remote_date_source.dart';
 import 'package:nhagiare_mobile/features/data/data_sources/remote/user_remote_date_source.dart';
 import 'package:nhagiare_mobile/features/data/repository/user_respository_impl.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_district_names.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/address/get_ward_names.dart';
-import 'package:nhagiare_mobile/features/domain/usecases/get_notification_usecase.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/noti/get_notification_usecase.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/delete_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_fav.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_limit_post.dart';
@@ -71,6 +70,7 @@ import 'features/domain/usecases/post/remote/get_posts_hided.dart';
 import 'features/domain/usecases/post/remote/get_posts_pending.dart';
 import 'features/domain/usecases/purchase/get_all_transactions.dart';
 import 'features/domain/usecases/user/FollowOrUnfollowUserUseCase.dart';
+import 'features/domain/usecases/user/send_verification.dart';
 
 final sl = GetIt.instance;
 
@@ -395,6 +395,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<FollowOrUnfollowUserUseCase>(
     FollowOrUnfollowUserUseCase(
+      sl<UserRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SendVerificationUseCase>(
+    SendVerificationUseCase(
       sl<UserRepository>(),
     ),
   );

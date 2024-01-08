@@ -51,6 +51,16 @@ class AccountController extends GetxController {
     Get.toNamed(AppRoutes.purchase);
   }
 
+  // checkUserIsWaiting
+  Future<String> checkUserIsWaiting() async {
+    return "1";
+  }
+
+  Future<String?> navToVerification() async {
+    var data = await Get.toNamed(AppRoutes.verificationCard);
+    return data;
+  }
+
   Future<void> handleSignOut() async {
     try {
       isLoadingLogout.value = true;

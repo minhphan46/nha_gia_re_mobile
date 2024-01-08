@@ -2,11 +2,9 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
-
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
-import '../../../../data/models/notification.dart';
-import '../../../../domain/entities/notification.dart';
+import '../../../../domain/entities/noti/notification.dart';
 import '../../../../domain/enums/notification_type.dart';
 
 class NotificationListItem extends StatelessWidget {

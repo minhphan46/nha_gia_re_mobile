@@ -1,9 +1,9 @@
 import 'package:nhagiare_mobile/core/resources/pair.dart';
 
-import '../../../core/resources/data_state.dart';
-import '../../../core/usecases/usecase.dart';
-import '../entities/notification.dart';
-import '../repository/notification_repository.dart';
+import '../../../../core/resources/data_state.dart';
+import '../../../../core/usecases/usecase.dart';
+import '../../entities/noti/notification.dart';
+import '../../repository/notification_repository.dart';
 
 class GetNotificationUseCase
     extends UseCase<Pair<int, List<NotificationEntity>>, int> {

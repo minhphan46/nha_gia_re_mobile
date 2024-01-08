@@ -93,6 +93,67 @@ class _AccountScreenState extends State<AccountScreen> {
                         size: 18,
                       ),
                     ),
+                    FutureBuilder<String>(
+                      future: controller.checkUserIsWaiting(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return const CircularProgressIndicator();
+                        } else {
+                          if (snapshot.error != null) {
+                            return const Center(
+                              child: Text("error"),
+                            );
+                          } else {
+                            final checkStatus = snapshot.data!;
+                            if (checkStatus == "2") {
+                              // duyet duoc roi
+                              return Container();
+                            } else {
+                              return ListTile(
+                                contentPadding: const EdgeInsets.symmetric(
+                                    horizontal: 30, vertical: 2),
+                                title: Text(
+                                  'Xác thực danh tính',
+                                  style: AppTextStyles.medium16,
+                                ),
+                                onTap: () {
+                                  // if (checkStatus == "0") {
+                                  //   //chua co
+                                  //   controller.navToVerification().then((value) {
+                                  //     setState(() {});
+                                  //   });
+                                  // } else if (checkStatus == "1") {
+                                  //   // dang cho duyet
+                                  //   controller.navToWaitingVerification().then((value) {
+                                  //     setState(() {});
+                                  //   });
+                                  // } else {
+                                  //   // tu choi
+                                  //   controller.navToRejectVerification(snapshot.data!);
+                                  // }
+                                  controller.navToVerification().then((value) {
+                                    setState(() {});
+                                  });
+                                },
+                                leading: const Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: 5),
+                                  child: Icon(
+                                    Icons.admin_panel_settings_outlined,
+                                    color: AppColors.black,
+                                    size: 25,
+                                  ),
+                                ),
+                                trailing: const Icon(
+                                  Icons.arrow_forward_ios_rounded,
+                                  size: 18,
+                                ),
+                              );
+                            }
+                          }
+                        }
+                      },
+                    ),
                     // favorite
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(

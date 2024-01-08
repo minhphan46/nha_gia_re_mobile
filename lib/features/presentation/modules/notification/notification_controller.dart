@@ -1,12 +1,9 @@
 import 'dart:async';
-
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
-import 'package:nhagiare_mobile/features/domain/entities/notification.dart';
+import 'package:nhagiare_mobile/features/domain/entities/noti/notification.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
-
-import '../../../data/models/notification.dart';
-import '../../../domain/usecases/get_notification_usecase.dart';
+import '../../../domain/usecases/noti/get_notification_usecase.dart';
 
 class NotificationController extends GetxController {
   int page = 1;

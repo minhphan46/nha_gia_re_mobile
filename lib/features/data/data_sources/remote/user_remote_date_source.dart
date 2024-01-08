@@ -4,11 +4,14 @@ import 'package:nhagiare_mobile/features/data/data_sources/local/authentication_
 import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
+import '../../../domain/entities/user/account_verification_requests.dart';
 
 abstract class UserRemoteDataSource {
   Future<HttpResponse<bool>> followOrUnfollowUser(String userId);
   Future<HttpResponse<Pair<int, int>>> getFollowersAndFollowingsCount(
       String userId);
+  Future<HttpResponse<void>> sendVerificationUser(
+      AccountVerificationRequestEntity entity);
 }
 
 class UserRemoteDataSourceImpl extends UserRemoteDataSource {
@@ -73,6 +76,38 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
           taskDataList['num_of_followers'],
         );
         return HttpResponse(value, response);
+      });
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<void>> sendVerificationUser(
+      AccountVerificationRequestEntity entity) async {
+    String url = '$apiAppUrl$kSendVerificationUserEndpoint';
+    try {
+      return client
+          .post(
+        url,
+        data: entity.toJson(),
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${authenLocalDataSrc.getAccessToken()}',
+          },
+        ),
+      )
+          .then((response) {
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data,
+            statusCode: response.statusCode!,
+          );
+        }
+
+        return HttpResponse(null, response);
       });
     } on ApiException {
       rethrow;

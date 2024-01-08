@@ -300,7 +300,6 @@ class CreatePostController extends GetxController {
   }
 
   void setPostEdit(RealEstatePostEntity post) {
-    print(post);
     if (post.isLease != null) {
       setIsLease(post.isLease!);
     }

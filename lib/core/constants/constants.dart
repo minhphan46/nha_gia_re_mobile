@@ -43,3 +43,5 @@ const kFollowUserEndpoint = '/users/follow/:id';
 const kGetDiscountCodeEndpoint = '/membership-package/discounts';
 const kGetPostFavoriteEndpoint = '/posts/favorites';
 const kGetAllNotifications = '/notifications';
+
+const kSendVerificationUserEndpoint = '/verification';

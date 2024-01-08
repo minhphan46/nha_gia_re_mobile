@@ -35,6 +35,10 @@ import 'package:nhagiare_mobile/features/presentation/modules/setting/setting_bi
 import 'package:nhagiare_mobile/features/presentation/modules/splash/splash_binding.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/splash/splash_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/screens/user_profile_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_card_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_info_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_portrait_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/verification/verification_binding.dart';
 import '../../features/presentation/modules/purchase/screens/purchase_screen.dart';
 import '../../features/presentation/modules/user_profile/user_profile_binding.dart';
 
@@ -102,7 +106,7 @@ abstract class AppPages {
     ),
     GetPage(
       name: AppRoutes.account,
-      page: () => AccountScreen(),
+      page: () => const AccountScreen(),
       binding: AccountBinding(),
     ),
     GetPage(
@@ -158,6 +162,21 @@ abstract class AppPages {
       name: AppRoutes.chatDetail,
       page: () => const ChatDetailScreen(),
       binding: ChatBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.verificationPortrait,
+      page: () => VerificationPortraitScreen(),
+      binding: VerificationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.verificationCard,
+      page: () => VerificationCardScreen(),
+      binding: VerificationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.verificationInfo,
+      page: () => VerificationInfoScreen(),
+      binding: VerificationBinding(),
     ),
   ];
 }

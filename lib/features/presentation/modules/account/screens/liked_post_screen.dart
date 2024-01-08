@@ -4,10 +4,6 @@ import 'package:nhagiare_mobile/features/presentation/modules/account/account_co
 
 import '../../../../../core/resources/pair.dart';
 import '../../../../domain/entities/posts/real_estate_post.dart';
-import '../../user_profile/widgets/user_posts.dart';
-
-import 'package:flutter/material.dart';
-import 'package:get/get.dart'; // Make sure to import the Get package for state management
 
 class LikedPostScreen extends StatelessWidget {
   LikedPostScreen({super.key});

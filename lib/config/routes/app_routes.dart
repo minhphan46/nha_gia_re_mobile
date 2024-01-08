@@ -56,4 +56,9 @@ abstract class AppRoutes {
   static String getChatDetailRoute(String id) {
     return '/chat/$id';
   }
+
+  // verify
+  static const verificationPortrait = '/verification/portrait';
+  static const verificationInfo = '/verification/info';
+  static const verificationCard = '/verification/card';
 }
