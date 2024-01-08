@@ -31,12 +31,13 @@ class UserCard extends StatelessWidget {
               // avatar
               if (controller.post.user!.avatar != null)
                 ClipRRect(
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  borderRadius: const BorderRadius.all(Radius.circular(50)),
                   child: CachedNetworkImage(
                     imageUrl:
                         Uri.parse(controller.post.user!.avatar!).toString(),
                     fit: BoxFit.cover,
                     width: 50,
+                    height: 50,
                     errorWidget: (context, _, __) {
                       return const CircleAvatar(
                         radius: 25,

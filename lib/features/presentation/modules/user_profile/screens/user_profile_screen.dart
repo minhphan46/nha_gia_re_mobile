@@ -40,11 +40,12 @@ class UserProfileScreen extends StatelessWidget {
                     if (controller.user!.avatar != null)
                       ClipRRect(
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(10)),
+                            const BorderRadius.all(Radius.circular(50)),
                         child: CachedNetworkImage(
                           imageUrl: controller.user!.avatar!,
                           fit: BoxFit.cover,
                           width: sizeImage,
+                          height: sizeImage,
                           errorWidget: (context, _, __) {
                             return CircleAvatar(
                               radius: sizeImage / 2,
