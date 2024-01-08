@@ -522,6 +522,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<bool>> likePost(String postId) {
     String url = '$apiAppUrl$kMarkFavEndpoint/$postId';
 
+    print(success('url: $url'));
+
     try {
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();

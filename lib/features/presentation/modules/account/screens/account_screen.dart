@@ -8,6 +8,7 @@ import 'package:nhagiare_mobile/features/presentation/global_widgets/loading_com
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/not_identity_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/account/screens/liked_post_screen.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/values/asset_image.dart';
 
@@ -93,29 +94,29 @@ class _AccountScreenState extends State<AccountScreen> {
                       ),
                     ),
                     // favorite
-                    // ListTile(
-                    //   contentPadding: const EdgeInsets.symmetric(
-                    //       horizontal: 30, vertical: 2),
-                    //   title: Text(
-                    //     'Đã lưu',
-                    //     style: AppTextStyles.medium16,
-                    //   ),
-                    //   onTap: () {
-                    //     Get.to(() => LikedPostScreen());
-                    //   },
-                    //   leading: const Padding(
-                    //     padding: EdgeInsets.symmetric(horizontal: 5),
-                    //     child: Icon(
-                    //       Icons.favorite,
-                    //       color: AppColors.red,
-                    //       size: 25,
-                    //     ),
-                    //   ),
-                    //   trailing: const Icon(
-                    //     Icons.arrow_forward_ios_rounded,
-                    //     size: 18,
-                    //   ),
-                    // ),
+                    ListTile(
+                      contentPadding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 2),
+                      title: Text(
+                        'Đã lưu',
+                        style: AppTextStyles.medium16,
+                      ),
+                      onTap: () {
+                        Get.to(() => LikedPostScreen());
+                      },
+                      leading: const Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 5),
+                        child: Icon(
+                          Icons.favorite,
+                          color: AppColors.red,
+                          size: 25,
+                        ),
+                      ),
+                      trailing: const Icon(
+                        Icons.arrow_forward_ios_rounded,
+                        size: 18,
+                      ),
+                    ),
                     // purchase
                     ListTile(
                       contentPadding: const EdgeInsets.symmetric(
