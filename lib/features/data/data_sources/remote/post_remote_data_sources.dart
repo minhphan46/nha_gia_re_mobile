@@ -143,7 +143,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<void>> createPost(RealEstatePostModel postModel) async {
-    const url = '$apiAppUrl$kCreatePostEndpoint';
+    final url = '$apiAppUrl$kCreatePostEndpoint';
     try {
       // get access token
       AuthenLocalDataSrc localDataSrc = sl<AuthenLocalDataSrc>();
@@ -274,7 +274,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<List<String>>> uploadImages(List<File> images) async {
-    const url = '$apiAppUrl$kPostImages';
+    final url = '$apiAppUrl$kPostImages';
 
     List<FormData> formDataList = [];
 
@@ -442,7 +442,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
 
   @override
   Future<HttpResponse<LitmitPostModel>> getLimitPosts() async {
-    const url = '$apiAppUrl$kGetLimitPostEndpoint';
+    final url = '$apiAppUrl$kGetLimitPostEndpoint';
 
     print(success('url: $url'));
 
@@ -481,7 +481,7 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   @override
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsFavorite(
       int? page) async {
-    const url = '$apiAppUrl$kGetPostFavoriteEndpoint';
+    final url = '$apiAppUrl$kGetPostFavoriteEndpoint';
     try {
       final response = await client.get(url,
           options: Options(headers: {

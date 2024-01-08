@@ -3,7 +3,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import '../../../../../config/theme/app_color.dart';
+import '../../../../../core/resources/pair.dart';
 import '../../../../data/models/notification.dart';
+import '../../../../domain/entities/notification.dart';
 import '../notification_controller.dart';
 import '../widgets/NotificationItem.dart';
 
@@ -16,11 +18,48 @@ class NotificationScreen extends StatefulWidget {
 
 class _NotificationScreenState extends State<NotificationScreen> {
   final NotificationController _controller = Get.find<NotificationController>();
+
+  int page = 0;
+  int totalPage = 1;
+  RxBool isLoading = RxBool(false);
+  Rx<List<NotificationEntity>?> listNoti = Rx<List<NotificationEntity>?>(null);
+  ScrollController _scrollController = ScrollController();
+  void _loadMore() async {
+    page++;
+    isLoading.value = true;
+    final result = await _controller.getNotifications(page);
+    // listNoti.addAll(result.second);
+    if (listNoti.value == null) {
+      listNoti.value = result.second.obs;
+    } else {
+      listNoti.value!.addAll(result.second);
+    }
+    totalPage = result.first;
+    isLoading.value = false;
+  }
+
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    _controller.init();
+    _loadMore();
+
+    _scrollController.addListener(() {
+      if (_scrollController.position.pixels ==
+          _scrollController.position.maxScrollExtent) {
+        print(page < totalPage);
+        if (page < totalPage) {
+          _loadMore();
+        }
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _scrollController.dispose();
   }
 
   @override
@@ -29,40 +68,46 @@ class _NotificationScreenState extends State<NotificationScreen> {
       appBar: AppBar(
         title: const Text("Thông báo"),
       ),
-      body: StreamBuilder<List<NotificationModel>>(
-        stream: _controller.notificationStream.stream,
-        builder: (context, snapshot) {
-          if (!snapshot.hasData) {
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          } else {
-            if (snapshot.error != null) {
-              return const Center(
-                child: Text('An error occured'),
-              );
-            } else {
-              var data = snapshot.data!;
+      body: Obx(
+        () {
+          return (listNoti.value == null)
+              ? const Center(
+                  child: CircularProgressIndicator(),
+                )
+              : (listNoti.value!.isEmpty)
+                  ? Center(
+                      child: SingleChildScrollView(
+                      child: SvgPicture.asset(Assets.emptyNotification),
+                    ))
+                  : Container(
+                      color: AppColors.grey100,
+                      child: ListView.builder(
+                        controller: _scrollController,
+                        itemCount: listNoti.value!.length,
+                        itemBuilder: (_, i) {
+                          // return NotificationListItem(
+                          //     notiModel: listNoti.value![i]);
 
-              if (data.isEmpty) {
-                return Center(
-                    child: SingleChildScrollView(
-                  child: SvgPicture.asset(Assets.emptyNotification),
-                ));
-              }
-
-              return Container(
-                color: AppColors.grey100,
-                child: ListView.builder(
-                  itemCount: snapshot.data!.length,
-                  itemBuilder: (_, i) {
-                    NotificationModel noti = snapshot.data![i];
-                    return NotificationListItem(notiModel: noti);
-                  },
-                ),
-              );
-            }
-          }
+                          if (i == listNoti.value!.length) {
+                            if (page < totalPage) {
+                              print("loading");
+                              return Visibility(
+                                visible: isLoading.value,
+                                child: const Center(
+                                  child: CircularProgressIndicator(),
+                                ),
+                              );
+                            } else {
+                              print("end");
+                              return const SizedBox();
+                            }
+                          } else {
+                            return NotificationListItem(
+                                notiModel: listNoti.value![i]);
+                          }
+                        },
+                      ),
+                    );
         },
       ),
     );

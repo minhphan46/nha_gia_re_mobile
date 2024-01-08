@@ -1,11 +1,13 @@
-const isProduction = true;
-const String ipconfig = '192.168.1.135';
-const String baseUrlDev = "http://$ipconfig:8000";
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
+final bool isProduction = dotenv.env['IS_PRODUCTION'] == 'true';
+final String ipconfig = dotenv.env['IPCONFIG']!;
+final String baseUrlDev = "http://$ipconfig:8000";
 const String baseUrlProduction = "https://nha-gia-re-server.onrender.com";
-const String apiDevUrl = "$baseUrlDev/api/v1";
+final String apiDevUrl = "$baseUrlDev/api/v1";
 const String apiProductionUrl = "$baseUrlProduction/api/v1";
-const String baseAppUrl = isProduction ? baseUrlProduction : baseUrlDev;
-const String apiAppUrl = isProduction ? apiProductionUrl : apiDevUrl;
+final String baseAppUrl = isProduction ? baseUrlProduction : baseUrlDev;
+final String apiAppUrl = isProduction ? apiProductionUrl : apiDevUrl;
 
 const String kGetMe = '/users/profile';
 const String kSignIn = '/auth/sign-in';
@@ -40,3 +42,4 @@ const kGetFollowersAndFollowingsCountEndpoint = '/users/follows';
 const kFollowUserEndpoint = '/users/follow/:id';
 const kGetDiscountCodeEndpoint = '/membership-package/discounts';
 const kGetPostFavoriteEndpoint = '/posts/favorites';
+const kGetAllNotifications = '/notifications';

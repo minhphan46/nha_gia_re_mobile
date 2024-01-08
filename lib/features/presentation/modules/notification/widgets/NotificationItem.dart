@@ -6,9 +6,11 @@ import 'package:flutter_slidable/flutter_slidable.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../data/models/notification.dart';
+import '../../../../domain/entities/notification.dart';
+import '../../../../domain/enums/notification_type.dart';
 
 class NotificationListItem extends StatelessWidget {
-  final NotificationModel notiModel;
+  final NotificationEntity notiModel;
 
   const NotificationListItem({
     required this.notiModel,
@@ -19,17 +21,11 @@ class NotificationListItem extends StatelessWidget {
 
   Color getColorStatus() {
     switch (notiModel.type) {
-      case NotificationType.suggest:
+      case NotificationType.info:
         return AppColors.grey100;
-      case NotificationType.expirationWarning:
+      case NotificationType.warning:
         return AppColors.yellow;
-      case NotificationType.rejectPost:
-        return AppColors.red;
-      case NotificationType.acceptPost:
-        return AppColors.green;
-      case NotificationType.advertise:
-        return const Color(0xff49454F);
-      case NotificationType.newFollower:
+      default:
         return AppColors.green;
     }
   }
@@ -38,7 +34,7 @@ class NotificationListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () async {
-        notiModel.isRead = true;
+        // notiModel.isRead = true;
       },
       child: Slidable(
         endActionPane: ActionPane(
