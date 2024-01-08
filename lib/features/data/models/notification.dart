@@ -1,65 +1,29 @@
-enum NotificationType {
-  suggest,
-  expirationWarning,
-  rejectPost,
-  acceptPost,
-  newFollower,
-  advertise;
+import 'package:nhagiare_mobile/features/domain/entities/notification.dart';
 
-  @override
-  String toString() {
-    switch (this) {
-      case NotificationType.suggest:
-        return "suggest";
-      case NotificationType.expirationWarning:
-        return "expirationWarning";
-      case NotificationType.rejectPost:
-        return "rejectPost";
-      case NotificationType.acceptPost:
-        return "acceptPost";
-      case NotificationType.advertise:
-        return "advertise";
-      case NotificationType.newFollower:
-        return "newFollower";
-    }
-  }
+import '../../domain/enums/notification_type.dart';
 
-  static NotificationType parse(String value) {
-    for (NotificationType type in NotificationType.values) {
-      if (type.toString() == value) {
-        return type;
-      }
-    }
-    throw Exception(
-        "Can't parse NotificationType! Your input value is \"$value\"");
-  }
-}
-
-class NotificationModel {
-  String id;
-  NotificationType type;
-  DateTime? createAt;
-  bool isRead;
-  String title;
-  String content;
-  String? image;
-  String? link;
-
-  NotificationModel({
-    required this.id,
-    required this.type,
-    required this.isRead,
-    required this.createAt,
-    required this.title,
-    required this.content,
-    this.image,
-    this.link,
-  });
-
-  void setIsRead(bool check) {
-    isRead = check;
-  }
-
+class NotificationModel extends NotificationEntity {
+  const NotificationModel({
+    required String id,
+    required NotificationType type,
+    required DateTime createAt,
+    required bool isRead,
+    required String title,
+    required String content,
+    String? image,
+    String? link,
+    dynamic data,
+  }) : super(
+          id: id,
+          type: type,
+          createAt: createAt,
+          isRead: isRead,
+          title: title,
+          content: content,
+          image: image,
+          link: link,
+          data: data,
+        );
   factory NotificationModel.fromJson(Map<String, dynamic> json) {
     return NotificationModel(
       id: json['id'],
@@ -70,6 +34,7 @@ class NotificationModel {
       content: json['content'],
       image: json['image'],
       link: json['link'],
+      data: json['data'],
     );
   }
 }

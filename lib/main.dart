@@ -16,6 +16,10 @@ Future<void> main() async {
   await dotenv.load(fileName: ".env");
   await initializeDependencies();
   OneSignal.initialize('f8ec53cc-0f67-482a-8a58-09ebba348a1a');
+  // Add ExternalUserId
+  OneSignal.login('1a9a5785-721a-4bb5-beb7-9d752e2070d4')
+      .then((value) => print("Login Success"))
+      .catchError((error) => print("Login Error: $error"));
   OneSignal.Notifications.requestPermission(true).then((value) {
     print(value);
   });
