@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
@@ -66,5 +68,9 @@ class UserProfileController extends GetxController {
 
   void navToAccountInfo() {
     Get.toNamed(AppRoutes.updateInfoAccount, arguments: user);
+  }
+
+  void handleReportUser(UserEntity user, String reason, File image) {
+    print(reason);
   }
 }

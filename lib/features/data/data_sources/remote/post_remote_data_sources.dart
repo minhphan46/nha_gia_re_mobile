@@ -35,6 +35,9 @@ abstract class PostRemoteDataSrc {
   Future<HttpResponse<void>> deletePost(String postId);
   Future<HttpResponse<void>> updatePost(RealEstatePostModel post);
 
+  // getSinglePost
+  Future<HttpResponse<RealEstatePostModel>> getSinglePost(String postId);
+
   // get limit post
   Future<HttpResponse<LitmitPostModel>> getLimitPosts();
 
@@ -62,7 +65,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     if (userId != null) {
       queryBuilder.addQuery('post_user_id', Operation.equals, '\'$userId\'');
     }
-    // post_is_active[eq]=true
+    queryBuilder.addQuery('post_expiry_date', Operation.greaterThan, 'now()');
+
     queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
 
     queryBuilder.addQuery('post_status', Operation.equals, '\'approved\'');
@@ -82,6 +86,9 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     queryBuilder.addQuery('post_status', Operation.equals, '\'$status\'');
     queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
     queryBuilder.addOrderBy('posted_date', OrderBy.desc);
+    queryBuilder.addQuery('post_expiry_date', Operation.greaterThan, 'now()');
+    queryBuilder.addQuery("user_id", Operation.equals,
+        '\'${sl<AuthenLocalDataSrc>().getUserIdFromToken()}\'');
 
     String url = '$apiAppUrl$kGetPostEndpoint${queryBuilder.build()}';
 
@@ -97,6 +104,8 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     queryBuilder.addPage(pageQuery);
     queryBuilder.addQuery('post_is_active', Operation.equals, 'false');
     queryBuilder.addOrderBy('posted_date', OrderBy.desc);
+    queryBuilder.addQuery("user_id", Operation.equals,
+        '\'${sl<AuthenLocalDataSrc>().getUserIdFromToken()}\'');
 
     String url = '$apiAppUrl$kGetPostEndpoint${queryBuilder.build()}';
 
@@ -107,38 +116,17 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
   Future<HttpResponse<Pair<int, List<RealEstatePostModel>>>> getPostsExpired(
       int? page) async {
     int pageQuery = page ?? 1;
-    String url = '$apiAppUrl$kGetPostEndpoint?page=$pageQuery';
+    QueryBuilder queryBuilder = QueryBuilder();
+    queryBuilder.addPage(pageQuery);
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
+    queryBuilder.addOrderBy('posted_date', OrderBy.desc);
+    queryBuilder.addQuery('post_expiry_date', Operation.lessThan, 'now()');
+    queryBuilder.addQuery("user_id", Operation.equals,
+        '\'${sl<AuthenLocalDataSrc>().getUserIdFromToken()}\'');
 
-    try {
-      final response = await client.get(url);
-      //print('${response.statusCode} : ${response.data["message"].toString()}');
-      if (response.statusCode != 200) {
-        //print('${response.statusCode} : ${response.data["result"].toString()}');
-        throw ApiException(
-          message: response.data,
-          statusCode: response.statusCode!,
-        );
-      }
+    String url = '$apiAppUrl$kGetPostEndpoint${queryBuilder.build()}';
 
-      final int numOfPages = response.data["num_of_pages"];
-
-      final List<DataMap> taskDataList =
-          List<DataMap>.from(response.data["result"]);
-
-      List<RealEstatePostModel> posts = taskDataList
-          .map((postJson) => RealEstatePostModel.fromJson(postJson))
-          //.where((post) => post.isActive!)
-          //.where((post) => post.expiryDate!.isBefore(DateTime.now()))
-          .toList();
-
-      final value = Pair(numOfPages, posts);
-
-      return HttpResponse(value, response);
-    } on ApiException {
-      rethrow;
-    } catch (error) {
-      throw ApiException(message: error.toString(), statusCode: 505);
-    }
+    return await DatabaseHelper().getPosts(url, client);
   }
 
   @override
@@ -339,6 +327,10 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
     QueryBuilder queryBuilder = QueryBuilder();
 
     queryBuilder.addPage(pageQuery);
+
+    queryBuilder.addQuery('post_is_active', Operation.equals, 'true');
+
+    queryBuilder.addQuery('post_expiry_date', Operation.greaterThan, 'now()');
 
     if (query.textSearch != null && query.textSearch!.isNotEmpty) {
       queryBuilder.addSearch(query.textSearch!);
@@ -559,6 +551,35 @@ class PostRemoteDataSrcImpl implements PostRemoteDataSrc {
         message: e.message!,
         statusCode: e.response?.statusCode ?? 505,
       );
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<RealEstatePostModel>> getSinglePost(String postId) async {
+    String url = '$apiAppUrl$kGetPostEndpoint?post_id[eq]=\'$postId\'';
+    try {
+      final response = await client.get(url,
+          options: Options(headers: {
+            'Authorization':
+                'Bearer ${sl<AuthenLocalDataSrc>().getAccessToken()}',
+          }));
+      //print('${response.statusCode} : ${response.data["message"].toString()}');
+      if (response.statusCode != 200) {
+        //print('${response.statusCode} : ${response.data["result"].toString()}');
+        throw ApiException(
+          message: response.data,
+          statusCode: response.statusCode!,
+        );
+      }
+
+      final RealEstatePostModel post =
+          RealEstatePostModel.fromJson(response.data["result"][0]);
+
+      return HttpResponse(post, response);
     } on ApiException {
       rethrow;
     } catch (error) {
