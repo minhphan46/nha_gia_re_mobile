@@ -18,7 +18,6 @@ class ButtonFollow extends StatelessWidget {
   Widget build(BuildContext context) {
     return InkWell(
       onTap: () {
-        print("click");
         onClick();
       },
       child: Container(

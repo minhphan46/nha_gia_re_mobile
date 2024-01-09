@@ -28,6 +28,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
   @override
   Future<HttpResponse<bool>> followOrUnfollowUser(String userId) {
     String url = '$apiAppUrl$kFollowUserEndpoint'.replaceAll(':id', userId);
+    print(url);
     try {
       return client
           .post(url,
@@ -45,7 +46,9 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
           );
         }
 
-        return HttpResponse(true, response);
+        final bool data = response.data['result'];
+
+        return HttpResponse(data, response);
       });
     } on ApiException {
       rethrow;

@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/report.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/user/FollowOrUnfollowUserUseCase.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/send_report.dart';
 import '../../../../config/routes/app_routes.dart';
@@ -17,7 +18,7 @@ import '../../../domain/usecases/post/remote/upload_images.dart';
 
 class UserProfileController extends GetxController {
   UserEntity? user = Get.arguments;
-  bool isFollow = false;
+  RxBool isFollow = false.obs;
   late RxBool isMe = false.obs;
 
   RxString numOfPosts = "-".obs;
@@ -43,14 +44,6 @@ class UserProfileController extends GetxController {
     } else {
       return [];
     }
-  }
-
-  Future<void> followOrUnfollowUser() async {
-    // final dataState = await _followOrUnfollowUserUseCase(params: user!.id);
-    // if (dataState is DataSuccess) {
-    //   isFollow = dataState.data!;
-    //   update();
-    // }
   }
 
   final GetFollowersAndFollowingsCount _getFollowersAndFollowingsCountUseCase =
@@ -99,5 +92,13 @@ class UserProfileController extends GetxController {
     } else {
       return "";
     }
+  }
+
+  final FollowOrUnfollowUserUseCase _followOrUnfollowUserUseCase =
+      sl<FollowOrUnfollowUserUseCase>();
+  Future<void> followOrUnfollow() async {
+    final dataState = await _followOrUnfollowUserUseCase(params: user!.id!);
+    isFollow.value = dataState;
+    print(isFollow.value);
   }
 }

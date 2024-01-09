@@ -182,11 +182,13 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
                           // button follow
                           Obx(
                             () => ButtonFollow(
-                              isFollow: false,
+                              isFollow: controller.isFollow.value,
                               isMe: controller.isMe.value,
                               onClick: () {
                                 if (controller.isMe.value) {
                                   controller.navToAccountInfo();
+                                } else {
+                                  controller.followOrUnfollow();
                                 }
                               },
                             ),
