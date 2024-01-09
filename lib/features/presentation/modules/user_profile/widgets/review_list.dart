@@ -77,8 +77,8 @@ class ReviewGenerator {
 }
 
 class ReviewList extends StatelessWidget {
-  List<Review> reviews;
-  ReviewList({super.key, required this.reviews});
+  final List<Review> reviews;
+  const ReviewList({super.key, required this.reviews});
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
@@ -105,7 +105,7 @@ class ReviewList extends StatelessWidget {
               ),
             ),
             subtitle: Container(
-                padding: EdgeInsets.fromLTRB(20, 10, 20, 10),
+                padding: const EdgeInsets.fromLTRB(20, 10, 20, 10),
                 decoration: BoxDecoration(
                   color: Colors.grey[200],
                   borderRadius: BorderRadius.circular(25),
