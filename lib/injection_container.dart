@@ -237,7 +237,7 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<TransactionRemoteDataSrc>(
     TransactionRemoteDataSrcImpl(
       sl<Dio>(),
-      sl<AuthenLocalDataSrc>().getAccessToken() ?? '',
+      sl<AuthenLocalDataSrc>(),
     ),
   );
 
