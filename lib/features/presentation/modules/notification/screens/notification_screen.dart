@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/config/theme/app_color.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
 import '../../../../domain/entities/noti/notification.dart';
 import '../notification_controller.dart';
@@ -95,8 +96,22 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       itemCount: listNoti.value!.length + 1,
                       itemBuilder: (context, index) {
                         if (index < listNoti.value!.length) {
-                          return NotificationListItem(
-                            notiModel: listNoti.value![index],
+                          return Column(
+                            children: [
+                              NotificationListItem(
+                                key: ValueKey(listNoti.value![index].id),
+                                notiModel: listNoti.value![index],
+                              ),
+                              Visibility(
+                                visible: index != listNoti.value!.length - 1,
+                                child: const Divider(
+                                    height: 0.5,
+                                    thickness: 0.5,
+                                    indent: 20,
+                                    endIndent: 20,
+                                    color: AppColors.grey200),
+                              ),
+                            ],
                           );
                         } else {
                           return Visibility(

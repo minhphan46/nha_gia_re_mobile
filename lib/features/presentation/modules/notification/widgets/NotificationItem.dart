@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:heroicons_flutter/heroicons_flutter.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
@@ -17,12 +18,39 @@ class NotificationListItem extends StatelessWidget {
 
   Color getColorStatus() {
     switch (notiModel.type) {
+      case NotificationType.postApproved:
       case NotificationType.info:
+      case NotificationType.follow:
+      case NotificationType.news:
         return AppColors.green100;
-      case NotificationType.warning:
+      case NotificationType.postRejected:
+      case NotificationType.postDeleted:
+        return AppColors.red100;
+      case NotificationType.postWarningExpired:
         return AppColors.yellow100;
       default:
         return AppColors.green;
+    }
+  }
+
+  String getType() {
+    switch (notiModel.type) {
+      case NotificationType.postApproved:
+        return 'Đã duyệt';
+      case NotificationType.postRejected:
+        return 'Bị từ chối';
+      case NotificationType.postDeleted:
+        return 'Bị xóa';
+      case NotificationType.postWarningExpired:
+        return 'Hết hạn';
+      case NotificationType.info:
+        return 'Thông báo';
+      case NotificationType.follow:
+        return 'Theo dõi';
+      case NotificationType.news:
+        return 'Tin tức';
+      default:
+        return 'Thông báo';
     }
   }
 
@@ -45,10 +73,6 @@ class NotificationListItem extends StatelessWidget {
         child: ListTile(
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(8),
-            // side: const BorderSide(
-            //   color: AppColors.grey200,
-            //   width: 1,
-            // ),
           ),
           onTap: () {
             // Get.toNamed('/notification-detail', arguments: notiModel);
@@ -56,17 +80,17 @@ class NotificationListItem extends StatelessWidget {
           splashColor: AppColors.grey200,
           leading: notiModel.image == null
               ? const Icon(
-                  Icons.circle_notifications,
+                  HeroiconsMini.bell,
                   color: AppColors.green,
                   size: 50,
                 )
               : ClipRRect(
                   borderRadius: BorderRadius.circular(8),
                   child: CachedNetworkImage(
-                    height: 100,
-                    width: 100,
-                    imageUrl: notiModel.image!,
+                    height: 50,
+                    width: 50,
                     fit: BoxFit.cover,
+                    imageUrl: notiModel.image!,
                     errorWidget: (context, error, stackTrace) {
                       return const Icon(
                         Icons.circle_notifications,
@@ -93,7 +117,7 @@ class NotificationListItem extends StatelessWidget {
                   borderRadius: BorderRadius.circular(8),
                 ),
                 child: Text(
-                  notiModel.type.toString().split('.').last,
+                  getType(),
                   style: AppTextStyles.medium12,
                 ),
               ),
@@ -102,12 +126,7 @@ class NotificationListItem extends StatelessWidget {
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                notiModel.title,
-                style: !notiModel.isRead
-                    ? AppTextStyles.semiBold14
-                    : AppTextStyles.regular14,
-              ),
+              Text(notiModel.title, style: AppTextStyles.semiBold14),
               Text(
                 notiModel.content,
                 style: AppTextStyles.regular12,
