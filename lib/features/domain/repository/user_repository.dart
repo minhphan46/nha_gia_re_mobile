@@ -15,4 +15,5 @@ abstract class UserRepository {
       AccountVerificationRequestEntity entity);
   Future<DataState<Pair<VerificationStatus, String>>> getVerificationStatus();
   Future<DataState<void>> sendReport(ReportEntity report);
+  Future<DataState<bool>> checkFollowUser(String userId);
 }
