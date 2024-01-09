@@ -16,9 +16,14 @@ import '../../../../../config/values/asset_image.dart';
 import '../../../../../core/resources/pair.dart';
 import '../widgets/dialog_report.dart';
 
-class UserProfileScreen extends StatelessWidget {
-  UserProfileScreen({super.key});
+class UserProfileScreen extends StatefulWidget {
+  const UserProfileScreen({super.key});
 
+  @override
+  State<UserProfileScreen> createState() => _UserProfileScreenState();
+}
+
+class _UserProfileScreenState extends State<UserProfileScreen> {
   final UserProfileController controller = Get.find();
 
   void showCommentForm(BuildContext context) {
@@ -29,6 +34,18 @@ class UserProfileScreen extends StatelessWidget {
         handleReportUser: controller.handleReportUser,
       ),
     );
+  }
+
+  @override
+  void initState() {
+    checkIsMe();
+    super.initState();
+  }
+
+  void checkIsMe() async {
+    controller.checkIsMe().then((value) {
+      setState(() {});
+    });
   }
 
   @override
