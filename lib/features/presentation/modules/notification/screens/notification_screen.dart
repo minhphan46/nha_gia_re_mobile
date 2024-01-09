@@ -45,7 +45,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
     _scrollController.addListener(() {
       if (_scrollController.position.pixels ==
           _scrollController.position.maxScrollExtent) {
-        print(page < totalPage);
+        // print(page < totalPage);
         if (page < totalPage) {
           _loadMore();
         }
@@ -77,34 +77,41 @@ class _NotificationScreenState extends State<NotificationScreen> {
                       child: SingleChildScrollView(
                       child: SvgPicture.asset(Assets.emptyNotification),
                     ))
-                  : Container(
-                      color: AppColors.grey100,
-                      child: ListView.builder(
-                        controller: _scrollController,
-                        itemCount: listNoti.value!.length,
-                        itemBuilder: (_, i) {
-                          // return NotificationListItem(
-                          //     notiModel: listNoti.value![i]);
-
-                          if (i == listNoti.value!.length) {
-                            if (page < totalPage) {
-                              print("loading");
-                              return Visibility(
-                                visible: isLoading.value,
-                                child: const Center(
-                                  child: CircularProgressIndicator(),
-                                ),
-                              );
-                            } else {
-                              print("end");
-                              return const SizedBox();
-                            }
-                          } else {
-                            return NotificationListItem(
-                                notiModel: listNoti.value![i]);
-                          }
-                        },
-                      ),
+                  : ListView.builder(
+                      controller: _scrollController,
+                      // children: [
+                      //   ...listNoti.value!.map((e) => NotificationListItem(
+                      //         notiModel: e,
+                      //       )),
+                      //   Visibility(
+                      //     visible: isLoading.value,
+                      //     child: Center(
+                      //       child: Container(
+                      //         margin: const EdgeInsets.symmetric(vertical: 20),
+                      //         child: const CircularProgressIndicator(),
+                      //       ),
+                      //     ),
+                      //   ),
+                      // ],
+                      itemCount: listNoti.value!.length + 1,
+                      itemBuilder: (context, index) {
+                        if (index < listNoti.value!.length) {
+                          return NotificationListItem(
+                            notiModel: listNoti.value![index],
+                          );
+                        } else {
+                          return Visibility(
+                            visible: isLoading.value,
+                            child: Center(
+                              child: Container(
+                                margin:
+                                    const EdgeInsets.symmetric(vertical: 20),
+                                child: const CircularProgressIndicator(),
+                              ),
+                            ),
+                          );
+                        }
+                      },
                     );
         },
       ),
