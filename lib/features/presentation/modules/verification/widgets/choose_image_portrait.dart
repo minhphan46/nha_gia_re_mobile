@@ -18,9 +18,41 @@ class ChooseImagePortrait extends StatefulWidget {
 
 class _ChooseImagePortraitState extends State<ChooseImagePortrait> {
   File? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              const SizedBox(height: 50),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Thư viện"),
+                onTap: () {
+                  imgFromGallery();
+                  Get.back();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text("Máy ảnh"),
+                onTap: () {
+                  _pickImageFromCamera();
+                  Get.back();
+                },
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   void _pickImageFromCamera() async {
-    final pickedImageFile = await ImagePicker().pickImage(
+    final pickedImageFile = await _picker.pickImage(
         source: ImageSource.camera,
         preferredCameraDevice: CameraDevice.front,
         imageQuality: 100,
@@ -32,11 +64,21 @@ class _ChooseImagePortraitState extends State<ChooseImagePortrait> {
     }
   }
 
+  void imgFromGallery() async {
+    final pickedImageFile =
+        await _picker.pickImage(source: ImageSource.gallery);
+    if (pickedImageFile != null) {
+      _pickedImage = File(pickedImageFile.path);
+      widget.verifyController.handelUploadPortrait(File(_pickedImage!.path));
+      setState(() {});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(children: [
       InkWell(
-        onTap: () => _pickImageFromCamera(),
+        onTap: () => _showPicker(context),
         child: Obx(() => DottedBorder(
               color: widget.verifyController.isCanClickPortrait.value
                   ? Colors.white
@@ -68,7 +110,7 @@ class _ChooseImagePortraitState extends State<ChooseImagePortrait> {
       ),
       const SizedBox(height: 15),
       InkWell(
-        onTap: () => _pickImageFromCamera(),
+        onTap: () => _showPicker(context),
         child: Container(
           width: 200,
           padding: const EdgeInsets.symmetric(vertical: 10),
