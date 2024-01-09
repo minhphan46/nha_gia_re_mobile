@@ -10,6 +10,7 @@ import '../../../../injection_container.dart';
 import '../../../domain/entities/posts/real_estate_post.dart';
 import '../../../domain/usecases/authentication/get_user_id.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
+import '../../../domain/usecases/post/remote/upload_images.dart';
 
 class UserProfileController extends GetxController {
   UserEntity? user = Get.arguments;
@@ -67,7 +68,19 @@ class UserProfileController extends GetxController {
     Get.toNamed(AppRoutes.updateInfoAccount, arguments: user);
   }
 
-  void handleReportUser(UserEntity user, String reason, File image) {
-    print(reason);
+  Future<void> handleReportUser(
+      UserEntity user, String reason, File image) async {
+    String urlImage = await uploadImages(image);
+  }
+
+  UploadImagessUseCase uploadImagessUseCase = sl<UploadImagessUseCase>();
+  Future<String> uploadImages(File image) async {
+    final dataState = await uploadImagessUseCase(params: [image]);
+
+    if (dataState is DataSuccess) {
+      return dataState.data![0];
+    } else {
+      return "";
+    }
   }
 }
