@@ -2,6 +2,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
 import '../../../../domain/entities/noti/notification.dart';
@@ -15,14 +16,12 @@ class NotificationListItem extends StatelessWidget {
     super.key,
   });
 
-  final double sizeImage = 80;
-
   Color getColorStatus() {
     switch (notiModel.type) {
       case NotificationType.info:
-        return AppColors.grey100;
+        return AppColors.green100;
       case NotificationType.warning:
-        return AppColors.yellow;
+        return AppColors.yellow100;
       default:
         return AppColors.green;
     }
@@ -30,63 +29,76 @@ class NotificationListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return InkWell(
-      onTap: () async {
-        // notiModel.isRead = true;
-      },
-      child: Slidable(
-        endActionPane: ActionPane(
-          motion: const ScrollMotion(),
-          children: [
-            SlidableAction(
-              onPressed: (context) async {
-                // delete task
-              },
-              icon: Icons.delete,
-              backgroundColor: AppColors.red,
-            ),
-          ],
-        ),
-        child: ListTile(
-          contentPadding: const EdgeInsets.all(8.0),
-          tileColor: !notiModel.isRead
-              ? const Color.fromARGB(255, 250, 245, 227)
-              : AppColors.white,
-          leading: SizedBox(
-            height: sizeImage,
-            width: sizeImage,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: notiModel.image == null
-                  ? const Icon(
-                      Icons.circle_notifications,
-                      color: AppColors.green,
-                      size: 50,
-                    )
-                  : CachedNetworkImage(
-                      imageUrl: notiModel.image!,
-                      fit: BoxFit.cover,
-                      errorWidget: (context, error, stackTrace) {
-                        return const Icon(
-                          Icons.circle_notifications,
-                          color: AppColors.green,
-                          size: 50,
-                        );
-                      },
-                      progressIndicatorBuilder:
-                          (context, string, loadingProgress) {
-                        return Center(
-                          child: CircularProgressIndicator(
-                            value: loadingProgress.progress,
-                          ),
-                        );
-                      },
-                    ),
-            ),
+    return Slidable(
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        children: [
+          SlidableAction(
+            onPressed: (context) async {
+              // delete task
+            },
+            icon: Icons.delete,
           ),
-          title: Text(
-            notiModel.type.toString().tr,
-            style: AppTextStyles.semiBold12.copyWith(color: getColorStatus()),
+        ],
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 8),
+        child: ListTile(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(8),
+            // side: const BorderSide(
+            //   color: AppColors.grey200,
+            //   width: 1,
+            // ),
+          ),
+          onTap: () {
+            // Get.toNamed('/notification-detail', arguments: notiModel);
+          },
+          splashColor: AppColors.grey200,
+          leading: notiModel.image == null
+              ? const Icon(
+                  Icons.circle_notifications,
+                  color: AppColors.green,
+                  size: 50,
+                )
+              : ClipRRect(
+                  borderRadius: BorderRadius.circular(8),
+                  child: CachedNetworkImage(
+                    height: 100,
+                    width: 100,
+                    imageUrl: notiModel.image!,
+                    fit: BoxFit.cover,
+                    errorWidget: (context, error, stackTrace) {
+                      return const Icon(
+                        Icons.circle_notifications,
+                        color: AppColors.green,
+                        size: 50,
+                      );
+                    },
+                    progressIndicatorBuilder:
+                        (context, string, loadingProgress) {
+                      return Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.progress,
+                        ),
+                      );
+                    },
+                  ),
+                ),
+          title: Row(
+            children: [
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 4, horizontal: 8),
+                decoration: BoxDecoration(
+                  color: getColorStatus(),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  notiModel.type.toString().split('.').last,
+                  style: AppTextStyles.medium12,
+                ),
+              ),
+            ],
           ),
           subtitle: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -94,16 +106,20 @@ class NotificationListItem extends StatelessWidget {
               Text(
                 notiModel.title,
                 style: !notiModel.isRead
-                    ? AppTextStyles.bold16
-                    : AppTextStyles.regular16,
+                    ? AppTextStyles.semiBold14
+                    : AppTextStyles.regular14,
               ),
-              const SizedBox(height: 5),
               Text(
                 notiModel.content,
-                style: AppTextStyles.regular14.copyWith(
-                  color: const Color(0xff49454F),
-                ),
+                style: AppTextStyles.regular12,
               ),
+              Visibility(
+                visible: notiModel.createAt != null,
+                child: Text(
+                  notiModel.createAt!.getTimeAgoVi(),
+                  style: AppTextStyles.regular12,
+                ),
+              )
             ],
           ),
         ),
