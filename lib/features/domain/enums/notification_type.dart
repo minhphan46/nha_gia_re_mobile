@@ -7,7 +7,8 @@ enum NotificationType {
   news,
   info,
   chat,
-  accept_account_verification_request;
+  acceptAccountVerificationRequest,
+  rejectAccountVerificationRequest;
 
   @override
   String toString() {
@@ -28,8 +29,10 @@ enum NotificationType {
         return "info";
       case NotificationType.chat:
         return "chat";
-      case NotificationType.accept_account_verification_request:
+      case NotificationType.acceptAccountVerificationRequest:
         return "accept_account_verification_request";
+      case NotificationType.rejectAccountVerificationRequest:
+        return "reject_account_verification_request";
     }
   }
 

@@ -17,7 +17,7 @@ class BlogRemoteDataSrcImpl implements BlogRemoteDataSrc {
 
   @override
   Future<HttpResponse<List<BlogModel>>> getAllBlogs() {
-    final url = '$apiAppUrl$kGetBlogEndpoint';
+    final url = '$apiAppUrl$kGetBlogEndpoint' + '?is_active[eq]=true';
 
     try {
       return client.get(url).then((response) {

@@ -1,5 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/features/data/data_sources/local/authentication_local_data_source.dart';
 import 'package:nhagiare_mobile/features/data/models/purchase/subscription_model.dart';
 import 'package:nhagiare_mobile/features/data/models/purchase/transaction_model.dart';
 import 'package:retrofit/retrofit.dart';
@@ -13,9 +14,11 @@ abstract class TransactionRemoteDataSrc {
 }
 
 class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
-  String accessToken;
+  AuthenLocalDataSrc _authenLocalDataSrc;
   final Dio client;
-  TransactionRemoteDataSrcImpl(this.client, this.accessToken);
+  TransactionRemoteDataSrcImpl(this.client, this._authenLocalDataSrc);
+
+  String get accessToken => _authenLocalDataSrc.getAccessToken() ?? '';
 
   @override
   Future<HttpResponse<TransactionModel>> getTransactionByAppTransId(String id) {
