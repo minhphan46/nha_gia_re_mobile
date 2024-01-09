@@ -45,3 +45,4 @@ const kGetPostFavoriteEndpoint = '/posts/favorites';
 const kGetAllNotifications = '/notifications';
 
 const kSendVerificationUserEndpoint = '/account-verification-request';
+const kSendReportUserEndpoint = '/reports/send-report';

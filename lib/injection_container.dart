@@ -17,6 +17,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_discount_c
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/unsubcribe.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/get_verification_status.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/user/send_report.dart';
 import '../features/domain/usecases/authentication/get_me.dart';
 import '../features/domain/usecases/post/remote/get_suggest_keywords_use_case.dart';
 import '../features/domain/usecases/purchase/get_current_subscription.dart';
@@ -409,6 +410,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<GetVerificationUsecase>(
     GetVerificationUsecase(
+      sl<UserRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<SendReportUsecase>(
+    SendReportUsecase(
       sl<UserRepository>(),
     ),
   );

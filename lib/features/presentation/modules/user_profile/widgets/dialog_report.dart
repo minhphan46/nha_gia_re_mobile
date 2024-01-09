@@ -40,6 +40,8 @@ class DialogReport extends StatelessWidget {
       return;
     }
     await handleReportUser(user, reason, image.value!);
+    Navigator.pop(Get.context!);
+    textController.clear();
   }
 
   // images
