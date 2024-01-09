@@ -1,4 +1,5 @@
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
+import 'package:nhagiare_mobile/features/domain/entities/user/report.dart';
 
 import '../../../core/resources/pair.dart';
 import '../entities/user/account_verification_requests.dart';
@@ -12,4 +13,5 @@ abstract class UserRepository {
   Future<DataState<void>> sendVerificationUser(
       AccountVerificationRequestEntity entity);
   Future<DataState<Pair<VerificationStatus, String>>> getVerificationStatus();
+  Future<DataState<void>> sendReport(ReportEntity report);
 }
