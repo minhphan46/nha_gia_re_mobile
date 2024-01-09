@@ -61,6 +61,17 @@ class AccountController extends GetxController {
     return data;
   }
 
+  Future<String?> navToWaitingVerification() async {
+    var data = await Get.toNamed(AppRoutes.verificationCard);
+    return data;
+  }
+
+  Future<String?> navToRejectVerification(String rejectInfo) async {
+    var data =
+        await Get.toNamed(AppRoutes.verificationCard, arguments: rejectInfo);
+    return data;
+  }
+
   Future<void> handleSignOut() async {
     try {
       isLoadingLogout.value = true;
@@ -246,7 +257,7 @@ class AccountController extends GetxController {
 
   // change language
   void navToChangeLanguage() {
-    Get.to(ChangeLanguageScreen());
+    Get.to(const ChangeLanguageScreen());
   }
 
   Rx<Language> language = Language.vi.obs;

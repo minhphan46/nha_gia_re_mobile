@@ -25,10 +25,6 @@ class NotIdentityCard extends StatelessWidget {
               "Chưa xác thực",
               style: AppTextStyles.medium12.colorEx(AppColors.grey700),
             ),
-            const Icon(
-              Icons.arrow_forward_ios_rounded,
-              size: 12,
-            ),
           ],
         ),
       ),

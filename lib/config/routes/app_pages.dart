@@ -38,6 +38,8 @@ import 'package:nhagiare_mobile/features/presentation/modules/user_profile/scree
 import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_card_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_info_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_portrait_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_reject_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/verification/screens/verification_waiting_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/verification/verification_binding.dart';
 import '../../features/presentation/modules/purchase/screens/purchase_screen.dart';
 import '../../features/presentation/modules/user_profile/user_profile_binding.dart';
@@ -176,6 +178,16 @@ abstract class AppPages {
     GetPage(
       name: AppRoutes.verificationInfo,
       page: () => VerificationInfoScreen(),
+      binding: VerificationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.verificationWaiting,
+      page: () => const VerificationWaitingScreen(),
+      binding: VerificationBinding(),
+    ),
+    GetPage(
+      name: AppRoutes.verificationReject,
+      page: () => VerificationRejectScreen(),
       binding: VerificationBinding(),
     ),
   ];

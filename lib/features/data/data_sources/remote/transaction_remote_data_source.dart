@@ -95,6 +95,7 @@ class TransactionRemoteDataSrcImpl extends TransactionRemoteDataSrc {
   @override
   Future<HttpResponse<SubscriptionModel?>> getCurrentSubscription() async {
     String url = '$apiAppUrl$kGetCurrentSubscriptionEndpoint';
+
     try {
       final httpResponse = await client.get(url,
           options: Options(headers: {

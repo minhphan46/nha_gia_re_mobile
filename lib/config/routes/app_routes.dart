@@ -61,4 +61,6 @@ abstract class AppRoutes {
   static const verificationPortrait = '/verification/portrait';
   static const verificationInfo = '/verification/info';
   static const verificationCard = '/verification/card';
+  static const verificationWaiting = '/verification/waiting';
+  static const verificationReject = '/verification/reject';
 }
