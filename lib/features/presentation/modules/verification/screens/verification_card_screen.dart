@@ -96,28 +96,6 @@ class VerificationCardScreen extends StatelessWidget {
           ),
         ],
       ),
-
-      // bottom button
-      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      // floatingActionButton: Obx(
-      //   () => Container(
-      //     height: 50,
-      //     margin: const EdgeInsets.all(10),
-      //     child: ElevatedButton(
-      //       onPressed: _controller.isCanClickCard.value
-      //           ? () {
-      //               _controller.navToPortraitSceen();
-      //             }
-      //           : null,
-      //       child: Center(
-      //         child: Text(
-      //           'Tiếp tục'.tr,
-      //           style: AppTextStyles.bold14,
-      //         ),
-      //       ),
-      //     ),
-      //   ),
-      // ),
     );
   }
 }
