@@ -260,13 +260,14 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
             ),
           ),
           // tab ==============================================
-          FutureBuilder<List<RealEstatePostEntity>>(
-              future: controller.getAllPosts(),
-              builder: (context, snapshot) {
-                return TabProfile(
-                  data: snapshot.data,
-                );
-              }),
+          Expanded(
+              child: FutureBuilder<List<RealEstatePostEntity>>(
+                  future: controller.getAllPosts(),
+                  builder: (context, snapshot) {
+                    return TabProfile(
+                      data: snapshot.data,
+                    );
+                  })),
         ],
       ),
     );
