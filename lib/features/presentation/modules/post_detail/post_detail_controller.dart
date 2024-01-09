@@ -4,6 +4,7 @@ import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
 import 'package:nhagiare_mobile/features/domain/enums/order_by_types.dart';
 import 'package:nhagiare_mobile/features/domain/enums/posted_by.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_signle_post.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/like_post.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/motel_card.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/post_detail/widgets/office_card.dart';
@@ -32,6 +33,8 @@ class PostDetailController extends GetxController {
   RxBool isLoading = false.obs;
 
   GetUserIdUseCase getUserIdUseCase = sl<GetUserIdUseCase>();
+  GetSignlePostUseCase getSignlePostUseCase = sl<GetSignlePostUseCase>();
+
   @override
   void onInit() async {
     print(post.isFavorite);
@@ -39,6 +42,11 @@ class PostDetailController extends GetxController {
       isYourPost.value = true;
     }
     isLiked.value = post.isFavorite!;
+    getSignlePostUseCase(params: post.id).then((value) {
+      if (value is DataSuccess) {
+        isLiked.value = value.data!.isFavorite!;
+      }
+    });
     super.onInit();
   }
 
@@ -95,17 +103,14 @@ class PostDetailController extends GetxController {
 
   LikePostUseCase likePostUseCase = sl<LikePostUseCase>();
   void likePost() async {
-    if (!isLiked.value && !isLoading.value) {
-      isLoading.value = true;
+    isLiked.value = !isLiked.value;
+    if (!isLiked.value) {
       await likePostUseCase(params: post.id).then((value) {
         isLiked.value = value.data!;
-        isLoading.value = false;
       });
-    } else if (isLiked.value && !isLoading.value) {
-      isLoading.value = true;
+    } else if (isLiked.value) {
       await likePostUseCase(params: post.id).then((value) {
         isLiked.value = value.data!;
-        isLoading.value = false;
       });
     }
   }

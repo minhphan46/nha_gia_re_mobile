@@ -1,67 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/account_controller.dart';
-
-import '../../../../../core/resources/pair.dart';
+import '../../../../../config/routes/app_routes.dart';
 import '../../../../domain/entities/posts/real_estate_post.dart';
+import '../../post_management/widgets/base_list_posts.dart';
+import '../../search/widgets/result_page/item_product.dart';
 
 // ignore: must_be_immutable
-class LikedPostScreen extends StatelessWidget {
-  LikedPostScreen({super.key});
+class LikedPostScreen extends StatefulWidget {
+  const LikedPostScreen({super.key});
 
+  @override
+  State<LikedPostScreen> createState() => _LikedPostScreenState();
+}
+
+class _LikedPostScreenState extends State<LikedPostScreen> {
   final AccountController controller = Get.find<AccountController>();
-  int page = 1;
-  int totalPage = 1;
-  final ScrollController _scrollController = ScrollController();
+
+  Widget? buildItem(RealEstatePostEntity post) {
+    return ItemProduct(
+      post: post,
+      isFavourited: post.isFavorite ?? false,
+      onTap: (RealEstatePostEntity post) async {
+        Get.toNamed(AppRoutes.postDetail, arguments: post)!
+            .then((value) => setState(() {
+                  controller.getPostFavorite();
+                }));
+      },
+    );
+  }
+
+  @override
+  void initState() {
+    controller.getPostFavorite();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Bài đăng đã lưu"),
+        title: const Text("Bài đăng đã thích"),
       ),
-      body: FutureBuilder<Pair<int, List<RealEstatePostEntity>>>(
-        future: controller.getPostFavorite(page),
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return const CircularProgressIndicator(); // Display a loading indicator while data is being fetched
-          } else if (snapshot.hasError) {
-            return Text("Error: ${snapshot.error}");
-          } else {
-            // Update the totalPage variable based on the data received
-            totalPage = snapshot.data!.first;
-
-            return NotificationListener<ScrollNotification>(
-              onNotification: (ScrollNotification scrollInfo) {
-                if (scrollInfo is ScrollEndNotification &&
-                    _scrollController.position.extentAfter == 0) {
-                  // Reached the end of the list, load more data
-                  if (page < totalPage) {
-                    page++;
-                    controller.getPostFavorite(page).then((newData) {
-                      // Update the data in your controller or state
-                      // This may vary depending on how your controller handles data
-                      // For example, if your controller has a method like updateData(newData),
-                      // you can call controller.updateData(newData);
-                    });
-                  }
-                }
-                return false;
-              },
-              child: ListView.builder(
-                controller: _scrollController,
-                itemCount: snapshot.data!.second.length,
-                itemBuilder: (context, index) {
-                  // Build your list item here using snapshot.data.second[index]
-                  return ListTile(
-                    title: Text(snapshot.data!.second[index].title ?? ""),
-                    // Add other relevant widget properties
-                  );
-                },
-              ),
-            );
-          }
-        },
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: BaseListPosts(
+          titleNull: "Chưa có tin đã thích",
+          getPosts: controller.getPostFavorite,
+          postsList: controller.favoritePosts,
+          buildItem: buildItem,
+        ),
       ),
     );
   }

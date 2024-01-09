@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.dart';
@@ -7,6 +8,8 @@ import 'package:nhagiare_mobile/features/domain/entities/posts/real_estate_post.
 import '../../../../../../config/theme/app_color.dart';
 import '../../../../../../config/theme/text_styles.dart';
 import '../../../../../../config/values/app_values.dart';
+import '../../../../../../injection_container.dart';
+import '../../../../../domain/usecases/post/remote/like_post.dart';
 
 class ItemProduct extends StatefulWidget {
   final RealEstatePostEntity post;
@@ -27,26 +30,27 @@ class ItemProduct extends StatefulWidget {
 class _ItemProductState extends State<ItemProduct> {
   double sizeImage = 100;
   bool isLoading = false;
-  // Future<void> toggleFav() async {
-  //   PostRepository postRepo = GetIt.instance<PostRepository>();
-  //   if (!widget.isFavourited && !isLoading) {
-  //     isLoading = true;
-  //     await postRepo.likePost(widget.post.id).then((value) {
-  //       setState(() {
-  //         widget.isFavourited = true;
-  //         isLoading = false;
-  //       });
-  //     });
-  //   } else if (widget.isFavourited && !isLoading) {
-  //     isLoading = true;
-  //     await postRepo.unlikePost(widget.post.id).then((value) {
-  //       setState(() {
-  //         widget.isFavourited = false;
-  //         isLoading = false;
-  //       });
-  //     });
-  //   }
-  // }
+  RxBool isLiked = false.obs;
+
+  @override
+  void initState() {
+    super.initState();
+    isLiked = widget.isFavourited.obs;
+  }
+
+  LikePostUseCase likePostUseCase = sl<LikePostUseCase>();
+  void likePost() async {
+    isLiked.value = !isLiked.value;
+    if (!isLiked.value) {
+      await likePostUseCase(params: widget.post.id).then((value) {
+        isLiked.value = value.data!;
+      });
+    } else if (isLiked.value) {
+      await likePostUseCase(params: widget.post.id).then((value) {
+        isLiked.value = value.data!;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -165,19 +169,19 @@ class _ItemProductState extends State<ItemProduct> {
             child: Positioned(
               bottom: 0,
               right: 0,
-              child: GestureDetector(
-                onTap: () {
-                  //toggleFav();
-                },
-                child: SizedBox(
-                  child: widget.isFavourited
-                      ? const Icon(
-                          Icons.favorite_sharp,
-                          color: AppColors.red,
-                        )
-                      : const Icon(Icons.favorite_border_rounded),
-                ),
-              ),
+              child: Obx(() => GestureDetector(
+                    onTap: () {
+                      likePost();
+                    },
+                    child: SizedBox(
+                      child: isLiked.value
+                          ? const Icon(
+                              Icons.favorite_sharp,
+                              color: AppColors.red,
+                            )
+                          : const Icon(Icons.favorite_border_rounded),
+                    ),
+                  )),
             ),
           ),
         ],

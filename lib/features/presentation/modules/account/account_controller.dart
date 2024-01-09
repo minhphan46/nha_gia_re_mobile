@@ -134,6 +134,8 @@ class AccountController extends GetxController {
     Get.toNamed(AppRoutes.userProfile, arguments: userEntity);
   }
 
+  // get posts
+
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
   Future<List<RealEstatePostEntity>> getAllPosts({int? page = 1}) async {
     final dataState = await _getPostsUseCase(
@@ -210,9 +212,12 @@ class AccountController extends GetxController {
     Get.toNamed(AppRoutes.updateInfoAccount, arguments: userEntity);
   }
 
+  // get favorite posts
+  RxList<RealEstatePostEntity> favoritePosts = <RealEstatePostEntity>[].obs;
+
   final getPostFavoriteUseCase = sl<GetPostFavorite>();
   Future<Pair<int, List<RealEstatePostEntity>>> getPostFavorite(
-      int page) async {
+      {int? page = 1}) async {
     final dataState = await getPostFavoriteUseCase(
       params: page,
     );

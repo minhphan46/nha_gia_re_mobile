@@ -21,7 +21,7 @@ enum Operation {
       case Operation.notEquals:
         return 'ne';
       case Operation.greaterThan:
-        return 'gt';
+        return 'gte';
       case Operation.greaterThanOrEqual:
         return 'ge';
       case Operation.lessThan:
