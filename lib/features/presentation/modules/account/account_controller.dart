@@ -22,7 +22,6 @@ import '../../../domain/entities/purchase/subscription.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 
 class AccountController extends GetxController {
-  bool isIdentity = true;
   RxBool isLoadingLogout = false.obs;
   RxInt servicePack = 0.obs;
 

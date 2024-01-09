@@ -75,7 +75,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                             ],
                           ),
-                          if (!controller.isIdentity) const NotIdentityCard(),
+                          if (!user.isIdentityVerified!)
+                            const NotIdentityCard(),
                         ],
                       ),
                       onTap: () {
