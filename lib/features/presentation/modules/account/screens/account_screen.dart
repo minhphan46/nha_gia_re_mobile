@@ -119,20 +119,25 @@ class _AccountScreenState extends State<AccountScreen> {
                                   style: AppTextStyles.medium16,
                                 ),
                                 onTap: () {
-                                  // if (checkStatus == "0") {
-                                  //   //chua co
-                                  //   controller.navToVerification().then((value) {
-                                  //     setState(() {});
-                                  //   });
-                                  // } else if (checkStatus == "1") {
-                                  //   // dang cho duyet
-                                  //   controller.navToWaitingVerification().then((value) {
-                                  //     setState(() {});
-                                  //   });
-                                  // } else {
-                                  //   // tu choi
-                                  //   controller.navToRejectVerification(snapshot.data!);
-                                  // }
+                                  if (checkStatus == "0") {
+                                    //chua co
+                                    controller
+                                        .navToVerification()
+                                        .then((value) {
+                                      setState(() {});
+                                    });
+                                  } else if (checkStatus == "1") {
+                                    // dang cho duyet
+                                    controller
+                                        .navToWaitingVerification()
+                                        .then((value) {
+                                      setState(() {});
+                                    });
+                                  } else {
+                                    // tu choi
+                                    controller.navToRejectVerification(
+                                        snapshot.data!);
+                                  }
                                   controller.navToVerification().then((value) {
                                     setState(() {});
                                   });

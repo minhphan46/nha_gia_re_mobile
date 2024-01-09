@@ -40,9 +40,6 @@ class VerifyComponent extends StatelessWidget {
                         style:
                             AppTextStyles.medium12.colorEx(AppColors.grey700),
                       ),
-                      const SizedBox(width: 2),
-                      const Icon(Icons.arrow_forward_ios,
-                          size: 10, color: AppColors.grey700)
                     ],
                   ),
                 ),

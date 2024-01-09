@@ -161,7 +161,9 @@ class UserProfileScreen extends StatelessWidget {
                           AppTextStyles.semiBold16.colorEx(AppColors.grey700),
                     ),
                     const SizedBox(width: 5),
-                    const VerifyComponent(isVerify: true, isMe: true),
+                    VerifyComponent(
+                        isVerify: controller.user!.isIdentityVerified!,
+                        isMe: true),
                   ],
                 ),
                 // location ========================================
