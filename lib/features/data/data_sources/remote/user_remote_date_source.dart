@@ -5,6 +5,7 @@ import 'package:retrofit/retrofit.dart';
 import 'package:nhagiare_mobile/core/constants/constants.dart';
 import '../../../../core/errors/exceptions.dart';
 import '../../../domain/entities/user/account_verification_requests.dart';
+import '../../../domain/enums/verification_status.dart';
 
 abstract class UserRemoteDataSource {
   Future<HttpResponse<bool>> followOrUnfollowUser(String userId);
@@ -12,6 +13,8 @@ abstract class UserRemoteDataSource {
       String userId);
   Future<HttpResponse<void>> sendVerificationUser(
       AccountVerificationRequestEntity entity);
+  Future<HttpResponse<Pair<VerificationStatus, String>>>
+      getVerificationStatus();
 }
 
 class UserRemoteDataSourceImpl extends UserRemoteDataSource {
@@ -108,6 +111,44 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
         }
 
         return HttpResponse(null, response);
+      });
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<Pair<VerificationStatus, String>>>
+      getVerificationStatus() async {
+    String url = '$apiAppUrl$kSendVerificationUserEndpoint';
+    try {
+      return client
+          .get(
+        url,
+        options: Options(
+          headers: {
+            'Authorization': 'Bearer ${authenLocalDataSrc.getAccessToken()}',
+          },
+        ),
+      )
+          .then((response) {
+        print(response.data);
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data,
+            statusCode: response.statusCode!,
+          );
+        }
+
+        final Map<String, dynamic> taskDataList = response.data['result'];
+        Pair<VerificationStatus, String> value = Pair(
+          VerificationStatus.parse(taskDataList['status']),
+          taskDataList['rejected_info'] ?? '',
+        );
+
+        return HttpResponse(value, response);
       });
     } on ApiException {
       rethrow;

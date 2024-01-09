@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:image_picker/image_picker.dart';
@@ -7,10 +6,12 @@ import 'package:intl/intl.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/core/resources/data_state.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
+import 'package:nhagiare_mobile/features/domain/enums/verification_status.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_me.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_out.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_fav.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/user/get_verification_status.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/screens/change_language_screen.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/account/screens/update_password_screen.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
@@ -52,8 +53,14 @@ class AccountController extends GetxController {
   }
 
   // checkUserIsWaiting
-  Future<String> checkUserIsWaiting() async {
-    return "1";
+  GetVerificationUsecase getVerificationUsecase = sl<GetVerificationUsecase>();
+  String? rejectInfo;
+  Future<VerificationStatus> checkUserIsWaiting() async {
+    final result = await getVerificationUsecase();
+    if (result.first == VerificationStatus.rejected) {
+      rejectInfo = result.second;
+    }
+    return result.first;
   }
 
   Future<String?> navToVerification() async {
@@ -62,13 +69,13 @@ class AccountController extends GetxController {
   }
 
   Future<String?> navToWaitingVerification() async {
-    var data = await Get.toNamed(AppRoutes.verificationCard);
+    var data = await Get.toNamed(AppRoutes.verificationWaiting);
     return data;
   }
 
-  Future<String?> navToRejectVerification(String rejectInfo) async {
+  Future<String?> navToRejectVerification() async {
     var data =
-        await Get.toNamed(AppRoutes.verificationCard, arguments: rejectInfo);
+        await Get.toNamed(AppRoutes.verificationReject, arguments: rejectInfo);
     return data;
   }
 

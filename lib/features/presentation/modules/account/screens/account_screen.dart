@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
 import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
+import 'package:nhagiare_mobile/features/domain/enums/verification_status.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/loading_component.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/my_appbar.dart';
 import 'package:nhagiare_mobile/features/presentation/global_widgets/not_identity_card.dart';
@@ -94,7 +95,7 @@ class _AccountScreenState extends State<AccountScreen> {
                         size: 18,
                       ),
                     ),
-                    FutureBuilder<String>(
+                    FutureBuilder<VerificationStatus>(
                       future: controller.checkUserIsWaiting(),
                       builder: (context, snapshot) {
                         if (snapshot.connectionState ==
@@ -107,7 +108,7 @@ class _AccountScreenState extends State<AccountScreen> {
                             );
                           } else {
                             final checkStatus = snapshot.data!;
-                            if (checkStatus == "2") {
+                            if (checkStatus == VerificationStatus.verified) {
                               // duyet duoc roi
                               return Container();
                             } else {
@@ -119,14 +120,16 @@ class _AccountScreenState extends State<AccountScreen> {
                                   style: AppTextStyles.medium16,
                                 ),
                                 onTap: () {
-                                  if (checkStatus == "0") {
+                                  if (checkStatus ==
+                                      VerificationStatus.notSent) {
                                     //chua co
                                     controller
                                         .navToVerification()
                                         .then((value) {
                                       setState(() {});
                                     });
-                                  } else if (checkStatus == "1") {
+                                  } else if (checkStatus ==
+                                      VerificationStatus.pending) {
                                     // dang cho duyet
                                     controller
                                         .navToWaitingVerification()
@@ -135,12 +138,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                     });
                                   } else {
                                     // tu choi
-                                    controller.navToRejectVerification(
-                                        snapshot.data!);
+                                    controller.navToRejectVerification();
                                   }
-                                  controller.navToVerification().then((value) {
-                                    setState(() {});
-                                  });
                                 },
                                 leading: const Padding(
                                   padding: EdgeInsets.symmetric(horizontal: 5),

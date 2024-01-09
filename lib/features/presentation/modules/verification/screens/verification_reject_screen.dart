@@ -9,6 +9,7 @@ import '../verification_controller.dart';
 class VerificationRejectScreen extends StatelessWidget {
   VerificationRejectScreen({super.key});
   final VerificationController _controller = Get.find<VerificationController>();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -44,17 +45,15 @@ class VerificationRejectScreen extends StatelessWidget {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Obx(
-        () => Container(
-          height: 50,
-          margin: const EdgeInsets.all(10),
-          child: ElevatedButton(
-            onPressed: _controller.navToVerification,
-            child: Center(
-              child: Text(
-                "Định danh lại tài khoản",
-                style: AppTextStyles.bold16,
-              ),
+      floatingActionButton: Container(
+        height: 50,
+        margin: const EdgeInsets.all(10),
+        child: ElevatedButton(
+          onPressed: _controller.navToVerification,
+          child: Center(
+            child: Text(
+              "Định danh lại tài khoản",
+              style: AppTextStyles.bold16,
             ),
           ),
         ),

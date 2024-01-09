@@ -66,6 +66,6 @@ class Assets {
   static const String purchaseSuccess = '$ilustrationPath/purchase-success.png';
   static const String emptyChat = '$ilustrationPath/empty_chat.png';
   static const String emptyNotification = '$ilustrationPath/empty_noti.svg';
-  static const String cardReject = '$animationsPath/card-rejected_loti.json';
-  static const String waiting = '$animationsPath/waiting_loti.json';
+  static const String cardReject = '$ilustrationPath/card-rejected_loti.json';
+  static const String waiting = '$ilustrationPath/waiting_loti.json';
 }
