@@ -18,6 +18,8 @@ abstract class UserRemoteDataSource {
       getVerificationStatus();
 
   Future<HttpResponse<void>> sendReport(ReportEntity report);
+
+  Future<HttpResponse<bool>> checkFollowUser(String userId);
 }
 
 class UserRemoteDataSourceImpl extends UserRemoteDataSource {
@@ -184,6 +186,36 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
         }
 
         return HttpResponse(null, response);
+      });
+    } on ApiException {
+      rethrow;
+    } catch (error) {
+      throw ApiException(message: error.toString(), statusCode: 505);
+    }
+  }
+
+  @override
+  Future<HttpResponse<bool>> checkFollowUser(String userId) {
+    String url =
+        '$apiAppUrl$kCheckFollowUserEndpoint'.replaceAll(':id', userId);
+    try {
+      return client
+          .get(url,
+              options: Options(
+                headers: {
+                  'Authorization':
+                      'Bearer ${authenLocalDataSrc.getAccessToken()}',
+                },
+              ))
+          .then((response) {
+        if (response.statusCode != 200) {
+          throw ApiException(
+            message: response.data,
+            statusCode: response.statusCode!,
+          );
+        }
+
+        return HttpResponse(true, response);
       });
     } on ApiException {
       rethrow;
