@@ -19,12 +19,9 @@ class UserProfileController extends GetxController {
   RxString numOfPosts = "-".obs;
 
   GetUserIdUseCase getUserIdUseCase = sl<GetUserIdUseCase>();
-  @override
-  void onInit() async {
-    if (user!.id == await getUserIdUseCase()) {
-      isMe.value = true;
-    }
-    super.onInit();
+  Future<void> checkIsMe() async {
+    isMe.value = (user!.id == await getUserIdUseCase());
+    print(isMe.value);
   }
 
   // get all posts
