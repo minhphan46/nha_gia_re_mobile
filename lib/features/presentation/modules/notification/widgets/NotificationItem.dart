@@ -22,6 +22,7 @@ class NotificationListItem extends StatelessWidget {
       case NotificationType.info:
       case NotificationType.follow:
       case NotificationType.news:
+      case NotificationType.accept_account_verification_request:
         return AppColors.green100;
       case NotificationType.postRejected:
       case NotificationType.postDeleted:
@@ -49,6 +50,8 @@ class NotificationListItem extends StatelessWidget {
         return 'Theo dõi';
       case NotificationType.news:
         return 'Tin tức';
+      case NotificationType.accept_account_verification_request:
+        return 'Xác minh tài khoản';
       default:
         return 'Thông báo';
     }
