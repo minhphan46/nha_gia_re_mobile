@@ -6,6 +6,7 @@ import 'package:nhagiare_mobile/features/domain/entities/user/report.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/FollowOrUnfollowUserUseCase.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/user/check_is_follow.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/send_report.dart';
 import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
@@ -27,6 +28,14 @@ class UserProfileController extends GetxController {
   Future<void> checkIsMe() async {
     isMe.value = (user!.id == await getUserIdUseCase());
     print(isMe.value);
+  }
+
+  CheckIsFollowUser checkIsFollowUser = sl<CheckIsFollowUser>();
+  Future<void> checkIsFollow() async {
+    print("user Id: ${user!.id}");
+    final dataState = await checkIsFollowUser(params: user!.id!);
+    isFollow.value = dataState;
+    print(isFollow.value);
   }
 
   // get all posts

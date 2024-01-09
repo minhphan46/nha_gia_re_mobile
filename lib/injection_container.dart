@@ -16,6 +16,7 @@ import 'package:nhagiare_mobile/features/domain/usecases/post/remote/update_post
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_discount_codes_usercase.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/unsubcribe.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
+import 'package:nhagiare_mobile/features/domain/usecases/user/check_is_follow.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/get_verification_status.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/send_report.dart';
 import '../features/domain/usecases/authentication/get_me.dart';
@@ -398,6 +399,12 @@ Future<void> initializeDependencies() async {
 
   sl.registerSingleton<FollowOrUnfollowUserUseCase>(
     FollowOrUnfollowUserUseCase(
+      sl<UserRepository>(),
+    ),
+  );
+
+  sl.registerSingleton<CheckIsFollowUser>(
+    CheckIsFollowUser(
       sl<UserRepository>(),
     ),
   );

@@ -7,6 +7,7 @@ import '../enums/verification_status.dart';
 
 abstract class UserRepository {
   Future<DataState<bool>> followOrUnfollowUser(String userId);
+  Future<DataState<bool>> checkFollowUser(String userId);
   Future<DataState<Pair<int, int>>> getFollowersAndFollowingsCount(
       String userId);
 

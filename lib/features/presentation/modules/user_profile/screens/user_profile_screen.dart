@@ -39,6 +39,7 @@ class _UserProfileScreenState extends State<UserProfileScreen> {
   @override
   void initState() {
     checkIsMe();
+    controller.checkIsFollow();
     super.initState();
   }
 
