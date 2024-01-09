@@ -11,8 +11,9 @@ import 'package:nhagiare_mobile/features/domain/usecases/authentication/get_me.d
 import 'package:nhagiare_mobile/features/domain/usecases/authentication/sign_out.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/post/remote/get_post_fav.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/purchase/get_current_subscription.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/account/screens/change_language_screen.dart';
+import 'package:nhagiare_mobile/features/presentation/modules/account/screens/update_password_screen.dart';
 import 'package:nhagiare_mobile/injection_container.dart';
-
 import '../../../../config/theme/app_color.dart';
 import '../../../../core/resources/pair.dart';
 import '../../../../core/service/device_service.dart';
@@ -22,7 +23,6 @@ import '../../../domain/entities/purchase/subscription.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 
 class AccountController extends GetxController {
-  bool isIdentity = true;
   RxBool isLoadingLogout = false.obs;
   RxInt servicePack = 0.obs;
 
@@ -200,4 +200,60 @@ class AccountController extends GetxController {
     );
     return dataState;
   }
+
+  // update passowrd
+  void navtoUpdatePassword() {
+    Get.to(UpdatePasswordAccountScreen());
+  }
+
+  String oldPassword = "";
+  String newPassword = "";
+  String reNewPassword = "";
+
+  RxBool isCanClickUpdatePassword = false.obs;
+
+  void checkCanClickUpdatePassword() {
+    if (oldPassword.isNotEmpty &&
+        newPassword.isNotEmpty &&
+        reNewPassword.isNotEmpty) {
+      isCanClickUpdatePassword.value = true;
+    } else {
+      isCanClickUpdatePassword.value = false;
+    }
+  }
+
+  Future<void> updatePassword() async {
+    if (oldPassword == newPassword) {
+      Get.snackbar(
+        'Lỗi',
+        'Mật khẩu mới không được trùng với mật khẩu cũ',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return Future.value();
+    }
+    if (newPassword != reNewPassword) {
+      Get.snackbar(
+        'Lỗi',
+        'Mật khẩu mới không trùng nhau',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return Future.value();
+    }
+    return Future.value();
+  }
+
+  // change language
+  void navToChangeLanguage() {
+    Get.to(ChangeLanguageScreen());
+  }
+
+  Rx<Language> language = Language.vi.obs;
+
+  void changeLanguage(String languageCode) {
+    Get.updateLocale(Locale(languageCode));
+  }
 }
+
+enum Language { vi, en }

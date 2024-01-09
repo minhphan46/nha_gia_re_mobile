@@ -75,7 +75,8 @@ class _AccountScreenState extends State<AccountScreen> {
                                 ),
                             ],
                           ),
-                          if (!controller.isIdentity) const NotIdentityCard(),
+                          if (!user.isIdentityVerified!)
+                            const NotIdentityCard(),
                         ],
                       ),
                       onTap: () {
@@ -270,7 +271,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         'Đổi mật khẩu',
                         style: AppTextStyles.medium16,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        controller.navtoUpdatePassword();
+                      },
                       leading: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Icon(
@@ -292,7 +295,9 @@ class _AccountScreenState extends State<AccountScreen> {
                         'Ngôn ngữ',
                         style: AppTextStyles.medium16,
                       ),
-                      onTap: () {},
+                      onTap: () {
+                        controller.navToChangeLanguage();
+                      },
                       leading: const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 5),
                         child: Icon(

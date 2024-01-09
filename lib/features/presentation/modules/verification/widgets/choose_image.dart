@@ -43,10 +43,53 @@ class _ChooseImageState extends State<ChooseImage> {
   }
 
   File? _pickedImage;
+  final ImagePicker _picker = ImagePicker();
+
+  void _showPicker(context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return SafeArea(
+          child: Wrap(
+            children: [
+              const SizedBox(height: 50),
+              ListTile(
+                leading: const Icon(Icons.photo_library),
+                title: const Text("Thư viện"),
+                onTap: () {
+                  imgFromGallery();
+                  Get.back();
+                },
+              ),
+              ListTile(
+                leading: const Icon(Icons.photo_camera),
+                title: const Text("Máy ảnh"),
+                onTap: () {
+                  _pickImageFromCamera();
+                  Get.back();
+                },
+              )
+            ],
+          ),
+        );
+      },
+    );
+  }
 
   void _pickImageFromCamera() async {
-    final pickedImageFile = await ImagePicker()
-        .pickImage(source: ImageSource.camera, imageQuality: 60, maxWidth: 150);
+    final pickedImageFile = await _picker.pickImage(
+        source: ImageSource.camera, imageQuality: 60, maxWidth: 150);
+    if (pickedImageFile != null) {
+      _pickedImage = File(pickedImageFile.path);
+      widget.verifyController
+          .handelUploadIdCard(File(_pickedImage!.path), widget.typeImage);
+      setState(() {});
+    }
+  }
+
+  void imgFromGallery() async {
+    final pickedImageFile =
+        await _picker.pickImage(source: ImageSource.gallery);
     if (pickedImageFile != null) {
       _pickedImage = File(pickedImageFile.path);
       widget.verifyController
@@ -64,7 +107,7 @@ class _ChooseImageState extends State<ChooseImage> {
         children: [
           Obx(
             () => InkWell(
-              onTap: () => _pickImageFromCamera(),
+              onTap: () => _showPicker(context),
               child: Container(
                 decoration: BoxDecoration(
                   color: AppColors.white,
@@ -88,7 +131,7 @@ class _ChooseImageState extends State<ChooseImage> {
           ),
           const SizedBox(height: 12),
           InkWell(
-            onTap: () => _pickImageFromCamera(),
+            onTap: () => _showPicker(context),
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 10),
               decoration: BoxDecoration(

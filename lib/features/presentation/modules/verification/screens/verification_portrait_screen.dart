@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
@@ -56,29 +58,34 @@ class VerificationPortraitScreen extends StatelessWidget {
             width: double.infinity,
             child: ChooseImagePortrait(_controller),
           ),
-        ],
-      ),
-
-      // bottom button
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Obx(
-        () => Container(
-          height: 50,
-          margin: const EdgeInsets.all(10),
-          child: ElevatedButton(
-            onPressed: _controller.isCanClickPortrait.value
-                ? () {
-                    _controller.navToInforScreen();
-                  }
-                : null,
-            child: Center(
-              child: Text(
-                'Tiếp tục'.tr,
-                style: AppTextStyles.bold16,
+          const Expanded(child: SizedBox()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Obx(
+              () => ElevatedButton(
+                onPressed: _controller.isCanClickPortrait.value
+                    ? () {
+                        _controller.navToInforScreen();
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.green,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  textStyle: const TextStyle(color: AppColors.white),
+                  elevation: 10,
+                  minimumSize: Size(100.wp, 55),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Tiếp tục'.tr,
+                  style: AppTextStyles.bold14.colorEx(AppColors.white),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }

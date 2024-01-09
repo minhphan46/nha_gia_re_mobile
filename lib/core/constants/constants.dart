@@ -44,4 +44,4 @@ const kGetDiscountCodeEndpoint = '/membership-package/discounts';
 const kGetPostFavoriteEndpoint = '/posts/favorites';
 const kGetAllNotifications = '/notifications';
 
-const kSendVerificationUserEndpoint = '/verification';
+const kSendVerificationUserEndpoint = '/account-verification-request';

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 
 import '../../../../../config/theme/app_color.dart';
 import '../../../../../config/theme/text_styles.dart';
@@ -46,29 +48,33 @@ class VerificationInfoScreen extends StatelessWidget {
             ),
             // form register
             FormInfomations(_controller),
-          ],
-        ),
-      ),
-
-      // bottom button
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Obx(
-        () => Container(
-          height: 50,
-          margin: const EdgeInsets.all(10),
-          child: ElevatedButton(
-            onPressed: _controller.isCanClickInfo.value
-                ? () {
-                    _controller.finishVerification();
-                  }
-                : null,
-            child: Center(
-              child: Text(
-                'Hoàn tất',
-                style: AppTextStyles.bold14,
+            Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+              child: Obx(
+                () => ElevatedButton(
+                  onPressed: _controller.isCanClickInfo.value
+                      ? () {
+                          _controller.finishVerification();
+                        }
+                      : null,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: AppColors.green,
+                    padding: const EdgeInsets.symmetric(vertical: 15),
+                    textStyle: const TextStyle(color: AppColors.white),
+                    elevation: 10,
+                    minimumSize: Size(100.wp, 55),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                  child: Text(
+                    'Hoàn tất'.tr,
+                    style: AppTextStyles.bold14.colorEx(AppColors.white),
+                  ),
+                ),
               ),
             ),
-          ),
+          ],
         ),
       ),
     );

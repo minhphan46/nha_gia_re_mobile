@@ -2,16 +2,28 @@ import 'package:get/get.dart';
 import 'package:nhagiare_mobile/core/resources/pair.dart';
 import 'package:nhagiare_mobile/features/domain/entities/user/user.dart';
 import 'package:nhagiare_mobile/features/domain/usecases/user/GetFollowersAndFollowingsCount.dart';
+import '../../../../config/routes/app_routes.dart';
 import '../../../../core/resources/data_state.dart';
 import '../../../../injection_container.dart';
 import '../../../domain/entities/posts/real_estate_post.dart';
+import '../../../domain/usecases/authentication/get_user_id.dart';
 import '../../../domain/usecases/post/remote/get_posts.dart';
 
 class UserProfileController extends GetxController {
   UserEntity? user = Get.arguments;
   bool isFollow = false;
+  late RxBool isMe = false.obs;
 
   RxString numOfPosts = "-".obs;
+
+  GetUserIdUseCase getUserIdUseCase = sl<GetUserIdUseCase>();
+  @override
+  void onInit() async {
+    if (user!.id == await getUserIdUseCase()) {
+      isMe.value = true;
+    }
+    super.onInit();
+  }
 
   // get all posts
   final GetPostsUseCase _getPostsUseCase = sl<GetPostsUseCase>();
@@ -50,5 +62,9 @@ class UserProfileController extends GetxController {
       Get.snackbar("Lỗi", "Lỗi khi lấy dữ liệu");
       return Pair(0, 0);
     }
+  }
+
+  void navToAccountInfo() {
+    Get.toNamed(AppRoutes.updateInfoAccount, arguments: user);
   }
 }

@@ -90,7 +90,7 @@ class UserRemoteDataSourceImpl extends UserRemoteDataSource {
     String url = '$apiAppUrl$kSendVerificationUserEndpoint';
     try {
       return client
-          .post(
+          .get(
         url,
         data: entity.toJson(),
         options: Options(

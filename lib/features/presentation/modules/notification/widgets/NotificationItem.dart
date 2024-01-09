@@ -1,6 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:nhagiare_mobile/core/extensions/date_ex.dart';
 import '../../../../../config/theme/app_color.dart';

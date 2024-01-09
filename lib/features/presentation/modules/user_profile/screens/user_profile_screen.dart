@@ -12,14 +12,14 @@ import 'package:nhagiare_mobile/features/presentation/modules/user_profile/user_
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/button_follow.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/tab_profile.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/verify_component.dart';
-
 import '../../../../../config/values/asset_image.dart';
 import '../../../../../core/resources/pair.dart';
 
 class UserProfileScreen extends StatelessWidget {
   UserProfileScreen({super.key});
 
-  final UserProfileController controller = UserProfileController();
+  final UserProfileController controller = Get.find();
+
   @override
   Widget build(BuildContext context) {
     double sizeImage = 22.wp;
@@ -134,10 +134,17 @@ class UserProfileScreen extends StatelessWidget {
                           ),
                           const SizedBox(height: 5),
                           // button follow
-                          const ButtonFollow(
-                            isFollow: false,
-                            isMe: true,
-                          )
+                          Obx(
+                            () => ButtonFollow(
+                              isFollow: false,
+                              isMe: controller.isMe.value,
+                              onClick: () {
+                                if (controller.isMe.value) {
+                                  controller.navToAccountInfo();
+                                }
+                              },
+                            ),
+                          ),
                         ],
                       ),
                     )

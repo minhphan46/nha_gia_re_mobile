@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/theme/text_styles.dart';
+import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
+import 'package:nhagiare_mobile/core/extensions/textstyle_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/verification/verification_controller.dart';
 import '../../../../../config/theme/app_color.dart';
 import '../widgets/change_type_doc.dart';
@@ -64,30 +66,35 @@ class VerificationCardScreen extends StatelessWidget {
               ChooseImage(_controller, true), // mặt trước
               ChooseImage(_controller, false), // mặt sau
             ],
-          )
-        ],
-      ),
-
-      // bottom button
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-      floatingActionButton: Obx(
-        () => Container(
-          height: 50,
-          margin: const EdgeInsets.all(10),
-          child: ElevatedButton(
-            onPressed: _controller.isCanClickCard.value
-                ? () {
-                    _controller.navToPortraitSceen();
-                  }
-                : null,
-            child: Center(
-              child: Text(
-                'Tiếp tục'.tr,
-                style: AppTextStyles.bold14,
+          ),
+          const Expanded(child: SizedBox()),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+            child: Obx(
+              () => ElevatedButton(
+                onPressed: _controller.isCanClickCard.value
+                    ? () {
+                        _controller.navToPortraitSceen();
+                      }
+                    : null,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: AppColors.green,
+                  padding: const EdgeInsets.symmetric(vertical: 15),
+                  textStyle: const TextStyle(color: AppColors.white),
+                  elevation: 10,
+                  minimumSize: Size(100.wp, 55),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                ),
+                child: Text(
+                  'Tiếp tục'.tr,
+                  style: AppTextStyles.bold14.colorEx(AppColors.white),
+                ),
               ),
             ),
           ),
-        ),
+        ],
       ),
     );
   }
