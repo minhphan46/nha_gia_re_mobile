@@ -14,17 +14,46 @@ import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widge
 import 'package:nhagiare_mobile/features/presentation/modules/user_profile/widgets/verify_component.dart';
 import '../../../../../config/values/asset_image.dart';
 import '../../../../../core/resources/pair.dart';
+import '../widgets/dialog_report.dart';
 
 class UserProfileScreen extends StatelessWidget {
   UserProfileScreen({super.key});
 
   final UserProfileController controller = Get.find();
 
+  void showCommentForm(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (ctx) => DialogReport(
+        user: controller.user!,
+        handleReportUser: controller.handleReportUser,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     double sizeImage = 22.wp;
     return Scaffold(
-      appBar: MyAppbar(title: controller.user!.fullName),
+      appBar: MyAppbar(
+        title: controller.user!.fullName,
+        actions: [
+          controller.isMe.value
+              ? Container()
+              : Padding(
+                  padding: const EdgeInsets.only(right: 10),
+                  child: IconButton(
+                    onPressed: () {
+                      showCommentForm(context);
+                    },
+                    icon: const Icon(
+                      Icons.outlined_flag_rounded,
+                      color: AppColors.grey500,
+                    ),
+                  ),
+                ),
+        ],
+      ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
