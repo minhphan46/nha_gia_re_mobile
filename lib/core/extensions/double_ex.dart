@@ -10,16 +10,15 @@ extension ResponsiveText on double {
 }
 
 String formatMoney(double amount) {
-
   if (amount >= 1000000000) {
     double value = amount / 1000000000;
-    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} tỷ/m2';
+    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} tỷ';
   } else if (amount >= 1000000) {
     double value = amount / 1000000;
-    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} triệu/m2';
+    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 3)} triệu';
   } else {
     double value = amount / 1000;
-    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1)} nghìn/m2';
+    return '${value.toStringAsFixed(value.truncateToDouble() == value ? 0 : 1)} nghìn';
   }
 }
 

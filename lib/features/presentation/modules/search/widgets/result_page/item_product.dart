@@ -114,7 +114,7 @@ class _ItemProductState extends State<ItemProduct> {
                       const SizedBox(height: 5),
                       // money
                       Text(
-                        "${widget.post.price!} VNĐ",
+                        "${double.parse(widget.post.price!).toInt().formatNumberWithCommas} VNĐ",
                         style: AppTextStyles.semiBold14
                             .copyWith(color: AppColors.orange),
                       ),

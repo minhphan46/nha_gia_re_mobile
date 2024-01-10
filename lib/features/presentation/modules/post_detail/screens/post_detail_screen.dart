@@ -64,8 +64,8 @@ class PostDetailScreen extends StatelessWidget {
                     children: [
                       Text.rich(
                         TextSpan(
-                          text: double.parse(controller.post.price!)
-                              .toFormattedMoney(),
+                          text:
+                              "${double.parse(controller.post.price!).toInt().formatNumberWithCommas} VNĐ",
                           style: AppTextStyles.semiBold14
                               .colorEx(AppColors.orange),
                           children: <InlineSpan>[

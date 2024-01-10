@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nhagiare_mobile/config/routes/app_routes.dart';
 import 'package:nhagiare_mobile/config/values/asset_image.dart';
-import 'package:nhagiare_mobile/core/extensions/double_ex.dart';
 import 'package:nhagiare_mobile/core/extensions/integer_ex.dart';
 import 'package:nhagiare_mobile/features/presentation/modules/home/widgets/icon_text.dart';
 import 'package:zoom_tap_animation/zoom_tap_animation.dart';
@@ -73,7 +72,8 @@ class InforCard extends StatelessWidget {
                     ),
                     IconText(
                       icon: Assets.money,
-                      text: double.parse(post.price!).toFormattedMoney(),
+                      text:
+                          "${double.parse(post.price!).toInt().formatNumberWithCommas} VNĐ",
                       color: AppColors.orange,
                     ),
                     const SizedBox(
