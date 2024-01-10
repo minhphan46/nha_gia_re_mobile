@@ -314,11 +314,9 @@ class MySearchController extends GetxController {
       return OrderByTypes.relatedDesc;
     } else if (radioSortType.isEqualValue(1)) {
       return OrderByTypes.createdAtDesc;
-    } else if (radioSortType.isEqualValue(2)) {
-      return OrderByTypes.priceAsc;
     } else {
-      return OrderByTypes.nearByAsc;
-    }
+      return OrderByTypes.priceAsc;
+    } 
   }
 
   PostedBy getPostBy() {

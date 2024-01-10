@@ -19,7 +19,6 @@ class FilterValues {
     "Liên quan",
     "Tin mới trước",
     "Giá thấp trước",
-    "Gần đây nhất",
   ];
 // posted card
   List<String> postedBy = [

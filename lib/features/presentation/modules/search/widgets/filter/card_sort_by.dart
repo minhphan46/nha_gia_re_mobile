@@ -108,32 +108,32 @@ class CardSortBy extends StatelessWidget {
                   ),
                 ),
               )),
-          Obx(() => ListTile(
-                horizontalTitleGap: 2,
-                title: Text(
-                  searchController.radioSortType.values[3],
-                  style:
-                      AppTextStyles.regular14.copyWith(color: AppColors.black),
-                ),
-                leading: const Padding(
-                  padding: EdgeInsets.only(right: 10),
-                  child: Icon(
-                    Icons.map_outlined,
-                    color: AppColors.black,
-                  ),
-                ),
-                trailing: SizedBox(
-                  width: 24,
-                  child: Radio<int>(
-                    value: 3,
-                    groupValue:
-                        searchController.radioSortType.selectedValue.value,
-                    onChanged: (value) {
-                      searchController.radioSortType.onChange(value);
-                    },
-                  ),
-                ),
-              )),
+          // Obx(() => ListTile(
+          //       horizontalTitleGap: 2,
+          //       title: Text(
+          //         searchController.radioSortType.values[3],
+          //         style:
+          //             AppTextStyles.regular14.copyWith(color: AppColors.black),
+          //       ),
+          //       leading: const Padding(
+          //         padding: EdgeInsets.only(right: 10),
+          //         child: Icon(
+          //           Icons.map_outlined,
+          //           color: AppColors.black,
+          //         ),
+          //       ),
+          //       trailing: SizedBox(
+          //         width: 24,
+          //         child: Radio<int>(
+          //           value: 3,
+          //           groupValue:
+          //               searchController.radioSortType.selectedValue.value,
+          //           onChanged: (value) {
+          //             searchController.radioSortType.onChange(value);
+          //           },
+          //         ),
+          //       ),
+          //     )),
         ],
       ),
     );
